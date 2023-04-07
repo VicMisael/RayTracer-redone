@@ -127,13 +127,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="tracer\objects\Ball.cpp" />
+    <ClCompile Include="tracer\objects\Plane.cpp" />
     <ClCompile Include="tracer\scene\Ray.cpp" />
     <ClCompile Include="RayTracerRedone.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tracer\config\glm_definitions.h" />
+    <ClInclude Include="tracer\objects\Ball.h" />
+    <ClInclude Include="tracer\objects\Plane.h" />
     <ClInclude Include="tracer\utils\Intersection.h" />
     <ClInclude Include="tracer\scene\Ray.h" />
+    <ClInclude Include="tracer\utils\Material.h" />
     <ClInclude Include="tracer\utils\Types.h" />
     <ClInclude Include="tracer\objects\VirtualObject.h" />
   </ItemGroup>
