@@ -1,7 +1,9 @@
 #pragma once
+
 #include "./VirtualObject.h"
 class Plane:public VirtualObject
 {
-	public
+public:
+	std::optional<Intersection> intersects(const Ray ray) const override;
 };
 

@@ -2,12 +2,11 @@
 #include "../utils/Types.h"
 class Ray
 {
-private:
-	Vector3f origin;
-	Vector3f direction;
 public:
-	Ray(Vector3f _origin, Vector3f _direction) :origin(_origin), direction(_direction) {};
+	const Point3 origin;
+	const Vector3 direction;
+	Ray(Point3 _origin, Vector3 _direction) :origin(_origin), direction(_direction) {};
 
-	Vector3f point_at(float t);
+	Point3 point_at(float t) const;
 };
 

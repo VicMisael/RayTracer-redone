@@ -2,13 +2,14 @@
 //
 
 #include <iostream>
-#include "tracer/utils/Types.h"
-int main()
-{
-    Vector3f(0.2, 0.3, 0.4);
+#include "tracer/config/glm_definitions.h"
+#include "tracer/scene/Ray.h"
+#include <glm/glm.hpp>
+int main(){
 
     std::cout <<"Starting";
-    std::cout << Vector3f(0.2, 0.3, 0.4).x;
+    Ray r = Ray(Point3(0, 0, 0), glm::normalize(Vector3(1, 0.5, 3)));
+    std::cout << r.point_at(3.5).y;
 }
 // Executar programa: Ctrl + F5 ou Menu Depurar > Iniciar Sem Depuração
 // Depurar programa: F5 ou menu Depurar > Iniciar Depuração

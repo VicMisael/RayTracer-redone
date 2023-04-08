@@ -1,6 +1,6 @@
 #include "Ray.h"
 
-Vector3f Ray::point_at(float t)
+Vector3 Ray::point_at(float t) const
 {
 	return origin + direction * t;
 }

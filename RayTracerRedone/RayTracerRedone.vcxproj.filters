@@ -18,13 +18,13 @@
     <ClCompile Include="RayTracerRedone.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="tracer\scene\Ray.cpp">
+    <ClCompile Include="tracer\scene\Ray.cc">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="tracer\objects\Ball.cpp">
+    <ClCompile Include="tracer\objects\Ball.cc">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="tracer\objects\Plane.cpp">
+    <ClCompile Include="tracer\objects\Plane.cc">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -51,6 +51,12 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="tracer\utils\Material.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="tracer\utils\type_utils.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="tracer\utils\Color.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

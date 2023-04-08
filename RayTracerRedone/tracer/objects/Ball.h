@@ -1,12 +1,14 @@
 #pragma once
 #include "VirtualObject.h"
-class Ball:VirtualObject
+class Ball: public VirtualObject
 {
 private:
-	Vector3f center;
+	Point3 center;
 	float radius;
 public:
-
-	 Intersection intersects(const Ray ray) override;
+	
+	Ball(Point3 center, float radius, Material material) :VirtualObject(material), center(center), radius(radius) {};
+	std::optional<Intersection> intersects(const Ray ray) const override;
+	
 };
 

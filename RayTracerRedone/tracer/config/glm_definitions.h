@@ -1,3 +1,3 @@
 #pragma once
-#define GLM_CONFIG_XYZW_ONLY=1
+#define GLM_FORCE_SWIZZLE
 
