@@ -20,5 +20,5 @@ std::optional<Intersection> Ball::intersects(const Ray ray) const
 	const float t2 = (-b - sqrtf(delta)) / (2.0f * a);
 	const float closest = std::min(t1, t2);
 	const Vector3 normal = (origin_minus_center + closest * ray_direction) / radius;
-	return Intersection{closest,};
+	return Intersection{ closest,ray.point_at(closest),normal,material};
 }

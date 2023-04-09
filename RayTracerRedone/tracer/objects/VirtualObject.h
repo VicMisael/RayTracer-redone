@@ -5,8 +5,8 @@
 #include <optional>
 class VirtualObject
 {
-	Material material;
 public: 
+	Material material;
 	VirtualObject(Material _material) :material(_material) {  };
 	virtual std::optional<Intersection> intersects(const Ray ray) const=0;
 };

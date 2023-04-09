@@ -136,19 +136,23 @@
     <ClCompile Include="tracer\scene\Ray.cc" />
     <ClCompile Include="RayTracerRedone.cpp" />
     <ClCompile Include="tracer\scene\World.cpp" />
+    <ClCompile Include="tracer\scene\ViewPlane.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="tracer\scene\light\Light.h" />
     <ClInclude Include="tracer\scene\World.h" />
     <ClInclude Include="tracer\utils\Color.h" />
     <ClInclude Include="tracer\config\glm_definitions.h" />
     <ClInclude Include="tracer\objects\Ball.h" />
     <ClInclude Include="tracer\objects\Plane.h" />
+    <ClInclude Include="tracer\utils\Constants.h" />
     <ClInclude Include="tracer\utils\Intersection.h" />
     <ClInclude Include="tracer\scene\Ray.h" />
     <ClInclude Include="tracer\utils\Material.h" />
     <ClInclude Include="tracer\utils\Types.h" />
     <ClInclude Include="tracer\objects\VirtualObject.h" />
     <ClInclude Include="tracer\utils\type_utils.h" />
+    <ClInclude Include="tracer\scene\ViewPlane.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

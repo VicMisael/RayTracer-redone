@@ -6,6 +6,6 @@ struct Intersection
 	const float tmin;
 	const Point3 closestHitPoint;
 	const Vector3 normal;
-	const Color color;
+	const Material material;
 };
 
