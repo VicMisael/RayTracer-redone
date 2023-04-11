@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="tracer\scene\tracer\RayCast.cpp" />
     <ClCompile Include="tracer\objects\Ball.cc" />
     <ClCompile Include="tracer\objects\Plane.cc" />
     <ClCompile Include="tracer\scene\Ray.cc" />
@@ -139,6 +140,9 @@
     <ClCompile Include="tracer\scene\ViewPlane.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="tracer\scene\tracer\RayCast.h" />
+    <ClInclude Include="tracer\scene\tracer\Tracer.h" />
+    <ClInclude Include="tracer\scene\Canvas.h" />
     <ClInclude Include="tracer\scene\light\Light.h" />
     <ClInclude Include="tracer\scene\World.h" />
     <ClInclude Include="tracer\utils\Color.h" />

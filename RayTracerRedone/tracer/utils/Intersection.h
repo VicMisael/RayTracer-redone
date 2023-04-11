@@ -1,6 +1,7 @@
 #pragma once
 #include "Types.h"
 #include "Color.h"
+#include "Material.h"
 struct Intersection
 {
 	const float tmin;
