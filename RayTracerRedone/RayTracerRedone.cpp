@@ -2,14 +2,40 @@
 //
 
 #include <iostream>
-#include "tracer/config/glm_definitions.h"
-#include "tracer/scene/Ray.h"
-#include <glm/glm.hpp>
+#define SDL_MAIN_HANDLED
+#include <SDL2/SDL.h>
 int main(){
+	std::cout << "STARTING SDL TRACER" << std::endl;
+    static int display_in_use = 0; /* Only using first display */
 
-    std::cout <<"Starting";
-    Ray r = Ray(Point3(0, 0, 0), glm::normalize(Vector3(1, 0.5, 3)));
-    std::cout << r.point_at(3.5).y;
+    
+    uint32_t w = 1280;
+    uint32_t h = 720;
+
+
+    auto window = SDL_CreateWindow("RayCaster", 100, 100, w, h, 0);
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    SDL_Texture* framebuffer = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, w,h);
+    uint32_t* rgba = new uint32_t[w * h];
+  
+    for(;;){
+        int val = 0;
+        for (int y = 0; y < h; y++)
+        {
+
+            for (int x = 0; x < w; x++)
+            {
+                rgba[y * w + x] =(val&&0xffffff);
+            }
+            val++;
+        }
+        SDL_UpdateTexture(framebuffer, NULL, rgba, w * sizeof(uint32_t));
+        SDL_RenderClear(renderer);
+        SDL_RenderCopy(renderer, framebuffer, NULL, NULL);
+        SDL_RenderPresent(renderer);
+    }
+
+
 }
 // Executar programa: Ctrl + F5 ou Menu Depurar > Iniciar Sem Depuração
 // Depurar programa: F5 ou menu Depurar > Iniciar Depuração
