@@ -9,5 +9,8 @@ private:
 	const std::unique_ptr<Canvas> canvas;
 public:
 	Scene(World* _world, Canvas* _canvas) :world(_world), canvas(_canvas) {};
+	void draw() {
+		canvas->draw();
+	};
 };
 
