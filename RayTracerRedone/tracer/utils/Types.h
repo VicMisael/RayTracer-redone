@@ -14,6 +14,4 @@ union RGBA {
     struct {
         uint8_t  _r, _g, _b, _a;
     };
-    RGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a) :_r(r), _g(g), _b(b), _a(a) {};
-    RGBA(uint32_t _rgba) :rgba(_rgba){};
 };

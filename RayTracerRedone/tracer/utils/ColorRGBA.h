@@ -14,8 +14,22 @@ public:
 		_color.b > 1.0f ? 255 : _color.b*255,
 		_color.a > 1.0f ? 255 : _color.a*255
 		) {};
+
+	ColorRGBA(const RGBA _color) :bytevec4
+	(
+		_color._r,
+		_color._g,
+		_color._b,
+		_color._a
+	) {};
+
 	RGBA toRgba() const {
-		return RGBA(r, g, b, a);
+		RGBA rgba;
+		rgba._r = r;
+		rgba._g = g;
+		rgba._b = b;
+		rgba._a = a;
+		return rgba;
 	}
 };
 
