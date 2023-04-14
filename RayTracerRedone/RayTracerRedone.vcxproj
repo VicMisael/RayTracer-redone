@@ -131,22 +131,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="sdl2\sdl2canvas.cpp" />
+    <ClCompile Include="sdl2canvas\sdl2canvas.cpp" />
+    <ClCompile Include="tracer\scene\Ray.cpp" />
     <ClCompile Include="tracer\scene\Scene.cpp" />
-    <ClCompile Include="tracer\scene\tracer\RayCast.cpp" />
     <ClCompile Include="tracer\objects\Ball.cc" />
     <ClCompile Include="tracer\objects\Plane.cc" />
-    <ClCompile Include="tracer\scene\Ray.cc" />
     <ClCompile Include="RayTracerRedone.cpp" />
     <ClCompile Include="tracer\scene\World.cpp" />
     <ClCompile Include="tracer\scene\ViewPlane.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="sdl2\sdl2canvas.h" />
+    <ClInclude Include="sdl2canvas\sdl2canvas.h" />
     <ClInclude Include="tracer\scene\Scene.h" />
     <ClInclude Include="tracer\utils\ColorRGBA.h" />
-    <ClInclude Include="tracer\scene\tracer\RayCast.h" />
-    <ClInclude Include="tracer\scene\tracer\Tracer.h" />
     <ClInclude Include="tracer\scene\Canvas.h" />
     <ClInclude Include="tracer\scene\light\Light.h" />
     <ClInclude Include="tracer\scene\World.h" />
@@ -160,7 +157,6 @@
     <ClInclude Include="tracer\utils\Material.h" />
     <ClInclude Include="tracer\utils\Types.h" />
     <ClInclude Include="tracer\objects\VirtualObject.h" />
-    <ClInclude Include="tracer\utils\type_utils.h" />
     <ClInclude Include="tracer\scene\ViewPlane.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,19 +1,8 @@
 #include "sdl2canvas.h"
 
-void sdl2canvas::write_pixel(int x, int y, uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+void sdl2canvas::write_pixel(const uint16_t x, const uint16_t y, const ColorRGBA colorRgba)
 {
-    union {
-        uint32_t rgba;
-        struct {
-            uint8_t  _r, _g, _b, _a;
-        };
-    } rgbaCol;
-    rgbaCol._r = r;
-    rgbaCol._g = g;
-    rgbaCol._b = b;
-    rgbaCol._a = a;
-
-    this->rgba[y * this->width + x]=rgbaCol.rgba;
+    this->rgba[y * this->width + x] = colorRgba.toRgba().rgba;
 }
 
 void sdl2canvas::draw()

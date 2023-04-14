@@ -1,15 +1,17 @@
 #pragma once
-#include "World.h"
 #include "Canvas.h"
+
+#include "World.h"
 #include <memory>
 class Scene
 {
 private:
 	const std::unique_ptr<World> world;
-	const std::unique_ptr<Canvas> canvas;
+	Canvas* canvas;
 public:
 	Scene(World* _world, Canvas* _canvas) :world(_world), canvas(_canvas) {};
 	void draw() {
+		world->render(canvas);
 		canvas->draw();
 	};
 };

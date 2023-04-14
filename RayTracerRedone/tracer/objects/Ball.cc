@@ -10,10 +10,10 @@ std::optional<Intersection> Ball::intersects(const Ray ray) const
 
 	const Vector3 origin_minus_center = ray.origin - center;
 	const float a = glm::dot(ray_direction, ray_direction);
-	const float b = 2.0 * glm::dot(origin_minus_center,ray_direction );
+	const float b = 2.0f * glm::dot(origin_minus_center,ray_direction );
 	const float c = glm::dot(origin_minus_center, origin_minus_center) - radius * radius;
-	const float delta = b*b-4.0*a*c;
-	if (delta < 0.0) {
+	const float delta = b*b-4.0f*a*c;
+	if (delta < 0.0f) {
 		return {};
 	}
 	const float t1 = (-b + sqrtf(delta)) / (2.0f * a);

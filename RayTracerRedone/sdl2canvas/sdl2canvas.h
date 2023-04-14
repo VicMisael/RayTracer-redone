@@ -13,8 +13,8 @@ private:
 
 public:
 	sdl2canvas(const uint32_t w, const uint32_t h) :Canvas(w, h){
-        assert(w <= 1000);
-        assert(h <= 1000);
+        assert(w <= 10000);
+        assert(h <= 10000);
         std::cout << "STARTING SDL TRACER" << std::endl;
         static int display_in_use = 0; /* Only using first display */
 
@@ -23,7 +23,7 @@ public:
         framebuffer = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, w, h);
         rgba = new uint32_t[w * h];
 	}
-	void write_pixel(int x, int y, uint8_t r, uint8_t g, uint8_t b, uint8_t a) override final;
+	void write_pixel(const uint16_t x, const uint16_t y, const ColorRGBA colorRgba) override final;
 	void draw() override final;
 };
 

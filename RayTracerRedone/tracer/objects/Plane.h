@@ -1,6 +1,6 @@
 #pragma once
 
-#include "./VirtualObject.h"
+#include "VirtualObject.h"
 class Plane:public VirtualObject
 {
 public:

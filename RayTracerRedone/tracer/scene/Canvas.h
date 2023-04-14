@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include "ViewPlane.h"
+#include "../utils/ColorRGBA.h"
 class Canvas
 {	
 protected:
@@ -10,10 +11,10 @@ public:
 
 	Canvas(const uint32_t _w,const uint32_t _h):width(_w),height(_h){}
 
-	float step_size_y(ViewPlane viewPlane) const{
+	float step_size_y(const ViewPlane viewPlane) const{
 		return viewPlane.hsize / (float)height;
 	};
-	float step_size_x(ViewPlane viewPlane) const {
+	float step_size_x(const ViewPlane viewPlane) const {
 		return viewPlane.wsize / (float)width;
 	};
 	uint32_t getWidth() const {
@@ -22,7 +23,7 @@ public:
 	uint32_t getHeight() const {
 		return height;
 	}
-	virtual void write_pixel(int x, int y, uint8_t r, uint8_t g, uint8_t b, uint8_t a) = 0;
+	virtual void write_pixel(const uint16_t x, const uint16_t y,const ColorRGBA colorrgba) = 0;
 	virtual void draw()=0;
 };
 
