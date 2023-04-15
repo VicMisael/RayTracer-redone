@@ -1,20 +1,25 @@
 #include "World.h"
 #include <limits>
 #include "../utils/Constants.h"
-Color trace_ray(const World *world,const Ray ray, const int depth) 
+
+#include <iostream>
+
+ColorVec World::traceray(const Ray ray, const int depth) const
 {
-	auto intersection = world->hit(ray);
-	if (intersection.has_value()) {
-		const Intersection intersection_val = intersection.value();
-		return intersection_val.material.color;
+	auto intersection = hit(ray);
+	if (intersection.hitSomething) {
+		return intersection.virtualObject->material.color;
 	}
 	else
 	{
-		return world->bgColor;
+		return bgColor;
 	}
 }
 
-void World::render(const Canvas* canvas) const
+static float xmin=FLT_MAX, xmax=-FLT_MAX;
+static float ymin=FLT_MAX, ymax=-FLT_MAX;
+
+void World::render(Canvas* canvas) const
 {
 	const uint32_t height= canvas->getHeight();
 	const uint32_t width = canvas->getWidth();
@@ -22,30 +27,39 @@ void World::render(const Canvas* canvas) const
 	const float xstep = canvas->step_size_x(viewPlane);
 	const float zw = 100.0f;
 
-	for (unsigned int y = 0; y < height; y++) {
-		for (unsigned int x = 0; x < width; x++) {
+	for (uint16_t y = 0; y < height; y++) {
+		for (uint16_t x = 0; x < width; x++) {
 			const float vp_y=ystep* y;
 			const float vp_x = xstep * x;
-			const float y_coord = viewPlane.pixelsize * (vp_y * ystep - 0.5f*(viewPlane.hsize));
-			const float x_coord = viewPlane.pixelsize * (vp_x * xstep - 0.5f * (viewPlane.wsize));
-			Ray r(Vector3(x_coord,y_coord,zw),Vector3(0,0,-1));
-			trace_ray(this,r,0);
+			const float y_coord = -viewPlane.pixelsize * (vp_y  - 0.5f * (viewPlane.hsize -1.0f));
+			const float x_coord = viewPlane.pixelsize * (vp_x - 0.5f * (viewPlane.wsize-1.0f));
+			const Ray r(Vector3(x_coord,y_coord,zw),Vector3(0,0,-1));
+			xmin=std::min(xmin,x_coord);
+			ymin = std::min(ymin, y_coord);
+			xmax = std::max(xmax, x_coord);
+			ymax = std::max(ymax, y_coord);
+			canvas->write_pixel(x,y,ColorRGBA(traceray(r, 0)));
 		}
 	}
+	std::cout << "XMAX " << xmax << std::endl;
+	std::cout << "YMAX " << ymax << std::endl;
+	std::cout << "XMIN " << xmin << std::endl;
+	std::cout << "YMIN " << ymin << std::endl;
 }
 
-std::optional<Intersection> World::hit(const Ray ray) const
+IntersectionData World::hit(const Ray ray) const
 {
 
 	float tmin = Constants::MAXFLOAT;
-	std::optional<Intersection> returned_intersection = {};
-
+	IntersectionData data;
 	for (VirtualObject* object : objects) {
 		auto intersects=object->intersects(ray);
-		if (intersects.has_value() && intersects.value().tmin < tmin) {
-			tmin = intersects.value().tmin;
-			returned_intersection.emplace(intersects.value());
+		if (intersects.hits && intersects.tmin < tmin) {
+			data.hitSomething = true;
+			tmin = intersects.tmin;
+			data.intersection = &intersects;
+			data.virtualObject = object;
 		}
-		return returned_intersection;
 	}
+	return data;
 }

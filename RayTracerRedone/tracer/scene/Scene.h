@@ -10,6 +10,7 @@ private:
 	Canvas* canvas;
 public:
 	Scene(World* _world, Canvas* _canvas) :world(_world), canvas(_canvas) {};
+
 	void draw() {
 		world->render(canvas);
 		canvas->draw();

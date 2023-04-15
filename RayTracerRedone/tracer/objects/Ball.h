@@ -5,8 +5,8 @@ class Ball: public VirtualObject
 public:
 	Point3 center;
 	float radius;
-	Ball(Point3 center, float radius, Material material) :VirtualObject(material), center(center), radius(radius) {};
-	std::optional<Intersection> intersects(const Ray ray) const override;
+	Ball(Point3 _center, float _radius, Material _material) :VirtualObject(_material), center(_center), radius(_radius) {};
+	Intersection intersects(const Ray ray) const override;
 	
 };
 

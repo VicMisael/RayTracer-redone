@@ -7,45 +7,36 @@
 #include <thread>
 #include <random>
 #include "sdl2canvas/sdl2canvas.h"
+#include "tracer/scene/World.h"
+#include "tracer/objects/Plane.h"
+#include "tracer/objects/Ball.h"
+#include "tracer/scene/Scene.h"
+
 int main(){
 	std::cout << "STARTING SDL TRACER" << std::endl;
     static int display_in_use = 0; /* Only using first display */
 
     
-    uint32_t w = 1280;
-    uint32_t h = 720;
+    uint32_t w = 900;
+    uint32_t h = 900;
 
     Canvas* canvas = new sdl2canvas(w,h);
+    
+    ViewPlane viewPlane(900, 900,1.0f);
 
-    std::random_device rd;  // Will be used to obtain a seed for the random number engine
-    std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
-    std::uniform_real_distribution<float> dis(0.0, 1.0);
-    RGBA rgba;
-    auto draw = [&]() {
-        for(;;){
-      
-        for (unsigned int y = 0; y < h; y++)
-        {
-           
-            for (unsigned int x = 0; x < w; x++)
-            {
-               
-                
-                canvas->write_pixel(x, y, ColorRGBA(rgba));
-                rgba.rgba++;
-            }
-            rgba.rgba++;
-        }
-        rgba.rgba++;
-        }
-    };
+    std::vector<VirtualObject*> objects;
 
-    std::thread t(draw);
+    objects.push_back(new Plane(Point3(0, 0, 0), Vector3(0, 1, 1), Material(ColorVec(0.0, 0.3, 0.0))));
+    objects.push_back(new Ball(Point3(0, 30, 0), 60, Material(ColorVec(1.0f, 0, 0))));
+    objects.push_back(new Ball(Point3(0, -25, 0), 80, Material(ColorVec(1.0f, 1.0f, 0))));
+
+  
+    World world(viewPlane,objects,ColorVec(0,0,0.5f));
+    Scene scene(&world,canvas);
 
     for (;;) {
-        canvas->draw();
+        scene.draw();
     }
-
 }
 // Executar programa: Ctrl + F5 ou Menu Depurar > Iniciar Sem Depuração
 // Depurar programa: F5 ou menu Depurar > Iniciar Depuração

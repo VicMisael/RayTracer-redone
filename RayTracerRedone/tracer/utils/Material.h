@@ -1,6 +1,8 @@
 #pragma once
+#include "ColorVec.h"
 struct Material
 {
-	Color color;
+	ColorVec color;
+	Material(ColorVec _color) :color(_color) {};
 };
 

@@ -77,6 +77,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -92,6 +93,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -107,6 +109,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -122,6 +125,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,20 +138,21 @@
     <ClCompile Include="sdl2canvas\sdl2canvas.cpp" />
     <ClCompile Include="tracer\scene\Ray.cpp" />
     <ClCompile Include="tracer\scene\Scene.cpp" />
-    <ClCompile Include="tracer\objects\Ball.cc" />
-    <ClCompile Include="tracer\objects\Plane.cc" />
+    <ClCompile Include="tracer\objects\Ball.cpp" />
+    <ClCompile Include="tracer\objects\Plane.cpp" />
     <ClCompile Include="RayTracerRedone.cpp" />
     <ClCompile Include="tracer\scene\World.cpp" />
     <ClCompile Include="tracer\scene\ViewPlane.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="tracer\utils\IntersectionData.h" />
     <ClInclude Include="sdl2canvas\sdl2canvas.h" />
     <ClInclude Include="tracer\scene\Scene.h" />
     <ClInclude Include="tracer\utils\ColorRGBA.h" />
     <ClInclude Include="tracer\scene\Canvas.h" />
     <ClInclude Include="tracer\scene\light\Light.h" />
     <ClInclude Include="tracer\scene\World.h" />
-    <ClInclude Include="tracer\utils\Color.h" />
+    <ClInclude Include="tracer\utils\ColorVec.h" />
     <ClInclude Include="tracer\config\glm_definitions.h" />
     <ClInclude Include="tracer\objects\Ball.h" />
     <ClInclude Include="tracer\objects\Plane.h" />
