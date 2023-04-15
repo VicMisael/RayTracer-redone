@@ -1,8 +1,8 @@
 #pragma once
 #include <float.h>
-#include "Intersection.h"
+#include "intersection.h"
 namespace Constants {
 	constexpr float EPSILON=FLT_EPSILON;
-	constexpr float MAXFLOAT = std::numeric_limits<float>::max();
-	const Intersection NO_INTERSECTION{ false, MAXFLOAT , Vector3(), Vector3() };
+	constexpr float MAX_FLOAT = std::numeric_limits<float>::max();
+	constexpr intersection NO_INTERSECTION{ false, MAX_FLOAT , Vector3(), Vector3() };
 }

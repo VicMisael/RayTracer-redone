@@ -17,12 +17,12 @@ int main(){
     static int display_in_use = 0; /* Only using first display */
 
     
-    uint32_t w = 900;
-    uint32_t h = 900;
+    const uint32_t w = 400;
+    const uint32_t h = 400;
 
-    Canvas* canvas = new sdl2canvas(w,h);
+    auto *canvas = new sdl2canvas(w,h);
     
-    ViewPlane viewPlane(900, 900,1.0f);
+    const ViewPlane view_plane(400, 400,10,1.0f);
 
     std::vector<VirtualObject*> objects;
 
@@ -31,11 +31,12 @@ int main(){
     objects.push_back(new Ball(Point3(0, -25, 0), 80, Material(ColorVec(1.0f, 1.0f, 0))));
 
   
-    World world(viewPlane,objects,ColorVec(0,0,0.5f));
-    Scene scene(&world,canvas);
+    World world(view_plane,objects,ColorVec(0,0,0.5f));
+    const Scene scene(&world,canvas);
 
-    for (;;) {
-        scene.draw();
+    while (!canvas->should_stop()) {
+        scene.render();
+        scene.draw();   
     }
 }
 // Executar programa: Ctrl + F5 ou Menu Depurar > Iniciar Sem Depuração

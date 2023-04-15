@@ -44,7 +44,7 @@
     <ClInclude Include="tracer\scene\Ray.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="tracer\utils\Intersection.h">
+    <ClInclude Include="tracer\utils\intersection.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="tracer\utils\Types.h">
@@ -92,7 +92,7 @@
     <ClInclude Include="sdl2canvas\sdl2canvas.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="tracer\utils\IntersectionData.h">
+    <ClInclude Include="tracer\utils\intersection_data.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

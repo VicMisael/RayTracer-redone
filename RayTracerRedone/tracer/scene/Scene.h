@@ -11,8 +11,12 @@ private:
 public:
 	Scene(World* _world, Canvas* _canvas) :world(_world), canvas(_canvas) {};
 
-	void draw() {
+	void render() const
+	{
 		world->render(canvas);
+	}
+
+	void draw() const {
 		canvas->draw();
 	};
 };

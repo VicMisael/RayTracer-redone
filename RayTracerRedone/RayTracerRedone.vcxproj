@@ -145,7 +145,7 @@
     <ClCompile Include="tracer\scene\ViewPlane.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="tracer\utils\IntersectionData.h" />
+    <ClInclude Include="tracer\utils\intersection_data.h" />
     <ClInclude Include="sdl2canvas\sdl2canvas.h" />
     <ClInclude Include="tracer\scene\Scene.h" />
     <ClInclude Include="tracer\utils\ColorRGBA.h" />
@@ -157,7 +157,7 @@
     <ClInclude Include="tracer\objects\Ball.h" />
     <ClInclude Include="tracer\objects\Plane.h" />
     <ClInclude Include="tracer\utils\Constants.h" />
-    <ClInclude Include="tracer\utils\Intersection.h" />
+    <ClInclude Include="tracer\utils\intersection.h" />
     <ClInclude Include="tracer\scene\Ray.h" />
     <ClInclude Include="tracer\utils\Material.h" />
     <ClInclude Include="tracer\utils\Types.h" />

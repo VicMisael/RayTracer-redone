@@ -2,7 +2,7 @@
 #include <cmath>
 #include <glm/geometric.hpp>
 #include <glm/exponential.hpp>
-Intersection Ball::intersects(const Ray ray) const
+intersection Ball::intersects(const Ray& ray) const
 {
 	const Vector3 ray_direction = ray.direction;
 	const float &radius = this->radius;
@@ -20,5 +20,5 @@ Intersection Ball::intersects(const Ray ray) const
 	const float t2 = (-b - sqrtf(delta)) / (2.0f * a);
 	const float closest = std::min(t1, t2);
 	const Vector3 normal = (origin_minus_center + closest * ray_direction) / radius;
-	return Intersection{ true,closest,ray.point_at(closest),normal};
+	return intersection{ true,closest,ray.point_at(closest),normal};
 }

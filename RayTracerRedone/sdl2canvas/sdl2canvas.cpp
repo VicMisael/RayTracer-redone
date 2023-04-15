@@ -18,11 +18,12 @@ void sdl2canvas::draw()
         {
 
         case SDL_QUIT:
-            //std::cout<<"Sai pora"<<std::endl;
+            std::cout << "should quit" << std::endl;
             SDL_RenderClear(renderer);
             SDL_DestroyTexture(framebuffer);
             SDL_DestroyWindow(window);
             SDL_Quit();
+        	shouldstop=true;
             break;
         }
     }

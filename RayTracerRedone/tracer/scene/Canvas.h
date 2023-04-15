@@ -12,10 +12,10 @@ public:
 	Canvas(const uint32_t _w,const uint32_t _h):width(_w),height(_h){}
 
 	float step_size_y(const ViewPlane viewPlane) const{
-		return viewPlane.hsize / (float)height;
+		return viewPlane.hsize / static_cast<float>(height);
 	};
 	float step_size_x(const ViewPlane viewPlane) const {
-		return viewPlane.wsize / (float)width;
+		return viewPlane.wsize / static_cast<float>(width);
 	};
 	uint32_t getWidth() const {
 		return width;
