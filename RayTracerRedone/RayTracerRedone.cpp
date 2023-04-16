@@ -17,19 +17,18 @@ int main(){
     static int display_in_use = 0; /* Only using first display */
 
     
-    const uint32_t w = 400;
-    const uint32_t h = 400;
+    const uint32_t w = 650;
+    const uint32_t h = 650;
 
     auto *canvas = new sdl2canvas(w,h);
     
-    const ViewPlane view_plane(400, 400,10,1.0f);
+    const ViewPlane view_plane(650, 650,100.0f,1.0f);
 
     std::vector<VirtualObject*> objects;
 
-    objects.push_back(new Plane(Point3(0, 0, 0), Vector3(0, 1, 1), Material(ColorVec(0.0, 0.3, 0.0))));
-    objects.push_back(new Ball(Point3(0, 30, 0), 60, Material(ColorVec(1.0f, 0, 0))));
-    objects.push_back(new Ball(Point3(0, -25, 0), 80, Material(ColorVec(1.0f, 1.0f, 0))));
-
+    objects.push_back(new Ball(Point3(-15, 30, -15), 20, Material(ColorVec(1.0f, 0, 0))));
+    objects.push_back(new Ball(Point3(15, 105, 0), 20, Material(ColorVec(1.0f, 1.0f, 0))));
+    objects.push_back(new Plane(Point3(0,0, 0), Vector3(0, 1, 0.01f), Material(ColorVec(0.0, 0.0, 0.0))));
   
     World world(view_plane,objects,ColorVec(0,0,0.5f));
     const Scene scene(&world,canvas);
