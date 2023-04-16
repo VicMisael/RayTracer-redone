@@ -145,6 +145,7 @@
     <ClCompile Include="tracer\scene\ViewPlane.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="tracer\scene\Projection.h" />
     <ClInclude Include="tracer\utils\intersection_data.h" />
     <ClInclude Include="sdl2canvas\sdl2canvas.h" />
     <ClInclude Include="tracer\scene\Scene.h" />

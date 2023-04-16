@@ -95,5 +95,8 @@
     <ClInclude Include="tracer\utils\intersection_data.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="tracer\scene\Projection.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

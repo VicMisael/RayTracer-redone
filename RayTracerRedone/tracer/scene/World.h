@@ -15,6 +15,7 @@ public:
 	ViewPlane viewPlane;
 	std::vector<VirtualObject*> objects;
 	ColorVec bgColor;
+	bool perspective = true;
 
 	World(ViewPlane _viewPlane, std::vector<VirtualObject*> _objects, ColorVec _bgColor):viewPlane(_viewPlane),bgColor(_bgColor){
 		objects.insert(objects.end(), _objects.begin(), _objects.end());
