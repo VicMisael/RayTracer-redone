@@ -27,13 +27,13 @@ int main(){
     std::vector<VirtualObject*> objects;
 
 
-    objects.push_back(new Plane(Point3(0, -500, 0), Vector3(0, 1, 1), Material(ColorVec(0.0, 0.0, 0.0))));
+    objects.push_back(new Plane(Point3(0, 0, -200), Vector3(1, 1, 1), Material(ColorVec(1.0, 1.0, 1.0))));
     objects.push_back(new Ball(Point3(150, -160, -180), 60, Material(ColorVec(0.0f, 1.0f, 0))));
     objects.push_back(new Ball(Point3(-15, 30, -125), 20, Material(ColorVec(1.0f, 0, 0))));
     objects.push_back(new Ball(Point3(150, 105, -150), 40, Material(ColorVec(1.0f, 1.0f, 0))));
 
-  
-    World world(view_plane,objects,ColorVec(0,0,0.5f));
+    auto lights=std::vector<Light*>();
+    World world(view_plane,objects,AmbientLight(0.1f,ColorVec(1,1,1)), ColorVec(0, 0, 0.5f));
     const Scene scene(&world,canvas);
 
     while (!canvas->should_stop()) {

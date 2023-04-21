@@ -1,7 +1,7 @@
 #pragma once
 #include "../utils/intersection.h"
 #include "../scene/Ray.h"
-#include "../utils/Material.h"
+#include "materials/Material.h"
 #include "../utils/Constants.h"
 class VirtualObject
 {

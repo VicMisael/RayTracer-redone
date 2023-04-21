@@ -10,10 +10,13 @@ ColorVec World::trace_ray(const Ray ray, const int depth) const
 	if (intersection.hit_something) {
 		return intersection.virtual_object->material.color;
 	}
-	else
-	{
-		return bgColor;
-	}
+	return bgColor;
+	
+}
+
+ColorVec World::compute_lightning(intersection_data _intersection_data, Ray ray)
+{
+
 }
 
 void World::render(Canvas* canvas) const
@@ -52,6 +55,7 @@ intersection_data World::hit(const Ray ray) const
 	intersection_data data;
 	for (VirtualObject* object : objects) {
 		auto intersects=object->intersects(ray);
+		//intersects.tmin > 0
 		if (intersects.hits && intersects.tmin < t_min && intersects.tmin > 0) {
 			data.hit_something = true;
 			t_min = intersects.tmin;
