@@ -20,5 +20,6 @@ public:
 	{
 		return color;
 	}
+	ColorVec intensityAtPoint();
 };
 

@@ -3,9 +3,9 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
-  <component name="CMakePresetLoader"><![CDATA[{
-  "useNewFormat": true
-}]]></component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
   <component name="CMakeReloadState">
     <option name="reloaded" value="true" />
   </component>
@@ -21,9 +21,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4e5fb865-1360-473f-9a14-7909f9ebc9d4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RayTracerRedone.vcxproj.user" beforeDir="false" afterPath="$PROJECT_DIR$/RayTracerRedone.vcxproj.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RayTracerRedone.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/RayTracerRedone.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tracer/scene/World.h" beforeDir="false" afterPath="$PROJECT_DIR$/tracer/scene/World.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,16 +61,21 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "last_opened_file_path": "C:/dev/projects/RayTracer-redone/RayTracerRedone",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "CPPToolchains",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration name="RayTracerRedone" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="RayTracerRedone" TARGET_NAME="RayTracerRedone" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="RayTracerRedone" RUN_TARGET_NAME="RayTracerRedone">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RayTracerRedone" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="RayTracerRedone" TARGET_NAME="RayTracerRedone" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="RayTracerRedone" RUN_TARGET_NAME="RayTracerRedone">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -86,6 +90,7 @@
       <option name="presentableId" value="Default" />
       <updated>1681534310929</updated>
       <workItem from="1681534312161" duration="166000" />
+      <workItem from="1681609638498" duration="1203000" />
     </task>
     <servers />
   </component>
