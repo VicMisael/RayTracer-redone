@@ -10,10 +10,13 @@ ColorVec World::trace_ray(const Ray ray, const int depth) const
 	if (intersection.hit_something) {
 		return intersection.virtual_object->material.color;
 	}
-	else
-	{
-		return bgColor;
-	}
+	return bgColor;
+	
+}
+
+ColorVec World::compute_lightning(intersection_data _intersection_data, Ray ray)
+{
+
 }
 
 void World::render(Canvas* canvas) const
@@ -30,8 +33,17 @@ void World::render(Canvas* canvas) const
 			const float vp_x = xstep * x;
 			const float y_coord = -viewPlane.pixelsize * (vp_y - 0.5f * (viewPlane.hsize - 1.0f));
 			const float x_coord = viewPlane.pixelsize * (vp_x - 0.5f * (viewPlane.wsize - 1.0f));
-			const Ray r(Vector3(x_coord, y_coord, zw), Vector3(0, 0, -1));
-			canvas->write_pixel(x, y, ColorRGBA(trace_ray(r, 0)));
+			const Vector3 vp_r(x_coord, y_coord, zw);
+			if(perspective){
+				const Point3 origin(0,0, 0) ;
+				const Vector3 direction = origin - vp_r;
+				const Ray r(origin,direction );
+				canvas->write_pixel(x, y, ColorRGBA(trace_ray(r, 0)));
+			}
+			else {
+				const Ray r(vp_r, Vector3(0, 0, -1));
+				canvas->write_pixel(x, y, ColorRGBA(trace_ray(r, 0)));
+			}
 		}
 	}
 }
@@ -43,7 +55,8 @@ intersection_data World::hit(const Ray ray) const
 	intersection_data data;
 	for (VirtualObject* object : objects) {
 		auto intersects=object->intersects(ray);
-		if (intersects.hits && intersects.tmin < t_min) {
+		//intersects.tmin > 0
+		if (intersects.hits && intersects.tmin < t_min && intersects.tmin > 0) {
 			data.hit_something = true;
 			t_min = intersects.tmin;
 			data.intersection = &intersects;

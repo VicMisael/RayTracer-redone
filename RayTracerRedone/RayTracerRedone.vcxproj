@@ -135,6 +135,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="tracer\scene\light\point\NonDirectionalLight.cpp" />
+    <ClCompile Include="tracer\scene\light\point\DirectionalLight.cpp" />
+    <ClCompile Include="tracer\scene\light\AmbientLight.cpp" />
     <ClCompile Include="sdl2canvas\sdl2canvas.cpp" />
     <ClCompile Include="tracer\scene\Ray.cpp" />
     <ClCompile Include="tracer\scene\Scene.cpp" />
@@ -145,6 +148,11 @@
     <ClCompile Include="tracer\scene\ViewPlane.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="tracer\scene\light\point\NonDirectionalLight.h" />
+    <ClInclude Include="tracer\scene\light\point\DirectionalLight.h" />
+    <ClInclude Include="tracer\scene\light\point\PointLight.h" />
+    <ClInclude Include="tracer\scene\light\AmbientLight.h" />
+    <ClInclude Include="tracer\scene\Projection.h" />
     <ClInclude Include="tracer\utils\intersection_data.h" />
     <ClInclude Include="sdl2canvas\sdl2canvas.h" />
     <ClInclude Include="tracer\scene\Scene.h" />
@@ -159,7 +167,7 @@
     <ClInclude Include="tracer\utils\Constants.h" />
     <ClInclude Include="tracer\utils\intersection.h" />
     <ClInclude Include="tracer\scene\Ray.h" />
-    <ClInclude Include="tracer\utils\Material.h" />
+    <ClInclude Include="tracer\objects\materials\Material.h" />
     <ClInclude Include="tracer\utils\Types.h" />
     <ClInclude Include="tracer\objects\VirtualObject.h" />
     <ClInclude Include="tracer\scene\ViewPlane.h" />
