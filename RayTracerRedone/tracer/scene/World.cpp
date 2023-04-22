@@ -6,15 +6,17 @@ ColorVec World::trace_ray(const Ray ray, const int depth) const
 {
 	const auto intersection = hit(ray);
 	if (intersection.hit_something) {
-		return intersection.virtual_object->material.color;
+		return shade(intersection, ray);
 	}
 	return bgColor;
 	
 }
 
-ColorVec World::shade(intersection_data _intersection_data, Ray ray)
+ColorVec World::shade(const intersection_data intersection_data,const Ray ray) const 
 {
-	return ColorVec(0, 0, 0);
+	const auto intensityatpoint = ambient_light
+		.intensityAtPoint(intersection_data.intersection->closestHitPoint);
+	return intensityatpoint*(intersection_data.virtual_object->material.color);
 }
 
 void World::render(Canvas* canvas) const

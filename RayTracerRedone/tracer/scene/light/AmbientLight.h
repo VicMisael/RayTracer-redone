@@ -2,9 +2,11 @@
 #include "Light.h"
 
 
-class AmbientLight:protected Light
+class AmbientLight:public Light
 {
 public:
-	AmbientLight(float intensity, ColorVec _color) :Light(intensity, _color){};
+	AmbientLight() = delete;
+	AmbientLight(const float _intensity, const ColorVec _color) :Light(_intensity, _color) {}
+	ColorVec intensityAtPoint(const Point3) const override;
 };
 

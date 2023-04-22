@@ -11,6 +11,7 @@
 #include "tracer/objects/Plane.h"
 #include "tracer/objects/Ball.h"
 #include "tracer/scene/Scene.h"
+#include "tracer/utils/sampler/equidistant_point_sampler.h"
 #include "tracer/utils/sampler/random_point_sampler.h"
 
 int main(){
@@ -27,16 +28,17 @@ int main(){
 
     std::vector<VirtualObject*> objects;
 
-    sampler* sampler = new random_point_sampler(16);
+    sampler* sampler = new equidistant_point_sampler(1);
 
     objects.push_back(new Plane(Point3(0, 0, -400), Vector3(1, 1, 1), Material(ColorVec(1.0, 1.0, 1.0))));
     objects.push_back(new Ball(Point3(150, -160, -280), 60, Material(ColorVec(0.0f, 1.0f, 0))));
-    objects.push_back(new Ball(Point3(0, 0, -225), 20, Material(ColorVec(1.0f, 0, 0))));
-    objects.push_back(new Ball(Point3(-200, -50, -225), 90, Material(ColorVec(0.0f, 0, 0))));
+    objects.push_back(new Ball(Point3(0, 0, -225), 20, Material(ColorVec(0.0f, 0, 1))));
+    objects.push_back(new Ball(Point3(-200, -50, -225), 90, Material(ColorVec(0.5f, 0.4 , 0.2))));
     objects.push_back(new Ball(Point3(150, 105, -250), 40, Material(ColorVec(1.0f, 1.0f, 0))));
 
+    AmbientLight ab(1, ColorVec(0.95, 0.95, 1));
     //auto lights=std::vector<Light*>();
-    World world(view_plane,objects,AmbientLight(0.1f,ColorVec(1,1,1)), ColorVec(0.005f, 0.0f, 0.5f),sampler);
+    World world(view_plane,objects,ab, ColorVec(0.005f, 0.0f, 0.5f),sampler);
     const Scene scene(&world,canvas);
 
     while (!canvas->should_stop()) {
