@@ -6,6 +6,6 @@ struct intersection_data
 {
 	bool hit_something=false;
 	intersection *intersection = nullptr;
-	VirtualObject* virtual_object = nullptr;
+	std::shared_ptr<Material> material;
 };
 

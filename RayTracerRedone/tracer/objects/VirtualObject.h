@@ -8,10 +8,10 @@
 class VirtualObject
 {
 public: 
-	std::sha<Material> material;
+	std::shared_ptr<Material> material;
 	VirtualObject(Material _material) 
 	{
-		material=std::make_unique<Material>(_material);
+		material = std::make_shared<Material>(_material);
 	};
 	virtual intersection intersects(const Ray &ray) const=0;
 };

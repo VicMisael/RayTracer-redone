@@ -16,7 +16,7 @@ ColorVec World::shade(const intersection_data intersection_data,const Ray ray) c
 {
 	const auto intensityatpoint = ambient_light
 		.intensityAtPoint(intersection_data.intersection->closestHitPoint);
-	return intensityatpoint*(intersection_data.virtual_object->material.color);
+	return intensityatpoint*(intersection_data.material->color);
 }
 
 void World::render(Canvas* canvas) const
@@ -76,7 +76,7 @@ intersection_data World::hit(const Ray ray) const
 			data.hit_something = true;
 			t_min = intersects.tmin;
 			data.intersection = &intersects;
-			data.virtual_object = object;
+			data.material = object->material;
 		}
 	}
 	return data;
