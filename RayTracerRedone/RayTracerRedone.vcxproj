@@ -184,6 +184,7 @@
     <ClInclude Include="tracer\utils\Types.h" />
     <ClInclude Include="tracer\objects\VirtualObject.h" />
     <ClInclude Include="tracer\scene\ViewPlane.h" />
+    <ClInclude Include="tracer\utils\utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
