@@ -135,15 +135,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="tracer\scene\light\point\NonDirectionalLight.cpp" />
-    <ClCompile Include="tracer\scene\light\point\DirectionalLight.cpp" />
+    <ClCompile Include="RayTracerRedone.cpp" />
+    <ClCompile Include="tracer\scene\light\DirectionalLight.cpp" />
+    <ClCompile Include="tracer\scene\light\PointLight.cpp" />
+    <ClCompile Include="tracer\objects\materials\OldMaterial.cpp" />
     <ClCompile Include="tracer\scene\light\AmbientLight.cpp" />
     <ClCompile Include="sdl2canvas\sdl2canvas.cpp" />
     <ClCompile Include="tracer\scene\Ray.cpp" />
     <ClCompile Include="tracer\scene\Scene.cpp" />
     <ClCompile Include="tracer\objects\Ball.cpp" />
     <ClCompile Include="tracer\objects\Plane.cpp" />
-    <ClCompile Include="RayTracerRedone.cpp" />
+    <ClCompile Include="tracer\scene\light\RayTracerRedone.cpp" />
     <ClCompile Include="tracer\scene\World.cpp" />
     <ClCompile Include="tracer\scene\ViewPlane.cpp" />
     <ClCompile Include="tracer\utils\sampler\diagonal_point_sampler.cpp" />
@@ -154,9 +156,9 @@
     <ClCompile Include="tracer\utils\sampler\vertical_point_sampler.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="tracer\scene\light\point\NonDirectionalLight.h" />
-    <ClInclude Include="tracer\scene\light\point\DirectionalLight.h" />
-    <ClInclude Include="tracer\scene\light\point\PointLight.h" />
+    <ClInclude Include="tracer\scene\light\PointLight.h" />
+    <ClInclude Include="tracer\scene\light\DirectionalLight.h" />
+    <ClInclude Include="tracer\objects\materials\OldMaterial.h" />
     <ClInclude Include="tracer\scene\light\AmbientLight.h" />
     <ClInclude Include="tracer\scene\Projection.h" />
     <ClInclude Include="tracer\utils\intersection_data.h" />
@@ -185,6 +187,7 @@
     <ClInclude Include="tracer\objects\VirtualObject.h" />
     <ClInclude Include="tracer\scene\ViewPlane.h" />
     <ClInclude Include="tracer\utils\utility.h" />
+    <ClInclude Include="tracer\scene\light\VectorialLight.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
