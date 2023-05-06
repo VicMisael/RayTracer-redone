@@ -1,4 +1,6 @@
 #pragma once
+#include <memory>
+
 #include "../utils/intersection.h"
 #include "../scene/Ray.h"
 #include "materials/Material.h"
@@ -6,8 +8,12 @@
 class VirtualObject
 {
 public: 
-	Material material;
-	VirtualObject(Material _material) :material(_material) {  };
+	std::sha<Material> material;
+	VirtualObject(Material _material) 
+	{
+		material=std::make_unique<Material>(_material);
+	};
 	virtual intersection intersects(const Ray &ray) const=0;
 };
 
+	
