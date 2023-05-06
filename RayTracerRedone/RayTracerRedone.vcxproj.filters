@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="tracer\scene\light\RayTracerRedone.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="tracer\objects\Ball.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>

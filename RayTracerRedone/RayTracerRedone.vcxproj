@@ -145,7 +145,6 @@
     <ClCompile Include="tracer\scene\Scene.cpp" />
     <ClCompile Include="tracer\objects\Ball.cpp" />
     <ClCompile Include="tracer\objects\Plane.cpp" />
-    <ClCompile Include="tracer\scene\light\RayTracerRedone.cpp" />
     <ClCompile Include="tracer\scene\World.cpp" />
     <ClCompile Include="tracer\scene\ViewPlane.cpp" />
     <ClCompile Include="tracer\utils\sampler\diagonal_point_sampler.cpp" />
