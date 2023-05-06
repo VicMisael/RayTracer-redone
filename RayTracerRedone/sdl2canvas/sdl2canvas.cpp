@@ -2,7 +2,7 @@
 
 void sdl2canvas::write_pixel(const uint16_t x, const uint16_t y, const ColorRGBA colorRgba)
 {
-    this->rgba[y * this->width + x] = colorRgba.toRgba().rgba;
+     this->rgba[y * this->width + x] = colorRgba.toRgba().rgba;
 }
 
 void sdl2canvas::draw()

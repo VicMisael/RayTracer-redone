@@ -15,7 +15,7 @@ class World
 {
 private:
 	ColorVec trace_ray(const Ray ray, const int depth) const;
-	ColorVec shade(intersection_data, Ray);
+	ColorVec shade(const intersection_data, const Ray) const;
 	ViewPlane viewPlane;
 	std::vector<VirtualObject*> objects;
 	std::vector<Light*> lights;
