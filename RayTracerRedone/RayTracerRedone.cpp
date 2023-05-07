@@ -30,12 +30,13 @@ int main(){
 
     sampler* sampler = new equidistant_point_sampler(1);
 
-    objects.push_back(new Plane(Point3(0, 0, -400), Vector3(1, 1, 1), Material(ColorVec(1.0, 1.0, 1.0))));
+    // objects.push_back(new Plane(Point3(0, 0, -400), Vector3(1, 1, 1), Material(ColorVec(1.0, 1.0, 1.0))));
+    objects.push_back(new Ball(Point3(0, -1195, -1100), 1000, Material(ColorVec(1.0f, 1.0f, 1))));
     objects.push_back(new Ball(Point3(150, -160, -280), 60, Material(ColorVec(0.0f, 1.0f, 0))));
     objects.push_back(new Ball(Point3(0, 0, -225), 20, Material(ColorVec(0.0f, 0, 1))));
     objects.push_back(new Ball(Point3(-200, -50, -225), 90, Material(ColorVec(0.5f, 0.4 , 0.2))));
     objects.push_back(new Ball(Point3(150, 105, -250), 40, Material(ColorVec(1.0f, 1.0f, 0))));
-
+ 
     AmbientLight ab(1, ColorVec(0.95, 0.95, 1));
     //auto lights=std::vector<Light*>();
     World world(view_plane,objects,ab, ColorVec(0.005f, 0.0f, 0.5f),sampler);

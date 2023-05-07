@@ -57,9 +57,6 @@
     <ClCompile Include="tracer\utils\sampler\vertical_point_sampler.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="tracer\objects\materials\OldMaterial.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="tracer\scene\light\DirectionalLight.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
@@ -67,6 +64,12 @@
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="RayTracerRedone.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="tracer\objects\materials\Phong.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="tracer\objects\materials\Lambertian.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -122,9 +125,6 @@
     <ClInclude Include="sdl2canvas\sdl2canvas.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="tracer\utils\intersection_data.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="tracer\scene\Projection.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
@@ -155,9 +155,6 @@
     <ClInclude Include="tracer\utils\utility.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="tracer\objects\materials\OldMaterial.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="tracer\scene\light\VectorialLight.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
@@ -165,6 +162,15 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="tracer\scene\light\PointLight.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="tracer\objects\materials\Phong.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="tracer\objects\materials\Lambertian.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="tracer\utils\intersection_data.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

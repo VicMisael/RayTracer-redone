@@ -71,7 +71,6 @@ intersection_data World::hit(const Ray ray) const
 	intersection_data data;
 	for (VirtualObject* object : objects) {
 		auto intersects=object->intersects(ray);
-		//intersects.tmin > 0
 		if (intersects.hits && intersects.tmin < t_min && intersects.tmin > 0) {
 			data.hit_something = true;
 			t_min = intersects.tmin;
@@ -81,3 +80,69 @@ intersection_data World::hit(const Ray ray) const
 	}
 	return data;
 }
+
+/*
+ *
+ *
+float World::ComputeLighting(const Point3f& p, const Vector3f& n, const Vector3f& V, const float s)
+{
+	using namespace VectorUtilities;
+	float intensity = 0;
+	Vector3f lVec;
+	float distanceFactor = 1.0f;
+	for (Light* l : lights)
+	{
+		switch (l->lt)
+		{
+		case LightType::ambient:
+			intensity += l->getIntensity();
+			continue;
+			break;
+		case LightType::point:
+			lVec = ((l->getPosition()) - p);
+			distanceFactor = inverseSquare(length(lVec));
+			break;
+		case LightType::directional:
+			lVec = l->getDirection();
+			//distanceFactor = inverseSquare(length(lVec));
+			break;
+		default:
+			break;
+		}
+
+		const float lveclength = length(lVec);
+		lVec = normalize(lVec);
+		if (renderShadows)
+		{
+			for (BaseObject* ob : objects)
+			{
+				const auto r = Ray(p, lVec);
+				const auto [intersects, t_min, normal] = ob->Intersects(r);
+				if (intersects && t_min > 0.01f && t_min <= lveclength)
+				{
+					return intensity;
+				}
+			}
+		}
+
+		const float n_dot_l = dotProduct(n, lVec);
+		const float _intensity = l->getIntensity();
+		if (n_dot_l > 0)
+		{
+			intensity += (_intensity * distanceFactor) * (n_dot_l / (length(n) * length(lVec)));
+		}
+		if (s >= 0)
+		{
+			const Vector3f R = ReflectRay(lVec, n);
+			const float r_dot_v = dotProduct(R, V);
+			if (r_dot_v > 0)
+			{
+				const float _pow = glm::pow(r_dot_v / (length(R) * length(V)), s);
+				intensity += _intensity * _pow;
+			}
+		}
+	}
+	return intensity;
+};
+
+*/
