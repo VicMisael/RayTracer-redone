@@ -17,11 +17,12 @@ struct scatter_out
 };
 struct Material
 {
+	virtual ~Material() = default;
 	ColorVec color;
 	Material(ColorVec _color) :color(_color) {};
 
 	//returns a value if and only if the ray was
 	virtual std::optional<scatter_out> scatter(scatter_in in) = 0;
-
+	
 };
 
