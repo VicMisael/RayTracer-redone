@@ -9,5 +9,9 @@ public:
 	DirectionalLight(const Vector3 _direction, const float _intensity, const ColorVec _color) :
 		VectorialLight( _intensity, _color), direction_(_direction)
 	{}
+
+	Vector3 getVector(const Point3) const override;
+	Vector3 getNormalizedVector(const Point3) const override;
+	ColorVec intensityAtPoint(const Point3) const override;
 };
 

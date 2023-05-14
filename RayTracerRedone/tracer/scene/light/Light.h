@@ -9,8 +9,7 @@ protected:
 
 	Light(const float _intensity, const ColorVec _color) :intensity(_intensity), color(_color) {}
 public:
-
-	virtual ColorVec intensityAtPoint(const Point3) const = 0;
+	virtual ~Light() = default;
 
 	Light() = delete;
 	float getIntensity() const

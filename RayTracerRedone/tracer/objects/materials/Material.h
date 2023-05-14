@@ -2,17 +2,23 @@
 #include <vector>
 
 #include "../../utils/ColorVec.h"
-
-struct scatter_record
+#include "../../utils/intersection_data.h"
+struct scatter_in
 {
+	Ray in;
+	intersection_data intersection_data;
 
+};
+struct scatter_out
+{
+	ColorVec attenuation;
 };
 struct Material
 {
 	ColorVec color;
 	Material(ColorVec _color) :color(_color) {};
 
-	// virtual scatter_record scatter(Ray in) = 0;
+	virtual scatter_out scatter(scatter_in in) = 0;
 
 };
 
