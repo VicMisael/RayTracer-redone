@@ -1,4 +1,5 @@
 #pragma once
+#include <optional>
 #include <vector>
 
 #include "../../utils/ColorVec.h"
@@ -12,13 +13,15 @@ struct scatter_in
 struct scatter_out
 {
 	ColorVec attenuation;
+	Ray out;
 };
 struct Material
 {
 	ColorVec color;
 	Material(ColorVec _color) :color(_color) {};
 
-	virtual scatter_out scatter(scatter_in in) = 0;
+	//returns a value if and only if the ray was
+	virtual std::optional<scatter_out> scatter(scatter_in in) = 0;
 
 };
 

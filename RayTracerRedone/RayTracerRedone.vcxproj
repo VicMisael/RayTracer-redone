@@ -135,8 +135,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="tracer\objects\materials\Lambertian.cpp" />
-    <ClCompile Include="tracer\objects\materials\Phong.cpp" />
     <ClCompile Include="RayTracerRedone.cpp" />
     <ClCompile Include="tracer\scene\light\DirectionalLight.cpp" />
     <ClCompile Include="tracer\scene\light\PointLight.cpp" />
@@ -156,8 +154,6 @@
     <ClCompile Include="tracer\utils\sampler\vertical_point_sampler.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="tracer\objects\materials\Lambertian.h" />
-    <ClInclude Include="tracer\objects\materials\Phong.h" />
     <ClInclude Include="tracer\scene\light\PointLight.h" />
     <ClInclude Include="tracer\scene\light\DirectionalLight.h" />
     <ClInclude Include="tracer\scene\light\AmbientLight.h" />
