@@ -135,7 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="tracer\objects\materials\Lambertian.cpp" />
+    <ClCompile Include="tracer\scene\materials\Lambertian.cpp" />
     <ClCompile Include="RayTracerRedone.cpp" />
     <ClCompile Include="tracer\scene\light\DirectionalLight.cpp" />
     <ClCompile Include="tracer\scene\light\PointLight.cpp" />
@@ -155,7 +155,7 @@
     <ClCompile Include="tracer\utils\sampler\vertical_point_sampler.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="tracer\objects\materials\Lambertian.h" />
+    <ClInclude Include="tracer\scene\materials\Lambertian.h" />
     <ClInclude Include="tracer\scene\light\PointLight.h" />
     <ClInclude Include="tracer\scene\light\DirectionalLight.h" />
     <ClInclude Include="tracer\scene\light\AmbientLight.h" />
@@ -173,8 +173,7 @@
     <ClInclude Include="tracer\utils\Constants.h" />
     <ClInclude Include="tracer\utils\intersection.h" />
     <ClInclude Include="tracer\scene\Ray.h" />
-    <ClInclude Include="tracer\objects\materials\Material.h" />
-    <ClInclude Include="tracer\utils\intersection_data.h" />
+    <ClInclude Include="tracer\scene\materials\Material.h" />
     <ClInclude Include="tracer\utils\sampler\diagonal_point_sampler.h" />
     <ClInclude Include="tracer\utils\sampler\equidistant_point_sampler.h" />
     <ClInclude Include="tracer\utils\sampler\horizontal_point_sampler.h" />

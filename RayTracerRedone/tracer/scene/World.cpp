@@ -1,22 +1,28 @@
 #include "World.h"
-#include <limits>
 #include "../utils/Constants.h"
 
 ColorVec World::trace_ray(const Ray ray, const int depth) const
 {
 	const auto intersection = hit(ray);
-	if (intersection.hit_something && depth>0) {
-		return shade(intersection, ray);
+	if (intersection.has_value() && depth>0) {
+		return shade(intersection.value(), ray);
 	}
 	return bgColor;
 	
 }
 
-ColorVec World::shade(const intersection_data intersection_data,const Ray ray) const 
+ColorVec World::shade(const intersection intersection,const Ray ray) const 
 {
-	const auto intensityatpoint = ambient_light
-		.intensityAtPoint(intersection_data.intersection->closestHitPoint);
-	return intensityatpoint*(intersection_data.material->color);
+	const auto intensity_at_point = ambient_light
+		.intensityAtPoint(intersection.closestHitPoint);
+	auto ambient_intensity= intensity_at_point *(intersection.material->color);
+	auto out=intersection.material->scatter(ray, intersection);
+	if(out.has_value())
+	{
+		const scatter_out result=out.value();
+		return ambient_intensity*trace_ray(result.out, depth - 1) * result.attenuation;
+	}
+	return  {0,0,0};
 }
 
 void World::render(Canvas* canvas) const
@@ -46,7 +52,7 @@ void World::render(Canvas* canvas) const
 					const Point3 origin(0, 0, 0);
 					const Vector3 direction = origin - vp_r;
 					const Ray r(origin, direction);
-					colorVec += trace_ray(r,0);
+					colorVec += trace_ray(r, depth);
 					//canvas->write_pixel(x, y, ColorRGBA(trace_ray(r, 0)));
 				}
 				else {
@@ -54,7 +60,7 @@ void World::render(Canvas* canvas) const
 					const float x_coord = viewPlane.pixelsize * (vp_x - 0.5f * (viewPlane.wsize - 1.0f));
 					const Vector3 vp_r(x_coord+x_sample_point, -y_coord+y_sample_point, zw);
 					const Ray r(vp_r, Vector3(0, 0, -1));
-					colorVec += trace_ray(r, 0);
+					colorVec += trace_ray(r, depth);
 					//canvas->write_pixel(x, y, ColorRGBA(trace_ray(r, 0)));
 				}
 			}
@@ -64,21 +70,22 @@ void World::render(Canvas* canvas) const
 	}
 }
 
-intersection_data World::hit(const Ray ray) const
+std::optional<intersection> World::hit(const Ray ray) const
 {
 
 	float t_min = Constants::MAX_FLOAT;
-	intersection_data data;
+	std::optional<intersection> selintersection;
 	for (VirtualObject* object : objects) {
-		auto intersects=object->intersects(ray);
-		if (intersects.hits && intersects.tmin < t_min && intersects.tmin > 0) {
-			data.hit_something = true;
-			t_min = intersects.tmin;
-			data.intersection = &intersects;
-			data.material = object->material;
+		auto intersectsoptional=object->intersects(ray);
+		if(intersectsoptional.has_value()){
+			const auto intersects = intersectsoptional.value();
+			if ( intersects.tmin < t_min && intersects.tmin > 0) {
+				t_min = intersects.tmin;
+				selintersection.emplace(intersects);
+			}
 		}
 	}
-	return data;
+	return selintersection;
 }
 
 /*

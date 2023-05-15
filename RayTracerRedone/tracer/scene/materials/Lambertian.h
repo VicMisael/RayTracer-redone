@@ -9,6 +9,6 @@ public:
 	{
 	}
 
-	std::optional<scatter_out> scatter(scatter_in in) override;
+	std::optional<scatter_out> scatter(const Ray in, const intersection intersection) override;
 };
 

@@ -1,27 +1,25 @@
-#ifndef _WORLD_
-#define _WORLD_
-#include <memory>
+#pragma once
+
 #include <vector>
-#include "../objects/VirtualObject.h"
 #include "Canvas.h"
 #include "ViewPlane.h"
-#include "../utils/intersection_data.h"
 #include "light/AmbientLight.h"
-#include "light/Light.h"
 #include "../utils/sampler/sampler.h"
+#include "../objects/VirtualObject.h"
 
 
 class World
 {
 private:
 	ColorVec trace_ray(const Ray ray, const int depth) const;
-	ColorVec shade(const intersection_data, const Ray) const;
+	ColorVec shade(const intersection, const Ray) const;
 	ViewPlane viewPlane;
 	std::vector<VirtualObject*> objects;
 	std::vector<Light*> lights;
 	ColorVec bgColor;
 	AmbientLight ambient_light;
 	sampler *_sampler;
+	unsigned int depth = 16;
 public:
 
 	bool perspective = false;
@@ -36,8 +34,7 @@ public:
 	}
 	
 	void render( Canvas*) const;
-	intersection_data hit( Ray ray) const;	
+	std::optional<intersection> hit( Ray ray) const;
 	
 
 };
-#endif

@@ -24,9 +24,20 @@ namespace utility
 		return { dis(generator), dis(generator), dis(generator) };
 	}
 
-	inline Vector3  reflect_vector(const Vector3f in, const Vector3f normal)
+	Vector3 random_in_unit_sphere()
 	{
-		return in-2*glm::dot(in,normal)*normal;
+		while (true) {
+			auto p = random(-1, 1);
+			
+			auto sqrd_length = length(p) * length(p);
+			if (sqrd_length >= 1) continue;
+			return p;
+		}
+	}
+
+	inline Vector3  reflect_vector(const Vector3 in, const Vector3 normal)
+	{
+		return in-2*dot(in,normal)*normal;
 	}
 }
 

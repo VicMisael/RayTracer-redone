@@ -11,6 +11,7 @@
 #include "tracer/objects/Plane.h"
 #include "tracer/objects/Ball.h"
 #include "tracer/scene/Scene.h"
+#include "tracer/scene/materials/Lambertian.h"
 #include "tracer/utils/sampler/equidistant_point_sampler.h"
 #include "tracer/utils/sampler/random_point_sampler.h"
 
@@ -28,24 +29,37 @@ int main(){
 
     std::vector<VirtualObject*> objects;
 
-    sampler* sampler = new equidistant_point_sampler(1);
+    sampler* sampler = new equidistant_point_sampler(150);
 
-    // objects.push_back(new Plane(Point3(0, 0, -400), Vector3(1, 1, 1), Material(ColorVec(1.0, 1.0, 1.0))));
-    objects.push_back(new Ball(Point3(0, -1195, -1100), 1000, Material(ColorVec(1.0f, 1.0f, 1))));
-    objects.push_back(new Ball(Point3(150, -160, -280), 60, Material(ColorVec(0.0f, 1.0f, 0))));
-    objects.push_back(new Ball(Point3(0, 0, -225), 20, Material(ColorVec(0.0f, 0, 1))));
-    objects.push_back(new Ball(Point3(-200, -50, -225), 90, Material(ColorVec(0.5f, 0.4 , 0.2))));
-    objects.push_back(new Ball(Point3(150, 105, -250), 40, Material(ColorVec(1.0f, 1.0f, 0))));
+    objects.push_back(new Ball(Point3(0, -1055, -1100), 1000, std::make_shared<Lambertian>(ColorVec(1.0f, 1.0f, 1))));
+    objects.push_back(new Ball(Point3(150, -160, -280), 60, std::make_shared<Lambertian>(ColorVec(0.0f, 1.0f, 0))));
+    objects.push_back(new Ball(Point3(0, 0, -225), 20, std::make_shared<Lambertian>(ColorVec(0.0f, 0, 1))));
+    objects.push_back(new Ball(Point3(-200, -50, -225), 90, std::make_shared<Lambertian>(ColorVec(0.5f, 0.4, 0.2))));
+    objects.push_back(new Ball(Point3(150, 105, -250), 40, std::make_shared<Lambertian>(ColorVec(1.0f, 1.0f, 0))));
+
  
-    AmbientLight ab(1, ColorVec(0.95, 0.95, 1));
+    AmbientLight ab(1, ColorVec(1.0, 1.0, 1));
     //auto lights=std::vector<Light*>();
-    World world(view_plane,objects,ab, ColorVec(0.005f, 0.0f, 0.5f),sampler);
+    World world(view_plane, objects, ab, { 1,1,1}, sampler);
     const Scene scene(&world,canvas);
 
+
+
+    auto draw = [&]
+    {
+        while (!canvas->should_stop())
+        {
+            scene.render();
+        }
+    };
+    std::thread t(draw);
+
     while (!canvas->should_stop()) {
-        scene.render();
-        scene.draw();   
+
+        scene.draw();
+
     }
+
 }
 // Executar programa: Ctrl + F5 ou Menu Depurar > Iniciar Sem Depuração
 // Depurar programa: F5 ou menu Depurar > Iniciar Depuração
