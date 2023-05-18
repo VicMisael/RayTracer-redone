@@ -7,7 +7,7 @@ std::optional<intersection> Plane::intersects(const Ray &ray) const
 	const float dot_dir_normal = dot(ray.direction, normal);
 	if(abs(dot_dir_normal)>Constants::EPSILON){
 		const float t = dot(point - ray.origin, normal) / dot_dir_normal;
-		if (t > Constants::EPSILON) {
+		if (t > Constants::EPSILON+0.001f) {
 			return intersection{true,t,ray.point_at(t),normal,material};
 		}
 	}

@@ -4,25 +4,26 @@
 ColorVec World::trace_ray(const Ray ray, const int depth) const
 {
 	const auto intersection = hit(ray);
-	if (intersection.has_value() && depth>0) {
-		return shade(intersection.value(), ray);
+	if (intersection.has_value() && depth>=0) {
+		return shade(intersection.value(), ray,depth);
 	}
 	return bgColor;
 	
 }
 
-ColorVec World::shade(const intersection intersection,const Ray ray) const 
+ColorVec World::shade(const intersection intersection,const Ray ray,const int depth) const 
 {
 	const auto intensity_at_point = ambient_light
 		.intensityAtPoint(intersection.closestHitPoint);
-	auto ambient_intensity= intensity_at_point *(intersection.material->color);
-	auto out=intersection.material->scatter(ray, intersection);
+	const auto ambient_intensity= intensity_at_point *(intersection.material->color);
+	const auto out=intersection.material->scatter(ray, intersection);
+	
 	if(out.has_value())
 	{
 		const scatter_out result=out.value();
-		return ambient_intensity*trace_ray(result.out, depth - 1) * result.attenuation;
+		return ambient_intensity+trace_ray(result.out, depth - 1) * result.attenuation;
 	}
-	return  {0,0,0};
+	return  ambient_intensity;
 }
 
 void World::render(Canvas* canvas) const
@@ -45,7 +46,7 @@ void World::render(Canvas* canvas) const
 				x_sample_point *= xstep;
 				y_sample_point *= ystep;
 
-				if (perspective) {
+				if (perspective_) {
 					const float y_coord = viewPlane.pixelsize * (vp_y - 0.5f * (viewPlane.hsize - 1.0f));
 					const float x_coord = -viewPlane.pixelsize * (vp_x - 0.5f * (viewPlane.wsize - 1.0f));
 					const Vector3 vp_r(x_coord+ x_sample_point, y_coord+ y_sample_point, zw);
@@ -76,7 +77,7 @@ std::optional<intersection> World::hit(const Ray ray) const
 	float t_min = Constants::MAX_FLOAT;
 	std::optional<intersection> selintersection;
 	for (VirtualObject* object : objects) {
-		auto intersectsoptional=object->intersects(ray);
+		const auto intersectsoptional=object->intersects(ray);
 		if(intersectsoptional.has_value()){
 			const auto intersects = intersectsoptional.value();
 			if ( intersects.tmin < t_min && intersects.tmin > 0) {

@@ -12,7 +12,7 @@ class World
 {
 private:
 	ColorVec trace_ray(const Ray ray, const int depth) const;
-	ColorVec shade(const intersection, const Ray) const;
+	ColorVec shade(const intersection, const Ray,const int depth) const;
 	ViewPlane viewPlane;
 	std::vector<VirtualObject*> objects;
 	std::vector<Light*> lights;
@@ -20,9 +20,10 @@ private:
 	AmbientLight ambient_light;
 	sampler *_sampler;
 	unsigned int depth = 16;
+	bool perspective_;
 public:
 
-	bool perspective = false;
+
 
 	World(ViewPlane _viewPlane, 
 		std::vector<VirtualObject*> _objects,
@@ -32,7 +33,17 @@ public:
 	{
 		objects.insert(objects.end(), _objects.begin(), _objects.end());
 	}
-	
+
+	World(ViewPlane _viewPlane,
+		std::vector<VirtualObject*> _objects,
+		AmbientLight _ambient_light,
+		ColorVec _bgColor, 
+		sampler* sampler,
+		bool _perspective):World(_viewPlane,_objects,_ambient_light, _bgColor,sampler)
+	{
+		perspective_ = _perspective;
+	};
+
 	void render( Canvas*) const;
 	std::optional<intersection> hit( Ray ray) const;
 	

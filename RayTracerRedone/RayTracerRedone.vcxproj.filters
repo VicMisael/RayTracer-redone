@@ -66,10 +66,7 @@
     <ClCompile Include="RayTracerRedone.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="tracer\objects\materials\Phong.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="tracer\objects\materials\Lambertian.cpp">
+    <ClCompile Include="tracer\scene\materials\Lambertian.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -93,9 +90,6 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="tracer\objects\Ball.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="tracer\objects\materials\Material.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="tracer\utils\ColorVec.h">
@@ -164,13 +158,13 @@
     <ClInclude Include="tracer\scene\light\PointLight.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="tracer\objects\materials\Phong.h">
+    <ClInclude Include="tracer\scene\materials\Lambertian.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="tracer\objects\materials\Lambertian.h">
+    <ClInclude Include="tracer\scene\materials\Material.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="tracer\utils\intersection_data.h">
+    <ClInclude Include="tracer\scene\BxDF\BxDF.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
