@@ -18,7 +18,7 @@ ColorVec World::shade(const intersection intersection,const Ray ray,const int de
 	const auto ambient_intensity= intensity_at_point *(intersection.material->color);
 	const auto out=intersection.material->scatter(ray, intersection);
 
-	if(out.has_value())
+	if( out.has_value())
 	{
 		const scatter_out result=out.value();
 		return ambient_intensity+trace_ray(result.out, depth - 1) * result.attenuation;
@@ -76,7 +76,7 @@ std::optional<intersection> World::hit(const Ray ray) const
 
 	float t_min = Constants::MAX_FLOAT;
 	std::optional<intersection> selintersection;
-	for (std::shared_ptr<VirtualObject> object : objects) {
+	for (const std::shared_ptr<VirtualObject> object : objects) {
 		const auto intersectsoptional=object->intersects(ray);
 		if(intersectsoptional.has_value()){
 			const auto intersects = intersectsoptional.value();
