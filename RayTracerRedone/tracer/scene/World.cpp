@@ -34,7 +34,7 @@ void World::render(Canvas* canvas) const
 	const float xstep = canvas->step_size_x(viewPlane);
 	const float zw = viewPlane.zw;
 	const auto  &points = _sampler->generate_points();
-	const auto num_samples = _sampler->num_samples;
+	const auto &num_samples = _sampler->num_samples;
 	for (uint16_t y = 0; y < height; y++) {
 		for (uint16_t x = 0; x < width; x++) {
 			ColorVec colorVec(0,0,0);
@@ -76,11 +76,11 @@ std::optional<intersection> World::hit(const Ray ray) const
 
 	float t_min = Constants::MAX_FLOAT;
 	std::optional<intersection> selintersection;
-	for (const std::shared_ptr<VirtualObject> object : objects) {
+	for (const std::shared_ptr<VirtualObject> &object : objects) {
 		const auto intersectsoptional=object->intersects(ray);
 		if(intersectsoptional.has_value()){
 			const auto intersects = intersectsoptional.value();
-			if ( intersects.tmin < t_min && intersects.tmin > 0) {
+			if ( intersects.tmin < t_min && intersects.tmin > FLT_EPSILON) {
 				t_min = intersects.tmin;
 				selintersection.emplace(intersects);
 			}
