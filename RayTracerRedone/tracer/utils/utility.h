@@ -23,7 +23,11 @@ namespace utility
 		//std::uniform_int_distribution<float> dist();
 		return { dis(generator), dis(generator), dis(generator) };
 	}
-
+	float random_in_interval(float min, float max)
+	{
+		std::uniform_real_distribution dis(min, max);
+			return dis(generator);
+	}
 	Vector3 random_in_unit_sphere()
 	{
 		while (true) {

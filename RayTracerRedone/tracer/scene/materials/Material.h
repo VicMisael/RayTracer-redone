@@ -22,7 +22,7 @@ public:
 
 	//returns a value if and only if the ray was
 	virtual std::optional<scatter_out> scatter(const Ray in,const intersection intersection) = 0;
-	virtual ColorVec shade(const World &world)
+	virtual ColorVec shade(const World &world,const Ray &ray,const intersection &intersection) const
 	{
 		return { 0,0,0 };
 	};

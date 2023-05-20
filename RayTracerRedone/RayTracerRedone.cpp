@@ -32,7 +32,7 @@ int main(){
 
     std::vector<std::shared_ptr<VirtualObject>> objects;
 
-    sampler* sampler = new vertical_point_sampler(32);
+    sampler* sampler = new mt19937_point_sampler(128);
     objects.push_back(std::make_shared<Plane>(Point3(0, 0, -700), Vector3(0, 0, 1), std::make_shared<Lambertian>(ColorVec(0.3, 0.3, 0.3))));
     objects.push_back(std::make_shared<Ball>(Point3(0, -955, -900), 1000, std::make_shared<Lambertian>(ColorVec(0.5f, 0.5f, 0.5f))));
 	objects.push_back(std::make_shared<Ball>(Point3(150, -160, -280), 60, std::make_shared<Lambertian>(ColorVec(0.0f, 1.0f, 0))));
@@ -43,7 +43,7 @@ int main(){
 	objects.push_back(std::make_shared<Ball>(Point3(0, 105, -650), 40, std::make_shared<Lambertian>(ColorVec(1,1,1))));
     AmbientLight ab(1, ColorVec(1.0, 1.0, 1));
     //auto lights=std::vector<Light*>();
-	World world(view_plane, objects, ab, { 0.3,0.3,0.3 }, sampler,false);
+	World world(view_plane, objects, ab, { 0.0,0.6,0.8 }, sampler,false);
     const Scene scene(&world,canvas);
 
 

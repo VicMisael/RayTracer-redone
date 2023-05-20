@@ -1,7 +1,7 @@
 #include "World.h"
 #include "../utils/Constants.h"
 
-ColorVec World::trace_ray(const Ray ray, const int depth) const
+ColorVec World::trace_ray(const Ray &ray, const int32_t depth) const
 {
 	const auto intersection = hit(ray);
 	if (intersection.has_value() && depth>=0) {
@@ -11,12 +11,12 @@ ColorVec World::trace_ray(const Ray ray, const int depth) const
 	
 }
 
-ColorVec World::shade(const intersection intersection,const Ray ray,const int depth) const 
+ColorVec World::shade(const intersection &intersection,const Ray &ray,const int32_t depth) const 
 {
-	const auto intensity_at_point = ambient_light
+	const auto &intensity_at_point = ambient_light
 		.intensityAtPoint(intersection.closestHitPoint);
-	const auto ambient_intensity= intensity_at_point *(intersection.material->color);
-	const auto out=intersection.material->scatter(ray, intersection);
+	const auto &ambient_intensity= intensity_at_point *(intersection.material->color);
+	const auto &out=intersection.material->scatter(ray, intersection);
 
 	if( out.has_value())
 	{
@@ -71,7 +71,7 @@ void World::render(Canvas* canvas) const
 	}
 }
 
-std::optional<intersection> World::hit(const Ray ray) const
+std::optional<intersection> World::hit(const Ray &ray) const
 {
 
 	float t_min = Constants::MAX_FLOAT;
