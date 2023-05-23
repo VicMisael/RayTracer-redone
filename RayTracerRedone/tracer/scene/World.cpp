@@ -13,20 +13,10 @@ ColorVec World::trace_ray(const Ray &ray, const int32_t depth) const
 
 ColorVec World::shade(const intersection &intersection,const Ray &ray,const int32_t depth) const 
 {
-	const auto &intensity_at_point = ambient_light
-		.intensityAtPoint(intersection.closestHitPoint);
-	const auto &ambient_intensity= intensity_at_point *(intersection.material->color);
-	const auto &out=intersection.material->scatter(ray, intersection);
-
-	if( out.has_value())
-	{
-		const scatter_out result=out.value();
-		return ambient_intensity+trace_ray(result.out, depth - 1) * result.attenuation;
-	}
-	return  ambient_intensity;
+	return intersection.material->shade(*this, ray, intersection, depth - 1);
 }
 
-void World::render(Canvas* canvas) const
+void World::render(Canvas* canvas,const int32_t depth) const
 {
 	const uint32_t height = canvas->getHeight();
 	const uint32_t width = canvas->getWidth();

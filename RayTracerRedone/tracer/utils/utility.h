@@ -9,7 +9,7 @@ namespace utility
 {
 	//static std::mt19937 generator;
 	inline std::mt19937 generator(time(NULL));
-	Vector3 random()
+	inline Vector3 random()
 	{
 		
 		std::uniform_real_distribution<float> dis;
@@ -17,18 +17,18 @@ namespace utility
 		return { dis(generator), dis(generator), dis(generator) };
 	}
 
-	Vector3 random(float min,float max)
+	inline Vector3 random(float min,float max)
 	{
 		std::uniform_real_distribution dis(min,max);
 		//std::uniform_int_distribution<float> dist();
 		return { dis(generator), dis(generator), dis(generator) };
 	}
-	float random_in_interval(float min, float max)
+	inline float random_in_interval(float min, float max)
 	{
 		std::uniform_real_distribution dis(min, max);
 			return dis(generator);
 	}
-	Vector3 random_in_unit_sphere()
+	inline Vector3 random_in_unit_sphere()
 	{
 		while (true) {
 			auto p = random(-1, 1);

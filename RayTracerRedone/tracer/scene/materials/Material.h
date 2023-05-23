@@ -8,21 +8,13 @@
 class World;
 struct intersection;
 
-struct scatter_out
-{
-	ColorVec attenuation;
-	Ray out;
-};
 class Material
 {
 
 public:
-	const ColorVec color;
-	Material(ColorVec _color) :color(_color) {};
 
-	//returns a value if and only if the ray was
-	virtual std::optional<scatter_out> scatter(const Ray in,const intersection intersection) = 0;
-	virtual ColorVec shade(const World &world,const Ray &ray,const intersection &intersection) const
+
+	virtual ColorVec shade(const World& world, const Ray& ray, const intersection& intersection, int32_t depth) const
 	{
 		return { 0,0,0 };
 	};

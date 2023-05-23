@@ -11,7 +11,7 @@
 class World
 {
 private:
-	ColorVec trace_ray(const Ray &ray, const int32_t depth) const;
+
 	ColorVec shade(const intersection&, const Ray&,const int32_t depth) const;
 	ViewPlane viewPlane;
 	std::vector<std::shared_ptr<VirtualObject>> objects;
@@ -19,10 +19,9 @@ private:
 	ColorVec bgColor;
 	AmbientLight ambient_light;
 	sampler *_sampler;
-	uint32_t depth = 2;
 	bool perspective_;
 public:
-
+	ColorVec trace_ray(const Ray& ray, const int32_t depth) const;
 
 
 	World(ViewPlane _viewPlane, 
@@ -44,8 +43,11 @@ public:
 		perspective_ = _perspective;
 	};
 
-	void render( Canvas*) const;
+	void render(Canvas*, int32_t)  const;
 	std::optional<intersection> hit(const Ray &ray) const;
-	
 
+	AmbientLight getAmbientLight() const
+	{
+		return ambient_light;
+	}
 };
