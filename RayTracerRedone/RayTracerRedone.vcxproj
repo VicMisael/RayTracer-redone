@@ -158,6 +158,7 @@
     <ClCompile Include="tracer\utils\sampler\mt19937_point_sampler.cpp" />
     <ClCompile Include="tracer\utils\sampler\random_point_sampler.cpp" />
     <ClCompile Include="tracer\utils\sampler\vertical_point_sampler.cpp" />
+    <ClCompile Include="tracer\scene\materials\WhiteMetal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tracer\scene\materials\Mirror.h" />
@@ -193,6 +194,7 @@
     <ClInclude Include="tracer\scene\ViewPlane.h" />
     <ClInclude Include="tracer\utils\utility.h" />
     <ClInclude Include="tracer\scene\light\VectorialLight.h" />
+    <ClInclude Include="tracer\scene\materials\WhiteMetal.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

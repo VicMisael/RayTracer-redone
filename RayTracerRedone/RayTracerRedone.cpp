@@ -13,6 +13,7 @@
 #include "tracer/scene/Scene.h"
 #include "tracer/scene/materials/Diffuse.h"
 #include "tracer/scene/materials/Mirror.h"
+#include "tracer/scene/materials/WhiteMetal.h"
 #include "tracer/utils/sampler/diagonal_point_sampler.h"
 #include "tracer/utils/sampler/equidistant_point_sampler.h"
 #include "tracer/utils/sampler/mt19937_point_sampler.h"
@@ -29,18 +30,23 @@ int main()
 	const uint32_t h = 650;
 
 	auto* canvas = new sdl2canvas(w, h);
+	//True=Perspective False=parallel
+	constexpr bool projection=false;
 
-	const ViewPlane view_plane(650, 650, 100, 01.0f);
+	const ViewPlane view_plane=projection? ViewPlane(10, 10,15, 01.0f): ViewPlane(650, 650, 100, 01.0f);
 
 	std::vector<std::shared_ptr<VirtualObject>> objects;
 
-	sampler* sampler = new mt19937_point_sampler(64);
-	objects.push_back(std::make_shared<Plane>(Point3(0, 0, -700), Vector3(0, 0.9, 1), std::make_shared<Mirror>()));
-	objects.push_back(std::make_shared<Ball>(Point3(0, -955, -900), 1000,
-	                                         std::make_shared<Diffuse>(ColorVec(0.5f, 0.5f, 0.5f))));
+	sampler* sampler = new equidistant_point_sampler(64);
+	objects.push_back(std::make_shared<Plane>(Point3(0, 90, -1000), Vector3(0, -1, 1), std::make_shared<WhiteMetal>(0.03f)));
+
+	// objects.push_back(std::make_shared<Ball>(Point3(0, -955, -900), 1000, std::make_shared<Diffuse>(ColorVec(0.5f, 0.5f, 0.5f))));
+	objects.push_back(std::make_shared<Ball>(Point3(0, -955, -900), 1000,std::make_shared<Mirror>(0.5f)));
+
 	objects.push_back(std::make_shared<Ball>(Point3(150, -160, -280), 60, std::make_shared<Mirror>()));
 	objects.push_back(
-		std::make_shared<Ball>(Point3(0, -150, -225), 60, std::make_shared<Diffuse>(ColorVec(0.0f, 0, 1))));
+		std::make_shared<Ball>(Point3(0, -150, -225), 60, std::make_shared<Mirror>()));
+
 	objects.push_back(std::make_shared<Ball>(Point3(-200, -50, -225), 90,
 	                                         std::make_shared<Diffuse>(ColorVec(0.5f, 0.4, 0.2))));
 	objects.push_back(std::make_shared<Ball>(Point3(150, 55, -650), 40,
@@ -48,13 +54,19 @@ int main()
 	objects.push_back(std::make_shared<Ball>(Point3(-150, 55, -650), 40,
 	                                         std::make_shared<Diffuse>(ColorVec(0.0f, 1.0f, 1.0f))));
 	objects.push_back(std::make_shared<Ball>(Point3(0, 40, -650), 40,
-	                                         std::make_shared<Diffuse>(ColorVec(0.4, 0.4, 0.4))));
+	                                         std::make_shared<Mirror>()));
+	objects.push_back(std::make_shared<Ball>(Point3(160, 0, -350), 40,
+		std::make_shared<WhiteMetal>(0.2f)));
+
+	objects.push_back(std::make_shared<Ball>(Point3(-90, -25, -250), 65,
+		std::make_shared<Diffuse>( ColorVec(0.5, 0.2, 0.3))));
+
 	AmbientLight ab(1, ColorVec(1.0, 1.0, 1));
 	//auto lights=std::vector<Light*>();
-	World world(view_plane, objects, ab, {1, 1, 1}, sampler, false);
+	World world(view_plane, objects, ab, { 1 , 1 , 1 }, sampler, projection);
 	const Scene scene(&world, canvas);
 
-	const int32_t recursion_depth_limit = 2;
+	const int32_t recursion_depth_limit = 64;
 
 	auto draw = [&]
 	{

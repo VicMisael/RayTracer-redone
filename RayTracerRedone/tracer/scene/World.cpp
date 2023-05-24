@@ -4,11 +4,10 @@
 ColorVec World::trace_ray(const Ray &ray, const int32_t depth) const
 {
 	const auto intersection = hit(ray);
-	if (intersection.has_value() && depth>=0) {
+	if (intersection.has_value() && depth >= 0) {
 		return shade(intersection.value(), ray,depth);
 	}
 	return bgColor;
-	
 }
 
 ColorVec World::shade(const intersection &intersection,const Ray &ray,const int32_t depth) const 

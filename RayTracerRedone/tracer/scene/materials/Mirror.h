@@ -7,7 +7,8 @@ class Mirror :
 	const float reflectivity_;
 
 public:
-	Mirror(): reflectivity_(1.0f)
+	Mirror() : reflectivity_(1.0f) {};
+	Mirror(float reflectivity) : reflectivity_(reflectivity >= 1.0f ? 1.0f : reflectivity)
 	{
 	};
 	ColorVec shade(const World& world, const Ray& ray, const intersection& intersection,

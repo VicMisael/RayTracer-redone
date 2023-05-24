@@ -14,9 +14,6 @@ class Material
 public:
 
 
-	virtual ColorVec shade(const World& world, const Ray& ray, const intersection& intersection, int32_t depth) const
-	{
-		return { 0,0,0 };
-	};
+	virtual ColorVec shade(const World& world, const Ray& ray, const intersection& intersection, int32_t depth) const = 0;
 };
 
