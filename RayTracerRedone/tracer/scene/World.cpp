@@ -1,12 +1,6 @@
 #include "World.h"
 #include "../utils/Constants.h"
 
-World::World(ViewPlane _viewPlane, std::vector<std::shared_ptr<VirtualObject>> _objects, AmbientLight _ambient_light,
-	ColorVec _bgColor, sampler* sampler, bool _perspective) :World(_viewPlane, std::move(_objects), _ambient_light, _bgColor, sampler)
-{
-	perspective_ = _perspective;
-}
-
 ColorVec World::trace_ray(const Ray &ray, const int32_t depth) const
 {
 	const auto intersection = hit(ray);

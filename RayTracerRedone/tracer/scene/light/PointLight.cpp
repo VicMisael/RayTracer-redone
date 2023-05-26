@@ -16,7 +16,7 @@ Vector3 PointLight::getVector(const Point3 p) const
 	return p - point;
 }
 
-Vector3 PointLight::getNormalizedVector(const Point3 p) const
+Vector3 PointLight::getNormalizedDirection(const Point3 p) const
 {
 	return normalize(PointLight::getVector(p));
 }

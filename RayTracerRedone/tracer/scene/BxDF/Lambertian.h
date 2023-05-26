@@ -14,8 +14,8 @@ public:
 	{
 
 	};
-	ColorVec rho(const Vector3& wo) override;
-	ColorVec f(const intersection& intersection, const Vector3& wo, const Vector3& wi) override;
-	::sample_f sample_f(const intersection& intersection, const Vector3& wo) override;
+	ColorVec rho(const Vector3& wo) const override;
+	ColorVec f(const intersection& intersection, const Vector3& wo, const Vector3& wi) const override;
+	::sample_f sample_f(const intersection& intersection, const Vector3& wo) const override;
 };
 

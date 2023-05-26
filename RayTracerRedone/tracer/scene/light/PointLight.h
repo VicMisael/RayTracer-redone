@@ -11,6 +11,6 @@ public:
 
 	ColorVec intensityAtPoint( const Point3) const override;
 	Vector3 getVector(const Point3) const override;
-	Vector3 getNormalizedVector(const Point3) const override;
+	Vector3 getNormalizedDirection(const Point3) const override;
 };
 

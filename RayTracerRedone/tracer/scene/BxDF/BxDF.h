@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <vector>
 
 #include "../../utils/ColorVec.h"
@@ -6,6 +6,7 @@
 struct sample_f{
 	ColorVec color;
 	Vector3 wi;
+	float pdf;
 };
 
 class BxDF
@@ -19,8 +20,20 @@ public:
 		value that gives the fraction of incident light reflected by a surface when the incident
 		light is the same from all directions. It is
 	 */
-	virtual ColorVec rho(const Vector3& wo) = 0;
-	virtual ColorVec f(const intersection &intersection,const Vector3 &wo,const Vector3 &wi) = 0;
-	virtual sample_f sample_f(const intersection& intersection,const Vector3 &wo) = 0;
+	virtual ColorVec rho(const Vector3& wo) const = 0;
+	/*
+	It returns the value of the distribution
+		function for the given pair of directions.This interface implicitly assumes that light in
+		different wavelengths is decoupled—energy at one wavelength will not be reflected at
+		a different wavelength
+	*/
+	virtual ColorVec f(const intersection &intersection,const Vector3 &wo,const Vector3 &wi) const = 0;
+	;/*
+			 computes the direction of incident light ωi given an outgoing direction
+		ωo and returns the value of the BxDF for the pair of directions. For delta distributions, it
+		is necessary for the BxDF to choose the incident light direction in this way, since the caller
+		has no chance of generating the appropriate wi direction.
+	*/
+	virtual sample_f sample_f(const intersection& intersection,const Vector3 &wo) const = 0;
 };
 

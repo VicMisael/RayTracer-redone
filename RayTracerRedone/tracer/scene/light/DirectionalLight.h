@@ -1,7 +1,7 @@
 #pragma once
 #include "VectorialLight.h"
 
-class DirectionalLight:VectorialLight
+class DirectionalLight:public VectorialLight
 {
 	Vector3 direction_;
 public:
@@ -11,7 +11,7 @@ public:
 	{}
 
 	Vector3 getVector(const Point3) const override;
-	Vector3 getNormalizedVector(const Point3) const override;
+	Vector3 getNormalizedDirection(const Point3) const override;
 	ColorVec intensityAtPoint(const Point3) const override;
 };
 

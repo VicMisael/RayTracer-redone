@@ -28,25 +28,26 @@ public:
 
 	World(ViewPlane _viewPlane, 
 		std::vector<std::shared_ptr<VirtualObject>> _objects,
+		std::vector<std::shared_ptr<VectorialLight>> lights,
 		AmbientLight _ambient_light, 
-		ColorVec _bgColor,sampler *sampler) :viewPlane(_viewPlane), bgColor(_bgColor),
-		ambient_light(std::move(_ambient_light)),_sampler(sampler)
+		ColorVec _bgColor,sampler *sampler,bool perspective) :
+		viewPlane(_viewPlane),
+		objects_(std::move(_objects)),
+		lights_(std::move(lights)),
+		bgColor(_bgColor),
+		ambient_light(std::move(_ambient_light)),_sampler(sampler),perspective_(perspective)
 	{
-		objects_.insert(objects_.end(), _objects.begin(), _objects.end());
 	}
 
 
 
-	World(ViewPlane _viewPlane,
-		std::vector<std::shared_ptr<VirtualObject>> _objects,
-		AmbientLight _ambient_light,
-		ColorVec _bgColor, 
-		sampler* sampler,
-		bool _perspective);
-
 	void render(Canvas*, int32_t)  const;
 	std::optional<intersection> hit(const Ray &ray) const;
 
+	std::vector<std::shared_ptr<VectorialLight>> lights() const
+	{
+		return lights_;
+	}
 	AmbientLight getAmbientLight() const
 	{
 		return ambient_light;
