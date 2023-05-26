@@ -28,9 +28,10 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects()
 	std::vector<std::shared_ptr<VirtualObject>> objects;
 	objects.push_back(std::make_shared<Plane>(Point3(0, 90, -1000), Vector3(0, -1, 1), std::make_shared<WhiteMetal>(0.03f)));
 
-	// objects.push_back(std::make_shared<Ball>(Point3(0, -955, -900), 1000, std::make_shared<Diffuse>(ColorVec(0.5f, 0.5f, 0.5f))));
-	objects.push_back(std::make_shared<Ball>(Point3(0, -955, -900), 1000, std::make_shared<Mirror>(0.5f)));
+	objects.push_back(std::make_shared<Ball>(Point3(0, -955, -900), 1000, std::make_shared<Diffuse>(ColorVec(0.5f, 0.5f, 0.5f))));
+	//objects.push_back(std::make_shared<Ball>(Point3(0, -955, -900), 1000, std::make_shared<Mirror>(0.5f)));
 	objects.push_back(std::make_shared<Ball>(Point3(1250, 0, -900), 1000, std::make_shared<Matte>(1,ColorVec(1,1,1))));
+	objects.push_back(std::make_shared<Ball>(Point3(-1250, 0, -900), 1000, std::make_shared<Mirror>()));
 
 	objects.push_back(std::make_shared<Ball>(Point3(150, -160, -280), 60, std::make_shared<Mirror>()));
 	objects.push_back(
@@ -71,11 +72,11 @@ int main()
 
 	auto* canvas = new sdl2canvas(w, h);
 	//True=Perspective False=parallel
-	constexpr bool projection=false;
+	constexpr bool projection=true;
 
 	const ViewPlane view_plane=projection? ViewPlane(10, 10,15, 01.0f): ViewPlane(650, 650, 100, 01.0f);
 
-	sampler* sampler = new equidistant_point_sampler(128);
+	sampler* sampler = new equidistant_point_sampler(8);
 
 	AmbientLight ab(0.05f, ColorVec(1.0, 1.0, 1));
 	//auto lights=std::vector<Light*>();
