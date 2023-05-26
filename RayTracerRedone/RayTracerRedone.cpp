@@ -11,6 +11,8 @@
 #include "tracer/objects/Plane.h"
 #include "tracer/objects/Ball.h"
 #include "tracer/scene/Scene.h"
+#include "tracer/scene/light/DirectionalLight.h"
+#include "tracer/scene/light/PointLight.h"
 #include "tracer/scene/materials/Diffuse.h"
 #include "tracer/scene/materials/Mirror.h"
 #include "tracer/scene/materials/WhiteMetal.h"
@@ -61,7 +63,10 @@ int main()
 	objects.push_back(std::make_shared<Ball>(Point3(-90, -25, -250), 65,
 		std::make_shared<Diffuse>( ColorVec(0.5, 0.2, 0.3))));
 
-	AmbientLight ab(1, ColorVec(1.0, 1.0, 1));
+	PointLight l1(Point3(-150, 105, -650), 100, ColorVec(1, 1, 1));
+	DirectionalLight p1(Vector3(0, -1, -1), 15, ColorVec(1, 1, 1));
+
+	AmbientLight ab(0.5, ColorVec(1.0, 1.0, 1));
 	//auto lights=std::vector<Light*>();
 	World world(view_plane, objects, ab, { 1 , 1 , 1 }, sampler, projection);
 

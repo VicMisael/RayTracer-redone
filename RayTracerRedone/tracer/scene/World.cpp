@@ -1,6 +1,12 @@
 #include "World.h"
 #include "../utils/Constants.h"
 
+World::World(ViewPlane _viewPlane, std::vector<std::shared_ptr<VirtualObject>> _objects, AmbientLight _ambient_light,
+	ColorVec _bgColor, sampler* sampler, bool _perspective) :World(_viewPlane, std::move(_objects), _ambient_light, _bgColor, sampler)
+{
+	perspective_ = _perspective;
+}
+
 ColorVec World::trace_ray(const Ray &ray, const int32_t depth) const
 {
 	const auto intersection = hit(ray);
@@ -14,6 +20,7 @@ ColorVec World::shade(const intersection &intersection,const Ray &ray,const int3
 {
 	return intersection.material->shade(*this, ray, intersection, depth - 1);
 }
+
 
 void World::render(Canvas* canvas,const int32_t depth) const
 {
@@ -65,11 +72,11 @@ std::optional<intersection> World::hit(const Ray &ray) const
 
 	float t_min = Constants::MAX_FLOAT;
 	std::optional<intersection> selintersection;
-	for (const std::shared_ptr<VirtualObject> &object : objects) {
+	for (const std::shared_ptr<VirtualObject> &object : objects_) {
 		const auto intersectsoptional=object->intersects(ray);
 		if(intersectsoptional.has_value()){
 			const auto intersects = intersectsoptional.value();
-			if ( intersects.tmin < t_min && intersects.tmin > FLT_EPSILON) {
+			if ( intersects.tmin < t_min && intersects.tmin > 0) {
 				t_min = intersects.tmin;
 				selintersection.emplace(intersects);
 			}

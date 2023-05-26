@@ -1,5 +1,6 @@
 #pragma once
 
+#include <utility>
 #include <vector>
 #include "Canvas.h"
 #include "ViewPlane.h"
@@ -15,12 +16,12 @@ private:
 
 	ColorVec shade(const intersection&, const Ray&,const int32_t depth) const;
 	ViewPlane viewPlane;
-	std::vector<std::shared_ptr<VirtualObject>> objects;
-	std::vector<std::shared_ptr<VectorialLight>> lights;
+	std::vector<std::shared_ptr<VirtualObject>> objects_;
+	std::vector<std::shared_ptr<VectorialLight>> lights_;
 	ColorVec bgColor;
 	AmbientLight ambient_light;
 	sampler *_sampler;
-	bool perspective_;
+	bool perspective_{};
 public:
 	ColorVec trace_ray(const Ray& ray, const int32_t depth) const;
 
@@ -29,20 +30,19 @@ public:
 		std::vector<std::shared_ptr<VirtualObject>> _objects,
 		AmbientLight _ambient_light, 
 		ColorVec _bgColor,sampler *sampler) :viewPlane(_viewPlane), bgColor(_bgColor),
-		ambient_light(_ambient_light),_sampler(sampler)
+		ambient_light(std::move(_ambient_light)),_sampler(sampler)
 	{
-		objects.insert(objects.end(), _objects.begin(), _objects.end());
+		objects_.insert(objects_.end(), _objects.begin(), _objects.end());
 	}
+
+
 
 	World(ViewPlane _viewPlane,
 		std::vector<std::shared_ptr<VirtualObject>> _objects,
 		AmbientLight _ambient_light,
 		ColorVec _bgColor, 
 		sampler* sampler,
-		bool _perspective):World(_viewPlane,_objects,_ambient_light, _bgColor,sampler)
-	{
-		perspective_ = _perspective;
-	};
+		bool _perspective);
 
 	void render(Canvas*, int32_t)  const;
 	std::optional<intersection> hit(const Ray &ray) const;
