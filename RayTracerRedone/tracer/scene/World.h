@@ -6,6 +6,7 @@
 #include "light/AmbientLight.h"
 #include "../utils/sampler/sampler.h"
 #include "../objects/VirtualObject.h"
+#include "light/VectorialLight.h"
 
 
 class World
@@ -15,7 +16,7 @@ private:
 	ColorVec shade(const intersection&, const Ray&,const int32_t depth) const;
 	ViewPlane viewPlane;
 	std::vector<std::shared_ptr<VirtualObject>> objects;
-	std::vector<Light*> lights;
+	std::vector<std::shared_ptr<VectorialLight>> lights;
 	ColorVec bgColor;
 	AmbientLight ambient_light;
 	sampler *_sampler;

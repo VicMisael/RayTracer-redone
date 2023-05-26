@@ -139,6 +139,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="tracer\scene\materials\Matte.cpp" />
+    <ClCompile Include="tracer\scene\BxDF\Lambertian.cpp" />
     <ClCompile Include="tracer\scene\materials\Mirror.cpp" />
     <ClCompile Include="tracer\scene\materials\Diffuse.cpp" />
     <ClCompile Include="RayTracerRedone.cpp" />
@@ -161,6 +163,8 @@
     <ClCompile Include="tracer\scene\materials\WhiteMetal.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="tracer\scene\materials\Matte.h" />
+    <ClInclude Include="tracer\scene\BxDF\Lambertian.h" />
     <ClInclude Include="tracer\scene\materials\Mirror.h" />
     <ClInclude Include="tracer\scene\BxDF\BxDF.h" />
     <ClInclude Include="tracer\scene\materials\Diffuse.h" />

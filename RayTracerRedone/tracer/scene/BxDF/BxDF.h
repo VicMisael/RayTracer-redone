@@ -12,6 +12,7 @@ class BxDF
 {
 
 public:
+	virtual ~BxDF() = default;
 	//Based of Physically based rendering
 	/*
 	 *The hemispherical-hemispherical reflectance of a surface, denoted by phh, is a spectral
@@ -20,6 +21,6 @@ public:
 	 */
 	virtual ColorVec rho(const Vector3& wo) = 0;
 	virtual ColorVec f(const intersection &intersection,const Vector3 &wo,const Vector3 &wi) = 0;
-	virtual sample_f sample_f(const intersection& intersection,const Vector3 &wo);
+	virtual sample_f sample_f(const intersection& intersection,const Vector3 &wo) = 0;
 };
 

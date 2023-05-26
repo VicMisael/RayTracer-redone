@@ -64,6 +64,8 @@ int main()
 	AmbientLight ab(1, ColorVec(1.0, 1.0, 1));
 	//auto lights=std::vector<Light*>();
 	World world(view_plane, objects, ab, { 1 , 1 , 1 }, sampler, projection);
+
+
 	const Scene scene(&world, canvas);
 
 	const int32_t recursion_depth_limit = 64;

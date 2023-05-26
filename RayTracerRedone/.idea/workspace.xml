@@ -22,6 +22,12 @@
   <component name="ChangeListManager">
     <list default="true" id="4e5fb865-1360-473f-9a14-7909f9ebc9d4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RayTracerRedone.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/RayTracerRedone.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RayTracerRedone.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/RayTracerRedone.vcxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RayTracerRedone.vcxproj.filters" beforeDir="false" afterPath="$PROJECT_DIR$/RayTracerRedone.vcxproj.filters" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tracer/scene/BxDF/BxDF.h" beforeDir="false" afterPath="$PROJECT_DIR$/tracer/scene/BxDF/BxDF.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tracer/scene/World.h" beforeDir="false" afterPath="$PROJECT_DIR$/tracer/scene/World.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tracer/utils/Constants.h" beforeDir="false" afterPath="$PROJECT_DIR$/tracer/utils/Constants.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,6 +93,7 @@
       <workItem from="1681609638498" duration="1203000" />
       <workItem from="1683078514937" duration="51000" />
       <workItem from="1683126933815" duration="585000" />
+      <workItem from="1685104374247" duration="610000" />
     </task>
     <servers />
   </component>
