@@ -2,7 +2,6 @@
 
 #include "../../utils/utility.h"
 #include "../../utils/Constants.h"
-#include "../../../Globals.h"
 #include "../World.h"
 
 
@@ -57,7 +56,7 @@ ColorVec new_shading(const Diffuse &diff, const World& world, const Ray& ray, co
 ColorVec Diffuse::shade(const World& world, const Ray& ray, const intersection& intersection, int32_t depth) const
 {
 	ColorVec res;
-	if(false)
+	if(true)
 	{
 		res=new_shading(*this, world, ray, intersection, depth);
 	}else

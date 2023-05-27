@@ -13,7 +13,7 @@ ColorVec PointLight::intensityAtPoint(const Point3 p) const
 
 Vector3 PointLight::getVector(const Point3 p) const
 {
-	return p - point;
+	return point-p;
 }
 
 Vector3 PointLight::getNormalizedDirection(const Point3 p) const
