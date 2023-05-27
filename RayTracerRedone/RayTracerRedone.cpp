@@ -16,6 +16,7 @@
 #include "tracer/scene/materials/Diffuse.h"
 #include "tracer/scene/materials/Matte.h"
 #include "tracer/scene/materials/Mirror.h"
+#include "tracer/scene/materials/Phong.h"
 #include "tracer/scene/materials/WhiteMetal.h"
 #include "tracer/utils/sampler/diagonal_point_sampler.h"
 #include "tracer/utils/sampler/equidistant_point_sampler.h"
@@ -29,24 +30,34 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects()
 	objects.push_back(std::make_shared<Plane>(Point3(0, 90, -1000), Vector3(0, -1, 1), std::make_shared<WhiteMetal>(0.03f)));
 
 	objects.push_back(std::make_shared<Ball>(Point3(0, -955, -900), 1000, std::make_shared<Diffuse>(ColorVec(0.5f, 0.5f, 0.5f))));
-	//objects.push_back(std::make_shared<Ball>(Point3(0, -955, -900), 1000, std::make_shared<Mirror>(0.5f)));
+
 	objects.push_back(std::make_shared<Ball>(Point3(1250, 0, -900), 1000, std::make_shared<Matte>(1,ColorVec(1,1,1))));
-	objects.push_back(std::make_shared<Ball>(Point3(-1250, 0, -900), 1000, std::make_shared<Mirror>()));
+
+	objects.push_back(
+		std::make_shared<Ball>(Point3(-1250, 0, -900), 1000, 
+			std::make_shared<Phong>(
+			ColorVec(0.2,0.9,0.3),0.5,1,0.625)));
 
 	objects.push_back(std::make_shared<Ball>(Point3(150, -160, -280), 60, std::make_shared<Mirror>()));
-	objects.push_back(
-		std::make_shared<Ball>(Point3(0, -150, -225), 60, std::make_shared<Mirror>()));
+
+	objects.push_back(std::make_shared<Ball>(Point3(0, -150, -225), 60, std::make_shared<Mirror>()));
 	
-	objects.push_back(std::make_shared<Ball>(Point3(150, 55, -650), 40,
-		std::make_shared<Matte>(1,ColorVec(1.0f, 1.0f, 0))));
+	objects.push_back(
+		std::make_shared<Ball>(Point3(150, 55, -650), 40,
+			std::make_shared<Matte>(1,ColorVec(1.0f, 1.0f, 0))));
+
 	objects.push_back(std::make_shared<Ball>(Point3(-150, 55, -650), 40,
 		std::make_shared<Matte>(1,ColorVec(0.0f, 1.0f, 1.0f))));
+
 	objects.push_back(std::make_shared<Ball>(Point3(0, 40, -650), 40,
 		std::make_shared<Mirror>()));
+
 	objects.push_back(std::make_shared<Ball>(Point3(160, 0, -350), 40,
 		std::make_shared<WhiteMetal>(0.2f)));
+
 	objects.push_back(std::make_shared<Ball>(Point3(-90, -25, -250), 65,
-		std::make_shared<Matte>(0.8,ColorVec(0.5, 0.2, 0.3))));
+		std::make_shared<Phong>(ColorVec(0.5, 0.2, 0.3), 4, 1, 10)));
+
 	objects.push_back(std::make_shared<Ball>(Point3(-200, -50, -225), 90,
 		std::make_shared<Matte>(0.9f,ColorVec(0.5f, 0.4, 0.2))));
 
@@ -56,7 +67,7 @@ std::vector<std::shared_ptr<VectorialLight>> generate_vectorial_lights()
 {
 	std::vector<std::shared_ptr<VectorialLight>> lights;
 	lights.push_back(std::make_shared<DirectionalLight>(Vector3(0, 1, 1), 3, ColorVec(1, 1, 1)));
-	lights.push_back(std::make_shared<PointLight>(Point3(-150, 150, -650), 5, ColorVec(1, 1, 1)));
+	lights.push_back(std::make_shared<PointLight>(Point3(-150, 150, -650), 2, ColorVec(1, 1, 1)));
 
 	return lights;
 }
@@ -72,11 +83,11 @@ int main()
 
 	auto* canvas = new sdl2canvas(w, h);
 	//True=Perspective False=parallel
-	constexpr bool projection=true;
+	constexpr bool projection=false;
 
-	const ViewPlane view_plane=projection? ViewPlane(10, 10,15, 01.0f): ViewPlane(650, 650, 100, 01.0f);
+	const ViewPlane view_plane=projection? ViewPlane(10, 10,8, 01.0f): ViewPlane(900, 900, 50, 01.0f);
 
-	sampler* sampler = new equidistant_point_sampler(8);
+	sampler* sampler = new equidistant_point_sampler(4);
 
 	AmbientLight ab(0.05f, ColorVec(1.0, 1.0, 1));
 	//auto lights=std::vector<Light*>();

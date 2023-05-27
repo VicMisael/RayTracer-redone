@@ -14,8 +14,10 @@ ColorVec GlossySpecular::f(const intersection& intersection, const Vector3& wo, 
 	const float n_dot_wi = dot(normal , wi);
 	const Vector3 r = -wi + 2.0f * normal * n_dot_wi;
 	float r_dot_two = dot(r, wo);
-	if (r_dot_two > 0.0)
-		L = color *ks * pow(r_dot_two, exp);
+	if (r_dot_two > 0.0){
+		
+		L = color_ * ks_ * pow(r_dot_two, exp_);
+	}
 	return L;
 }
 
@@ -38,8 +40,8 @@ sample_f GlossySpecular::sample_f(const intersection& intersection, const Vector
 		wi = -sp.x * u - sp.y * v + sp.z * w;
 	}
 
-	const float phong_lobe = pow(dot(r , wi), exp);
+	const float phong_lobe = pow(dot(r , wi), exp_);
 	const float pdf = phong_lobe * (dot(normal , wi));
 
-	return { ks * color * phong_lobe,wi,pdf };
+	return { ks_ * color_ * phong_lobe,wi,pdf };
 }

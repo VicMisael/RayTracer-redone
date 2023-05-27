@@ -7,6 +7,7 @@
 class Lambertian :
     public BxDF
 {
+	//Fraction of light reflected
 	const float kd_;
 	const ColorVec cd_;
 public:
