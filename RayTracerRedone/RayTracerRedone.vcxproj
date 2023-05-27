@@ -165,6 +165,7 @@
     <ClCompile Include="tracer\scene\materials\WhiteMetal.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Globals.h" />
     <ClInclude Include="tracer\scene\materials\Phong.h" />
     <ClInclude Include="tracer\scene\BxDF\GlossySpecular.h" />
     <ClInclude Include="tracer\scene\materials\Matte.h" />
