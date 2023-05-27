@@ -15,7 +15,7 @@ ColorVec World::trace_ray(const Ray &ray, const int32_t depth) const
 
 ColorVec World::shade(const intersection &intersection,const Ray &ray,const int32_t depth) const 
 {
-	return intersection.material->shade(*this, ray, intersection, depth - 1);
+	return intersection.material->shade(*this, ray, intersection, depth);
 }
 
 

@@ -48,6 +48,13 @@ public:
 	{
 		return lights_;
 	}
+
+	std::vector<std::shared_ptr<VirtualObject>> objects() const
+	{
+		return objects_;
+	}
+
+
 	AmbientLight getAmbientLight() const
 	{
 		return ambient_light;

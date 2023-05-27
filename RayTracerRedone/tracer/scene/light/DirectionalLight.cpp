@@ -2,6 +2,9 @@
 
 #include <glm/geometric.hpp>
 
+#include "../Ray.h"
+#include "../World.h"
+
 Vector3 DirectionalLight::getVector(const Point3 p) const
 {
 	return direction_;
@@ -15,4 +18,20 @@ Vector3 DirectionalLight::getNormalizedDirection(const Point3 p) const
 ColorVec DirectionalLight::intensityAtPoint(const Point3) const
 {
 	return this->intensity * this->color;
+}
+
+bool DirectionalLight::shadow_hit(const World& world, const Ray& outgoing) const
+{
+
+
+	for (const auto& obj : world.objects())
+	{
+
+		const std::optional<intersection> intersection = obj->intersects(outgoing);
+		if (intersection.has_value() && intersection.value().hits && intersection.value().tmin > 0)
+		{
+			return true;
+		}
+	}
+	return false;
 }

@@ -139,6 +139,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="tracer\scene\BxDF\PerfectSpecular.cpp" />
+    <ClCompile Include="tracer\scene\light\VectorialLight.cpp" />
     <ClCompile Include="tracer\scene\materials\Phong.cpp" />
     <ClCompile Include="tracer\scene\BxDF\GlossySpecular.cpp" />
     <ClCompile Include="tracer\scene\materials\Matte.cpp" />
@@ -165,7 +167,7 @@
     <ClCompile Include="tracer\scene\materials\WhiteMetal.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Globals.h" />
+    <ClInclude Include="tracer\scene\BxDF\PerfectSpecular.h" />
     <ClInclude Include="tracer\scene\materials\Phong.h" />
     <ClInclude Include="tracer\scene\BxDF\GlossySpecular.h" />
     <ClInclude Include="tracer\scene\materials\Matte.h" />

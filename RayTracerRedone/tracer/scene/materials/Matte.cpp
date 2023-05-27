@@ -12,13 +12,28 @@ ColorVec Matte::shade(const World& world, const Ray& ray, const intersection& in
 	for(const auto &light:world.lights())
 	{
 		const auto wi = light->getNormalizedDirection(intersection.hit_point);
-		const float ndotwi = glm::dot(intersection.normal, wi);
+		const float ndotwi = dot(intersection.normal, wi);
 		if(ndotwi>0)
 		{
-			bool inshadow = false;
-			L += brdf_.f(intersection, wo, wi) * light->intensityAtPoint(intersection.hit_point) * ndotwi;
+			bool in_shadow = false;
+
+			if (light->casts_shadow())
+				in_shadow = light->shadow_hit(world, Ray(intersection.hit_point, wi));
+
+			if(!in_shadow)
+			{
+				const auto intensity = light->intensityAtPoint(intersection.hit_point);
+				L += brdf_.f(intersection, wo, wi) * intensity * ndotwi;
+			}
+
 		}
 	}
+	
+	const auto [color, wi_2, pdf] = brdf_.sample_f(intersection, wo);
+	const float ndotwi2 = glm::dot(intersection.normal, wi_2);
+	const Ray reflected(intersection.hit_point, wi_2);
 
+	L += color * world.trace_ray(reflected, depth - 1) * ndotwi2 / pdf;
+	
 	return L;
 }

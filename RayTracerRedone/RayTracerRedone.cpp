@@ -3,6 +3,7 @@
 
 #include <iostream>
 #define SDL_MAIN_HANDLED
+#define GLM_FORCE_MESSAGES
 #include <SDL2/SDL.h>
 #include <thread>
 #include <random>
@@ -24,21 +25,29 @@
 #include "tracer/utils/sampler/random_point_sampler.h"
 #include "tracer/utils/sampler/vertical_point_sampler.h"
 
+
+#include <glm/gtx/fast_square_root.hpp> 
+
 std::vector<std::shared_ptr<VirtualObject>> generateObjects()
 {
 	std::vector<std::shared_ptr<VirtualObject>> objects;
-	objects.push_back(std::make_shared<Plane>(Point3(0, 90, -1100), Vector3(0, -1, 1), std::make_shared<Matte>(1,ColorVec(1,1,1))));
+	//objects.push_back(std::make_shared<Plane>(Point3(0, 90, -1100), Vector3(0, -1, 1), std::make_shared<Mirror>()));
 	// objects.push_back(std::make_shared<Plane>(Point3(0, 0, 1100), Vector3(0, -1, 0), std::make_shared<Mirror>()));
 
 
-	objects.push_back(std::make_shared<Ball>(Point3(0, -955, -900), 1000, std::make_shared<WhiteMetal>()));
+	// objects.push_back(std::make_shared<Ball>(Point3(0, -955, -900), 1000, std::make_shared<Phong>(ColorVec(0.9, 0.9, 0.9), 1, 2)));
 
-	objects.push_back(std::make_shared<Ball>(Point3(1350, 0, -900), 1000, std::make_shared<Diffuse>(ColorVec(0.2,0.2,0.2))));
+	// objects.push_back(std::make_shared<Ball>(Point3(1350, 0, -900), 1000, std::make_shared<Phong>(ColorVec(0.9, 0.9, 0.9), 1, 2)));
+
+
+	objects.push_back(std::make_shared<Ball>(Point3(0, -955, -1000), 1000, std::make_shared<Matte>(1,ColorVec(0.9, 0.9,0))));
+
+	objects.push_back(std::make_shared<Ball>(Point3(1350, 0, -900), 1000, std::make_shared<Mirror>()));
+
 
 	objects.push_back(
 		std::make_shared<Ball>(Point3(-1250, 0, -900), 1000, 
-			std::make_shared<Phong>(
-			ColorVec(0.2,0.9,0.3),0.5,1,15)));
+			std::make_shared<Matte>(1, ColorVec(1,1,1))));
 
 	objects.push_back(std::make_shared<Ball>(Point3(150, -160, -280), 60, std::make_shared<Mirror>()));
 
@@ -67,33 +76,22 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects()
 		std::make_shared<Mirror>()));
 
 	objects.push_back(std::make_shared<Ball>(Point3(-15, 350, -425), 55,
-		std::make_shared<Diffuse>(ColorVec(1, 1, 1))));
-	objects.push_back(std::make_shared<Ball>(Point3(0, 250, -425), 15,
-		std::make_shared<Diffuse>(ColorVec(1, 1, 1))));
-	objects.push_back(std::make_shared<Ball>(Point3(30, 250, -425), 20,
-		std::make_shared<Diffuse>(ColorVec(1, 1, 1))));
+		std::make_shared<Matte>(1,ColorVec(1, 1, 1))));
 
-
-	objects.push_back(std::make_shared<Ball>(Point3(0, 0, -125), 25,
-		std::make_shared<Diffuse>(ColorVec(1, 1, 0.2))));
-
-
-	objects.push_back(std::make_shared<Ball>(Point3(400, 300, -150), 150,
-		std::make_shared<Mirror>()));
 
 	objects.push_back(std::make_shared<Ball>(Point3(400, 150, -350), 150,
-		std::make_shared<Matte>(6, ColorVec(1, 1, 0))));
+		std::make_shared<Matte>(1, ColorVec(1, 1, 0))));
 
 	objects.push_back(std::make_shared<Ball>(Point3(0, 550, -725), 256,
-		std::make_shared<Diffuse>( ColorVec(1, 1, 1))));
+		std::make_shared<WhiteMetal>(0.001 )));
 
 	return objects;
 }
 std::vector<std::shared_ptr<VectorialLight>> generate_vectorial_lights()
 {
 	std::vector<std::shared_ptr<VectorialLight>> lights;
-	lights.push_back(std::make_shared<DirectionalLight>(Vector3(0, 1, 1), 1, ColorVec(1, 1, 1)));
-	lights.push_back(std::make_shared<PointLight>(Point3(0, 0, -300), 15, ColorVec(1, 1, 1)));
+	lights.push_back(std::make_shared<DirectionalLight>(Vector3(0, 1, 0), 1, ColorVec(1, 1, 1)));
+	lights.push_back(std::make_shared<PointLight>(Point3(0, 0 ,0), 15, ColorVec(1, 1, 1)));
 
 	return lights;
 }
@@ -104,25 +102,24 @@ int main()
 	static int display_in_use = 0; /* Only using first display */
 
 
-	const uint32_t w = 600;
-	const uint32_t h = 600;
+	const uint32_t w = 650;
+	const uint32_t h = 650;
 
 	auto* canvas = new sdl2canvas(w, h);
 	//True=Perspective False=parallel
-	constexpr bool projection=false;
+	constexpr bool projection=true;
 
-	const ViewPlane view_plane=projection? ViewPlane(10, 10,8, 01.0f): ViewPlane(1500, 1500, 50, 01.0f);
+	const ViewPlane view_plane=projection? ViewPlane(10, 10,8, 01.0f): ViewPlane(1450, 1450, 50, 01.0f);
 
-	sampler* sampler = new mt19937_point_sampler(20);
+	sampler* sampler = new equidistant_point_sampler(68);
 
-	AmbientLight ab(0.05f, ColorVec(1.0, 1.0, 1));
-	//auto lights=std::vector<Light*>();
-	World world(view_plane, generateObjects(), generate_vectorial_lights(), ab, {1 , 1 , 1}, sampler, projection);
+	AmbientLight ab(0.4, ColorVec(1.0, 1.0, 1));
+	World world(view_plane, generateObjects(), generate_vectorial_lights(), ab, {0.06 , 0.06 , 0.1}, sampler, projection);
 
 
 	const Scene scene(&world, canvas);
 
-	const int32_t recursion_depth_limit = 100;
+	const int32_t recursion_depth_limit = 6;
 
 	auto draw = [&]
 	{
