@@ -2,7 +2,10 @@
 
 #include "../../utils/utility.h"
 #include "../../utils/Constants.h"
+#include "../../../Globals.h"
 #include "../World.h"
+
+
 
 inline bool nearzero(const Vector3 v)
 {
@@ -21,6 +24,51 @@ inline std::optional<Ray> scatter(const Ray& in, const intersection& intersectio
 	return scattered;
 }
 
+// Antes eu e Deus sabiam o que esse código fazia
+// agora só Deus
+
+ColorVec oldshading(const Diffuse &diff,const World& world, const Ray& ray, const intersection& intersection, const int32_t depth)
+{
+	const auto& intensity_at_point = world.getAmbientLight().intensityAtPoint(intersection.hit_point);
+	const auto& ambient_intensity = intensity_at_point * (diff.color_);
+	const auto& out = scatter(ray, intersection);
+
+	if (out.has_value())
+	{
+		const Ray result = out.value();
+		auto out = world.trace_ray(result, depth - 1);
+		out.clamp_to_x_if_bigger_than(3, 2);
+		return ambient_intensity + 0.5f * out * diff.color_;
+	}
+	return ambient_intensity;
+}
+
+ColorVec new_shading(const Diffuse &diff, const World& world, const Ray& ray, const intersection& intersection, const int32_t depth)
+{
+	const Vector3 wo = -ray.direction;
+	const auto [color, wi, pdf] = diff.lambertian_.sample_f(intersection, wo);
+
+	const float ndotwi = glm::dot(intersection.normal, wi);
+	const Ray reflected(intersection.hit_point, wi);
+
+	return color * world.trace_ray(reflected, depth - 1) * ndotwi / pdf;
+}
+
+ColorVec Diffuse::shade(const World& world, const Ray& ray, const intersection& intersection, int32_t depth) const
+{
+	ColorVec res;
+	if(false)
+	{
+		res=new_shading(*this, world, ray, intersection, depth);
+	}else
+	{
+		res=oldshading(*this, world, ray, intersection, depth);
+	}
+	return res;
+}
+
+
+/*
 ColorVec Diffuse::shade(const World& world, const Ray& ray, const intersection& intersection, const int32_t depth) const
 {
 	const auto& intensity_at_point = world.getAmbientLight().intensityAtPoint(intersection.hit_point);
@@ -30,7 +78,23 @@ ColorVec Diffuse::shade(const World& world, const Ray& ray, const intersection& 
 	if (out.has_value())
 	{
 		const Ray result = out.value();
-		return ambient_intensity + 0.5f * world.trace_ray(result, depth - 1) * color_;
+		auto out=world.trace_ray(result, depth - 1);
+		out.clamp_to_x_if_bigger_than(3,2);
+		return ambient_intensity + 0.5f * out * color_;
 	}
 	return ambient_intensity;
 }
+*/
+/*
+ColorVec Diffuse::shade(const World& world, const Ray& ray, const intersection& intersection, int32_t depth) const
+{
+	const Vector3 wo = -ray.direction;
+	const auto [color, wi, pdf] =lambertian_.sample_f(intersection, wo);
+
+	const float ndotwi = glm::dot(intersection.normal, wi);
+	const Ray reflected(intersection.hit_point, wi);
+
+	return color * world.trace_ray(reflected, depth - 1) * ndotwi / pdf;
+
+}
+*/

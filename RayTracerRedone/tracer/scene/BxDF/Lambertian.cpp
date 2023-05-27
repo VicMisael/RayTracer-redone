@@ -23,8 +23,7 @@ sample_f Lambertian::sample_f(const intersection& intersection, const Vector3& w
 	const Vector3 u = cross(vNormalized, inNormal);
 
 	//TODO: Improve sampling
-	const auto sp=utility::random_in_unit_sphere();
-	const Vector3 wi = glm::normalize(sp.x* u + sp.y * v + sp.z * inNormal);
+	const auto wi=utility::random_in_hemisphere(inNormal);
 	const float pdf = dot(inNormal,wi) * Constants::INVPI_FLT;
 
 	return { kd_ * cd_ * Constants::INVPI_FLT,wi,pdf };

@@ -3,6 +3,7 @@
 #include <glm/vec3.hpp>
 #include <glm/geometric.hpp>
 
+#include "Constants.h"
 #include "Types.h"
 
 namespace utility
@@ -15,6 +16,11 @@ namespace utility
 		std::uniform_real_distribution<float> dis;
 		//std::uniform_int_distribution<float> dist();
 		return { dis(generator), dis(generator), dis(generator) };
+	}
+
+	inline double random_double() {
+		// Returns a random real in [0,1).
+		return rand() / (RAND_MAX + 1.0);
 	}
 
 	inline Vector3 random(float min,float max)
@@ -30,15 +36,21 @@ namespace utility
 	}
 	inline Vector3 random_in_unit_sphere()
 	{
-		while (true) {
-			auto p = random(-1, 1);
-			
-			auto sqrd_length = length(p) * length(p);
-			if (sqrd_length >= 1) continue;
-			return p;
-		}
+		auto r1 = random_double();
+		auto r2 = random_double();
+		auto x = cos(2 * Constants::pi * r1) * 2 * sqrt(r2 * (1 - r2));
+		auto y = sin(2 * Constants::pi * r1) * 2 * sqrt(r2 * (1 - r2));
+		auto z = 1 - r2;
+		return Vector3(x, y, z);
 	}
 
+	inline Vector3 random_in_hemisphere(const vec3& normal) {
+		Vector3 in_unit_sphere = random_in_unit_sphere();
+		if (dot(in_unit_sphere, normal) > 0.0) // In the same hemisphere as the normal
+			return in_unit_sphere;
+		else
+			return -in_unit_sphere;
+	}
 	inline Vector3  reflect_vector(const Vector3 in, const Vector3 normal)
 	{
 		return in-2*dot(in,normal)*normal;

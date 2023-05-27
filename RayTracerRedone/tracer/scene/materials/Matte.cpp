@@ -15,6 +15,7 @@ ColorVec Matte::shade(const World& world, const Ray& ray, const intersection& in
 		const float ndotwi = glm::dot(intersection.normal, wi);
 		if(ndotwi>0)
 		{
+			bool inshadow = false;
 			L += brdf_.f(intersection, wo, wi) * light->intensityAtPoint(intersection.hit_point) * ndotwi;
 		}
 	}
