@@ -13,7 +13,7 @@ ColorVec MetallicSpecular::f(const intersection& intersection, const Vector3& wo
 	return Constants::BLACK;
 }
 
-sample_f MetallicSpecular::sample_f(const intersection& intersection, const Vector3& wo) const
+sample_f_out MetallicSpecular::sample_f(const intersection& intersection, const Vector3& wo) const
 {
 	float ndotwo = dot(intersection.normal, wo);
 	const Vector3 wi = -wo + 2.0f * intersection.normal * ndotwo + (fuzz_ * utility::random_in_hemisphere(intersection.normal));

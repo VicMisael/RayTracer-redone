@@ -4,7 +4,8 @@
 #include "../../utils/ColorVec.h"
 #include "../../utils/Intersection.h"
 #include "../../utils/Constants.h"
-struct sample_f{
+
+struct sample_f_out{
 	ColorVec color;
 	Vector3 wi;
 	float pdf;
@@ -35,6 +36,6 @@ public:
 		is necessary for the BxDF to choose the incident light direction in this way, since the caller
 		has no chance of generating the appropriate wi direction.
 	*/
-	virtual sample_f sample_f(const intersection& intersection,const Vector3 &wo) const = 0;
+	virtual sample_f_out sample_f(const intersection& intersection,const Vector3 &wo) const = 0;
 };
 

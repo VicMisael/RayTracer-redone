@@ -21,7 +21,7 @@ ColorVec GlossySpecular::f(const intersection& intersection, const Vector3& wo, 
 	return L;
 }
 
-sample_f GlossySpecular::sample_f(const intersection& intersection, const Vector3& wo) const
+sample_f_out GlossySpecular::sample_f(const intersection& intersection, const Vector3& wo) const
 {
 	const Vector3& normal = intersection.normal;
 	const float n_dot_two = dot(normal, wo);

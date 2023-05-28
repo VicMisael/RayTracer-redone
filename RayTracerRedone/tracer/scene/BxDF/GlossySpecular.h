@@ -19,5 +19,5 @@ public:
 	GlossySpecular(const float ks, const ColorVec color, const float exp) :ks_(ks), color_(color), exp_(exp){};
 	ColorVec rho(const Vector3& wo) const override;
 	ColorVec f(const intersection& intersection, const Vector3& wo, const Vector3& wi) const override;
-	::sample_f sample_f(const intersection& intersection, const Vector3& wo) const override;
+	::sample_f_out sample_f(const intersection& intersection, const Vector3& wo) const override;
 };

@@ -12,7 +12,7 @@ ColorVec PerfectSpecular::f(const intersection& intersection, const Vector3& wo,
 	return Constants::BLACK;
 }
 
-sample_f PerfectSpecular::sample_f(const intersection& intersection, const Vector3& wo) const
+sample_f_out PerfectSpecular::sample_f(const intersection& intersection, const Vector3& wo) const
 {
 	
 	float ndotwo =dot(intersection.normal ,wo);
