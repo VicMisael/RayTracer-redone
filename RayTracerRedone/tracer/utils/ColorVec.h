@@ -15,6 +15,5 @@ public:
 		this->g = this->g > x ? val : this->g;
 		this->b = this->b > x ? val : this->b;
 	}
-	
 };
 

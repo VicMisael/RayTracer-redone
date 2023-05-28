@@ -3,6 +3,7 @@
 
 #include "../../utils/ColorVec.h"
 #include "../../utils/Intersection.h"
+#include "../../utils/Constants.h"
 struct sample_f{
 	ColorVec color;
 	Vector3 wi;
