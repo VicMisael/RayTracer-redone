@@ -93,4 +93,7 @@ add_executable(RayTracer_redone
 
 
 target_link_libraries(RayTracer_redone glm::glm)
+
 target_link_libraries(RayTracer_redone ${SDL2_LIBRARIES})
+set(CMAKE_CXX_FLAGS_RELEASE "-Ofast")
+set_property(TARGET RayTracer_redone PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)

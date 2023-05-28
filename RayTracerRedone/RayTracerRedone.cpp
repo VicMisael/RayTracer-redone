@@ -94,7 +94,7 @@ int main()
 
 	const ViewPlane view_plane=projection? ViewPlane(60, 60,20, 01.0f): ViewPlane(1450, 1450, 50, 01.0f);
 
-	sampler* sampler = new mt19937_point_sampler(1);
+	sampler* sampler = new mt19937_point_sampler(50);
 
 	AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
 	World world(view_plane, generateObjects(), generate_vectorial_lights(), ab, {0.3 , 0.3 , 1}, sampler, projection);
