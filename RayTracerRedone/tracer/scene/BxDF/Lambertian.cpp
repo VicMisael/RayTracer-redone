@@ -11,8 +11,7 @@ ColorVec Lambertian::rho(const Vector3& wo) const
 
 ColorVec Lambertian::f(const intersection& intersection, const Vector3& wo, const Vector3& wi) const 
 {
-	// return kd_ * cd_ * Constants::INVPI_FLT;
-	return kd_ * cd_;
+	 return kd_ * cd_ * Constants::INVPI_FLT;
 }
 
 

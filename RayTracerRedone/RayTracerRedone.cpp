@@ -28,10 +28,12 @@
 
 #include <glm/gtx/fast_square_root.hpp> 
 
+#include "tracer/scene/materials/PhongReflective.h"
+
 std::vector<std::shared_ptr<VirtualObject>> generateObjects()
 {
 	std::vector<std::shared_ptr<VirtualObject>> objects;
-	//objects.push_back(std::make_shared<Plane>(Point3(0, 90, -1100), Vector3(0, -1, 1), std::make_shared<Mirror>()));
+	objects.push_back(std::make_shared<Plane>(Point3(0, 90, -1100), Vector3(0, -1, 1), std::make_shared<Matte>(1,ColorVec(0.5,0.5,0.5))));
 	// objects.push_back(std::make_shared<Plane>(Point3(0, 0, 1100), Vector3(0, -1, 0), std::make_shared<Mirror>()));
 
 
@@ -66,10 +68,10 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects()
 	objects.push_back(std::make_shared<Ball>(Point3(160, 0, -350), 40,
 		std::make_shared<WhiteMetal>(0.2f)));
 
-	objects.push_back(std::make_shared<Ball>(Point3(-90, -25, -250), 65,
-		std::make_shared<Phong>(ColorVec(0.5, 0.2, 0.3), 4, 1, 10)));
+		objects.push_back(std::make_shared<Ball>(Point3(-90, -25, -250), 65,
+		std::make_shared<Phong>(ColorVec(1, 0, 1), 1, 1, 10)));
 
-	objects.push_back(std::make_shared<Ball>(Point3(-200, -50, -225), 90,
+	objects.push_back(std::make_shared<Ball>(Point3(-200, 50, -225), 90,
 		std::make_shared<Matte>(0.9f,ColorVec(0.5f, 0.4, 0.2))));
 
 	objects.push_back(std::make_shared<Ball>(Point3(-115, 350, -425), 55,
@@ -78,20 +80,24 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects()
 	objects.push_back(std::make_shared<Ball>(Point3(-15, 350, -425), 55,
 		std::make_shared<Matte>(1,ColorVec(1, 1, 1))));
 
-
+	
 	objects.push_back(std::make_shared<Ball>(Point3(400, 150, -350), 150,
 		std::make_shared<Matte>(1, ColorVec(1, 1, 0))));
 
 	objects.push_back(std::make_shared<Ball>(Point3(0, 550, -725), 256,
-		std::make_shared<WhiteMetal>(0.001 )));
+		std::make_shared<WhiteMetal>(1 )));
+
+	objects.push_back(std::make_shared<Ball>(Point3(0, 150, -100), 32,
+		std::make_shared<PhongReflective>(ColorVec(0.3,0.3,0.3),1,0.25,24,1)));
+		
 
 	return objects;
 }
 std::vector<std::shared_ptr<VectorialLight>> generate_vectorial_lights()
 {
 	std::vector<std::shared_ptr<VectorialLight>> lights;
-	lights.push_back(std::make_shared<DirectionalLight>(Vector3(0, 1, 0), 1, ColorVec(1, 1, 1)));
-	lights.push_back(std::make_shared<PointLight>(Point3(0, 0 ,0), 15, ColorVec(1, 1, 1)));
+	lights.push_back(std::make_shared<DirectionalLight>(Vector3(0, 1, 1), 3.15, ColorVec(1, 1, 1)));
+	lights.push_back(std::make_shared<PointLight>(Point3(0, 0 ,0), Constants::pi*2, ColorVec(1, 1, 1)));
 
 	return lights;
 }
@@ -111,15 +117,15 @@ int main()
 
 	const ViewPlane view_plane=projection? ViewPlane(10, 10,8, 01.0f): ViewPlane(1450, 1450, 50, 01.0f);
 
-	sampler* sampler = new equidistant_point_sampler(2);
+	sampler* sampler = new mt19937_point_sampler(256);
 
-	AmbientLight ab(0.4, ColorVec(1.0, 1.0, 1));
+	AmbientLight ab(0.1, ColorVec(1.0, 1.0, 1));
 	World world(view_plane, generateObjects(), generate_vectorial_lights(), ab, {0.06 , 0.06 , 0.1}, sampler, projection);
 
 
 	const Scene scene(&world, canvas);
 
-	const int32_t recursion_depth_limit = 6;
+	const int32_t recursion_depth_limit = 64;
 
 	auto draw = [&]
 	{

@@ -9,11 +9,11 @@ class Phong :
 	const GlossySpecular glossy_specular_;
 public:
 	Phong(const ColorVec color,const ColorVec specular_color,
-		const float ks, const float kd, const float exp) :lambertian_(kd, color), glossy_specular_(ks, specular_color, exp) {};
+		const float kspecular, const float kdiffuse, const float exp) :lambertian_(kdiffuse, color), glossy_specular_(kspecular, specular_color, exp) {};
 
-	Phong(const ColorVec color,const float ks,const float kd,const float exp):lambertian_(kd,color),glossy_specular_(ks,exp){};
+	Phong(const ColorVec color,const float kspecular,const float kdiffuse,const float exp):lambertian_(kspecular,color),glossy_specular_(kdiffuse,exp){};
 	
-	Phong(const ColorVec color, const float ks, const float exp) :lambertian_(1.0f, color), glossy_specular_(ks, exp) {};
+	Phong(const ColorVec color, const float kspecular, const float exp) :lambertian_(1.0f, color), glossy_specular_(kspecular, exp) {};
 
 	ColorVec shade(const World& world, const Ray& ray, const intersection& intersection, int32_t depth) const override;
 };

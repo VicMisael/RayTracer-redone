@@ -14,7 +14,7 @@ std::optional<intersection> Ball::intersects(const Ray& ray) const
 	const float c = glm::dot(origin_minus_center, origin_minus_center) - radius * radius;
 	const float disc = b*b-4.0f*a*c;
 	if (disc < 0.0f) {
-		{}
+		return {};
 	}
 	const float t1 = (-b + sqrtf(disc)) / (2.0f * a);
 	const float t2 = (-b - sqrtf(disc)) / (2.0f * a);

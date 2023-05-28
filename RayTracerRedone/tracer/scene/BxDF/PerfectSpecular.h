@@ -4,7 +4,7 @@
 class PerfectSpecular :
     public BxDF
 {
-	ColorVec cr = Constants::WHITE;
+	const ColorVec cr = Constants::WHITE;
 	const float kr;
 public:
 	PerfectSpecular(const float kr_):kr(kr_){}

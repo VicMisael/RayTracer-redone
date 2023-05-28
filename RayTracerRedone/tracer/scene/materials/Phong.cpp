@@ -17,7 +17,7 @@ ColorVec Phong::shade(const World& world, const Ray& ray, const intersection& in
 		{
 			bool inshadow = false;
 			if (light->casts_shadow())
-				inshadow = light->shadow_hit(world, Ray(intersection.hit_point, wi));
+				inshadow = light->shadow_hit(world, Ray(intersection.hit_point, normalize(wi)));
 
 			if (!inshadow){
 				const auto l_intensity = light->intensityAtPoint(intersection.hit_point);

@@ -9,6 +9,10 @@ inline float distanceAtenuation(float vectorLength)
 	return glm::inversesqrt(vectorLength);
 }
 
+float length(const Vector3 a)
+{
+	return  glm::length(a);
+}
 ColorVec PointLight::intensityAtPoint(const Point3 p) const
 {
 	return inversesqrt(length(getVector(p)))*intensity * color;
@@ -26,14 +30,17 @@ Vector3 PointLight::getNormalizedDirection(const Point3 p) const
 
 bool PointLight::shadow_hit(const World& world, const Ray& outgoing) const
 {
-	float distance = length(outgoing.origin - this->point);
-
+	
+	const float distance = length(outgoing.origin - this->point);
 	for (const auto& obj : world.objects())
 	{
 
 		const std::optional<intersection> intersection = obj->intersects(outgoing);
-		if (intersection.has_value() && intersection.value().hits && intersection.value().tmin<distance){
-			return true;
+		if (intersection.has_value() ){
+			const auto& intersection_data = intersection.value();
+			if (intersection_data.hits  && intersection_data.tmin >0 && intersection_data.tmin <= distance) {
+				return true;
+			}
 		}
 		
 	}
