@@ -1,0 +1,1 @@
+g++-12 sdl2canvas/*.cpp tracer/config/*.cpp tracer/objects/*.cpp tracer/scene/*.cpp tracer/utils/*.cpp RayTracerRedone.cpp -mavx2 -flto -Ofast -pipe -lSDL2  -o main
