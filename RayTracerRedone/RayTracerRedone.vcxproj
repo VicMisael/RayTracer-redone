@@ -142,6 +142,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="tracer\objects\Mesh.cpp" />
+    <ClCompile Include="tracer\objects\OpenCylinder.cpp" />
     <ClCompile Include="tracer\scene\BxDF\MetallicSpecular.cpp" />
     <ClCompile Include="tracer\scene\materials\PhongReflective.cpp" />
     <ClCompile Include="tracer\scene\BxDF\PerfectSpecular.cpp" />
@@ -173,6 +175,8 @@
     <ClCompile Include="tracer\scene\materials\PhongMetal.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="tracer\objects\Mesh.h" />
+    <ClInclude Include="tracer\objects\OpenCylinder.h" />
     <ClInclude Include="tracer\scene\BxDF\MetallicSpecular.h" />
     <ClInclude Include="tracer\scene\materials\PhongReflective.h" />
     <ClInclude Include="tracer\scene\BxDF\PerfectSpecular.h" />

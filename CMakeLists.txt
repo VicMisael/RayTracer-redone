@@ -27,6 +27,10 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/objects/Plane.cpp
         RayTracerRedone/tracer/objects/Plane.h
         RayTracerRedone/tracer/objects/VirtualObject.h
+        RayTracerRedone/tracer/objects/Mesh.cpp
+        RayTracerRedone/tracer/objects/Mesh.h
+        RayTracerRedone/tracer/objects/OpenCylinder.cpp
+        RayTracerRedone/tracer/objects/OpenCylinder.h
         RayTracerRedone/tracer/scene/BxDF/BxDF.h
         RayTracerRedone/tracer/scene/BxDF/GlossySpecular.cpp
         RayTracerRedone/tracer/scene/BxDF/GlossySpecular.h
@@ -89,7 +93,7 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/utils/Intersection.h
         RayTracerRedone/tracer/utils/Types.h
         RayTracerRedone/tracer/utils/utility.h
-        RayTracerRedone/RayTracerRedone.cpp RayTracerRedone/tracer/objects/Mesh.cpp RayTracerRedone/tracer/objects/Mesh.h RayTracerRedone/tracer/objects/Cylinder.cpp RayTracerRedone/tracer/objects/Cylinder.h)
+        RayTracerRedone/RayTracerRedone.cpp)
 
 
 target_link_libraries(RayTracer_redone glm::glm)

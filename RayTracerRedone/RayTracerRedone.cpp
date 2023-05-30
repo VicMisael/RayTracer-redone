@@ -7,10 +7,14 @@
 #include <SDL2/SDL.h>
 #include <thread>
 #include <random>
+
 #include "sdl2canvas/sdl2canvas.h"
+
 #include "tracer/scene/World.h"
 #include "tracer/objects/Plane.h"
 #include "tracer/objects/Ball.h"
+#include "tracer/objects/OpenCylinder.h"
+
 #include "tracer/scene/Scene.h"
 #include "tracer/scene/light/DirectionalLight.h"
 #include "tracer/scene/light/PointLight.h"
@@ -29,13 +33,14 @@
 #include "tracer/scene/materials/Mirror.h"
 #include "tracer/scene/materials/Phong.h"
 
+
 std::vector<std::shared_ptr<VirtualObject>> generateObjects()
 {
 	std::vector<std::shared_ptr<VirtualObject>> objects;
 	const auto plane_material= std::make_shared<Phong>(ColorVec(0.4,0.4,0.8),1,1,25);
-	objects.push_back(std::make_shared<Plane>(Point3(0, 0, -1900), Vector3(0, -1, 1), plane_material));
-	objects.push_back(std::make_shared<Plane>(Point3(0, 900, 1000), Vector3(0, 1, 1), plane_material));
-
+    const auto plane_material2= std::make_shared<Phong>(ColorVec(0.4,0.9,0.2),1,1,25);
+    objects.push_back(std::make_shared<Plane>(Point3(0, 0, -1900), Vector3(0, -1, 1), plane_material));
+	objects.push_back(std::make_shared<Plane>(Point3(0, 900, 1000), Vector3(0, 1, 1), plane_material2));
 
 	objects.push_back(std::make_shared<Ball>(Point3(0, -955, -1000), 1000, std::make_shared<Matte>(1,ColorVec(1, 1.0,1))));
 	objects.push_back(std::make_shared<Ball>(Point3(1350, 0, -900), 1000, std::make_shared<PhongMetal>()));
@@ -68,6 +73,8 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects()
 		std::make_shared<PhongReflective>(ColorVec(Constants::BLACK),1,25,1)));
 
 
+    objects.push_back(std::make_shared<OpenCylinder>(Vector3(0,1,0),Point3(100,0,-300),150,50,std::make_shared<PhongReflective>()));
+
 	return objects;
 }
 std::vector<std::shared_ptr<VectorialLight>> generate_vectorial_lights()
@@ -94,15 +101,15 @@ int main()
 
 	const ViewPlane view_plane=projection? ViewPlane(60, 60,20, 01.0f): ViewPlane(1450, 1450, 50, 01.0f);
 
-	sampler* sampler = new mt19937_point_sampler(1);
+	sampler* sampler = new mt19937_point_sampler(20);
 
 	AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
-	World world(view_plane, generateObjects(), generate_vectorial_lights(), ab, {0.3 , 0.3 , 1}, sampler, projection);
+	World world(view_plane, generateObjects(), generate_vectorial_lights(), ab, {0.9 , 0.9 , 1}, sampler, projection);
 
 
 	const Scene scene(&world, canvas);
 
-	constexpr int32_t recursion_depth_limit = 64;
+	constexpr int32_t recursion_depth_limit = 3;
 
 	auto draw = [&]
 	{
