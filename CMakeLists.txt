@@ -89,11 +89,12 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/utils/Intersection.h
         RayTracerRedone/tracer/utils/Types.h
         RayTracerRedone/tracer/utils/utility.h
-        RayTracerRedone/RayTracerRedone.cpp)
+        RayTracerRedone/RayTracerRedone.cpp RayTracerRedone/tracer/objects/Mesh.cpp RayTracerRedone/tracer/objects/Mesh.h RayTracerRedone/tracer/objects/Cylinder.cpp RayTracerRedone/tracer/objects/Cylinder.h)
 
 
 target_link_libraries(RayTracer_redone glm::glm)
 
 target_link_libraries(RayTracer_redone ${SDL2_LIBRARIES})
-set(CMAKE_CXX_FLAGS_RELEASE "-Ofast -Wall -march=native")
+set(CMAKE_CXX_FLAGS_RELEASE "-Ofast -Wall -mavx2")
+SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-Ofast -g -mavx")
 set_property(TARGET RayTracer_redone PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)

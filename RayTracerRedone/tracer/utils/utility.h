@@ -48,12 +48,12 @@ namespace utility
 		Vector3 in_unit_sphere = random_in_unit_sphere();
 		if (dot(in_unit_sphere, normal) > 0.0) // In the same hemisphere as the normal
 			return in_unit_sphere;
-		else
-			return -in_unit_sphere;
+        return -in_unit_sphere;
 	}
 	inline Vector3  reflect_vector(const Vector3 in, const Vector3 normal)
 	{
-		return in-2*dot(in,normal)*normal;
+        return glm::reflect(in,normal);
+		//return in-2*dot(in,normal)*normal;
 	}
 }
 
