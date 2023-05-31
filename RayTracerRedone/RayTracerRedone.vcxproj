@@ -145,6 +145,7 @@
     <ClCompile Include="tracer\objects\BoundingBox\AABB.cpp" />
     <ClCompile Include="tracer\objects\Mesh.cpp" />
     <ClCompile Include="tracer\objects\OpenCylinder.cpp" />
+    <ClCompile Include="tracer\objects\VirtualObject.cpp" />
     <ClCompile Include="tracer\scene\BxDF\MetallicSpecular.cpp" />
     <ClCompile Include="tracer\scene\materials\PhongReflective.cpp" />
     <ClCompile Include="tracer\scene\BxDF\PerfectSpecular.cpp" />
