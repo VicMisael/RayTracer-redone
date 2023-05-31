@@ -73,7 +73,7 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects()
 		std::make_shared<PhongReflective>(ColorVec(Constants::BLACK),1,25,1)));
 
 
-    objects.push_back(std::make_shared<OpenCylinder>(Vector3(0,1,0),Point3(100,0,-300),150,50,std::make_shared<PhongReflective>()));
+    //objects.push_back(std::make_shared<OpenCylinder>(Vector3(0,1,0),Point3(100,0,-300),150,50,std::make_shared<PhongReflective>()));
 
 	return objects;
 }
