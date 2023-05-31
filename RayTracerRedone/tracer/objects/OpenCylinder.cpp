@@ -43,7 +43,7 @@ std::optional<intersection> OpenCylinder::intersects(const Ray &ray) const {
         const auto W = intersectionPoint - base_;
         const auto unnormalizedNormal = (W-axis_*(dot(W,axis_)));
 
-        return intersection{true,t_min,intersectionPoint, normalize(unnormalizedNormal),material};
+        return intersection{true,t_min,intersectionPoint, normalize(unnormalizedNormal),material.value()};
     };
     return {};
 

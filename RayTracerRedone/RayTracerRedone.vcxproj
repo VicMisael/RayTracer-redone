@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="tracer\objects\BoundingBox\AABB.cpp" />
     <ClCompile Include="tracer\objects\Mesh.cpp" />
     <ClCompile Include="tracer\objects\OpenCylinder.cpp" />
     <ClCompile Include="tracer\scene\BxDF\MetallicSpecular.cpp" />
@@ -175,6 +176,7 @@
     <ClCompile Include="tracer\scene\materials\PhongMetal.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="tracer\objects\BoundingBox\AABB.h" />
     <ClInclude Include="tracer\objects\Mesh.h" />
     <ClInclude Include="tracer\objects\OpenCylinder.h" />
     <ClInclude Include="tracer\scene\BxDF\MetallicSpecular.h" />

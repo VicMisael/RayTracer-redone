@@ -3,3 +3,7 @@
 //
 
 #include "AABB.h"
+
+std::optional<intersection> AABB::intersects(const Ray &ray) const {
+    return std::optional<intersection>();
+}

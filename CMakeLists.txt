@@ -93,7 +93,7 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/utils/Intersection.h
         RayTracerRedone/tracer/utils/Types.h
         RayTracerRedone/tracer/utils/utility.h
-        RayTracerRedone/RayTracerRedone.cpp)
+        RayTracerRedone/RayTracerRedone.cpp RayTracerRedone/tracer/objects/BoundingBox/AABB.h RayTracerRedone/tracer/objects/BoundingBox/AABB.cpp RayTracerRedone/tracer/objects/VirtualObject.cpp)
 
 
 target_link_libraries(RayTracer_redone glm::glm)

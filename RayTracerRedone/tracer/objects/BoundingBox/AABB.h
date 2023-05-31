@@ -7,7 +7,9 @@
 
 #include "../VirtualObject.h"
 
-class AABB : public VirtualObject{
-
+class AABB: public VirtualObject{
+public:
+            AABB()=default;
+    std::optional<intersection> intersects(const Ray &ray) const override;
 };
 
