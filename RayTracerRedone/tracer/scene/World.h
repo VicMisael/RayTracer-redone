@@ -22,6 +22,9 @@ private:
 	AmbientLight ambient_light;
 	sampler *_sampler;
 	bool perspective_{};
+	void draw_pixel(Canvas *canvas, const int32_t depth, const float ystep, const float xstep, const float zw,
+					const std::vector<std::tuple<float, float>> &points, const unsigned int &num_samples, uint16_t y,
+					uint16_t x) const;
 public:
 	ColorVec trace_ray(const Ray& ray, const int32_t depth) const;
 
@@ -59,4 +62,6 @@ public:
 	{
 		return ambient_light;
 	}
+
+
 };

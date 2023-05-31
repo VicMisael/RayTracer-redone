@@ -1,3 +1,4 @@
+#include <thread>
 #include "World.h"
 
 ColorVec World::trace_ray(const Ray &ray, const int32_t depth) const
@@ -27,40 +28,87 @@ void World::render(Canvas* canvas,const int32_t depth) const
 	const float zw = viewPlane.zw;
 	const auto  &points = _sampler->generate_points();
 	const auto &num_samples = _sampler->num_samples;
+    auto drawblock1=[&]{
+        for (uint16_t y = 0; y < height/4; y++) {
+            for (uint16_t x = 0; x < width; x++) {
+                draw_pixel(canvas, depth, ystep, xstep, zw, points, num_samples, y, x);
+            }
+        }
+    };
+
+    auto drawblock2=[&]{
+        for (uint16_t y = height/4; y < 2*height/4; y++) {
+            for (uint16_t x = 0; x < width; x++) {
+                draw_pixel(canvas, depth, ystep, xstep, zw, points, num_samples, y, x);
+            }
+        }
+    };
+    auto drawblock3=[&]{
+        for (uint16_t y = 2*height/4; y < 3*height/4; y++) {
+            for (uint16_t x = 0; x < width; x++) {
+                draw_pixel(canvas, depth, ystep, xstep, zw, points, num_samples, y, x);
+            }
+        }
+    };
+    auto drawblock4=[&]{
+        for (uint16_t y = 3*height/4; y < height; y++) {
+            for (uint16_t x = 0; x < width; x++) {
+                draw_pixel(canvas, depth, ystep, xstep, zw, points, num_samples, y, x);
+            }
+        }
+    };
+    std::thread t1(drawblock1);
+    std::thread t2(drawblock2);
+    std::thread t3(drawblock3);
+    std::thread t4(drawblock4);
+
+    t1.join();
+    t2.join();
+    t3.join();
+    t4.join();
+    /*
+     * Unthreaded
 	for (uint16_t y = 0; y < height; y++) {
 		for (uint16_t x = 0; x < width; x++) {
-			ColorVec colorVec(0,0,0);
-			for (const std::tuple<float, float>& sample_point : points) {
-				auto [x_sample_point, y_sample_point] = sample_point;
-				const float vp_y =  ystep * y;
-				const float vp_x =  xstep * x;
-
-				x_sample_point *= xstep;
-				y_sample_point *= ystep;
-
-				if (perspective_) {
-					const float y_coord = viewPlane.pixelsize * (vp_y - 0.5f * (viewPlane.hsize - 1.0f));
-					const float x_coord = -viewPlane.pixelsize * (vp_x - 0.5f * (viewPlane.wsize - 1.0f));
-					const Vector3 vp_r(x_coord+ x_sample_point, y_coord+ y_sample_point, zw);
-					const Point3 origin(0, 0, 0);
-					const Vector3 direction = origin - vp_r;
-					const Ray r(origin, direction);
-					colorVec += trace_ray(r, depth);
-					//canvas->write_pixel(x, y, ColorRGBA(trace_ray(r, 0)));
-				}
-				else {
-					const float y_coord = viewPlane.pixelsize * (vp_y - 0.5f * (viewPlane.hsize - 1.0f));
-					const float x_coord = viewPlane.pixelsize * (vp_x - 0.5f * (viewPlane.wsize - 1.0f));
-					const Vector3 vp_r(x_coord+x_sample_point, -y_coord+y_sample_point, zw);
-					const Ray r(vp_r, Vector3(0, 0, -1));
-					colorVec += trace_ray(r, depth);
-					//canvas->write_pixel(x, y, ColorRGBA(trace_ray(r, 0)));
-				}
-			}
-			const ColorVec out = (colorVec * 1.0f/static_cast<float>(num_samples));
-			canvas->write_pixel(x, y,ColorRGBA(out));
-		}
+            draw_pixel(canvas, depth, ystep, xstep, zw, points, num_samples, y, x);
+        }
 	}
+     */
+}
+
+void World::draw_pixel(Canvas *canvas, const int32_t depth, const float ystep, const float xstep, const float zw,
+                       const std::vector<std::tuple<float, float>> &points, const unsigned int &num_samples, uint16_t y,
+                       uint16_t x) const {
+    ColorVec colorVec(0, 0, 0);
+    for (const std::tuple<float, float>& sample_point : points) {
+        auto [x_sample_point, y_sample_point] = sample_point;
+        const float vp_y =  ystep * y;
+        const float vp_x =  xstep * x;
+
+        x_sample_point *= xstep;
+        y_sample_point *= ystep;
+
+        if (perspective_) {
+            const float y_coord = viewPlane.pixelsize * (vp_y - 0.5f * (viewPlane.hsize - 1.0f));
+            const float x_coord = -viewPlane.pixelsize * (vp_x - 0.5f * (viewPlane.wsize - 1.0f));
+            const Vector3 vp_r(x_coord+ x_sample_point, y_coord+ y_sample_point, zw);
+            const Point3 origin(0, 0, 0);
+            const Vector3 direction = origin - vp_r;
+            const Ray r(origin, direction);
+            colorVec += trace_ray(r, depth);
+            //canvas->write_pixel(x, y, ColorRGBA(trace_ray(r, 0)));
+        }
+        else {
+            const float y_coord = viewPlane.pixelsize * (vp_y - 0.5f * (viewPlane.hsize - 1.0f));
+            const float x_coord = viewPlane.pixelsize * (vp_x - 0.5f * (viewPlane.wsize - 1.0f));
+            const Vector3 vp_r(x_coord+x_sample_point, -y_coord+y_sample_point, zw);
+            const Ray r(vp_r, Vector3(0, 0, -1));
+            colorVec += trace_ray(r, depth);
+            //canvas->write_pixel(x, y, ColorRGBA(trace_ray(r, 0)));
+        }
+    }
+    const ColorVec out = (colorVec * 1.0f/static_cast<float>(num_samples));
+    canvas->write_pixel(x, y,ColorRGBA(out));
 }
 
 std::optional<intersection> World::hit(const Ray &ray) const
