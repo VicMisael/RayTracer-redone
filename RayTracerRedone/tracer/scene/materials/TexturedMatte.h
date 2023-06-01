@@ -5,7 +5,7 @@
 #include "Matte.h"
 
 #include <utility>
-#include "textures/Texture.h"
+#include "../textures/Texture.h"
 
 class TexturedMatte: public Matte{
     std::shared_ptr<Texture> texture_;

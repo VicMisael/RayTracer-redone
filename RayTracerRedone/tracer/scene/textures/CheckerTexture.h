@@ -2,16 +2,16 @@
 
 
 #include "Texture.h"
-#include "Constants.h"
+#include "../../utils/Constants.h"
 
 class CheckerTexture: public Texture{
     const ColorVec a_;
     const ColorVec b_;
-    const float size_=10;
+    const float size_;
 public:
-    CheckerTexture():a_(Constants::RED),b_(Constants::WHITE){};
-    explicit CheckerTexture(const float size):size_(size){};
-    CheckerTexture(const ColorVec a,const ColorVec b):a_(a),b_(b){
+    CheckerTexture():CheckerTexture(10){};
+    CheckerTexture(const float size):CheckerTexture(Constants::RED,Constants::WHITE,size){};
+    CheckerTexture(const ColorVec a,const ColorVec b):CheckerTexture(a,b, 10) {
 
     }
     CheckerTexture(const ColorVec a,const ColorVec b,const float size):a_(a),b_(b),size_(size){

@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="tracer\objects\BoundingBox\AABB.cpp" />
+    <ClCompile Include="tracer\objects\BoundingBox\BVH.cpp" />
     <ClCompile Include="tracer\objects\Mesh.cpp" />
     <ClCompile Include="tracer\objects\OpenCylinder.cpp" />
     <ClCompile Include="tracer\objects\VirtualObject.cpp" />
@@ -161,10 +162,15 @@
     <ClCompile Include="tracer\scene\light\PointLight.cpp" />
     <ClCompile Include="tracer\scene\light\AmbientLight.cpp" />
     <ClCompile Include="sdl2canvas\sdl2canvas.cpp" />
+    <ClCompile Include="tracer\scene\materials\TexturedMaterial.cpp" />
+    <ClCompile Include="tracer\scene\materials\TexturedMatte.cpp" />
+    <ClCompile Include="tracer\scene\materials\TexturedPhong.cpp" />
     <ClCompile Include="tracer\scene\Ray.cpp" />
     <ClCompile Include="tracer\scene\Scene.cpp" />
     <ClCompile Include="tracer\objects\Ball.cpp" />
     <ClCompile Include="tracer\objects\Plane.cpp" />
+    <ClCompile Include="tracer\scene\textures\CheckerTexture.cpp" />
+    <ClCompile Include="tracer\scene\textures\Texture.cpp" />
     <ClCompile Include="tracer\scene\World.cpp" />
     <ClCompile Include="tracer\scene\ViewPlane.cpp" />
     <ClCompile Include="tracer\utils\sampler\diagonal_point_sampler.cpp" />
@@ -178,6 +184,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tracer\objects\BoundingBox\AABB.h" />
+    <ClInclude Include="tracer\objects\BoundingBox\BVH.h" />
     <ClInclude Include="tracer\objects\Mesh.h" />
     <ClInclude Include="tracer\objects\OpenCylinder.h" />
     <ClInclude Include="tracer\scene\BxDF\MetallicSpecular.h" />
@@ -193,9 +200,14 @@
     <ClInclude Include="tracer\scene\light\PointLight.h" />
     <ClInclude Include="tracer\scene\light\DirectionalLight.h" />
     <ClInclude Include="tracer\scene\light\AmbientLight.h" />
+    <ClInclude Include="tracer\scene\materials\TexturedMaterial.h" />
+    <ClInclude Include="tracer\scene\materials\TexturedMatte.h" />
+    <ClInclude Include="tracer\scene\materials\TexturedPhong.h" />
     <ClInclude Include="tracer\scene\Projection.h" />
     <ClInclude Include="sdl2canvas\sdl2canvas.h" />
     <ClInclude Include="tracer\scene\Scene.h" />
+    <ClInclude Include="tracer\scene\textures\CheckerTexture.h" />
+    <ClInclude Include="tracer\scene\textures\Texture.h" />
     <ClInclude Include="tracer\utils\ColorRGBA.h" />
     <ClInclude Include="tracer\scene\Canvas.h" />
     <ClInclude Include="tracer\scene\light\Light.h" />

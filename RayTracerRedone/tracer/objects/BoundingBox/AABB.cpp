@@ -3,6 +3,7 @@
 //
 
 #include "AABB.h"
+#include <algorithm>
 
 
 bool AABB::intersects(const Ray &ray,  float t_min,  float t_max) const {

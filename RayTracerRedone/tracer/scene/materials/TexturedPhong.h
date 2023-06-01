@@ -8,7 +8,7 @@
 #include "Phong.h"
 
 #include <utility>
-#include "textures/Texture.h"
+#include "../textures/Texture.h"
 
 class TexturedPhong: public Phong {
     std::shared_ptr<Texture> texture_;

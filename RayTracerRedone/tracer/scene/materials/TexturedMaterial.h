@@ -6,7 +6,7 @@
 
 #include <memory>
 #include "Material.h"
-#include "textures/Texture.h"
+#include "../textures/Texture.h"
 
 //Avoid This
 class TexturedMaterial: public Material{

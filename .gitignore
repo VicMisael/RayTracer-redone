@@ -22,3 +22,9 @@
 /RayTracerRedone/.vs/
 /RayTracerRedone/Debug/
 /RayTracerRedone/Release/
+/cmake-build-default
+/cmake-build-release-g12
+/cmake-build-release-wsl-clang
+/cmake-build-release-wsl-gcc12
+/cmake-build-relwithdebinfo-wsl-clang
+/cmake-build-relwithdebinfo-wsl-gcc12

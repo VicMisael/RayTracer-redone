@@ -35,9 +35,10 @@
 #include "tracer/scene/materials/Phong.h"
 #include "tracer/scene/materials/TexturedPhong.h"
 #include "tracer/scene/materials/TexturedMatte.h"
+#include "tracer/scene/textures/CheckerTexture.h"
+#include "tracer/scene/materials/TexturedMaterial.h"
+#include "tracer/scene/materials/Diffuse.h"
 
-
-#include "textures/CheckerTexture.h"
 
 
 std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
@@ -45,8 +46,17 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     const auto plane_material = std::make_shared<Phong>(ColorVec(0.4, 0.4, 0.8), 1, 1, 25);
     const auto plane_material2 = std::make_shared<Phong>(ColorVec(0.4, 0.9, 0.2), 1, 1, 25);
     const auto checkeredTexture=std::make_shared<CheckerTexture>(100);
-    const auto textured =std::make_shared<TexturedMatte>(checkeredTexture);
-
+    const auto textured =std::make_shared<TexturedPhong>(checkeredTexture);
+    const auto red_specular_phong = std::make_shared<Phong>(ColorVec(0.4, 0.5, 0.5),
+                                                            ColorVec(1, 0, 0), 1, 1,
+                                                            23);
+    const auto phong_metal = std::make_shared<PhongMetal>();
+    const auto white_matte = std::make_shared<Matte>(1, ColorVec(1, 1.0, 1));
+    const auto mirror = std::make_shared<Mirror>();
+    const auto phong_black_reflective = std::make_shared<PhongReflective>(Constants::BLACK, 1, 12, 1);
+    const auto pink_matte = std::make_shared<Matte>(1, ColorVec(1, 0, 1));
+    const auto phong_reflective_higher_exp = std::make_shared<PhongReflective>(ColorVec(Constants::BLACK), 1, 25, 1);
+    const auto yellow_matte = std::make_shared<Matte>(1, ColorVec(1, 1, 0));
 
     std::vector<std::shared_ptr<VirtualObject>> objects;
 
@@ -54,42 +64,47 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     objects.push_back(std::make_shared<Plane>(Point3(0, 900, 1000), Vector3(0, 1, 1), plane_material2));
 
     objects.push_back(
-            std::make_shared<Ball>(Point3(0, -955, -1000), 1000, textured));
+            std::make_shared<Ball>(Point3(0, -955, -1000), 1000, white_matte));
 
-    objects.push_back(std::make_shared<Ball>(Point3(1350, 0, -1000), 1000, std::make_shared<PhongMetal>()));
+    objects.push_back(std::make_shared<Ball>(Point3(1350, 0, -1000), 1000, phong_metal));
 
     objects.push_back(
-            std::make_shared<Ball>(Point3(-1250, 0, -1000), 1000,std::make_shared<Phong>(ColorVec(0.4, 0.5, 0.5), ColorVec(1, 0, 0), 1, 1, 23)));
+            std::make_shared<Ball>(Point3(-1250, 0, -1000), 1000, textured));
 
-    objects.push_back(std::make_shared<Ball>(Point3(5, -20, -625), 120, std::make_shared<PhongMetal>(1)));
+    objects.push_back(std::make_shared<Ball>(Point3(5, -20, -625), 120, phong_metal));
 
 
     objects.push_back(std::make_shared<Ball>(Point3(-150, 55, -150), 40,
-                                             std::make_shared<Matte>(1, Constants::WHITE)));
-
-    objects.push_back(std::make_shared<Ball>(Point3(0, 40, -650), 40,
-                                             std::make_shared<Mirror>()));
-
-    objects.push_back(std::make_shared<Ball>(Point3(-90, -25, -350), 105,
-                                             std::make_shared<Matte>(1, ColorVec(1, 0, 1))));
-
-    objects.push_back(std::make_shared<Ball>(Point3(0, 0, -195), 95,
-                                             std::make_shared<PhongReflective>(Constants::BLACK, 1, 12, 1)));
-
-    objects.push_back(std::make_shared<Ball>(Point3(400, 150, -350), 150,
-                                             std::make_shared<Matte>(1, ColorVec(1, 1, 0))));
-
-    objects.push_back(std::make_shared<Ball>(Point3(0, 100, -925), 256,
-                                             std::make_shared<Mirror>()));
-
-    const auto white_matte = std::make_shared<Matte>(1, ColorVec(1, 1.0, 1));
-
-
-    objects.push_back(std::make_shared<Ball>(Point3(-120, 100, -125), 100,
                                              white_matte));
 
+
+    objects.push_back(std::make_shared<Ball>(Point3(0, 40, -650), 40,
+                                             mirror));
+
+
+
+    objects.push_back(std::make_shared<Ball>(Point3(-90, -25, -350), 105,
+                                             pink_matte));
+
+
+    objects.push_back(std::make_shared<Ball>(Point3(0, 0, -195), 95,
+                                             phong_black_reflective));
+
+
+    objects.push_back(std::make_shared<Ball>(Point3(400, 150, -350), 150,
+                                             yellow_matte));
+
+    objects.push_back(std::make_shared<Ball>(Point3(0, 100, -925), 256,
+                                             mirror));
+
+    const auto textured_test_material=std::make_shared<TexturedMaterial>(checkeredTexture, phong_metal);
+
+    objects.push_back(std::make_shared<Ball>(Point3(200, 300, -1500), 280,
+        textured_test_material));
+
+
     objects.push_back(std::make_shared<Ball>(Point3(0, 650, -125), 120,
-                                             std::make_shared<PhongReflective>(ColorVec(Constants::BLACK), 1, 25, 1)));
+                                             phong_reflective_higher_exp));
 
     objects.push_back(std::make_shared<OpenCylinder>(Vector3(0,1,0),Point3(200,0,-200),650,150,std::make_shared<Matte>(1,ColorVec(1.0f,.2f,.3f))));
 
@@ -118,15 +133,15 @@ int main() {
 
     const ViewPlane view_plane = projection ? ViewPlane(60, 60, 20, 01.0f) : ViewPlane(1450, 1450, 50, 01.0f);
 
-    sampler *sampler = new mt19937_point_sampler(1);
+    sampler *sampler = new mt19937_point_sampler(10);
 
-    AmbientLight ab(1, ColorVec(1.0, 1.0, 1));
+    AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
     World world(view_plane, generateObjects(), generate_vectorial_lights(), ab, {0.9, 0.9, 1}, sampler, projection);
 
 
     const Scene scene(&world, canvas);
 
-    constexpr int32_t recursion_depth_limit = 0 ;
+    constexpr int32_t recursion_depth_limit = 10 ;
 
     auto draw = [&] {
         while (!canvas->should_stop()) {

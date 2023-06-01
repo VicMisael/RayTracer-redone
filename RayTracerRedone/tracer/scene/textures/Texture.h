@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "ColorVec.h"
-#include "Types.h"
+#include "../../utils/ColorVec.h"
+#include "../../utils/Types.h"
 
 class Texture {
 public:
