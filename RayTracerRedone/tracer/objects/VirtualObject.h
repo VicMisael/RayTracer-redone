@@ -7,7 +7,8 @@
 #include "../scene/Ray.h"
 #include "../scene/materials/Material.h"
 #include "../utils/Constants.h"
-class AABB;
+
+#include "BoundingBox/AABB.h"
 
 class VirtualObject
 {

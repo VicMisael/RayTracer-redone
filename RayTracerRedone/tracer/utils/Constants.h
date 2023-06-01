@@ -13,4 +13,7 @@ namespace Constants {
 	constexpr ColorVec YELLOW(1, 1, 0);
 	constexpr ColorVec BLACK(0,0,0);
 	constexpr ColorVec WHITE(1, 1, 1);
+    constexpr ColorVec RED(1, 0, 0);
+    constexpr ColorVec BLUE(0, 0, 1);
+    constexpr ColorVec GREEN(0, 1, 0);
 }

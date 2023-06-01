@@ -93,12 +93,23 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/utils/Intersection.h
         RayTracerRedone/tracer/utils/Types.h
         RayTracerRedone/tracer/utils/utility.h
-        RayTracerRedone/RayTracerRedone.cpp RayTracerRedone/tracer/objects/BoundingBox/AABB.h RayTracerRedone/tracer/objects/BoundingBox/AABB.cpp RayTracerRedone/tracer/objects/VirtualObject.cpp)
+        RayTracerRedone/RayTracerRedone.cpp
+        RayTracerRedone/tracer/objects/BoundingBox/AABB.h
+        RayTracerRedone/tracer/objects/BoundingBox/AABB.cpp
+        RayTracerRedone/tracer/objects/VirtualObject.cpp
+        RayTracerRedone/tracer/objects/BoundingBox/BVH.cpp
+        RayTracerRedone/tracer/objects/BoundingBox/BVH.h
+        RayTracerRedone/tracer/scene/materials/TexturedPhong.cpp
+        RayTracerRedone/tracer/scene/materials/TexturedPhong.h
+        RayTracerRedone/tracer/scene/textures/Texture.cpp
+        RayTracerRedone/tracer/scene/textures/Texture.h
+        RayTracerRedone/tracer/scene/textures/CheckerTexture.cpp
+        RayTracerRedone/tracer/scene/textures/CheckerTexture.h RayTracerRedone/tracer/scene/materials/TexturedMatte.cpp RayTracerRedone/tracer/scene/materials/TexturedMatte.h RayTracerRedone/tracer/scene/materials/TexturedMaterial.cpp RayTracerRedone/tracer/scene/materials/TexturedMaterial.h)
 
 
 target_link_libraries(RayTracer_redone glm::glm)
 
 target_link_libraries(RayTracer_redone ${SDL2_LIBRARIES})
-set(CMAKE_CXX_FLAGS_RELEASE "-Ofast -Wall -mavx2")
-SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-Ofast -g -mavx")
+set(CMAKE_CXX_FLAGS_RELEASE "-Ofast -Wall -march=native")
+SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-Ofast -g -march=native")
 set_property(TARGET RayTracer_redone PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
