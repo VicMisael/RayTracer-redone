@@ -111,7 +111,7 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
 
     objects.push_back(std::make_shared<Ball>(Point3(0, 650, -125), 120,
                                              phong_reflective_higher_exp));
-    const auto checkeredTexture2 = std::make_shared<PointCheckerTexture>(10);
+    const auto checkeredTexture2 = std::make_shared<CheckerTexture>(10);
     const auto textured3 = std::make_shared<TexturedMaterial>(checkeredTexture2,phong_metal);
     objects.push_back(std::make_shared<OpenCylinder>(Vector3(1,0,0),Point3(400,-140,-200),450,80, textured3));
     
@@ -140,7 +140,7 @@ int main() {
 
     const ViewPlane view_plane = projection ? ViewPlane(60, 60, 20, 01.0f) : ViewPlane(1450, 1450, 50, 01.0f);
 
-    sampler *sampler = new mt19937_point_sampler(100);
+    sampler *sampler = new mt19937_point_sampler(380);
 
     AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
     World world(view_plane, generateObjects(), generate_vectorial_lights(), ab, {0.9, 0.9, 1}, sampler, projection);
@@ -157,7 +157,12 @@ int main() {
 
             auto t2 = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double, std::milli> ms_double = t2 - t1;
-            std::cout << " Took" << ms_double.count() / 1000 << "s" << std::endl;
+            const auto seconds = ms_double.count() / 1000;
+            std::cout << " Took";
+            if ((seconds/60) > 1) {
+                std::cout << floor(static_cast<int>(seconds / 60)) << ".";
+            }
+            std::cout << seconds/ 1000  << "s" << std::endl;
         }
     };
     std::thread t(draw);
