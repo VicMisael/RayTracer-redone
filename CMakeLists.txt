@@ -104,7 +104,12 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/scene/textures/Texture.cpp
         RayTracerRedone/tracer/scene/textures/Texture.h
         RayTracerRedone/tracer/scene/textures/CheckerTexture.cpp
-        RayTracerRedone/tracer/scene/textures/CheckerTexture.h RayTracerRedone/tracer/scene/materials/TexturedMatte.cpp RayTracerRedone/tracer/scene/materials/TexturedMatte.h RayTracerRedone/tracer/scene/materials/TexturedMaterial.cpp RayTracerRedone/tracer/scene/materials/TexturedMaterial.h)
+        RayTracerRedone/tracer/scene/textures/CheckerTexture.h
+        RayTracerRedone/tracer/scene/materials/TexturedMatte.cpp
+        RayTracerRedone/tracer/scene/materials/TexturedMatte.h
+        RayTracerRedone/tracer/scene/materials/TexturedMaterial.cpp
+        RayTracerRedone/tracer/scene/materials/TexturedMaterial.h
+        RayTracerRedone/tracer/scene/textures/PointCheckerTexture.cpp)
 
 
 target_link_libraries(RayTracer_redone glm::glm)

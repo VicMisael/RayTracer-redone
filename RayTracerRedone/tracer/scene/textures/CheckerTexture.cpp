@@ -4,10 +4,15 @@
 
 #include "CheckerTexture.h"
 
-ColorVec CheckerTexture::value(double u, double v, const Point3 &p) const {
-    auto sines = std::sin(p.x/static_cast<float>(size_))*std::sin(p.y/static_cast<float>(size_))*std::sin(p.z/static_cast<float>(size_));
-    if (sines < 0)
-        return a_;
-    else
-        return b_;
+ColorVec CheckerTexture::value(float u, float v, const Point3& p) const {
+   
+     const int us = floor(u * size_);
+     const int vs = floor(v * size_);
+        //const int sizefloor = floor(size_);
+        if ((us + vs)% 2 ==0) {
+            return a_;
+        }
+        else {
+            return b_;
+        }
 }

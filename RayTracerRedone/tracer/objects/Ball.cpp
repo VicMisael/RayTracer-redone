@@ -39,6 +39,6 @@ std::optional<intersection> Ball::intersects(const Ray& ray) const
 	const float t2 = (-b - sqrtf(disc)) / (2.0f * a);
 	const float closest = std::min(t1, t2);
 	const Vector3 normal = (origin_minus_center + closest * ray_direction) / radius;
-    const auto [u,v]=get_sphere_uv(ray.point_at(closest));
+    const auto [u,v]=get_sphere_uv(normal);
 	return intersection{ true,closest,ray.point_at(closest),normal,material.value(),u,v };
 }

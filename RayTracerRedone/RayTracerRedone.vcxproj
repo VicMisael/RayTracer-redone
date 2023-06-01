@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="tracer\scene\textures\PointCheckerTexture.cpp" />
     <ClCompile Include="tracer\objects\BoundingBox\AABB.cpp" />
     <ClCompile Include="tracer\objects\BoundingBox\BVH.cpp" />
     <ClCompile Include="tracer\objects\Mesh.cpp" />
@@ -183,6 +184,7 @@
     <ClCompile Include="tracer\scene\materials\PhongMetal.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="tracer\scene\textures\PointCheckerTexture.h" />
     <ClInclude Include="tracer\objects\BoundingBox\AABB.h" />
     <ClInclude Include="tracer\objects\BoundingBox\BVH.h" />
     <ClInclude Include="tracer\objects\Mesh.h" />
