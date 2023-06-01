@@ -140,7 +140,7 @@ int main() {
 
     const ViewPlane view_plane = projection ? ViewPlane(60, 60, 20, 01.0f) : ViewPlane(1450, 1450, 50, 01.0f);
 
-    sampler *sampler = new mt19937_point_sampler(5);
+    sampler *sampler = new mt19937_point_sampler(20);
 
     AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
     World world(view_plane, generateObjects(), generate_vectorial_lights(), ab, {0.9, 0.9, 1}, sampler, projection);
@@ -148,7 +148,7 @@ int main() {
 
     const Scene scene(&world, canvas);
 
-    constexpr int32_t recursion_depth_limit = 10 ;
+    constexpr int32_t recursion_depth_limit = 10;
 
     auto draw = [&] {
         while (!canvas->should_stop()) {
@@ -160,7 +160,7 @@ int main() {
             const auto seconds = ms_double.count() / 1000;
             std::cout << " Took";
             if ((seconds/60) > 1) {
-                std::cout << floor(static_cast<int>(seconds / 60)) << ".";
+                std::cout << (int)floor(static_cast<int>(seconds / 60)) << ".";
             }
             std::cout << seconds  << "s" << std::endl;
         }
