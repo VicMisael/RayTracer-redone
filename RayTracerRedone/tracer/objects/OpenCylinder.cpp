@@ -3,27 +3,34 @@
 //
 
 #include "OpenCylinder.h"
+#include <cmath>
 #include <glm/trigonometric.hpp>
 #include <glm/geometric.hpp>
+#include <glm/gtc/constants.hpp>
+#include <glm/gtx/norm.hpp>
 
 
 std::tuple<float,float> getUV(const Vector3& point, const Vector3& base, const Vector3& axis, float height, float radius) {
     // Normalize axis
-    glm::vec3 axisNormalized = glm::normalize(axis);
+    Vector3 axisNormalized = glm::normalize(axis);
 
     // Calculate the point's position relative to the base of the cylinder
-    glm::vec3 relPoint = point - base;
+    Vector3 relPoint = point - base;
 
     // Compute 'v' coordinate by projecting relPoint onto axisNormalized (dot product)
     float v = dot(relPoint, axisNormalized);
 
     // Remove the part of relPoint that lies along the cylinder's axis
-    glm::vec3 radialVec = relPoint - v * axisNormalized;
-
+    Vector3 radialVec = relPoint - v * axisNormalized;
+    Vector3 refDir;
     // Compute 'u' coordinate as the angle between radialVec and a reference direction (e.g., (1,0,0))
-    glm::vec3 refDir(1, 0, 0);
-    if (fabs(dot(refDir, axis)-1)<=Constants::EPSILON) {
-        refDir = { 0, 1, 0 };
+    if(glm::length2(axisNormalized - Vector3(0,1,0)) < glm::epsilon<float>())
+    {
+        refDir = Vector3(1, 0, 0);
+    }
+    else
+    {
+        refDir = Vector3(0, 1, 0);
     }
     float dotProduct = dot(radialVec, refDir);
     float crossProductLength = glm::length(glm::cross(radialVec, refDir));
@@ -67,7 +74,7 @@ std::optional<intersection> OpenCylinder::intersects(const Ray &ray) const {
         t_min = std::min(intersection2, t_min);
     }
 
-    if(intersecs>0){
+    if(intersecs>0 && std::fabs(t_min)>glm::epsilon<float>()){
         const auto intersectionPoint= ray.point_at(t_min);
         const auto W = intersectionPoint - base_;
         const auto unnormalizedNormal = (W-axis_*(dot(W,axis_)));
