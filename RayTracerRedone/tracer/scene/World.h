@@ -15,7 +15,7 @@ class World
 private:
 
 	ColorVec shade(const intersection&, const Ray&,const int32_t depth) const;
-	ViewPlane viewPlane;
+	std::shared_ptr<ViewPlane> viewPlane;
 	std::vector<std::shared_ptr<VirtualObject>> objects_;
 	std::vector<std::shared_ptr<VectorialLight>> lights_;
 	ColorVec bgColor;
@@ -26,7 +26,7 @@ public:
 	ColorVec trace_ray(const Ray& ray, const int32_t depth) const;
 
 
-	World(ViewPlane _viewPlane, 
+	World(std::shared_ptr<ViewPlane> _viewPlane,
 		std::vector<std::shared_ptr<VirtualObject>> _objects,
 		std::vector<std::shared_ptr<VectorialLight>> lights,
 		AmbientLight _ambient_light, 

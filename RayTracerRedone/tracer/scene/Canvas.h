@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <memory>
 #include "ViewPlane.h"
 #include "../utils/ColorRGBA.h"
 class Canvas
@@ -11,11 +12,11 @@ public:
 
 	Canvas(const uint32_t _w,const uint32_t _h):width(_w),height(_h){}
 
-	float step_size_y(const ViewPlane viewPlane) const{
-		return viewPlane.hsize / static_cast<float>(height);
+	float step_size_y(const std::shared_ptr<ViewPlane> viewPlane) const{
+		return viewPlane->hsize / static_cast<float>(height);
 	};
-	float step_size_x(const ViewPlane viewPlane) const {
-		return viewPlane.wsize / static_cast<float>(width);
+	float step_size_x(const std::shared_ptr<ViewPlane> viewPlane) const {
+		return viewPlane->hsize / static_cast<float>(width);
 	};
 	uint32_t getWidth() const {
 		return width;
