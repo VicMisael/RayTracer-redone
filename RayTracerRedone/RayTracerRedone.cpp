@@ -49,7 +49,10 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     const auto plane_material2 = std::make_shared<Phong>(ColorVec(0.4, 0.9, 0.2), 1, 1, 25);
     const auto white_phong = std::make_shared<Phong>(Constants::WHITE, 1, 1, 25);
     const auto checkeredTexture=std::make_shared<CheckerTexture>(10);
-    const auto planecheckeredTexture2 = std::make_shared<CheckerTexture>(ColorVec(0.4, 0.4, 0.8), Constants::WHITE, 0.01);
+    const auto blue_white_texture = std::make_shared<CheckerTexture>(ColorVec(0.4, 0.4, 0.8), Constants::WHITE, 0.01);
+    const auto black_white_texture = std::make_shared<CheckerTexture>(Constants::BLACK, Constants::WHITE, 0.01);
+
+
     const auto textured =std::make_shared<TexturedPhong>(checkeredTexture);
     const auto red_specular_phong = std::make_shared<Phong>(ColorVec(0.4, 0.5, 0.5),
                                                             ColorVec(1, 0, 0), 1, 1,
@@ -64,12 +67,12 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
 
     std::vector<std::shared_ptr<VirtualObject>> objects;
 
-    const auto textured_test_material2=std::make_shared<TexturedMaterial>(planecheckeredTexture2, white_matte);
+    const auto textured_test_material2=std::make_shared<TexturedMaterial>(blue_white_texture, white_matte);
+    const auto textured_test_material3=std::make_shared<TexturedMaterial>(black_white_texture, white_matte);
 
-    objects.push_back(std::make_shared<Plane>(Point3(0, 150, 0), Vector3(0, -1, 0), textured_test_material2));
+    const auto textured_test_material4=std::make_shared<TexturedMaterial>(black_white_texture, white_phong);
 
-    const auto planecheckeredTexture3 = std::make_shared<CheckerTexture>(ColorVec(1, 0, 0), ColorVec(0.4, 0.4, 0.8), 0.001);
-    const auto textured_test_material3=std::make_shared<TexturedMaterial>(planecheckeredTexture3, white_phong);
+    objects.push_back(std::make_shared<Plane>(Point3(0, 0, -1600), Vector3(0, -1, 1), textured_test_material2));
 
     objects.push_back(std::make_shared<Plane>(Point3(0, 900, 1000), Vector3(0, 1, 1), yellow_matte));
 
@@ -140,11 +143,11 @@ int main() {
 
     auto *canvas = new sdl2canvas(w, h);
     //True=Perspective False=parallel
-    constexpr bool projection = true;
+    constexpr bool projection = false;
 
-    const ViewPlane view_plane = projection ? ViewPlane(60, 60, 20, 01.0f) : ViewPlane(1450, 1450, 50, 01.0f);
+    const ViewPlane view_plane = projection ? ViewPlane(60, 60, 20, 01.0f) : ViewPlane(2000, 2000, 50, 01.0f);
 
-    sampler *sampler = new mt19937_point_sampler(5);
+    sampler *sampler = new mt19937_point_sampler(20);
 
     AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
     World world(view_plane, generateObjects(), generate_vectorial_lights(), ab, {0.9, 0.9, 1}, sampler, projection);
