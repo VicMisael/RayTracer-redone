@@ -128,7 +128,7 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
                                              eight_ball_material));
 
 
-    objects.push_back(std::make_shared<Ball>(Point3(-300, -20, -200), 80,
+    objects.push_back(std::make_shared<Ball>(Point3(400, -20, -100), 120,
                                              earthmaterial));
 
 
@@ -138,7 +138,7 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
 std::vector<std::shared_ptr<VectorialLight>> generate_vectorial_lights() {
     std::vector<std::shared_ptr<VectorialLight>> lights;
     //lights.push_back(std::make_shared<DirectionalLight>(Vector3(0, 1, 1), 3.15, ColorVec(1, 1, 1)));
-    lights.push_back(std::make_shared<PointLight>(Point3(90, 0, 0), Constants::pi * 32, ColorVec(1, 1, 1)));
+    lights.push_back(std::make_shared<PointLight>(Point3(90, 0, 0), Constants::pi * 6, ColorVec(1, 1, 1)));
 
     return lights;
 }
@@ -155,17 +155,17 @@ int main() {
     //True=Perspective False=parallel
     constexpr bool projection = false;
 
-    const ViewPlane view_plane = projection ? ViewPlane(60, 60, 20, 1) : ViewPlane(2000, 2000, 50, 01.0f);
+    const auto view_plane = projection ? std::make_shared<ViewPlane>( 60, 60, 20, 1) : std::make_shared<ViewPlane>(2000, 2000, 50, 01.0f);
 
-    sampler *sampler = new mt19937_point_sampler(20);
+    sampler *sampler = new mt19937_point_sampler(2);
 
     AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
-    World world(std::make_shared<ViewPlane>(view_plane), generateObjects(), generate_vectorial_lights(), ab, {0.9, 0.9, 1}, sampler, projection);
+    World world(view_plane, generateObjects(), generate_vectorial_lights(), ab, {0.9, 0.9, 1}, sampler, projection);
 
 
     const Scene scene(&world, canvas);
 
-    constexpr int32_t recursion_depth_limit = 10;
+    constexpr int32_t recursion_depth_limit = 1;
 
     auto draw = [&] {
         while (!canvas->should_stop()) {
