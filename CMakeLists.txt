@@ -112,7 +112,7 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/utils/stb/stb_image.h
         RayTracerRedone/tracer/scene/textures/ImageTexture.cpp
         RayTracerRedone/tracer/scene/textures/ImageTexture.h
-        RayTracerRedone/RayTracerRedone.cpp RayTracerRedone/tracer/utils/stb/rtr_stb_image.h)
+        RayTracerRedone/RayTracerRedone.cpp RayTracerRedone/tracer/utils/stb/rtr_stb_image.h RayTracerRedone/tracer/scene/materials/TexturedPhongReflective.cpp RayTracerRedone/tracer/scene/materials/TexturedPhongReflective.h RayTracerRedone/tracer/scene/materials/TexturedPhongReflective.h)
 
 
 target_link_libraries(RayTracer_redone glm::glm)

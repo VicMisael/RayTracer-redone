@@ -63,6 +63,7 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
       const auto white_matte = std::make_shared<Matte>(1, ColorVec(1, 1.0, 1));
     const auto mirror = std::make_shared<Mirror>();
     const auto phong_black_reflective = std::make_shared<PhongReflective>(Constants::BLACK, 1, 12, 1);
+    const auto phong_white_reflective = std::make_shared<PhongReflective>(Constants::WHITE, 1, 12, 1);
     const auto pink_matte = std::make_shared<Matte>(1, ColorVec(1, 0, 1));
     const auto phong_reflective_higher_exp = std::make_shared<PhongReflective>(ColorVec(Constants::BLACK), 1, 25, 1);
     const auto yellow_matte = std::make_shared<Matte>(1, ColorVec(1, 1, 0));
@@ -118,8 +119,17 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
 
     const auto earthmaterial=std::make_shared<TexturedMatte>(earthtexture,1);
 
+    const auto _8balltexture=std::make_shared<ImageTexture>("assets/textures/8ball.jpg");
+    const auto eight_ball_material = std::make_shared<TexturedMaterial>(_8balltexture,phong_white_reflective);
+
+
     objects.push_back(std::make_shared<Ball>(Point3(-600, 450, -300), 280,
+                                             phong_black_reflective));
+
+
+    objects.push_back(std::make_shared<Ball>(Point3(-300, -20, -200), 80,
                                              earthmaterial));
+
 
     return objects;
 }
@@ -146,7 +156,7 @@ int main() {
 
     const ViewPlane view_plane = projection ? ViewPlane(60, 60, 20, 1) : ViewPlane(2000, 2000, 50, 01.0f);
 
-    sampler *sampler = new mt19937_point_sampler(1);
+    sampler *sampler = new mt19937_point_sampler(20);
 
     AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
     World world(std::make_shared<ViewPlane>(view_plane), generateObjects(), generate_vectorial_lights(), ab, {0.9, 0.9, 1}, sampler, projection);
@@ -166,12 +176,6 @@ int main() {
             const auto seconds = ms_double.count() / 1000;
             std::cout << " Took";
             std::cout << seconds << "s" << std::endl;
-//            if ((seconds/60) > 1) {
-//                std::cout << (int)floor(static_cast<int>(seconds / 60)) << ".";
-//                std::cout << (int)floor(static_cast<int>(seconds )) % 60 << std::endl;
-//            }else{
-//
-//            }
 
         }
     };
