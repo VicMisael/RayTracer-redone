@@ -4,47 +4,38 @@
 
 #include <glm/geometric.hpp>
 
-inline float distanceAtenuation(float vectorLength)
-{
-	return glm::inversesqrt(vectorLength);
+inline float distanceAtenuation(float vectorLength) {
+    return glm::inversesqrt(vectorLength);
 }
 
-float length(const Vector3 a)
-{
-	return  glm::length(a);
-}
-ColorVec PointLight::intensityAtPoint(const Point3 p) const
-{
-	return inversesqrt(length(getVector(p)))*intensity * color;
+float length(const Vector3 a) {
+    return glm::length(a);
 }
 
-Vector3 PointLight::getVector(const Point3 p) const
-{
-	return point-p;
+ColorVec PointLight::intensityAtPoint(const Point3 p) const {
+    return inversesqrt(length(getVector(p))) * intensity * color;
 }
 
-Vector3 PointLight::getNormalizedDirection(const Point3 p) const
-{
-	return normalize(PointLight::getVector(p));
+Vector3 PointLight::getVector(const Point3 p) const {
+    return point - p;
 }
 
-bool PointLight::shadow_hit(const World& world, const Ray& outgoing) const
-{
-	
-	const float distance = length(outgoing.origin - this->point);
-	for (const auto& obj : world.objects())
-	{
+Vector3 PointLight::getNormalizedDirection(const Point3 p) const {
+    return normalize(PointLight::getVector(p));
+}
 
-		const std::optional<intersection> intersection = obj->intersects(outgoing);
-		if (intersection ){
-			const auto& intersection_data = intersection.value();
-			if (intersection_data.hits  && intersection_data.tmin >0 && intersection_data.tmin <= distance) {
-				return true;
-			}
-		}
-		
-	}
-	return false;
+bool PointLight::shadow_hit(const World &world, const Ray &outgoing) const {
+
+    const float distance = length(outgoing.origin - this->point);
+    const std::optional<intersection> intersection = world.hit(outgoing);
+    if (intersection) {
+        const auto &intersection_data = intersection.value();
+        if (intersection_data.hits && intersection_data.tmin > 0 && intersection_data.tmin <= distance) {
+            return true;
+        }
+    }
+
+    return false;
 
 }
 
