@@ -44,6 +44,7 @@
 
 
 std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
+    std::vector<std::shared_ptr<VirtualObject>> objects;
 
     const auto plane_material = std::make_shared<Phong>(ColorVec(0.4, 0.4, 0.8), 1, 1, 25);
     const auto plane_material2 = std::make_shared<Phong>(ColorVec(0.4, 0.9, 0.2), 1, 1, 25);
@@ -58,14 +59,14 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
                                                             ColorVec(1, 0, 0), 1, 1,
                                                             23);
     const auto phong_metal = std::make_shared<PhongMetal>();
-    const auto white_matte = std::make_shared<Matte>(1, ColorVec(1, 1.0, 1));
+      const auto white_matte = std::make_shared<Matte>(1, ColorVec(1, 1.0, 1));
     const auto mirror = std::make_shared<Mirror>();
     const auto phong_black_reflective = std::make_shared<PhongReflective>(Constants::BLACK, 1, 12, 1);
     const auto pink_matte = std::make_shared<Matte>(1, ColorVec(1, 0, 1));
     const auto phong_reflective_higher_exp = std::make_shared<PhongReflective>(ColorVec(Constants::BLACK), 1, 25, 1);
     const auto yellow_matte = std::make_shared<Matte>(1, ColorVec(1, 1, 0));
 
-    std::vector<std::shared_ptr<VirtualObject>> objects;
+
 
     const auto textured_test_material2=std::make_shared<TexturedMaterial>(blue_white_texture, white_matte);
     const auto textured_test_material3=std::make_shared<TexturedMaterial>(black_white_texture, white_matte);
@@ -128,7 +129,7 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
 std::vector<std::shared_ptr<VectorialLight>> generate_vectorial_lights() {
     std::vector<std::shared_ptr<VectorialLight>> lights;
     //lights.push_back(std::make_shared<DirectionalLight>(Vector3(0, 1, 1), 3.15, ColorVec(1, 1, 1)));
-    lights.push_back(std::make_shared<PointLight>(Point3(90, 0, 0), Constants::pi * 6, ColorVec(1, 1, 1)));
+    lights.push_back(std::make_shared<PointLight>(Point3(90, 0, 0), Constants::pi * 32, ColorVec(1, 1, 1)));
 
     return lights;
 }
@@ -155,7 +156,7 @@ int main() {
 
     const Scene scene(&world, canvas);
 
-    constexpr int32_t recursion_depth_limit = 10;
+    constexpr int32_t recursion_depth_limit = 2;
 
     auto draw = [&] {
         while (!canvas->should_stop()) {

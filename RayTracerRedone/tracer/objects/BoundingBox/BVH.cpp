@@ -28,31 +28,51 @@ inline void sort(std::vector<std::shared_ptr<VirtualObject>>& objects){
 }
 
 std::optional<intersection> BVH::intersects(const Ray &ray) const {
-    if (!aabb->intersects(ray)) {
-        return std::nullopt;
-    }
+    float t_min = Constants::MAX_FLOAT;
+    std::optional<intersection> selintersection={};
 
-    std::optional<intersection> left_intersection = left ? left->intersects(ray) : std::nullopt;
-    std::optional<intersection> right_intersection = right ? right->intersects(ray) : std::nullopt;
-
-    std::optional<intersection> closest_intersection = std::nullopt;
-    // Check the closest intersection from the children
-    if (left_intersection && (!right_intersection || left_intersection->tmin < right_intersection->tmin)) {
-        closest_intersection.emplace(*left_intersection);
-    }
-    else if (right_intersection) {
-        closest_intersection.emplace(*right_intersection);
-    }
-
-    // Check intersections with unboundable objects
-    for (const auto& obj : unboundables) {
-        auto inter = obj->intersects(ray);
-        if (inter && (!closest_intersection || inter->tmin < closest_intersection->tmin)) {
-            closest_intersection.emplace(*inter);
+    for (const std::shared_ptr<VirtualObject> &object : unboundables) {
+        const auto intersectsoptional=object->intersects(ray);
+        if(intersectsoptional){
+            const auto &intersects = *intersectsoptional;
+            if ( intersects.tmin < t_min && intersects.tmin > 0) {
+                t_min = intersects.tmin;
+                selintersection.emplace(intersects);
+            }
         }
     }
 
-    return closest_intersection;
+    if(aabb==nullptr || !aabb->intersects(ray)){
+        return selintersection;
+    }
+    if(object){
+        //Leaf node
+        // if this condition is reached left and right are null;
+        return object->intersects(ray);
+    }
+    const auto left_int = left->intersects(ray);
+    const auto right_int= right->intersects(ray);
+
+
+    if(left_int.has_value() && right_int.has_value()){
+         auto temp=((*left_int).tmin<(*right_int).tmin?*left_int:*right_int);
+         if(temp.tmin<t_min){
+             t_min=temp.tmin;
+             selintersection.emplace(temp);
+         };
+    }else if(left_int.has_value()){
+        auto temp=*left_int;
+        if(temp.tmin<t_min){
+            selintersection.emplace(temp);
+        };
+    }else if(right_int.has_value()){
+        auto temp=*right_int;
+        if(temp.tmin<t_min){
+            selintersection.emplace(temp);
+        };
+    }
+
+    return selintersection;
 
 }
 
@@ -60,9 +80,7 @@ std::optional<intersection> BVH::intersects(const Ray &ray) const {
 BVH::BVH( std::vector<std::shared_ptr<VirtualObject>> objectList) {
 
     //create the copy
-    if (objectList.size() == 0) {
-        return;
-    }
+
     std::vector<std::shared_ptr<VirtualObject>> objects;
     std::copy_if(objectList.begin(), objectList.end(), std::back_inserter(unboundables),[&]( const std::shared_ptr<VirtualObject>& item ){
         return !item->hasBoundingBox();
@@ -73,6 +91,9 @@ BVH::BVH( std::vector<std::shared_ptr<VirtualObject>> objectList) {
      });
 
     sort(objects);
+    if (objects.size() == 0) {
+        return;
+    }
 
     if (objects.size() == 1) {
         object = objects[0];
