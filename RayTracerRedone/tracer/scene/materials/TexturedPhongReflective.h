@@ -13,11 +13,12 @@ class TexturedPhongReflective: public Phong {
     std::shared_ptr<Texture> texture_;
     PerfectSpecular reflective_brdf;
 public:
-    explicit TexturedPhongReflective(std::shared_ptr<Texture> texture):Phong(Constants::BLACK, Constants::WHITE, 1, 1, 25),
+    explicit TexturedPhongReflective(std::shared_ptr<Texture> texture,const float r):Phong(Constants::WHITE, Constants::WHITE, 1, 1, 25),
     texture_(std::move(texture)),
-    reflective_brdf(1){
-
+    reflective_brdf(r){
     }
+
+    ColorVec shade(const World &world, const Ray &ray, const intersection &intersection, int32_t depth) const override;
 };
 
 

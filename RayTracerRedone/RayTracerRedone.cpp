@@ -36,6 +36,7 @@
 #include "tracer/scene/materials/TexturedPhong.h"
 #include "tracer/scene/materials/TexturedMatte.h"
 #include "tracer/scene/materials/TexturedMaterial.h"
+#include "tracer/scene/materials/TexturedPhongReflective.h"
 #include "tracer/scene/materials/Diffuse.h"
 
 #include "tracer/scene/textures/CheckerTexture.h"
@@ -120,11 +121,11 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     const auto earthmaterial=std::make_shared<TexturedMatte>(earthtexture,1);
 
     const auto _8balltexture=std::make_shared<ImageTexture>("assets/textures/8ball.jpg");
-    const auto eight_ball_material = std::make_shared<TexturedMaterial>(_8balltexture,phong_white_reflective);
+    const auto eight_ball_material = std::make_shared<TexturedPhongReflective>(_8balltexture,0.4);
 
 
-    objects.push_back(std::make_shared<Ball>(Point3(-600, 450, -300), 280,
-                                             phong_black_reflective));
+    objects.push_back(std::make_shared<Ball>(Point3(-600, 450, -300), 280,180
+                                             eight_ball_material));
 
 
     objects.push_back(std::make_shared<Ball>(Point3(-300, -20, -200), 80,
