@@ -23,8 +23,8 @@ inline std::optional<Ray> scatter(const Ray& in, const intersection& intersectio
 	return scattered;
 }
 
-// Antes eu e Deus sabiam o que esse código fazia
-// agora só Deus
+// Antes eu e Deus sabiam o que esse cï¿½digo fazia
+// agora sï¿½ Deus
 
 ColorVec oldshading(const Diffuse &diff,const World& world, const Ray& ray, const intersection& intersection, const int32_t depth)
 {
@@ -32,7 +32,7 @@ ColorVec oldshading(const Diffuse &diff,const World& world, const Ray& ray, cons
 	const auto& ambient_intensity = intensity_at_point * (diff.color_);
 	const auto& out = scatter(ray, intersection);
 
-	if (out.has_value())
+	if (out)
 	{
 		const Ray result = out.value();
 		auto out = world.trace_ray(result, depth - 1);

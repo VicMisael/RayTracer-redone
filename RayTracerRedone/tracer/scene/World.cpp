@@ -70,8 +70,8 @@ std::optional<intersection> World::hit(const Ray &ray) const
 	std::optional<intersection> selintersection;
 	for (const std::shared_ptr<VirtualObject> &object : objects_) {
 		const auto intersectsoptional=object->intersects(ray);
-		if(intersectsoptional.has_value()){
-			const auto &intersects = intersectsoptional.value();
+		if(intersectsoptional){
+			const auto &intersects = *intersectsoptional;
 			if ( intersects.tmin < t_min && intersects.tmin > 0) {
 				t_min = intersects.tmin;
 				selintersection.emplace(intersects);
