@@ -312,4 +312,12 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\textures\earthmap.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="assets\textures\8ball.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

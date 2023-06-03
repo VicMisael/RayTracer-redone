@@ -157,7 +157,7 @@ int main() {
 
     const auto view_plane = projection ? std::make_shared<ViewPlane>( 60, 60, 20, 1) : std::make_shared<ViewPlane>(2000, 2000, 50, 01.0f);
 
-    sampler *sampler = new mt19937_point_sampler(2);
+    sampler *sampler = new mt19937_point_sampler(20);
 
     AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
     World world(view_plane, generateObjects(), generate_vectorial_lights(), ab, {0.9, 0.9, 1}, sampler, projection);
