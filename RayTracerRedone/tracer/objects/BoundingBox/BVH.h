@@ -2,16 +2,25 @@
 // Created by Misael on 31/05/2023.
 //
 
-#ifndef RAYTRACER_REDONE_BVH_H
-#define RAYTRACER_REDONE_BVH_H
-namespace BVH{
+#pragma once
 
-class BVH {
+#include "../VirtualObject.h"
+#include <vector>
+class BVH: public VirtualObject{
+
+private:
+    std::shared_ptr<VirtualObject> object;
+    std::unique_ptr<BVH> left;
+    std::unique_ptr<BVH> right;
+    std::shared_ptr<AABB> aabb;
+    std::vector<std::shared_ptr<VirtualObject>> unboundables;
+public:
+     BVH(std::vector<std::shared_ptr<VirtualObject>> objectList);
+
+
+    [[nodiscard]] std::optional<intersection> intersects(const Ray &ray) const override;
+
+    [[nodiscard]] std::optional<std::shared_ptr<AABB>> bounding_box() const override;
 
 };
-class bvh_node{
 
-};
-}
-
-#endif //RAYTRACER_REDONE_BVH_H

@@ -138,8 +138,8 @@ int main() {
     static int display_in_use = 0; /* Only using first display */
 
 
-    const uint32_t w = 1000;
-    const uint32_t h = 1000;
+    const uint32_t w = 900;
+    const uint32_t h = 900;
 
     auto *canvas = new sdl2canvas(w, h);
     //True=Perspective False=parallel
@@ -147,7 +147,7 @@ int main() {
 
     const ViewPlane view_plane = projection ? ViewPlane(60, 60, 20, 1) : ViewPlane(2000, 2000, 50, 01.0f);
 
-    sampler *sampler = new mt19937_point_sampler(10);
+    sampler *sampler = new mt19937_point_sampler(1);
 
     AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
     World world(std::make_shared<ViewPlane>(view_plane), generateObjects(), generate_vectorial_lights(), ab, {0.9, 0.9, 1}, sampler, projection);
@@ -168,8 +168,11 @@ int main() {
             std::cout << " Took";
             if ((seconds/60) > 1) {
                 std::cout << (int)floor(static_cast<int>(seconds / 60)) << ".";
+                std::cout << (int)floor(static_cast<int>(seconds )) % 60 << ".";
+            }else{
+                std::cout << seconds << "s" << std::endl;
             }
-            std::cout << seconds  << "s" << std::endl;
+
         }
     };
     std::thread t(draw);

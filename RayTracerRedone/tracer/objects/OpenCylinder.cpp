@@ -84,3 +84,23 @@ std::optional<intersection> OpenCylinder::intersects(const Ray &ray) const {
     return {};
 
 }
+
+std::optional<std::shared_ptr<AABB>> OpenCylinder::bounding_box() const {
+    glm::vec3 min_point, max_point;
+
+// Min and max points on the base circle
+    for (int i = 0; i < 3; i++) {
+        min_point[i] = base_[i] - radius_;
+        max_point[i] = base_[i] + radius_;
+    }
+// Calculate the top of the cylinder
+    glm::vec3 top = base_ + height_ * axis_;
+
+// Consider height of the cylinder
+    for (int i = 0; i < 3; i++) {
+        min_point[i] = std::min(min_point[i], top[i] - radius_);
+        max_point[i] = std::max(max_point[i], top[i] + radius_);
+    }
+
+    return std::make_shared<AABB>(AABB{min_point,max_point});
+}

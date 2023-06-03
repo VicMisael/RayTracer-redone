@@ -8,6 +8,7 @@
 #include "../utils/sampler/sampler.h"
 #include "../objects/VirtualObject.h"
 #include "light/VectorialLight.h"
+#include "../objects/BoundingBox/BVH.h"
 
 
 class World
@@ -21,6 +22,7 @@ private:
 	ColorVec bgColor;
 	AmbientLight ambient_light;
 	sampler *_sampler;
+	BVH bvh;
 	bool perspective_{};
 public:
 	ColorVec trace_ray(const Ray& ray, const int32_t depth) const;
@@ -32,7 +34,8 @@ public:
 		AmbientLight _ambient_light, 
 		ColorVec _bgColor,sampler *sampler,bool perspective) :
 		viewPlane(_viewPlane),
-		objects_(std::move(_objects)),
+		bvh(_objects),
+		objects_(_objects),
 		lights_(std::move(lights)),
 		bgColor(_bgColor),
 		ambient_light(std::move(_ambient_light)),_sampler(sampler),perspective_(perspective)

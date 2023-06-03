@@ -6,7 +6,9 @@
 #include <algorithm>
 
 
-bool AABB::intersects(const Ray &ray,  float t_min,  float t_max) const {
+bool AABB::intersects(const Ray &ray) const {
+    float t_min=0;
+    float t_max=std::numeric_limits<float>::max();
     for (int a = 0; a < 3; a++) {
         auto invD = 1.0f / ray.direction[a];
         auto t0 = (min()[a] - ray.origin[a]) * invD;

@@ -42,3 +42,10 @@ std::optional<intersection> Ball::intersects(const Ray& ray) const
     const auto [u,v]=get_sphere_uv(normal);
 	return intersection{ true,closest,ray.point_at(closest),normal,material.value(),u,v };
 }
+
+std::optional<std::shared_ptr<AABB>> Ball::bounding_box() const {
+    return std::make_shared<AABB>(AABB(
+            center - Vector3 (radius, radius, radius),
+            center + Vector3(radius, radius, radius)));
+
+}
