@@ -56,18 +56,17 @@ std::optional<intersection> BVH::intersects(const Ray &ray) const {
 
     if(left_int.has_value() && right_int.has_value()){
          auto temp=((*left_int).tmin<(*right_int).tmin?*left_int:*right_int);
-         if(temp.tmin<t_min){
-             t_min=temp.tmin;
+         if(temp.tmin<t_min && temp.tmin>0){
              selintersection.emplace(temp);
          };
     }else if(left_int.has_value()){
         auto temp=*left_int;
-        if(temp.tmin<t_min){
+        if(temp.tmin<t_min && temp.tmin>0){
             selintersection.emplace(temp);
         };
     }else if(right_int.has_value()){
         auto temp=*right_int;
-        if(temp.tmin<t_min){
+        if(temp.tmin<t_min && temp.tmin>0){
             selintersection.emplace(temp);
         };
     }

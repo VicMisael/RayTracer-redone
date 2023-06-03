@@ -28,7 +28,7 @@ bool DirectionalLight::shadow_hit(const World& world, const Ray& outgoing) const
 		if (intersection)
 		{
 			const auto &intersection_data = intersection.value();
-			if(intersection_data.hits && intersection_data.tmin> 0 ){
+			if( intersection_data.tmin> 0 ){
 				return true;
 			}
 		}

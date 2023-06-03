@@ -33,7 +33,7 @@ std::optional<intersection> Plane::intersects(const Ray &ray) const
 	if (t > Constants::EPSILON+0.001f) {
         const auto intersectionPoint=ray.point_at(t);
         const auto [u,v] = computeUV(point, intersectionPoint,normal);
-		return intersection{true,t,ray.point_at(t),normal,material.value(),u,v};
+		return intersection{t,ray.point_at(t),normal,material.value(),u,v};
 	}
 	
 	return {};

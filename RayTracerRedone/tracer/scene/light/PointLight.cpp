@@ -30,7 +30,7 @@ bool PointLight::shadow_hit(const World &world, const Ray &outgoing) const {
     const std::optional<intersection> intersection = world.hit(outgoing);
     if (intersection) {
         const auto &intersection_data = intersection.value();
-        if (intersection_data.hits && intersection_data.tmin > 0 && intersection_data.tmin <= distance) {
+        if (intersection_data.tmin > 0 && intersection_data.tmin <= distance) {
             return true;
         }
     }

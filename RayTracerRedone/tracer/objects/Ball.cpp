@@ -40,7 +40,7 @@ std::optional<intersection> Ball::intersects(const Ray& ray) const
 	const float closest = std::min(t1, t2);
 	const Vector3 normal = (origin_minus_center + closest * ray_direction) / radius;
     const auto [u,v]=get_sphere_uv(normal);
-	return intersection{ true,closest,ray.point_at(closest),normal,material.value(),u,v };
+	return intersection{ closest,ray.point_at(closest),normal,material.value(),u,v };
 }
 
 std::optional<std::shared_ptr<AABB>> Ball::bounding_box() const {
