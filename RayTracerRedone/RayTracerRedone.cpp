@@ -40,6 +40,7 @@
 
 #include "tracer/scene/textures/CheckerTexture.h"
 #include "tracer/scene/textures/PointCheckerTexture.h"
+#include "tracer/scene/textures/ImageTexture.h"
 
 
 
@@ -65,8 +66,6 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     const auto pink_matte = std::make_shared<Matte>(1, ColorVec(1, 0, 1));
     const auto phong_reflective_higher_exp = std::make_shared<PhongReflective>(ColorVec(Constants::BLACK), 1, 25, 1);
     const auto yellow_matte = std::make_shared<Matte>(1, ColorVec(1, 1, 0));
-
-
 
     const auto textured_test_material2=std::make_shared<TexturedMaterial>(blue_white_texture, white_matte);
     const auto textured_test_material3=std::make_shared<TexturedMaterial>(black_white_texture, white_matte);
@@ -95,12 +94,6 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     objects.push_back(std::make_shared<Ball>(Point3(0, 40, -650), 40,
                                              mirror));
 
-
-
-    objects.push_back(std::make_shared<Ball>(Point3(-90, -25, -350), 105,
-                                             pink_matte));
-
-
     objects.push_back(std::make_shared<Ball>(Point3(0, 0, -195), 95,
                                              phong_black_reflective));
 
@@ -113,16 +106,21 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
 
     const auto textured_test_material=std::make_shared<TexturedMaterial>(checkeredTexture, phong_black_reflective);
 
-    objects.push_back(std::make_shared<Ball>(Point3(200, 300, -1500), 280,
-        phong_metal));
-
-
     objects.push_back(std::make_shared<Ball>(Point3(0, 650, -125), 120,
                                              phong_reflective_higher_exp));
     const auto checkeredTexture2 = std::make_shared<CheckerTexture>(10);
     const auto textured3 = std::make_shared<TexturedMaterial>(checkeredTexture2,white_matte);
+
     objects.push_back(std::make_shared<OpenCylinder>(Vector3(1,1,0),Point3(400,-240,-200),450,80, textured3));
-    
+
+
+    const auto earthtexture=std::make_shared<ImageTexture>("assets/textures/earthmap.jpg");
+
+    const auto earthmaterial=std::make_shared<TexturedMatte>(earthtexture,1);
+
+    objects.push_back(std::make_shared<Ball>(Point3(-600, 450, -300), 280,
+                                             earthmaterial));
+
     return objects;
 }
 
@@ -148,7 +146,7 @@ int main() {
 
     const ViewPlane view_plane = projection ? ViewPlane(60, 60, 20, 1) : ViewPlane(2000, 2000, 50, 01.0f);
 
-    sampler *sampler = new mt19937_point_sampler(20);
+    sampler *sampler = new mt19937_point_sampler(1);
 
     AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
     World world(std::make_shared<ViewPlane>(view_plane), generateObjects(), generate_vectorial_lights(), ab, {0.9, 0.9, 1}, sampler, projection);

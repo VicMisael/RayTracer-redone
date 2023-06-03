@@ -110,7 +110,9 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/scene/materials/TexturedMaterial.h
         RayTracerRedone/tracer/scene/textures/PointCheckerTexture.cpp
         RayTracerRedone/tracer/utils/stb/stb_image.h
-        RayTracerRedone/RayTracerRedone.cpp)
+        RayTracerRedone/tracer/scene/textures/ImageTexture.cpp
+        RayTracerRedone/tracer/scene/textures/ImageTexture.h
+        RayTracerRedone/RayTracerRedone.cpp RayTracerRedone/tracer/utils/stb/rtr_stb_image.h)
 
 
 target_link_libraries(RayTracer_redone glm::glm)
@@ -119,3 +121,5 @@ target_link_libraries(RayTracer_redone ${SDL2_LIBRARIES})
 set(CMAKE_CXX_FLAGS_RELEASE "-Ofast -Wall -march=native")
 SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-Ofast -g -march=native")
 set_property(TARGET RayTracer_redone PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+
+file(COPY RayTracerRedone/assets DESTINATION ${CMAKE_BINARY_DIR})
