@@ -124,7 +124,7 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     const auto eight_ball_material = std::make_shared<TexturedPhongReflective>(_8balltexture,0.4);
 
 
-    objects.push_back(std::make_shared<Ball>(Point3(-600, 450, -300), 280,180
+    objects.push_back(std::make_shared<Ball>(Point3(-600, 450, -300), 280,
                                              eight_ball_material));
 
 
