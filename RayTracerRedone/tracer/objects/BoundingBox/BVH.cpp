@@ -29,49 +29,8 @@ inline void sort(std::vector<std::shared_ptr<VirtualObject>>& objects){
 
 std::optional<intersection> BVH::intersects(const Ray &ray) const {
     float t_min = Constants::MAX_FLOAT;
-    std::optional<intersection> selintersection={};
+    return BVH::intersects(ray,t_min);
 
-    for (const std::shared_ptr<VirtualObject> &object : unboundables) {
-        const auto intersectsoptional=object->intersects(ray);
-        if(intersectsoptional){
-            const auto &intersects = *intersectsoptional;
-            if ( intersects.tmin < t_min && intersects.tmin > 0) {
-                t_min = intersects.tmin;
-                selintersection.emplace(intersects);
-            }
-        }
-    }
-
-    if(aabb==nullptr || !aabb->intersects(ray)){
-        return selintersection;
-    }
-    if(object){
-        //Leaf node
-        // if this condition is reached left and right are null;
-        return object->intersects(ray);
-    }
-    const auto left_int = left->intersects(ray);
-    const auto right_int= right->intersects(ray);
-
-
-    if(left_int.has_value() && right_int.has_value()){
-         auto temp=((*left_int).tmin<(*right_int).tmin?*left_int:*right_int);
-         if(temp.tmin<t_min && temp.tmin>0){
-             selintersection.emplace(temp);
-         };
-    }else if(left_int.has_value()){
-        auto temp=*left_int;
-        if(temp.tmin<t_min && temp.tmin>0){
-            selintersection.emplace(temp);
-        };
-    }else if(right_int.has_value()){
-        auto temp=*right_int;
-        if(temp.tmin<t_min && temp.tmin>0){
-            selintersection.emplace(temp);
-        };
-    }
-
-    return selintersection;
 
 }
 
@@ -115,6 +74,56 @@ BVH::BVH( std::vector<std::shared_ptr<VirtualObject>> objectList) {
 
 std::optional<std::shared_ptr<AABB>> BVH::bounding_box() const {
     return this->aabb;
+}
+
+std::optional<intersection> BVH::intersects(const Ray &ray, float t_min) const {
+
+    std::optional<intersection> selintersection={};
+
+    for (const std::shared_ptr<VirtualObject> &object : unboundables) {
+        const auto intersectsoptional=object->intersects(ray);
+        if(intersectsoptional){
+            const auto &intersects = *intersectsoptional;
+            if ( intersects.tmin < t_min && intersects.tmin > 0) {
+                t_min = intersects.tmin;
+                selintersection.emplace(intersects);
+            }
+        }
+    }
+
+    if(aabb==nullptr || !aabb->intersects(ray)){
+        return selintersection;
+    }
+    if(object){
+        //Leaf node
+        // if this condition is reached left and right are null
+        const auto intersection=object->intersects(ray);
+        if(intersection->tmin<t_min){
+            t_min=intersection->tmin;
+            return object->intersects(ray);
+        }else
+            return {};
+    }
+    const auto left_int = left->intersects(ray,t_min);
+    if(left_int.has_value()){
+        auto temp=*left_int;
+        if(temp.tmin<t_min && temp.tmin>0){
+            t_min=temp.tmin;
+            selintersection.emplace(temp);
+
+        };
+    }
+    const auto right_int= right->intersects(ray,t_min);
+    if(right_int.has_value()){
+        auto temp=*right_int;
+        if(temp.tmin<t_min && temp.tmin>0){
+            selintersection.emplace(temp);
+        };
+    }
+
+    return selintersection;
+
+
 }
 
 

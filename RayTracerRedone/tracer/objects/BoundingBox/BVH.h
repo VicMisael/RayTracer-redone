@@ -14,6 +14,7 @@ private:
     std::unique_ptr<BVH> right;
     std::shared_ptr<AABB> aabb;
     std::vector<std::shared_ptr<VirtualObject>> unboundables;
+    std::optional<intersection> intersects(const Ray &ray,float t_min) const;
 public:
      BVH(std::vector<std::shared_ptr<VirtualObject>> objectList);
 

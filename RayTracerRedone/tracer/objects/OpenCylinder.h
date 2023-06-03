@@ -20,9 +20,9 @@ public:
 
     std::optional<std::shared_ptr<AABB>> bounding_box() const override;
 
-    bool hasBoundingBox() const override  {
+    virtual bool hasBoundingBox() const {
         return false;
-    };
+    }
 };
 
 

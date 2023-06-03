@@ -8,6 +8,7 @@
 #include <glm/geometric.hpp>
 #include <glm/gtc/constants.hpp>
 #include <glm/gtx/norm.hpp>
+#include <glm/gtx/rotate_vector.hpp>
 
 
 std::tuple<float,float> getUV(const Vector3& point, const Vector3& base, const Vector3& axis, float height, float radius) {
@@ -86,21 +87,25 @@ std::optional<intersection> OpenCylinder::intersects(const Ray &ray) const {
 }
 
 std::optional<std::shared_ptr<AABB>> OpenCylinder::bounding_box() const {
-    glm::vec3 min_point, max_point;
+    glm::vec3 axis_normalized = glm::normalize(axis_);
 
-// Min and max points on the base circle
-    for (int i = 0; i < 3; i++) {
-        min_point[i] = base_[i] - radius_;
-        max_point[i] = base_[i] + radius_;
-    }
-// Calculate the top of the cylinder
-    glm::vec3 top = base_ + height_ * axis_;
+    // 2. Create a rotation matrix that aligns the cylinder axis with the y-axis.
+    glm::vec3 y_axis(0.0f, 1.0f, 0.0f); // the target axis
+    glm::vec3 rotation_axis = glm::cross(axis_normalized, y_axis);
+    float rotation_angle = acos(glm::dot(axis_normalized, y_axis));
 
-// Consider height of the cylinder
-    for (int i = 0; i < 3; i++) {
-        min_point[i] = std::min(min_point[i], top[i] - radius_);
-        max_point[i] = std::max(max_point[i], top[i] + radius_);
-    }
+    glm::mat4 rotation_matrix = glm::rotate(glm::mat4(1.0f), rotation_angle, rotation_axis);
 
-    return std::make_shared<AABB>(AABB{min_point,max_point});
+    // 3. Rotate the base and top points of the cylinder using this matrix.
+    glm::vec4 base_rotated = rotation_matrix * glm::vec4(base_, 1.0f);
+    glm::vec4 top_rotated = rotation_matrix * glm::vec4(base_ + height_ * axis_, 1.0f);
+
+    // 4. Calculate the AABB as before, but using these rotated points and a vertical axis.
+    glm::vec3 min_point = glm::vec3(base_rotated) - glm::vec3(radius_, 0.0f, radius_);
+    glm::vec3 max_point = glm::vec3(top_rotated) + glm::vec3(radius_, 0.0f, radius_);
+
+    // 5. Rotate the AABB back to the original orientation using the inverse of the rotation matrix.
+    glm::mat4 inverse_rotation_matrix = glm::inverse(rotation_matrix);
+
+    return std::make_shared<AABB>(glm::vec3(inverse_rotation_matrix * glm::vec4(min_point, 1.0f)), glm::vec3(inverse_rotation_matrix * glm::vec4(max_point, 1.0f)));
 }

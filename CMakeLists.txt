@@ -93,7 +93,6 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/utils/Intersection.h
         RayTracerRedone/tracer/utils/Types.h
         RayTracerRedone/tracer/utils/utility.h
-        RayTracerRedone/RayTracerRedone.cpp
         RayTracerRedone/tracer/objects/BoundingBox/AABB.h
         RayTracerRedone/tracer/objects/BoundingBox/AABB.cpp
         RayTracerRedone/tracer/objects/VirtualObject.cpp
@@ -109,7 +108,9 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/scene/materials/TexturedMatte.h
         RayTracerRedone/tracer/scene/materials/TexturedMaterial.cpp
         RayTracerRedone/tracer/scene/materials/TexturedMaterial.h
-        RayTracerRedone/tracer/scene/textures/PointCheckerTexture.cpp)
+        RayTracerRedone/tracer/scene/textures/PointCheckerTexture.cpp
+        RayTracerRedone/tracer/utils/stb/stb_image.h
+        RayTracerRedone/RayTracerRedone.cpp)
 
 
 target_link_libraries(RayTracer_redone glm::glm)

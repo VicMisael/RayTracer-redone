@@ -3,7 +3,8 @@
 //
 
 #pragma once
-class Mesh {
+#include "VirtualObject.h"
+class Mesh : public VirtualObject {
 
 };
 
