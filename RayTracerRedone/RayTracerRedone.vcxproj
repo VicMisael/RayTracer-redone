@@ -226,6 +226,8 @@
     <ClInclude Include="tracer\scene\Scene.h" />
     <ClInclude Include="tracer\scene\textures\CheckerTexture.h" />
     <ClInclude Include="tracer\scene\textures\Texture.h" />
+    <ClInclude Include="tracer\utils\3dloader\rtr_tiny_obj_loader.h" />
+    <ClInclude Include="tracer\utils\3dloader\tiny_obj_loader.h" />
     <ClInclude Include="tracer\utils\ColorRGBA.h" />
     <ClInclude Include="tracer\scene\Canvas.h" />
     <ClInclude Include="tracer\scene\light\Light.h" />

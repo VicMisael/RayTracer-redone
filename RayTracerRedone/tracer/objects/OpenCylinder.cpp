@@ -109,3 +109,8 @@ std::optional<std::shared_ptr<AABB>> OpenCylinder::bounding_box() const {
 
     return std::make_shared<AABB>(glm::vec3(inverse_rotation_matrix * glm::vec4(min_point, 1.0f)), glm::vec3(inverse_rotation_matrix * glm::vec4(max_point, 1.0f)));
 }
+
+void OpenCylinder::transform(Matrix4x4 m) {
+    base_=Vector3(m*Vector4(base_,1));
+    axis_=Vector3(m*Vector4(axis_,0));
+}

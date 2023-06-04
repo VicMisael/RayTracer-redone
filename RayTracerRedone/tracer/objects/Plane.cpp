@@ -38,3 +38,8 @@ std::optional<intersection> Plane::intersects(const Ray &ray) const
 	
 	return {};
 }
+
+void Plane::transform(Matrix4x4 m) {
+        point=Vector3(m*Vector4(point,1));
+        normal=Vector3(m*Vector4(point,0));
+}

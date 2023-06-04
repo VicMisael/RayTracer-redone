@@ -16,7 +16,9 @@ public:
 
     bool hasBoundingBox() const override  {
         return false;
-    };
+    }
+
+    void transform(Matrix4x4 m) override;;
 
 
 };

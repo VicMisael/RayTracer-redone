@@ -10,5 +10,7 @@ public:
 
     std::optional<std::shared_ptr<AABB>> bounding_box() const override;
 
+    void transform(Matrix4x4 m) override;
+
 };
 

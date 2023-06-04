@@ -4,6 +4,7 @@
 #include <glm/exponential.hpp>
 
 
+
 std::tuple<float,float> get_sphere_uv(const Point3 p) {
     // p: a given point on the sphere of radius one, centered at the origin.
     // u: returned value [0,1] of angle around the Y axis from X=-1.
@@ -48,4 +49,8 @@ std::optional<std::shared_ptr<AABB>> Ball::bounding_box() const {
             center - Vector3 (radius, radius, radius),
             center + Vector3(radius, radius, radius)));
 
+}
+
+void Ball::transform(Matrix4x4 m) {
+    center=Vector3(m*Vector4(center,1));
 }

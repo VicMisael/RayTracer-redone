@@ -20,6 +20,9 @@ public:
 		material = std::move(_material);
 	};
 	[[nodiscard]] virtual std::optional<intersection> intersects(const Ray &ray) const = 0;
+
+    virtual void transform( Matrix4x4 m) {};
+
     virtual std::optional<std::shared_ptr<AABB>> bounding_box() const;
     // the case where there is no bounding box is the edge case
     [[nodiscard]] virtual bool hasBoundingBox() const {
