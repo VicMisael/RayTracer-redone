@@ -65,12 +65,12 @@ void World::render(Canvas* canvas,const int32_t depth) const
 
 std::optional<intersection> World::hit(const Ray &ray) const
 {
-	return bvh.intersects(ray);
+	//return bvh.intersects(ray);
 	float t_min = Constants::MAX_FLOAT;
 	std::optional<intersection> selintersection;
 	for (const std::shared_ptr<VirtualObject> &object : objects_) {
 		const auto intersectsoptional=object->intersects(ray);
-		if(intersectsoptional){
+		if(intersectsoptional.has_value()){
 			const auto &intersects = *intersectsoptional;
 			if ( intersects.tmin < t_min && intersects.tmin > 0) {
 				t_min = intersects.tmin;

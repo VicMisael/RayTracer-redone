@@ -26,7 +26,8 @@ ColorVec ImageTexture::value(float u, float v, const Point3 &p) const {
     // If we have no texture data, then return solid cyan as a debugging aid.
     if (data == nullptr)
         return {0,1,1};
-
+    u=fabs(u);
+    v=fabs(v);
     // Clamp input texture coordinates to [0,1] x [1,0]
     u = utility::clamp(u, 0.0, 1.0);
     v = 1.0 - utility::clamp(v, 0.0, 1.0);  // Flip V to image coordinates
