@@ -15,50 +15,47 @@ class World
 {
 private:
 
-	ColorVec shade(const intersection&, const Ray&,const int32_t depth) const;
+	[[nodiscard]] ColorVec shade(const intersection&, const Ray&,const int32_t depth) const;
 	std::shared_ptr<ViewPlane> viewPlane;
 	std::vector<std::shared_ptr<VirtualObject>> objects_;
 	std::vector<std::shared_ptr<VectorialLight>> lights_;
 	ColorVec bgColor;
 	AmbientLight ambient_light;
-	sampler *_sampler;
-	BVH bvh;
+    //std::shared_ptr<sampler> _sampler;
+	//BVH bvh;
 	bool perspective_{};
 public:
-	ColorVec trace_ray(const Ray& ray, const int32_t depth) const;
+	[[nodiscard]] ColorVec trace_ray(const Ray& ray, const int32_t depth) const;
 
 
 	World(std::shared_ptr<ViewPlane> _viewPlane,
 		std::vector<std::shared_ptr<VirtualObject>> _objects,
 		std::vector<std::shared_ptr<VectorialLight>> lights,
 		AmbientLight _ambient_light, 
-		ColorVec _bgColor,sampler *sampler,bool perspective) :
-		viewPlane(_viewPlane),
-		bvh(_objects),
+		ColorVec _bgColor,
+        bool perspective) :
+		viewPlane(std::move(_viewPlane)),
+		//bvh(_objects),
 		objects_(_objects),
 		lights_(std::move(lights)),
 		bgColor(_bgColor),
-		ambient_light(std::move(_ambient_light)),_sampler(sampler),perspective_(perspective)
+		ambient_light(std::move(_ambient_light)),perspective_(perspective)
 	{
 	}
 
 
 
-	void render(Canvas*, int32_t)  const;
-	std::optional<intersection> hit(const Ray &ray) const;
+	void render(Canvas*, int32_t, const std::shared_ptr<sampler>&)  const;
 
-	std::vector<std::shared_ptr<VectorialLight>> lights() const
+    [[nodiscard]] std::optional<intersection> hit(const Ray &ray) const;
+
+	[[nodiscard]] std::vector<std::shared_ptr<VectorialLight>> lights() const
 	{
 		return lights_;
 	}
 
-	std::vector<std::shared_ptr<VirtualObject>> objects() const
-	{
-		return objects_;
-	}
 
-
-	AmbientLight getAmbientLight() const
+	[[nodiscard]] AmbientLight getAmbientLight() const
 	{
 		return ambient_light;
 	}
