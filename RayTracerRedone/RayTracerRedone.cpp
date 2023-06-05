@@ -21,27 +21,27 @@
 
 
 std::shared_ptr<sampler> generateSampler(int numsamples){
-    return std::make_shared<horizontal_point_sampler>(numsamples);
+    return std::make_shared<vertical_point_sampler>(numsamples);
 }
 
 int main() {
     static int display_in_use = 0; /* Only using first display */
 
 
-    const uint32_t w = 900;
-    const uint32_t h = 900;
+    const uint32_t w = 1000;
+    const uint32_t h = 1000;
 
    
 
 
     auto* canvas = new sdl2canvas(w, h);
 
-    const auto sampler= generateSampler(100);
+    const auto sampler= generateSampler(2);
 
-    auto selectedWorld= worlds::generateWorld2();
+    auto selectedWorld= worlds::moonEarth();
     const Scene scene(selectedWorld, canvas);
 
-    constexpr int32_t recursion_depth_limit = 10;
+    constexpr int32_t recursion_depth_limit = 20;
 
     auto draw = [&] {
         while (!canvas->should_stop()) {

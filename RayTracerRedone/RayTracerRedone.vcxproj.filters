@@ -328,5 +328,8 @@
     <Image Include="assets\textures\8ball.jpg">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
+    <Image Include="assets\textures\moon.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
   </ItemGroup>
 </Project>

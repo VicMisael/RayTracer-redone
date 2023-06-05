@@ -265,6 +265,7 @@
     <Image Include="assets\textures\earthmap.jpg">
       <DeploymentContent>true</DeploymentContent>
     </Image>
+    <Image Include="assets\textures\moon.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

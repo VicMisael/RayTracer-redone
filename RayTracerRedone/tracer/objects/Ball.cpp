@@ -2,8 +2,8 @@
 #include <cmath>
 #include <glm/geometric.hpp>
 #include <glm/exponential.hpp>
-
-
+#include "../scene/World.h"
+#include "../utils/utility.h"
 
 std::tuple<float,float> get_sphere_uv(const Point3 p) {
     // p: a given point on the sphere of radius one, centered at the origin.
@@ -53,4 +53,17 @@ std::optional<std::shared_ptr<AABB>> Ball::bounding_box() const {
 
 void Ball::transform(Matrix4x4 m) {
     center=Vector3(m*Vector4(center,1));
+}
+
+Ball::Ball(Point3 _center, float _radius) {
+    center=_center;
+    radius=_radius;
+    class internal:public Material{
+        ColorVec shade(const World& world, const Ray& ray, const intersection& intersection, int32_t depth) const override{
+            const auto& hitPoint = intersection.hit_point;
+            const Ray reflected(hitPoint, utility::reflect_vector(normalize(ray.direction), intersection.normal));
+            return 0.5f*world.trace_ray(reflected, depth - 1);
+        }
+    }  t;
+    material=std::make_shared<internal>(t);
 }
