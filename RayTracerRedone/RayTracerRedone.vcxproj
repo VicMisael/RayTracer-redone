@@ -256,6 +256,7 @@
     <ClInclude Include="tracer\scene\light\VectorialLight.h" />
     <ClInclude Include="tracer\scene\materials\WhiteMetal.h" />
     <ClInclude Include="tracer\scene\materials\PhongMetal.h" />
+    <ClInclude Include="worlds.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\textures\8ball.jpg">

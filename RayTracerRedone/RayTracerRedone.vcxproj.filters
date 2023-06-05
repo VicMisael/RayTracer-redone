@@ -311,6 +311,15 @@
     <ClInclude Include="tracer\scene\materials\TexturedPhongReflective.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="tracer\utils\3dloader\rtr_tiny_obj_loader.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="tracer\utils\3dloader\tiny_obj_loader.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="worlds.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\textures\earthmap.jpg">
