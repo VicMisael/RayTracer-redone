@@ -43,8 +43,8 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     const auto plane_material2 = std::make_shared<Phong>(ColorVec(0.4, 0.9, 0.2), 1, 1, 25);
     const auto white_phong = std::make_shared<Phong>(Constants::WHITE, 1, 1, 25);
     const auto checkeredTexture = std::make_shared<CheckerTexture>(10);
-    const auto blue_white_texture = std::make_shared<CheckerTexture>(ColorVec(0.4, 0.4, 0.8), Constants::WHITE, 0.01);
-    const auto black_white_texture = std::make_shared<CheckerTexture>(Constants::BLACK, Constants::WHITE, 0.01);
+    const auto blue_white_texture = std::make_shared<CheckerTexture>(ColorVec(0.4, 0.4, 0.8), Constants::WHITE, 1);
+    const auto black_white_texture = std::make_shared<CheckerTexture>(Constants::BLACK, Constants::WHITE, 1);
 
 
     const auto textured = std::make_shared<TexturedPhong>(checkeredTexture);
@@ -72,7 +72,8 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     objects.push_back(
             std::make_shared<Ball>(Point3(0, -1000, -1000), 1000, white_matte));
 
-    objects.push_back(std::make_shared<Ball>(Point3(1350, 0, -1000), 1000));
+
+    objects.push_back(std::make_shared<Ball>(Point3(1350, 0, -1000), 1000,phong_metal));
 
     objects.push_back(
             std::make_shared<Ball>(Point3(-1250, 0, -1000), 1000, textured));
@@ -118,12 +119,12 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
                                              earthmaterial));
 
     const auto checkeredTexture2 = std::make_shared<CheckerTexture>(10);
-    const auto textured3 = std::make_shared<TexturedMaterial>(earthtexture, white_matte);
+    const auto textured3 = std::make_shared<TexturedMaterial>(checkeredTexture2, white_matte);
 
-    auto cylinder = std::make_shared<OpenCylinder>(Vector3(1, 1, 0), Point3(400, -240, -200), 450, 80, textured3);
-    auto mat = glm::rotate(Matrix4x4(1.0f), (float) glm::radians(15.0f), Vector3(0, 1, 0));
+    auto cylinder = std::make_shared<OpenCylinder>(Vector3(0, 1, 0), Point3(400, -240, -200), 450, 80, textured3);
+    // auto mat = glm::rotate(Matrix4x4(1.0f), (float)glm::radians(15.0f), Vector3(0, 1, 0));
     //mat=glm::scale(mat,12.0f*Vector3(1));
-    cylinder->transform(mat);
+    //cylinder->transform(mat);
     objects.push_back(cylinder);
 
 

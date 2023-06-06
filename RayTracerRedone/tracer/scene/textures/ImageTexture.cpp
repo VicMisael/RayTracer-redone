@@ -10,7 +10,7 @@ ImageTexture::~ImageTexture() {
     delete data;
 }
 
-ImageTexture::ImageTexture(std::string filename) {
+ImageTexture::ImageTexture(const std::string& filename) {
     auto components_per_pixel = bytes_per_pixel;
     data = stbi_load(
             filename.c_str(), &width, &height, &components_per_pixel, components_per_pixel);

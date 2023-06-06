@@ -21,7 +21,7 @@
 
 
 std::shared_ptr<sampler> generateSampler(int numsamples){
-    return std::make_shared<vertical_point_sampler>(numsamples);
+    return std::make_shared<mt19937_point_sampler>(numsamples);
 }
 
 int main() {
@@ -30,18 +30,17 @@ int main() {
 
     const uint32_t w = 1000;
     const uint32_t h = 1000;
-
-   
+    //TODO: ARea Lights, Refractance, Mesh + BVH, BumpMapping, 
 
 
     auto* canvas = new sdl2canvas(w, h);
 
-    const auto sampler= generateSampler(2);
+    const auto sampler = generateSampler(1);
 
-    auto selectedWorld= worlds::moonEarthPerspective();
+    auto selectedWorld= worlds::generateWorld1();
     const Scene scene(selectedWorld, canvas);
 
-    constexpr int32_t recursion_depth_limit = 20;
+    constexpr int32_t recursion_depth_limit = 10;
 
     auto draw = [&] {
         while (!canvas->should_stop()) {

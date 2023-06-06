@@ -1,10 +1,11 @@
 #include "World.h"
 
+static int i = 0;
 ColorVec World::trace_ray(const Ray &ray, const int32_t depth) const
 {
 	if(depth>=0){
 		const auto intersection = hit(ray);
-		if (intersection.has_value() ) {
+		if (intersection.has_value()) {
 			return shade(intersection.value(), ray,depth);
 		}
 		return bgColor;

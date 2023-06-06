@@ -15,7 +15,7 @@ ColorVec PerfectSpecular::f(const intersection& intersection, const Vector3& wo,
 sample_f_out PerfectSpecular::sample_f(const intersection& intersection, const Vector3& wo) const
 {
 	
-	float ndotwo =dot(intersection.normal ,wo);
+	const float ndotwo =dot(intersection.normal ,wo);
 	const Vector3 wi = -wo + 2.0f * intersection.normal * ndotwo;
 	const float pdf = fabs(dot(intersection.normal, wi));
 	return { kr * cr,wi,pdf };

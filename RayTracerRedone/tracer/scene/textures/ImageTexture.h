@@ -13,7 +13,7 @@ public:
     const static int bytes_per_pixel = 3;
     virtual ~ImageTexture();
     ImageTexture():data(nullptr),width(0),height(0),bytes_per_scanline(0){}
-    ImageTexture(std::string filename);
+    ImageTexture(const std::string& filename);
     ColorVec value(float u, float v, const Point3 &p) const override;
 
 private:

@@ -15,7 +15,7 @@ ColorVec MetallicSpecular::f(const intersection& intersection, const Vector3& wo
 
 sample_f_out MetallicSpecular::sample_f(const intersection& intersection, const Vector3& wo) const
 {
-	float ndotwo = dot(intersection.normal, wo);
+	const float ndotwo = dot(intersection.normal, wo);
 	const Vector3 wi = -wo + 2.0f * intersection.normal * ndotwo + (fuzz_ * utility::random_in_hemisphere(intersection.normal));
 	const float pdf = fabs(dot(intersection.normal, wi));
 	return { kr_ * cr,wi,pdf };
