@@ -38,7 +38,7 @@ int main() {
 
     const auto sampler= generateSampler(2);
 
-    auto selectedWorld= worlds::moonEarth();
+    auto selectedWorld= worlds::moonEarthPerspective();
     const Scene scene(selectedWorld, canvas);
 
     constexpr int32_t recursion_depth_limit = 20;
