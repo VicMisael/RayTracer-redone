@@ -7,6 +7,9 @@
 #include <string>
 #include <vector>
 
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 
 struct Vertex {
     Vector3 position;
@@ -27,7 +30,6 @@ public:
 
     std::optional<std::shared_ptr<AABB>> bounding_box() const override;
 
-    bool hasBoundingBox() const override;
 
     void transform(Matrix4x4 m) override;
 
@@ -37,6 +39,11 @@ private:
     std::vector<Vertex> vertices;
     std::vector<Face> faces;
     void calculateBoundingBox();
+
+    void processNode(aiNode *node, const aiScene *scene) ;
+
+    void processMesh(aiMesh *mesh) ;
+
 };
 
 

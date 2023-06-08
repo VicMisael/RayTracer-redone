@@ -19,8 +19,9 @@ ColorVec World::shade(const intersection &intersection,const Ray &ray,const int3
 }
 
 
-void World::render(Canvas* canvas,const int32_t depth, const std::shared_ptr<sampler>& _sampler) const
+void World::render(Canvas* canvas,const int32_t depth, const std::shared_ptr<sampler>& _sampler)
 {
+    bvh=new BVH(objects_);
 	const uint32_t height = canvas->getHeight();
 	const uint32_t width = canvas->getWidth();
 	const float ystep = canvas->step_size_y(viewPlane);
@@ -66,14 +67,14 @@ void World::render(Canvas* canvas,const int32_t depth, const std::shared_ptr<sam
 
 std::optional<intersection> World::hit(const Ray &ray) const
 {
-	return bvh.intersects(ray);
+	return bvh->intersects(ray);
 	float t_min = Constants::MAX_FLOAT;
 	std::optional<intersection> selintersection;
 	for (const std::shared_ptr<VirtualObject> &object : objects_) {
 		const auto intersectsoptional=object->intersects(ray);
 		if(intersectsoptional.has_value()){
 			const auto &intersects = *intersectsoptional;
-			if ( intersects.tmin < t_min && intersects.tmin > 0) {
+			if ( intersects.tmin < t_min && intersects.tmin > 1) {
 				t_min = intersects.tmin;
 				selintersection.emplace(intersects);
 			}

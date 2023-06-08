@@ -17,12 +17,10 @@ std::optional<intersection> Mesh::intersects(const Ray &ray) const {
     bool hit = false;
     glm::vec3 hit_normal;
     float uNear, vNear;
-
-    for (const Face &face : faces) {
+    for (const Face &face: faces) {
         glm::vec3 v0 = vertices[face.v1].position;
         glm::vec3 v1 = vertices[face.v2].position;
         glm::vec3 v2 = vertices[face.v3].position;
-
         glm::vec3 edge1 = v1 - v0;
         glm::vec3 edge2 = v2 - v0;
         glm::vec3 h = glm::cross(ray.direction, edge2);
@@ -63,7 +61,7 @@ std::optional<intersection> Mesh::intersects(const Ray &ray) const {
     }
 
     if (hit) {
-        intersection result {
+        intersection result{
                 tNear,
                 ray.origin + tNear * ray.direction,
                 hit_normal,
@@ -81,96 +79,41 @@ std::optional<std::shared_ptr<AABB>> Mesh::bounding_box() const {
     return aabb;
 }
 
-bool Mesh::hasBoundingBox() const {
-    return false;
-}
-
-Mesh::Mesh(const std::string filename,const std::shared_ptr<Material> &material) :
-VirtualObject(material) {
+Mesh::Mesh(const std::string filename, const std::shared_ptr<Material> &material) :
+        VirtualObject(material) {
     Assimp::Importer importer;
-    const aiScene* scene = importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+    const aiScene *scene = importer.ReadFile(filename,
+                                             aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
     // Error checking
-    if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
-    {
+    if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
         std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
         return;
     }
 
-    // Process all the model's meshes
-    for(unsigned int i = 0; i < scene->mNumMeshes; i++)
-    {
-        aiMesh* mesh = scene->mMeshes[i];
-        for(unsigned int j = 0; j < mesh->mNumVertices; j++)
-        {
-            Vertex vertex;
-            Vector3 vector;
+    processNode(scene->mRootNode, scene);
 
-            // Position
-            vector.x = mesh->mVertices[j].x;
-            vector.y = mesh->mVertices[j].y;
-            vector.z = mesh->mVertices[j].z;
-            vertex.position = vector;
-
-            // Texture Coordinates
-            if(mesh->mTextureCoords[0])
-            {
-                Vector2 vec;
-                vec.x = mesh->mTextureCoords[0][j].x;
-                vec.y = mesh->mTextureCoords[0][j].y;
-                vertex.tex_coord = vec;
-            }
-
-            // Normal
-            if(mesh->mNormals)
-            {
-                vector.x = mesh->mNormals[j].x;
-                vector.y = mesh->mNormals[j].y;
-                vector.z = mesh->mNormals[j].z;
-                vertex.normal = vector;
-            }
-
-            vertices.push_back(vertex);
-        }
-
-        // Process indices
-        for(unsigned int j = 0; j < mesh->mNumFaces; j++)
-        {
-            aiFace face = mesh->mFaces[j];
-            Face myFace;
-            myFace.v1 = face.mIndices[0];
-            myFace.v2 = face.mIndices[1];
-            myFace.v3 = face.mIndices[2];
-
-            faces.push_back(myFace);
-        }
-    }
-
-    calculateBoundingBox();
     calculateBoundingBox();
 }
 
 void Mesh::transform(Matrix4x4 m) {
-    for(auto& vertex : vertices) {
-            vertex.position=Vector3(m*Vector4(vertex.position,1.0f));
-            vertex.normal= normalize(Vector3(m*Vector4(vertex.normal,0.0f)));
+    for (auto &vertex: vertices) {
+        vertex.position = Vector3(m * Vector4(vertex.position, 1.0f));
+        vertex.normal = normalize(Vector3(m * Vector4(vertex.normal, 0.0f)));
     }
     calculateBoundingBox();
 }
 
-void Mesh::calculateBoundingBox()
-{
-    if (vertices.empty())
-    {
+void Mesh::calculateBoundingBox() {
+    if (vertices.empty()) {
         std::cerr << "empty mesh" << std::endl;
         return;
     }
 
-    glm::vec3 minPoint = glm::vec3(-std::numeric_limits<float>::max());
-    glm::vec3 maxPoint = glm::vec3(std::numeric_limits<float>::max());
+    glm::vec3 minPoint = glm::vec3(FLT_MAX, FLT_MAX, FLT_MAX);
+    glm::vec3 maxPoint = glm::vec3(FLT_MIN, FLT_MIN, FLT_MIN);
 
-    for (const auto& vertex : vertices)
-    {
+    for (const auto &vertex: vertices) {
         glm::vec3 pos = vertex.position;
 
         minPoint = glm::min(minPoint, pos);
@@ -179,3 +122,65 @@ void Mesh::calculateBoundingBox()
 
     aabb = std::make_shared<AABB>(minPoint, maxPoint);
 }
+
+void Mesh::processNode(aiNode *node, const aiScene *scene) {
+    for (unsigned int i = 0; i < node->mNumMeshes; i++) {
+        aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
+        processMesh(mesh);
+    }
+
+    for (unsigned int i = 0; i < node->mNumChildren; i++) {
+        processNode(node->mChildren[i], scene);
+    }
+}
+
+void Mesh::processMesh(aiMesh *mesh) {
+    for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
+        Vertex vertex;
+
+        // Process vertex positions
+        vertex.position = {mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z};
+
+        // Process texture coordinates if available
+        if (mesh->mTextureCoords[0]) {
+            vertex.tex_coord = {mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y};
+        } else {
+            vertex.tex_coord = {0.0f, 0.0f};
+        }
+
+        // Process normals if available
+        if (mesh->HasNormals()) {
+            vertex.normal = {mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z};
+        } else {
+            vertex.normal = {0.0f, 0.0f, 0.0f};
+        }
+
+        vertices.push_back(vertex);
+    }
+
+    if (!mesh->HasNormals()) {
+        for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
+            aiFace face = mesh->mFaces[i];
+
+            glm::vec3 v1 = vertices[face.mIndices[0]].position;
+            glm::vec3 v2 = vertices[face.mIndices[1]].position;
+            glm::vec3 v3 = vertices[face.mIndices[2]].position;
+
+            glm::vec3 edge1 = v2 - v1;
+            glm::vec3 edge2 = v3 - v1;
+            glm::vec3 normal = glm::normalize(glm::cross(edge1, edge2));
+
+            for (unsigned int j = 0; j < face.mNumIndices; j++) {
+                vertices[face.mIndices[j]].normal = normal;
+            }
+        }
+    }
+
+    for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
+        aiFace face = mesh->mFaces[i];
+        for (unsigned int j = 0; j < face.mNumIndices; j++) {
+            faces.push_back({(int) face.mIndices[0], (int) face.mIndices[1], (int) face.mIndices[2]});
+        }
+    }
+}
+
