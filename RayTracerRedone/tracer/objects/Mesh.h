@@ -24,11 +24,11 @@ struct Face {
 
 class Mesh : public VirtualObject {
 public:
-    explicit Mesh(const std::string filename,const std::shared_ptr<Material> &material);
+    explicit Mesh(std::string filename,const std::shared_ptr<Material> &material);
 
-    std::optional<intersection> intersects(const Ray &ray) const override;
+    [[nodiscard]] std::optional<intersection> intersects(const Ray &ray) const override;
 
-    std::optional<std::shared_ptr<AABB>> bounding_box() const override;
+    [[nodiscard]] std::optional<std::shared_ptr<AABB>> bounding_box() const override;
 
 
     void transform(Matrix4x4 m) override;
@@ -44,6 +44,7 @@ private:
 
     void processMesh(aiMesh *mesh) ;
 
+    void processScene(const aiScene *pScene);
 };
 
 

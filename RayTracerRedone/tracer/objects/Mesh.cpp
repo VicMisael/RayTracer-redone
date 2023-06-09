@@ -17,6 +17,7 @@ std::optional<intersection> Mesh::intersects(const Ray &ray) const {
     bool hit = false;
     glm::vec3 hit_normal;
     float uNear, vNear;
+    float uTexture, vTexture;
     for (const Face &face: faces) {
         glm::vec3 v0 = vertices[face.v1].position;
         glm::vec3 v1 = vertices[face.v2].position;
@@ -30,7 +31,7 @@ std::optional<intersection> Mesh::intersects(const Ray &ray) const {
             continue;
         }
 
-        float f = 1.0 / a;
+        float f = 1.0f / a;
         glm::vec3 s = ray.origin - v0;
         float u = f * glm::dot(s, h);
 
@@ -47,7 +48,7 @@ std::optional<intersection> Mesh::intersects(const Ray &ray) const {
 
         float t = f * glm::dot(edge2, q);
 
-        if (t > 0.00001 && t < tNear) {
+        if (t > 0.0001 && t < tNear) {
             tNear = t;
             hit = true;
             uNear = u;
@@ -57,6 +58,14 @@ std::optional<intersection> Mesh::intersects(const Ray &ray) const {
             hit_normal = (1 - u - v) * vertices[face.v1].normal +
                          u * vertices[face.v2].normal +
                          v * vertices[face.v3].normal;
+
+            // Interpolate texture coordinates
+            uTexture = (1 - u - v) * vertices[face.v1].tex_coord.x +
+                       u * vertices[face.v2].tex_coord.x +
+                       v * vertices[face.v3].tex_coord.x;
+            vTexture = (1 - u - v) * vertices[face.v1].tex_coord.y +
+                       u * vertices[face.v2].tex_coord.y +
+                       v * vertices[face.v3].tex_coord.y;
         }
     }
 
@@ -64,10 +73,10 @@ std::optional<intersection> Mesh::intersects(const Ray &ray) const {
         intersection result{
                 tNear,
                 ray.origin + tNear * ray.direction,
-                hit_normal,
+                normalize(hit_normal),
                 material.value(),
-                uNear,
-                vNear
+                uTexture,
+                vTexture
         };
         return result;
     } else {
@@ -83,16 +92,21 @@ Mesh::Mesh(const std::string filename, const std::shared_ptr<Material> &material
         VirtualObject(material) {
     Assimp::Importer importer;
     const aiScene *scene = importer.ReadFile(filename,
-                                             aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+                                             aiProcess_FlipUVs | aiProcess_PreTransformVertices |
+                                             aiProcess_CalcTangentSpace |
+                                             aiProcess_GenSmoothNormals |
+                                             aiProcess_Triangulate );
 
     // Error checking
-    if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
+
+    if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE) {
         std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
         return;
     }
-
-    processNode(scene->mRootNode, scene);
-
+   
+ 
+    //processNode(scene->mRootNode, scene);
+    processScene(scene);
     calculateBoundingBox();
 }
 
@@ -123,16 +137,18 @@ void Mesh::calculateBoundingBox() {
     aabb = std::make_shared<AABB>(minPoint, maxPoint);
 }
 
-void Mesh::processNode(aiNode *node, const aiScene *scene) {
-    for (unsigned int i = 0; i < node->mNumMeshes; i++) {
-        aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-        processMesh(mesh);
-    }
 
-    for (unsigned int i = 0; i < node->mNumChildren; i++) {
-        processNode(node->mChildren[i], scene);
-    }
-}
+//void Mesh::processNode(aiNode *node, const aiScene *scene) {
+//
+//    for (unsigned int i = 0; i < node->mNumMeshes; i++) {
+//        aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
+//        processMesh(mesh);
+//    }
+//
+//    for (unsigned int i = 0; i < node->mNumChildren; i++) {
+//        processNode(node->mChildren[i], scene);
+//    }
+//}
 
 void Mesh::processMesh(aiMesh *mesh) {
     for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
@@ -181,6 +197,13 @@ void Mesh::processMesh(aiMesh *mesh) {
         for (unsigned int j = 0; j < face.mNumIndices; j++) {
             faces.push_back({(int) face.mIndices[0], (int) face.mIndices[1], (int) face.mIndices[2]});
         }
+    }
+}
+
+void Mesh::processScene(const aiScene *pScene) {
+    for (unsigned int i = 0; i < pScene->mNumMeshes; i++) {
+        aiMesh *mesh = pScene->mMeshes[i];
+        processMesh(mesh);
     }
 }
 

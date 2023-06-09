@@ -221,19 +221,21 @@ namespace worlds {
         const auto view_plane = std::make_shared<ViewPlane>(2000, 2000, 50, 01.0f);
 
         std::vector<std::shared_ptr<VirtualObject>> objects;
-        const auto pink_matte = std::make_shared<Matte>(1, ColorVec(1, 0, 1));
-        auto mesh = std::make_shared<Mesh>("assets/objs/cow.obj", pink_matte);
-        auto mat = glm::translate(Matrix4x4(1.0f), Vector3(0, 0, -200));
+
+        //const auto black_white_texture = std::make_shared<CheckerTexture>(Constants::BLACK, Constants::WHITE, 1);
+        const auto white_phong = std::make_shared<Phong>(Constants::RED, 1, 1, 25);
+        auto mesh = std::make_shared<Mesh>("assets/objs/cow.obj", white_phong);
+        auto mat = glm::translate(Matrix4x4(1.0f), Vector3(0, -100, -300));
         float angle = 1.5708;
-        mat = glm::rotate(mat, angle, Vector3(1, 0, 0));
-        mat = glm::scale(mat, Vector3(100));
+        mat = glm::rotate(mat, angle/2 , Vector3(0, 1, 0));
+        mat = glm::scale(mat, Vector3(40));
         mesh->transform(mat);
         objects.push_back(mesh);
 
         std::vector<std::shared_ptr<VectorialLight>> lights;
         //lights.push_back(std::make_shared<DirectionalLight>(Vector3(0, 1, 1), 3.15, ColorVec(1, 1, 1)));
         lights.push_back(std::make_shared<PointLight>(Point3(0, 600, 0), Constants::pi * 60, ColorVec(1, 1, 1)));
-        AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
+        AmbientLight ab(0.2, ColorVec(1.0, 1.0, 1));
 
         return {view_plane, objects, lights,
                 ab, {0.9, 0.9, 1}, projection};
