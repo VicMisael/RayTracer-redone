@@ -3,7 +3,9 @@
 //
 
 #pragma once
+
 #include "VirtualObject.h"
+#include "BoundingBox/BVH.h"
 #include <string>
 #include <vector>
 
@@ -24,7 +26,7 @@ struct Face {
 
 class Mesh : public VirtualObject {
 public:
-    explicit Mesh(std::string filename,const std::shared_ptr<Material> &material);
+    explicit Mesh(std::string filename, const std::shared_ptr<Material> &material);
 
     [[nodiscard]] std::optional<intersection> intersects(const Ray &ray) const override;
 
@@ -38,13 +40,32 @@ private:
     std::shared_ptr<AABB> aabb;
     std::vector<Vertex> vertices;
     std::vector<Face> faces;
+    std::unique_ptr<BVH> bvh;
+
     void calculateBoundingBox();
 
-    void processNode(aiNode *node, const aiScene *scene) ;
+    void processNode(aiNode *node, const aiScene *scene);
 
-    void processMesh(aiMesh *mesh) ;
+    void processMesh(aiMesh *mesh);
 
     void processScene(const aiScene *pScene);
+
+    class Triangle : public VirtualObject {
+        std::vector<Vertex> &vertices;
+        Face &face;
+    public:
+        Triangle(Face &face_,std::vector<Vertex> &vertices_,const std::shared_ptr<Material> meshMaterial):face(face_),vertices(vertices_),VirtualObject(meshMaterial){
+
+        };
+        [[nodiscard]] std::optional<intersection> intersects(const Ray &ray) const override;
+
+        void transform(Matrix4x4 m) override{};
+
+        [[nodiscard]] std::optional<std::shared_ptr<AABB>> bounding_box() const override;
+
+    };
+
+    void GenerateBvh();
 };
 
 

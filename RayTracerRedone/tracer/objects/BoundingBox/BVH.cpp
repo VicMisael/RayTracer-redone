@@ -5,9 +5,9 @@
 #include <algorithm>
 #include "BVH.h"
 #include <iterator>
-
+static int axis = 0;
 inline void sort(std::vector<std::shared_ptr<VirtualObject>>& objects){
-    int axis = rand() % 3;
+    axis = axis++ % 3;
     if (axis == 0) {
         std::sort(objects.begin(), objects.end(),
                   [](const std::shared_ptr<VirtualObject>& a, const std::shared_ptr<VirtualObject>& b) {
@@ -30,8 +30,6 @@ inline void sort(std::vector<std::shared_ptr<VirtualObject>>& objects){
 std::optional<intersection> BVH::intersects(const Ray &ray) const {
     float t_min = Constants::MAX_FLOAT;
     return BVH::intersects(ray,t_min);
-
-
 }
 
 
@@ -120,9 +118,7 @@ std::optional<intersection> BVH::intersects(const Ray &ray, float t_min) const {
             selintersection.emplace(temp);
         };
     }
-
     return selintersection;
-
 
 }
 

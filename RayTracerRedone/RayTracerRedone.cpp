@@ -28,8 +28,8 @@ int main() {
     static int display_in_use = 0; /* Only using first display */
 
 
-    const uint32_t w = 400;
-    const uint32_t h = 400;
+    const uint32_t w = 1000;
+    const uint32_t h = 1000;
     //TODO: ARea Lights, Refractance,  BVH for meshes, BumpMapping,
 
 

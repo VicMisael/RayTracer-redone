@@ -21,7 +21,7 @@ private:
 	std::vector<std::shared_ptr<VectorialLight>> lights_;
 	ColorVec bgColor;
 	AmbientLight ambient_light;
-	BVH *bvh;
+	std::shared_ptr<BVH> bvh;
 	bool perspective_{};
 public:
 	[[nodiscard]] ColorVec trace_ray(const Ray& ray, const int32_t depth) const;
@@ -39,6 +39,7 @@ public:
 		bgColor(_bgColor),
 		ambient_light(std::move(_ambient_light)),perspective_(perspective)
 	{
+		bvh = std::make_shared<BVH>(objects_);
 	}
 
 
