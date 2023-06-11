@@ -12,6 +12,7 @@
 #include "worlds.h"
 
 
+
 #include "tracer/utils/sampler/diagonal_point_sampler.h"
 #include "tracer/utils/sampler/equidistant_point_sampler.h"
 #include "tracer/utils/sampler/mt19937_point_sampler.h"
@@ -19,7 +20,7 @@
 #include "tracer/utils/sampler/vertical_point_sampler.h"
 #include "tracer/utils/sampler/horizontal_point_sampler.h"
 
-
+#include "tracer/utils/utility.h"
 std::shared_ptr<sampler> generateSampler(int numsamples){
     return std::make_shared<mt19937_point_sampler>(numsamples);
 }
@@ -52,7 +53,7 @@ int main() {
             const auto seconds = ms_double.count() / 1000;
             std::cout << " Took";
             std::cout << seconds << "s" << std::endl;
-
+            std::cout << "Intersection Test with triangle called" << utility::counter << std::endl;
         }
     };
     std::thread t(draw);

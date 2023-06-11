@@ -7,9 +7,11 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include "../utils/utility.h"
 
 std::optional<intersection> Mesh::intersects(const Ray &ray) const {
-    if (!aabb->intersects(ray)) {
+    float t_min = 0;
+    if (!aabb->intersects(ray, t_min)) {
         return std::nullopt;
     }
 
@@ -217,11 +219,12 @@ void Mesh::GenerateBvh() {
 
     std::vector<std::shared_ptr<VirtualObject>> triangleList;
     for (auto &item: faces) {
-        auto triangle = std::make_shared<Triangle>(item,vertices,material.value());
+        auto triangle = std::make_shared<Triangle>(item, vertices, material.value());
         triangleList.push_back(triangle);
     }
     bvh = std::make_unique<BVH>(triangleList);
 }
+
 
 std::optional<intersection> Mesh::Triangle::intersects(const Ray &ray) const {
     float tNear = std::numeric_limits<float>::max();

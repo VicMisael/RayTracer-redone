@@ -16,6 +16,7 @@ public:
     AABB(const Point3 min,const Point3 max):min_(min),max_(max){};
 
     bool intersects(const Ray &ray) const;
+     bool intersects(const Ray &ray,float &t_min) const;
 
     static std::shared_ptr<AABB>  surrounding_box(const std::shared_ptr<AABB> box0, const std::shared_ptr<AABB> box1) {
         const auto minPoint = glm::min(box0->min(), box1->min());
