@@ -57,9 +57,11 @@ private:
     class Triangle : public VirtualObject {
         std::vector<Vertex> &vertices;
         Face &face;
+        std::shared_ptr<AABB> aabb;
+        void generateBoundingBox();
     public:
         Triangle(Face &face_,std::vector<Vertex> &vertices_,const std::shared_ptr<Material> meshMaterial):face(face_),vertices(vertices_),VirtualObject(meshMaterial){
-
+            generateBoundingBox();
         };
         [[nodiscard]] std::optional<intersection> intersects(const Ray &ray) const override;
 

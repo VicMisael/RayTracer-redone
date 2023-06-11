@@ -225,6 +225,19 @@ void Mesh::GenerateBvh() {
 }
 
 
+void Mesh::Triangle::generateBoundingBox()
+{
+    glm::vec3 minPoint = glm::vec3(FLT_MAX, FLT_MAX, FLT_MAX);
+    glm::vec3 maxPoint = glm::vec3(FLT_MIN, FLT_MIN, FLT_MIN);
+
+    for (const auto& vertex : { vertices[face.v1], vertices[face.v2], vertices[face.v3] }) {
+        glm::vec3 pos = vertex.position;
+        minPoint = glm::min(minPoint, pos);
+        maxPoint = glm::max(maxPoint, pos);
+    }
+    aabb= std::make_shared<AABB>(minPoint, maxPoint);
+}
+
 std::optional<intersection> Mesh::Triangle::intersects(const Ray &ray) const {
     float tNear = std::numeric_limits<float>::max();
     bool hit = false;
@@ -294,6 +307,7 @@ std::optional<intersection> Mesh::Triangle::intersects(const Ray &ray) const {
 
 
 std::shared_ptr<AABB> Mesh::Triangle::bounding_box() const {
+    /*
     glm::vec3 minPoint = glm::vec3(FLT_MAX, FLT_MAX, FLT_MAX);
     glm::vec3 maxPoint = glm::vec3(FLT_MIN, FLT_MIN, FLT_MIN);
 
@@ -303,4 +317,6 @@ std::shared_ptr<AABB> Mesh::Triangle::bounding_box() const {
         maxPoint = glm::max(maxPoint, pos);
     }
     return std::make_shared<AABB>(minPoint, maxPoint);
-}
+        */
+    return aabb;
+ }

@@ -5,9 +5,8 @@
 #include <algorithm>
 #include "BVH.h"
 #include <iterator>
-static int axis = 0;
 inline void sort(std::vector<std::shared_ptr<VirtualObject>>& objects){
-    axis = axis++ % 3;
+    int axis = rand() % 3;
     if (axis == 0) {
         std::sort(objects.begin(), objects.end(),
                   [](const std::shared_ptr<VirtualObject>& a, const std::shared_ptr<VirtualObject>& b) {
@@ -45,8 +44,8 @@ BVH::BVH( std::vector<std::shared_ptr<VirtualObject>> objectList) {
     std::copy_if(objectList.begin(), objectList.end(), std::back_inserter(objects), [&](const std::shared_ptr<VirtualObject>& item) {
         return item->hasBoundingBox();
      });
-
     sort(objects);
+
     if (objects.size() == 0) {
         return;
     }
@@ -60,6 +59,7 @@ BVH::BVH( std::vector<std::shared_ptr<VirtualObject>> objectList) {
         right = std::make_unique<BVH>(std::vector<std::shared_ptr<VirtualObject>>{objects[1]});
         aabb = AABB::surrounding_box(left->aabb, right->aabb);
     }else{
+
         auto middle = objects.begin() + objects.size() / 2;
         std::vector<std::shared_ptr<VirtualObject>> leftObjects(objects.begin(), middle);
         std::vector<std::shared_ptr<VirtualObject>> rightObjects(middle, objects.end());
@@ -77,14 +77,15 @@ std::shared_ptr<AABB> BVH::bounding_box() const  {
 std::optional<intersection> BVH::intersects(const Ray &ray, float t_min) const {
 
     std::optional<intersection> selintersection={};
-
-    for (const std::shared_ptr<VirtualObject> &object : unboundables) {
-        const auto intersectsoptional=object->intersects(ray);
-        if(intersectsoptional){
-            const auto &intersects = *intersectsoptional;
-            if ( intersects.tmin < t_min && intersects.tmin > 0) {
-                t_min = intersects.tmin;
-                selintersection.emplace(intersects);
+    if(!unboundables.empty()){
+        for (const std::shared_ptr<VirtualObject> &object : unboundables) {
+            const auto intersectsoptional=object->intersects(ray);
+            if(intersectsoptional){
+                const auto &intersects = *intersectsoptional;
+                if ( intersects.tmin < t_min && intersects.tmin > 0) {
+                    t_min = intersects.tmin;
+                    selintersection.emplace(intersects);
+                }
             }
         }
     }
@@ -102,8 +103,9 @@ std::optional<intersection> BVH::intersects(const Ray &ray, float t_min) const {
     if(object){
         //Leaf node
         // if this condition is reached left and right are null
+        assert(left == nullptr && right == nullptr);
         const auto intersection=object->intersects(ray);
-        if(intersection->tmin<t_min){
+        if(intersection.has_value() && intersection->tmin<t_min){
             t_min=intersection->tmin;
             return object->intersects(ray);
         }else

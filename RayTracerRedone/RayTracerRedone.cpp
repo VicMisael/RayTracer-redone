@@ -29,8 +29,8 @@ int main() {
     static int display_in_use = 0; /* Only using first display */
 
 
-    const uint32_t w = 1000;
-    const uint32_t h = 1000;
+    const uint32_t w = 400;
+    const uint32_t h = 400;
     //TODO: ARea Lights, Refractance, BumpMapping,
 
 
@@ -38,10 +38,10 @@ int main() {
 
     const auto sampler = generateSampler(10);
 
-    auto selectedWorld= worlds::generateWorld1();
+    auto selectedWorld= worlds::meshTest();
     Scene scene(selectedWorld, canvas);
 
-    constexpr int32_t recursion_depth_limit = 10;
+    constexpr int32_t recursion_depth_limit = 3;
 
     auto draw = [&] {
         while (!canvas->should_stop()) {
