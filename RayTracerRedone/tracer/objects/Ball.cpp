@@ -24,6 +24,9 @@ std::tuple<float,float> get_sphere_uv(const Point3 p) {
 
 std::optional<intersection> Ball::intersects(const Ray& ray) const
 {
+     if(!aabb->intersects(ray)){
+        return {};
+    }
 	const Vector3 ray_direction = ray.direction;
 	const float &radius = this->radius;
 	const Point3 &center = this->center;
@@ -44,26 +47,33 @@ std::optional<intersection> Ball::intersects(const Ray& ray) const
 	return intersection{ closest,ray.point_at(closest),normal,material.value(),u,v };
 }
 
-std::optional<std::shared_ptr<AABB>> Ball::bounding_box() const {
-    return std::make_shared<AABB>(AABB(
-            center - Vector3 (radius, radius, radius),
-            center + Vector3(radius, radius, radius)));
-
+std::shared_ptr<AABB> Ball::bounding_box() const {
+    return aabb;
 }
 
 void Ball::transform(Matrix4x4 m) {
     center=Vector3(m*Vector4(center,1));
+    calculateBoundingBox();
 }
 
 Ball::Ball(Point3 _center, float _radius) {
     center=_center;
     radius=_radius;
     class internal:public Material{
-        ColorVec shade(const World& world, const Ray& ray, const intersection& intersection, int32_t depth) const override{
+        [[nodiscard]] ColorVec shade(const World& world, const Ray& ray, const intersection& intersection, int32_t depth) const override{
             const auto& hitPoint = intersection.hit_point;
             const Ray reflected(hitPoint, utility::reflect_vector(normalize(ray.direction), intersection.normal));
             return 0.5f*world.trace_ray(reflected, depth - 1);
         }
     }  t;
     material=std::make_shared<internal>(t);
+    aabb=std::make_shared<AABB>(AABB(
+            center - Vector3 (radius, radius, radius),
+            center + Vector3(radius, radius, radius)));
+}
+
+void Ball::calculateBoundingBox() {
+    this->aabb=std::make_shared<AABB>(AABB(
+            center - Vector3 (radius, radius, radius),
+            center + Vector3(radius, radius, radius)));
 }

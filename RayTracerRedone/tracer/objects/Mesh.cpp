@@ -10,8 +10,7 @@
 #include "../utils/utility.h"
 
 std::optional<intersection> Mesh::intersects(const Ray &ray) const {
-    float t_min = 0;
-    if (!aabb->intersects(ray, t_min)) {
+    if (!aabb->intersects(ray)) {
         return std::nullopt;
     }
 
@@ -90,7 +89,7 @@ std::optional<intersection> Mesh::intersects(const Ray &ray) const {
     */
 }
 
-std::optional<std::shared_ptr<AABB>> Mesh::bounding_box() const {
+std::shared_ptr<AABB>Mesh::bounding_box()  const {
     return aabb;
 }
 
@@ -113,7 +112,7 @@ Mesh::Mesh(const std::string filename, const std::shared_ptr<Material> &material
 
     //processNode(scene->mRootNode, scene);
     processScene(scene);
-    calculateBoundingBox();
+    this->calculateBoundingBox();
     GenerateBvh();
 }
 
@@ -294,7 +293,7 @@ std::optional<intersection> Mesh::Triangle::intersects(const Ray &ray) const {
 }
 
 
-std::optional<std::shared_ptr<AABB>> Mesh::Triangle::bounding_box() const {
+std::shared_ptr<AABB> Mesh::Triangle::bounding_box() const {
     glm::vec3 minPoint = glm::vec3(FLT_MAX, FLT_MAX, FLT_MAX);
     glm::vec3 maxPoint = glm::vec3(FLT_MIN, FLT_MIN, FLT_MIN);
 

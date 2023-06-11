@@ -2,18 +2,24 @@
 #include "VirtualObject.h"
 class Ball: public VirtualObject
 {
+    std::shared_ptr<AABB> aabb;
 public:
 	Point3 center;
 	float radius;
 	Ball(Point3 _center, float _radius) ;
 	Ball(Point3 _center, float _radius, std::shared_ptr<Material> _material) :VirtualObject(_material), center(_center), radius(_radius) {
-
+        aabb=std::make_shared<AABB>(AABB(
+                center - Vector3 (radius, radius, radius),
+                center + Vector3(radius, radius, radius)));
 	};
-	std::optional<intersection> intersects(const Ray &ray) const override;
+	[[nodiscard]] std::optional<intersection> intersects(const Ray &ray) const override;
 
-    std::optional<std::shared_ptr<AABB>> bounding_box() const override;
+    [[nodiscard]] std::shared_ptr<AABB> bounding_box() const override;
 
     void transform(Matrix4x4 m) override;
+
+protected:
+    void calculateBoundingBox() ;
 
 };
 

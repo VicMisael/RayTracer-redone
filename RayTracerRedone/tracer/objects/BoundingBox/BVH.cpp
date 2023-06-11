@@ -11,18 +11,18 @@ inline void sort(std::vector<std::shared_ptr<VirtualObject>>& objects){
     if (axis == 0) {
         std::sort(objects.begin(), objects.end(),
                   [](const std::shared_ptr<VirtualObject>& a, const std::shared_ptr<VirtualObject>& b) {
-                      return a->bounding_box().value()->min().x < b->bounding_box().value()->min().x;
+                      return a->bounding_box()->min().x < b->bounding_box()->min().x;
 
                   });
     } else if (axis == 1) {
         std::sort(objects.begin(), objects.end(),
                   [](const std::shared_ptr<VirtualObject>& a, const std::shared_ptr<VirtualObject>& b) {
-                      return a->bounding_box().value()->min().y < b->bounding_box().value()->min().y;
+                      return a->bounding_box()->min().y < b->bounding_box()->min().y;
                   });
     } else {
         std::sort(objects.begin(), objects.end(),
                   [](const std::shared_ptr<VirtualObject>& a, const std::shared_ptr<VirtualObject>& b) {
-                      return a->bounding_box().value()->min().z <  a->bounding_box().value()->min().z;
+                      return a->bounding_box()->min().z <  a->bounding_box()->min().z;
                   });
     }
 }
@@ -53,7 +53,7 @@ BVH::BVH( std::vector<std::shared_ptr<VirtualObject>> objectList) {
 
     if (objects.size() == 1) {
         object = objects[0];
-        aabb = object->bounding_box().value();
+        aabb = object->bounding_box();
     }else if(objects.size()==2)
     {
         left = std::make_unique<BVH>(std::vector<std::shared_ptr<VirtualObject>>{objects[0]});
@@ -70,7 +70,7 @@ BVH::BVH( std::vector<std::shared_ptr<VirtualObject>> objectList) {
 
 }
 
-std::optional<std::shared_ptr<AABB>> BVH::bounding_box() const {
+std::shared_ptr<AABB> BVH::bounding_box() const  {
     return this->aabb;
 }
 
@@ -89,8 +89,15 @@ std::optional<intersection> BVH::intersects(const Ray &ray, float t_min) const {
         }
     }
 
-    if(aabb==nullptr || !aabb->intersects(ray)){
+    if(aabb==nullptr){
         return selintersection;
+    } else{
+        float aabb_min=0;
+        float aabb_max=t_min;
+        auto intersectsaabb=this->aabb->intersects(ray,aabb_min,aabb_max);
+        if(!intersectsaabb || aabb_min>t_min){
+            return {};
+        }
     }
     if(object){
         //Leaf node

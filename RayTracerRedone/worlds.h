@@ -231,7 +231,10 @@ namespace worlds {
         mesh->transform(mat);
         objects.push_back(mesh);
 
-        mesh = std::make_shared<Mesh>("assets/objs/cow.obj", white_phong);
+        const auto texture = std::make_shared<ImageTexture>("assets/textures/jupiter.jpg");
+        const auto eight_ball_material = std::make_shared<TexturedPhongReflective>(texture, 0.4);
+
+        mesh = std::make_shared<Mesh>("assets/objs/cow.obj", eight_ball_material);
         mat = glm::translate(Matrix4x4(1.0f), Vector3(200, -400, -300));
         mat = glm::rotate(mat, angle/2 , Vector3(0, 1, 0));
         mat = glm::scale(mat, Vector3(100));

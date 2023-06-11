@@ -86,31 +86,33 @@ std::optional<intersection> OpenCylinder::intersects(const Ray &ray) const {
 
 }
 
-std::optional<std::shared_ptr<AABB>> OpenCylinder::bounding_box() const {
-    glm::vec3 axis_normalized = glm::normalize(axis_);
-
-    // 2. Create a rotation matrix that aligns the cylinder axis with the y-axis.
-    glm::vec3 y_axis(0.0f, 1.0f, 0.0f); // the target axis
-    glm::vec3 rotation_axis = glm::cross(axis_normalized, y_axis);
-    float rotation_angle = acos(glm::dot(axis_normalized, y_axis));
-
-    glm::mat4 rotation_matrix = glm::rotate(glm::mat4(1.0f), rotation_angle, rotation_axis);
-
-    // 3. Rotate the base and top points of the cylinder using this matrix.
-    glm::vec4 base_rotated = rotation_matrix * glm::vec4(base_, 1.0f);
-    glm::vec4 top_rotated = rotation_matrix * glm::vec4(base_ + height_ * axis_, 1.0f);
-
-    // 4. Calculate the AABB as before, but using these rotated points and a vertical axis.
-    glm::vec3 min_point = glm::vec3(base_rotated) - glm::vec3(radius_, 0.0f, radius_);
-    glm::vec3 max_point = glm::vec3(top_rotated) + glm::vec3(radius_, 0.0f, radius_);
-
-    // 5. Rotate the AABB back to the original orientation using the inverse of the rotation matrix.
-    glm::mat4 inverse_rotation_matrix = glm::inverse(rotation_matrix);
-
-    return std::make_shared<AABB>(glm::vec3(inverse_rotation_matrix * glm::vec4(min_point, 1.0f)), glm::vec3(inverse_rotation_matrix * glm::vec4(max_point, 1.0f)));
-}
+//std::shared_ptr<AABB>OpenCylinder::bounding_box()  {
+//    return {};
+//    glm::vec3 axis_normalized = glm::normalize(axis_);
+//
+//    // 2. Create a rotation matrix that aligns the cylinder axis with the y-axis.
+//    glm::vec3 y_axis(0.0f, 1.0f, 0.0f); // the target axis
+//    glm::vec3 rotation_axis = glm::cross(axis_normalized, y_axis);
+//    float rotation_angle = acos(glm::dot(axis_normalized, y_axis));
+//
+//    glm::mat4 rotation_matrix = glm::rotate(glm::mat4(1.0f), rotation_angle, rotation_axis);
+//
+//    // 3. Rotate the base and top points of the cylinder using this matrix.
+//    glm::vec4 base_rotated = rotation_matrix * glm::vec4(base_, 1.0f);
+//    glm::vec4 top_rotated = rotation_matrix * glm::vec4(base_ + height_ * axis_, 1.0f);
+//
+//    // 4. Calculate the AABB as before, but using these rotated points and a vertical axis.
+//    glm::vec3 min_point = glm::vec3(base_rotated) - glm::vec3(radius_, 0.0f, radius_);
+//    glm::vec3 max_point = glm::vec3(top_rotated) + glm::vec3(radius_, 0.0f, radius_);
+//
+//    // 5. Rotate the AABB back to the original orientation using the inverse of the rotation matrix.
+//    glm::mat4 inverse_rotation_matrix = glm::inverse(rotation_matrix);
+//
+//    return std::make_shared<AABB>(glm::vec3(inverse_rotation_matrix * glm::vec4(min_point, 1.0f)), glm::vec3(inverse_rotation_matrix * glm::vec4(max_point, 1.0f)));
+//}
 
 void OpenCylinder::transform(Matrix4x4 m) {
     base_=Vector3(m*Vector4(base_,1));
     axis_=Vector3(m*Vector4(axis_,0));
+    VirtualObject::transform(m);
 }

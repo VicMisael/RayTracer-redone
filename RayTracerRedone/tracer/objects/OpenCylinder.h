@@ -16,9 +16,8 @@ public:
 
     }
 
-    std::optional<intersection> intersects(const Ray &ray) const override;
+    [[nodiscard]] std::optional<intersection> intersects(const Ray &ray) const override;
 
-    std::optional<std::shared_ptr<AABB>> bounding_box() const override;
 
     virtual bool hasBoundingBox() const override{
         return false;

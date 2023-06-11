@@ -3,6 +3,6 @@
 //
 #include "VirtualObject.h"
 #include "BoundingBox/AABB.h"
-std::optional<std::shared_ptr<AABB>> VirtualObject::bounding_box() const {
+std::shared_ptr<AABB> VirtualObject::bounding_box() const {
     return  {};
 }

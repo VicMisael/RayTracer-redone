@@ -25,12 +25,14 @@ struct Face {
 
 
 class Mesh : public VirtualObject {
+protected:
+    void calculateBoundingBox() ;
 public:
     explicit Mesh(std::string filename, const std::shared_ptr<Material> &material);
 
     [[nodiscard]] std::optional<intersection> intersects(const Ray &ray) const override;
 
-    [[nodiscard]] std::optional<std::shared_ptr<AABB>> bounding_box() const override;
+    [[nodiscard]] std::shared_ptr<AABB> bounding_box() const  override;
 
 
     void transform(Matrix4x4 m) override;
@@ -42,13 +44,15 @@ private:
     std::vector<Face> faces;
     std::unique_ptr<BVH> bvh;
 
-    void calculateBoundingBox();
+
 
     void processNode(aiNode *node, const aiScene *scene);
 
     void processMesh(aiMesh *mesh);
 
     void processScene(const aiScene *pScene);
+
+    void GenerateBvh();
 
     class Triangle : public VirtualObject {
         std::vector<Vertex> &vertices;
@@ -61,11 +65,11 @@ private:
 
         void transform(Matrix4x4 m) override{};
 
-        [[nodiscard]] std::optional<std::shared_ptr<AABB>> bounding_box() const override;
+        [[nodiscard]] std::shared_ptr<AABB> bounding_box() const override  ;
 
     };
 
-    void GenerateBvh();
+
 };
 
 

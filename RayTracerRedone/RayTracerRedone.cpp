@@ -31,17 +31,17 @@ int main() {
 
     const uint32_t w = 1000;
     const uint32_t h = 1000;
-    //TODO: ARea Lights, Refractance,  BVH for meshes, BumpMapping,
+    //TODO: ARea Lights, Refractance, BumpMapping,
 
 
     auto* canvas = new sdl2canvas(w, h);
 
     const auto sampler = generateSampler(1);
 
-    auto selectedWorld= worlds::meshTest();
+    auto selectedWorld= worlds::generateWorld1();
     Scene scene(selectedWorld, canvas);
 
-    constexpr int32_t recursion_depth_limit = 0;
+    constexpr int32_t recursion_depth_limit = 10;
 
     auto draw = [&] {
         while (!canvas->should_stop()) {
