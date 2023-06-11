@@ -36,7 +36,7 @@ int main() {
 
     auto* canvas = new sdl2canvas(w, h);
 
-    const auto sampler = generateSampler(1);
+    const auto sampler = generateSampler(10);
 
     auto selectedWorld= worlds::generateWorld1();
     Scene scene(selectedWorld, canvas);

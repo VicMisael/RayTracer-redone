@@ -9,7 +9,7 @@
 bool AABB::intersects(const Ray &ray) const {
     float t_min=0;
     float t_max=std::numeric_limits<float>::max();
-    this->intersects(ray,t_min,t_max);
+    return this->intersects(ray,t_min,t_max);
 }
 
 bool AABB::intersects(const Ray& ray, float& t_min) const
