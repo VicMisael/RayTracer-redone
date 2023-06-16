@@ -28,3 +28,5 @@
 /cmake-build-release-wsl-gcc12
 /cmake-build-relwithdebinfo-wsl-clang
 /cmake-build-relwithdebinfo-wsl-gcc12
+/cmake-build-minsizerel-wsl
+/cmake-build-relwithdebinfo-wsl

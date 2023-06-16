@@ -127,16 +127,6 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     //cylinder->transform(mat);
     objects.push_back(cylinder);
 
-    auto mesh = std::make_shared<Mesh>("assets/objs/teapot.obj", white_phong);
-    auto mat = glm::translate(Matrix4x4(1.0f), Vector3(0, -100, -300));
-    float angle = 1.5708;
-    mat = glm::rotate(mat, angle / 2, Vector3(0, 1, 0));
-    mat = glm::scale(mat, Vector3(25));
-    mesh->transform(mat);
-    objects.push_back(mesh);
-
-
-
     return objects;
 }
 
@@ -170,8 +160,8 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjectsMoonEarth() {
 
 std::vector<std::shared_ptr<VectorialLight>> generate_moon_earth_scenario_lights() {
     std::vector<std::shared_ptr<VectorialLight>> lights;
-    lights.push_back(std::make_shared<PointLight>(Point3(7200, 0, -1000), Constants::pi * 1000,
-                                                  normalize(ColorVec(1.2, 1.2, 1))));
+    //lights.push_back(std::make_shared<PointLight>(Point3(7200, 0, -1000), Constants::pi * 1000,
+    //                                            normalize(ColorVec(1.2, 1.2, 1))));
 
     return lights;
 }
@@ -245,8 +235,8 @@ namespace worlds {
         const auto eight_ball_material = std::make_shared<TexturedPhongReflective>(texture, 0.4);
 
         mesh = std::make_shared<Mesh>("assets/objs/cow.obj", eight_ball_material);
-        mat = glm::translate(Matrix4x4(1.0f), Vector3(10, 0, -300));
-        mat = glm::rotate(mat, angle/2 , Vector3(0, 1, 0));
+        mat = glm::translate(Matrix4x4(1.0f), Vector3(-200, -400, -300));
+        mat = glm::rotate(mat, angle / 2, Vector3(0, 1, 0));
         mat = glm::scale(mat, Vector3(20));
         mesh->transform(mat);
         objects.push_back(mesh);
@@ -257,12 +247,12 @@ namespace worlds {
         AmbientLight ab(0.2, ColorVec(1.0, 1.0, 1));
 
 
-        mesh = std::make_shared<Mesh>("assets/objs/box_stack.obj", eight_ball_material);
+        auto mesh2 = std::make_shared<Mesh>("assets/objs/box_stack.obj", eight_ball_material);
         mat = glm::translate(Matrix4x4(1.0f), Vector3(-200, 400, -300));
         mat = glm::rotate(mat, angle / 2, Vector3(0, 1, 0));
-        mat = glm::scale(mat, Vector3(100));
-        mesh->transform(mat);
-        objects.push_back(mesh);
+        mat = glm::scale(mat, Vector3(20));
+        mesh2->transform(mat);
+        objects.push_back(mesh2);
 
         return {view_plane, objects, lights,
                 ab, {0.9, 0.9, 1}, projection};

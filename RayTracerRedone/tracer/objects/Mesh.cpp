@@ -14,8 +14,8 @@ std::optional<intersection> Mesh::intersects(const Ray &ray) const {
         return std::nullopt;
     }
 
-    return bvh->intersects(ray);
-    /*
+	//return bvh->intersects(ray);
+
     float tNear = std::numeric_limits<float>::max();
     bool hit = false;
     glm::vec3 hit_normal;
@@ -86,7 +86,7 @@ std::optional<intersection> Mesh::intersects(const Ray &ray) const {
     else {
         return std::nullopt;
     }
-    */
+
 }
 
 std::shared_ptr<AABB>Mesh::bounding_box()  const {
@@ -110,8 +110,8 @@ Mesh::Mesh(const std::string filename, const std::shared_ptr<Material> &material
     }
 
 
-    //processNode(scene->mRootNode, scene);
-    processScene(scene);
+    processNode(scene->mRootNode, scene);
+   // processScene(scene);
     this->calculateBoundingBox();
     GenerateBvh();
 }
@@ -145,17 +145,17 @@ void Mesh::calculateBoundingBox() {
 }
 
 
-//void Mesh::processNode(aiNode *node, const aiScene *scene) {
-//
-//    for (unsigned int i = 0; i < node->mNumMeshes; i++) {
-//        aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-//        processMesh(mesh);
-//    }
-//
-//    for (unsigned int i = 0; i < node->mNumChildren; i++) {
-//        processNode(node->mChildren[i], scene);
-//    }
-//}
+void Mesh::processNode(aiNode *node, const aiScene *scene) {
+
+    for (unsigned int i = 0; i < node->mNumMeshes; i++) {
+        aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
+        processMesh(mesh);
+    }
+
+    for (unsigned int i = 0; i < node->mNumChildren; i++) {
+        processNode(node->mChildren[i], scene);
+    }
+}
 
 void Mesh::processMesh(aiMesh *mesh) {
     for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
@@ -216,7 +216,7 @@ void Mesh::processScene(const aiScene *pScene) {
 
 void Mesh::GenerateBvh() {
 
-    std::vector<std::shared_ptr<VirtualObject>> triangleList;
+    std::vector<std::shared_ptr<VirtualObject>> triangleList={};
     for (auto &item: faces) {
         auto triangle = std::make_shared<Triangle>(item, vertices, material.value());
         triangleList.push_back(triangle);

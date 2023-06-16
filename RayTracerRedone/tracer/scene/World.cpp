@@ -62,7 +62,7 @@ void World::render(Canvas *canvas, const int32_t depth, const std::shared_ptr<sa
 }
 
 std::optional<intersection> World::hit(const Ray &ray) const {
-    return bvh->intersects(ray);
+    //return bvh->intersects(ray);
     float t_min = Constants::MAX_FLOAT;
     std::optional<intersection> selintersection;
     for (const std::shared_ptr<VirtualObject> &object: objects_) {

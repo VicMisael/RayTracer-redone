@@ -100,7 +100,7 @@ std::optional<intersection> BVH::intersects(const Ray &ray, float t_min) const {
             return {};
         }
     }
-    if(object){
+    if(left== nullptr && right== nullptr){
         //Leaf node
         // if this condition is reached left and right are null
         assert(left == nullptr && right == nullptr);
