@@ -14,8 +14,8 @@ std::tuple<float,float> get_sphere_uv(const Point3 p) {
     //     <0 0 1> yields <0.25 0.50>       < 0  0 -1> yields <0.75 0.50>
 
     using namespace Constants;
-    auto theta = acos(-p.y);
-    auto phi = atan2(-p.z, p.x) + Constants::pi;
+    const float theta = acosf(-p.y);
+    const float phi = atan2f(-p.z, p.x) + Constants::pi;
 
     const float u = phi / (2*Constants::pi);
     const float v = theta / Constants::pi;

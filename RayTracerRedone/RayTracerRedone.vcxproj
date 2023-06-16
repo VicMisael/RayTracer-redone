@@ -155,6 +155,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="tracer\scene\Camera.cpp" />
+    <ClCompile Include="tracer\scene\materials\SampleDielectric.cpp" />
     <ClCompile Include="tracer\scene\materials\TexturedPhongReflective.cpp" />
     <ClCompile Include="tracer\scene\textures\ImageTexture.cpp" />
     <ClCompile Include="tracer\scene\textures\PointCheckerTexture.cpp" />
@@ -200,6 +201,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tracer\scene\Camera.h" />
+    <ClInclude Include="tracer\scene\materials\SampleDielectric.h" />
     <ClInclude Include="tracer\scene\materials\TexturedPhongReflective.h" />
     <ClInclude Include="tracer\scene\textures\ImageTexture.h" />
     <ClInclude Include="tracer\scene\textures\PointCheckerTexture.h" />
