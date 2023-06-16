@@ -224,13 +224,11 @@ namespace worlds {
     }
     World refractanceTest() {
 
-        //constexpr bool projection = true;
-
-        //const auto view_plane = std::make_shared<ViewPlane>(60, 60, 20, 0.50);
-
+//        constexpr bool projection = true;
+//
+//        const auto view_plane = std::make_shared<ViewPlane>(60, 60, 20, 0.50);
 
         constexpr bool projection = false;
-
         const auto view_plane = std::make_shared<ViewPlane>(2000, 2000, 50, 01.0f);
 
         std::vector<std::shared_ptr<VirtualObject>> objects;
@@ -245,27 +243,40 @@ namespace worlds {
         const auto blue_matte = std::make_shared<Matte>(1, ColorVec(0.3, 0.9 , 1));
 
         objects.push_back(ball);
-        const auto ball2 = std::make_shared<Ball>(Point3(500, 0, -950), 350.0f, blue_matte);
+        //const auto ball2 = std::make_shared<Ball>(Point3(500, 0, -1050), 350.0f, blue_matte);
 
-        objects.push_back(ball2);
+        //objects.push_back(ball2);
 
-        const auto dielectric = std::make_shared<SampleDielectric>(0.8545);
+        const auto dielectric = std::make_shared<SampleDielectric>(1.6);
 
-        objects.push_back(std::make_shared<Ball>(Point3(0, 0, -255), 150, dielectric));
-        objects.push_back(std::make_shared<Ball>(Point3(0, -150, -255), 150, dielectric));
+        //objects.push_back(std::make_shared<Ball>(Point3(0, 0, -255), 150, dielectric));
+
+        const auto dielectric2 = std::make_shared<SampleDielectric>(.6);
+        objects.push_back(std::make_shared<Ball>(Point3(0, -150, -155), 150, dielectric2));
+
+        const auto dielectric3 = std::make_shared<SampleDielectric>(.56);
+        objects.push_back(std::make_shared<Ball>(Point3(350, 0, -455), 150, dielectric3));
+
+
+
+        const auto tex_phong = std::make_shared<TexturedPhong>(black_white_texture);
+        objects.push_back(std::make_shared<Ball>(Point3(350, 0, -655), 150, tex_phong));
+        objects.push_back(std::make_shared<Ball>(Point3(50, 0, -655), 150, tex_phong));
+        //objects.push_back(std::make_shared<Ball>(Point3(150, 0, -655), 150, tex_phong));
+        objects.push_back(std::make_shared<Ball>(Point3(-150, 0, -655), 150, blue_matte));
+        //objects.push_back(std::make_shared<Ball>(Point3(-150, 0, -655), 150, tex_phong));
+        objects.push_back(std::make_shared<Ball>(Point3(-450, 0, -655), 150, tex_phong));
 
         objects.push_back(
             std::make_shared<Ball>(Point3(0, -1000, -1000), 1000, white_matte));
 
         objects.push_back(
-            std::make_shared<Ball>(Point3(0, -1000, -1000), 1000, white_matte));
+            std::make_shared<Ball>(Point3(-1000, -1000, 1000), 1000, white_matte));
 
         const auto bw_matte = std::make_shared<TexturedMatte>(black_white_texture, 1);
 
         objects.push_back(std::make_shared<Ball>(Point3(1350, 0, -1000), 1000, phong_metal));
 
-
-        objects.push_back(std::make_shared<Ball>(Point3(0, 0, -5000), 2000, blue_matte));
         std::vector<std::shared_ptr<VectorialLight>> lights;
         //lights.push_back(std::make_shared<DirectionalLight>(Vector3(0, 1, 1), 3.15, ColorVec(1, 1, 1)));
         //lights.push_back(std::make_shared<PointLight>(Point3(0, 0, 0), Constants::pi * 62, ColorVec(1, 1, 1)));
@@ -275,7 +286,7 @@ namespace worlds {
 
 
         return { view_plane, objects, lights,
-                ab, {0.4, 0.4, 1}, projection };
+                ab, {1, 1, 1}, projection };
 
     }
 

@@ -36,12 +36,12 @@ int main() {
 
     auto* canvas = new sdl2canvas(w, h);
 
-    const auto sampler = generateSampler(100);
+    const auto sampler = generateSampler(10);
 
     auto selectedWorld= worlds::refractanceTest();
     Scene scene(selectedWorld, canvas);
 
-    constexpr int32_t recursion_depth_limit = 10;
+    constexpr int32_t recursion_depth_limit = 20;
 
     auto draw = [&] {
         while (!canvas->should_stop()) {
