@@ -29,19 +29,19 @@ int main() {
     static int display_in_use = 0; /* Only using first display */
 
 
-    const uint32_t w = 400;
-    const uint32_t h = 400;
+    const uint32_t w = 1000;
+    const uint32_t h = 1000;
     //TODO: ARea Lights, Refractance, BumpMapping,
 
 
     auto* canvas = new sdl2canvas(w, h);
 
-    const auto sampler = generateSampler(10);
+    const auto sampler = generateSampler(100);
 
-    auto selectedWorld= worlds::meshTest();
+    auto selectedWorld= worlds::refractanceTest();
     Scene scene(selectedWorld, canvas);
 
-    constexpr int32_t recursion_depth_limit = 3;
+    constexpr int32_t recursion_depth_limit = 10;
 
     auto draw = [&] {
         while (!canvas->should_stop()) {

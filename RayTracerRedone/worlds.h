@@ -34,6 +34,7 @@
 #include "tracer/scene/textures/CheckerTexture.h"
 #include "tracer/scene/textures/PointCheckerTexture.h"
 #include "tracer/scene/textures/ImageTexture.h"
+#include "tracer/scene/materials/SampleDielectric.h"
 
 
 std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
@@ -127,6 +128,14 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     //cylinder->transform(mat);
     objects.push_back(cylinder);
 
+    const auto dielectric = std::make_shared<SampleDielectric>(.4f);
+
+    objects.push_back(std::make_shared<Ball>(Point3(0, -120, -155), 100, dielectric));
+  
+
+
+
+
     return objects;
 }
 
@@ -211,6 +220,62 @@ namespace worlds {
 
         return {view_plane, generateObjectsMoonEarth(),generate_moon_earth_scenario_lights(),
                 ab, {0.2, 0.2, 0.2}, projection};
+
+    }
+    World refractanceTest() {
+
+        //constexpr bool projection = true;
+
+        //const auto view_plane = std::make_shared<ViewPlane>(60, 60, 20, 0.50);
+
+
+        constexpr bool projection = false;
+
+        const auto view_plane = std::make_shared<ViewPlane>(2000, 2000, 50, 01.0f);
+
+        std::vector<std::shared_ptr<VirtualObject>> objects;
+
+        const auto white_matte = std::make_shared<Matte>(1, ColorVec(1, 1.0, 1));
+        const auto black_red_texture = std::make_shared<CheckerTexture>(Constants::BLACK, Constants::RED, 10);
+        const auto black_white_texture = std::make_shared<CheckerTexture>(Constants::BLACK, Constants::WHITE, 10);
+        const auto phong_metal = std::make_shared<PhongMetal>();
+        const auto rw_matte = std::make_shared<TexturedMatte>(black_red_texture, 1);
+        const auto ball = std::make_shared<Ball>(Point3(-500, 0, -950), 350.0f, rw_matte);
+
+        const auto blue_matte = std::make_shared<Matte>(1, ColorVec(0.3, 0.9 , 1));
+
+        objects.push_back(ball);
+        const auto ball2 = std::make_shared<Ball>(Point3(500, 0, -950), 350.0f, blue_matte);
+
+        objects.push_back(ball2);
+
+        const auto dielectric = std::make_shared<SampleDielectric>(0.8545);
+
+        objects.push_back(std::make_shared<Ball>(Point3(0, 0, -255), 150, dielectric));
+        objects.push_back(std::make_shared<Ball>(Point3(0, -150, -255), 150, dielectric));
+
+        objects.push_back(
+            std::make_shared<Ball>(Point3(0, -1000, -1000), 1000, white_matte));
+
+        objects.push_back(
+            std::make_shared<Ball>(Point3(0, -1000, -1000), 1000, white_matte));
+
+        const auto bw_matte = std::make_shared<TexturedMatte>(black_white_texture, 1);
+
+        objects.push_back(std::make_shared<Ball>(Point3(1350, 0, -1000), 1000, phong_metal));
+
+
+        objects.push_back(std::make_shared<Ball>(Point3(0, 0, -5000), 2000, blue_matte));
+        std::vector<std::shared_ptr<VectorialLight>> lights;
+        //lights.push_back(std::make_shared<DirectionalLight>(Vector3(0, 1, 1), 3.15, ColorVec(1, 1, 1)));
+        //lights.push_back(std::make_shared<PointLight>(Point3(0, 0, 0), Constants::pi * 62, ColorVec(1, 1, 1)));
+        AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
+
+
+
+
+        return { view_plane, objects, lights,
+                ab, {0.4, 0.4, 1}, projection };
 
     }
 
