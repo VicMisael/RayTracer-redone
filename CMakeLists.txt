@@ -117,7 +117,6 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/utils/stb/rtr_stb_image.h
         RayTracerRedone/tracer/scene/materials/TexturedPhongReflective.cpp
         RayTracerRedone/tracer/scene/materials/TexturedPhongReflective.h
-        RayTracerRedone/tracer/scene/materials/TexturedPhongReflective.h
         RayTracerRedone/worlds.h
         RayTracerRedone/tracer/scene/Camera.cpp
         RayTracerRedone/tracer/scene/Camera.h
@@ -125,7 +124,11 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/scene/materials/SampleDielectric.h
         RayTracerRedone/tracer/scene/BxDF/PerfectTransmitter.cpp
         RayTracerRedone/tracer/scene/BxDF/PerfectTransmitter.h
-        RayTracerRedone/tracer/scene/BxDF/PerfectTransmitter.h)
+        RayTracerRedone/tracer/scene/BxDF/BTDF.h
+        RayTracerRedone/tracer/scene/BxDF/FresnelTransmitter.cpp
+        RayTracerRedone/tracer/scene/BxDF/FresnelTransmitter.h
+        RayTracerRedone/tracer/scene/materials/Transparent.h
+        RayTracerRedone/tracer/scene/materials/Transparent.cpp)
 
 
 target_link_libraries(RayTracer_redone glm::glm)

@@ -3,15 +3,28 @@
 //
 
 #pragma once
-#include "BxDF.h"
 
-class PerfectTransmitter:public BxDF {
+
+#include "BTDF.h"
+
+class PerfectTransmitter : public BTDF {
+
+    float ior = 1.0f;  // index of refraction
+    float kt = 0.0f;    // transmission coefficient;
 public:
-    ColorVec rho(const Vector3 &wo) const override;
+    PerfectTransmitter(float kt, float ior);
+    PerfectTransmitter() {
 
-    ColorVec f(const intersection &intersection, const Vector3 &wo, const Vector3 &wi) const override;
+    }
 
-    sample_f_out sample_f(const intersection &intersection, const Vector3 &wo) const override;
+public:
+    [[nodiscard]] ColorVec rho(const Vector3 &wo) const override;
+
+    [[nodiscard]] ColorVec f(const intersection &intersection, const Vector3 &wo, const Vector3 &wi) const override;
+
+    [[nodiscard]] sample_f_out sample_f(const intersection &intersection, const Vector3 &wo) const override;
+
+    float total_internal_reflection(const Ray &ray, const intersection &intersection) const override;
 
 };
 

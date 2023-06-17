@@ -5,13 +5,43 @@
 #include "PerfectTransmitter.h"
 
 ColorVec PerfectTransmitter::rho(const Vector3 &wo) const {
-    return ColorVec();
+    return Constants::BLACK;
 }
 
 ColorVec PerfectTransmitter::f(const intersection &intersection, const Vector3 &wo, const Vector3 &wi) const {
-    return ColorVec();
+    return Constants::BLACK;
 }
 
 sample_f_out PerfectTransmitter::sample_f(const intersection &intersection, const Vector3 &wo) const {
-    return sample_f_out();
+    Vector3 normal(intersection.normal);
+    float cos_thetai = dot(normal, wo);
+    float eta = ior;
+
+    if (cos_thetai < 0.0f) {  // transmitted ray is outside
+        cos_thetai = -cos_thetai;
+        normal = -normal;            // reverse direction of normal
+        eta = 1.0f / eta;  // invert ior
+    }
+
+    float temp = 1.0f - (1.0f - cos_thetai * cos_thetai) / (eta * eta);
+    float cos_theta2 = sqrt(temp);
+    Vector3 wt = -wo / eta - (cos_theta2 - cos_thetai / eta) * normal;
+
+    float k = 1.0f / (fabs(dot(normal, wt)));
+    return {(kt / (eta * eta)) * Constants::WHITE * k, wt, 0};
 }
+
+float PerfectTransmitter::total_internal_reflection(const Ray &ray, const intersection &intersection) const {
+
+    Vector3 wo(-ray.direction);
+    float cos_thetai = dot(intersection.normal, wo);
+    float eta = ior;
+
+    if (cos_thetai < 0.0f) {
+        eta = 1.0f / eta;
+    }
+
+    return 1.0f - (1.0f - cos_thetai * cos_thetai) / (eta * eta);
+}
+
+PerfectTransmitter::PerfectTransmitter(float kt, float ior) : ior(ior), kt(kt) {}

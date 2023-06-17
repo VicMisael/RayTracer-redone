@@ -154,9 +154,11 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="tracer\scene\BxDF\PerfectTransmitter.cpp" />
     <ClCompile Include="tracer\scene\Camera.cpp" />
     <ClCompile Include="tracer\scene\materials\SampleDielectric.cpp" />
     <ClCompile Include="tracer\scene\materials\TexturedPhongReflective.cpp" />
+    <ClCompile Include="tracer\scene\materials\Transparent.cpp" />
     <ClCompile Include="tracer\scene\textures\ImageTexture.cpp" />
     <ClCompile Include="tracer\scene\textures\PointCheckerTexture.cpp" />
     <ClCompile Include="tracer\objects\BoundingBox\AABB.cpp" />
@@ -200,9 +202,12 @@
     <ClCompile Include="tracer\scene\materials\PhongMetal.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="tracer\scene\BxDF\BTDF.h" />
+    <ClInclude Include="tracer\scene\BxDF\PerfectTransmitter.h" />
     <ClInclude Include="tracer\scene\Camera.h" />
     <ClInclude Include="tracer\scene\materials\SampleDielectric.h" />
     <ClInclude Include="tracer\scene\materials\TexturedPhongReflective.h" />
+    <ClInclude Include="tracer\scene\materials\Transparent.h" />
     <ClInclude Include="tracer\scene\textures\ImageTexture.h" />
     <ClInclude Include="tracer\scene\textures\PointCheckerTexture.h" />
     <ClInclude Include="tracer\objects\BoundingBox\AABB.h" />

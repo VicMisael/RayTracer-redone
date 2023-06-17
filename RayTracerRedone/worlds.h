@@ -35,6 +35,7 @@
 #include "tracer/scene/textures/PointCheckerTexture.h"
 #include "tracer/scene/textures/ImageTexture.h"
 #include "tracer/scene/materials/SampleDielectric.h"
+#include "tracer/scene/materials/Transparent.h"
 
 
 std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
@@ -82,14 +83,10 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     objects.push_back(std::make_shared<Ball>(Point3(5, -20, -625), 120, phong_metal));
 
 
-    objects.push_back(std::make_shared<Ball>(Point3(-150, 55, -150), 40,
-                                             white_matte));
-
-
     objects.push_back(std::make_shared<Ball>(Point3(0, 40, -650), 40,
                                              mirror));
 
-    objects.push_back(std::make_shared<Ball>(Point3(0, 0, -195), 95,
+    objects.push_back(std::make_shared<Ball>(Point3(0, 600, -195), 95,
                                              phong_black_reflective));
 
 
@@ -128,13 +125,9 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     //cylinder->transform(mat);
     objects.push_back(cylinder);
 
-    const auto dielectric = std::make_shared<SampleDielectric>(.4f);
+    const auto dielectric = std::make_shared<SampleDielectric>(0.3f);
 
-    objects.push_back(std::make_shared<Ball>(Point3(0, -120, -155), 100, dielectric));
-  
-
-
-
+    objects.push_back(std::make_shared<Ball>(Point3(-100, 120, -355), 300, dielectric));
 
     return objects;
 }
@@ -229,14 +222,14 @@ namespace worlds {
 //        const auto view_plane = std::make_shared<ViewPlane>(60, 60, 20, 0.50);
 
         constexpr bool projection = false;
-        const auto view_plane = std::make_shared<ViewPlane>(2000, 2000, 50, 01.0f);
+        const auto view_plane = std::make_shared<ViewPlane>(2000, 2000, 50, 0.5f);
 
         std::vector<std::shared_ptr<VirtualObject>> objects;
 
         const auto white_matte = std::make_shared<Matte>(1, ColorVec(1, 1.0, 1));
         const auto black_red_texture = std::make_shared<CheckerTexture>(Constants::BLACK, Constants::RED, 10);
         const auto black_white_texture = std::make_shared<CheckerTexture>(Constants::BLACK, Constants::WHITE, 10);
-        const auto phong_metal = std::make_shared<PhongMetal>();
+        const auto phong_metal = std::make_shared<PhongReflective>();
         const auto rw_matte = std::make_shared<TexturedMatte>(black_red_texture, 1);
         const auto ball = std::make_shared<Ball>(Point3(-500, 0, -950), 350.0f, rw_matte);
 
@@ -247,15 +240,18 @@ namespace worlds {
 
         //objects.push_back(ball2);
 
-        const auto dielectric = std::make_shared<SampleDielectric>(1.6);
+        const auto dielectric = std::make_shared<SampleDielectric>(4.6);
 
-        //objects.push_back(std::make_shared<Ball>(Point3(0, 0, -255), 150, dielectric));
+        objects.push_back(std::make_shared<Ball>(Point3(0, 0, -255), 150, dielectric));
 
         const auto dielectric2 = std::make_shared<SampleDielectric>(.6);
         objects.push_back(std::make_shared<Ball>(Point3(0, -150, -155), 150, dielectric2));
 
         const auto dielectric3 = std::make_shared<SampleDielectric>(.56);
         objects.push_back(std::make_shared<Ball>(Point3(350, 0, -455), 150, dielectric3));
+
+        const auto transparent = std::make_shared<Transparent>();
+        objects.push_back(std::make_shared<Ball>(Point3(350, 180, -455), 150, transparent));
 
 
 
