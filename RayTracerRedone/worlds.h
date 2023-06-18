@@ -220,7 +220,7 @@ namespace worlds {
 //        constexpr bool projection = true;
 //
 //        const auto view_plane = std::make_shared<ViewPlane>(60, 60, 20, 0.50);
-
+//
         constexpr bool projection = false;
         const auto view_plane = std::make_shared<ViewPlane>(2000, 2000, 50, 0.5f);
 
@@ -232,6 +232,10 @@ namespace worlds {
         const auto phong_metal = std::make_shared<PhongReflective>();
         const auto rw_matte = std::make_shared<TexturedMatte>(black_red_texture, 1);
         const auto ball = std::make_shared<Ball>(Point3(-500, 0, -950), 350.0f, rw_matte);
+        const auto jupitertexture = std::make_shared<ImageTexture>("assets/textures/jupiter.jpg");
+        const auto jupitermaterial = std::make_shared<TexturedPhong>(jupitertexture);
+        const auto moontexture = std::make_shared<ImageTexture>("assets/textures/moon.jpg");
+        const auto moonmaterial = std::make_shared<TexturedMatte>(moontexture, 1);
 
         const auto blue_matte = std::make_shared<Matte>(1, ColorVec(0.3, 0.9 , 1));
 
@@ -240,7 +244,7 @@ namespace worlds {
 
         //objects.push_back(ball2);
 
-        const auto dielectric = std::make_shared<SampleDielectric>(4.6);
+        const auto dielectric = std::make_shared<SampleDielectric>(.93);
 
         objects.push_back(std::make_shared<Ball>(Point3(0, 0, -255), 150, dielectric));
 
@@ -251,23 +255,23 @@ namespace worlds {
         objects.push_back(std::make_shared<Ball>(Point3(350, 0, -455), 150, dielectric3));
 
         const auto transparent = std::make_shared<Transparent>();
-        objects.push_back(std::make_shared<Ball>(Point3(350, 180, -455), 150, transparent));
+        objects.push_back(std::make_shared<Ball>(Point3(0, 150, -255), 150, transparent));
 
 
 
         const auto tex_phong = std::make_shared<TexturedPhong>(black_white_texture);
         objects.push_back(std::make_shared<Ball>(Point3(350, 0, -655), 150, tex_phong));
         objects.push_back(std::make_shared<Ball>(Point3(50, 0, -655), 150, tex_phong));
-        //objects.push_back(std::make_shared<Ball>(Point3(150, 0, -655), 150, tex_phong));
         objects.push_back(std::make_shared<Ball>(Point3(-150, 0, -655), 150, blue_matte));
-        //objects.push_back(std::make_shared<Ball>(Point3(-150, 0, -655), 150, tex_phong));
         objects.push_back(std::make_shared<Ball>(Point3(-450, 0, -655), 150, tex_phong));
 
         objects.push_back(
-            std::make_shared<Ball>(Point3(0, -1000, -1000), 1000, white_matte));
+            std::make_shared<Ball>(Point3(0, -1000, -1000), 1000, moonmaterial));
+
+ 
 
         objects.push_back(
-            std::make_shared<Ball>(Point3(-1000, -1000, 1000), 1000, white_matte));
+            std::make_shared<Ball>(Point3(0, 0, -3000), 1000, jupitermaterial));
 
         const auto bw_matte = std::make_shared<TexturedMatte>(black_white_texture, 1);
 

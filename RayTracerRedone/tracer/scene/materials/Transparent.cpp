@@ -13,10 +13,10 @@ ColorVec Transparent::shade(const World &world, const Ray &ray, const intersecti
     if (specular_btdf.total_internal_reflection(ray, intersection) < 0.0f) {
         L += world.trace_ray(reflect_ray, depth - 1);
     } else {
-        const auto [color, wt, pdf] = reflective_brdf.sample_f(intersection, wo);
+        const auto [color, wt, pdf] = specular_btdf.sample_f(intersection, wo);
         Ray transmitted_ray(intersection.hit_point, wt);
         L += colorfr * world.trace_ray(reflect_ray, depth - 1) * static_cast<float>(fabs(dot(intersection.normal, wi)));
-        L += colorfr * world.trace_ray(transmitted_ray, depth - 1) * static_cast<float>(fabs(dot(intersection.normal, wt)));
+        L += color * world.trace_ray(transmitted_ray, depth - 1) * static_cast<float>(fabs(dot(intersection.normal, wt)));
     }
     return L;
 }

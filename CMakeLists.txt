@@ -128,7 +128,9 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/scene/BxDF/FresnelTransmitter.cpp
         RayTracerRedone/tracer/scene/BxDF/FresnelTransmitter.h
         RayTracerRedone/tracer/scene/materials/Transparent.h
-        RayTracerRedone/tracer/scene/materials/Transparent.cpp)
+        RayTracerRedone/tracer/scene/materials/Transparent.cpp
+        RayTracerRedone/tracer/scene/BxDF/FresnelReflector.h
+        RayTracerRedone/tracer/scene/BxDF/FresnelReflector.cpp)
 
 
 target_link_libraries(RayTracer_redone glm::glm)
@@ -137,7 +139,7 @@ target_link_libraries(RayTracer_redone ${SDL2_LIBRARIES})
 
 set(CMAKE_CXX_FLAGS_RELEASE "-Ofast -mavx2 -fopt-info  -Wall")
 set(CMAKE_CXX_FLAGS_MINSIZEREL  " ")
-SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-Ofast -g")
+SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-Ofast -mavx2 -g")
 set_property(TARGET RayTracer_redone PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
 
 file(COPY RayTracerRedone/assets DESTINATION ${CMAKE_BINARY_DIR})
