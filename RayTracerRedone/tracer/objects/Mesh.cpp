@@ -19,7 +19,7 @@ std::optional<intersection> Mesh::intersects(const Ray &ray) const {
     float tNear = std::numeric_limits<float>::max();
     bool hit = false;
     glm::vec3 hit_normal;
-    float uNear, vNear;
+    //float uNear, vNear;
     float uTexture, vTexture;
     for (const Face& face : faces) {
         glm::vec3 v0 = vertices[face.v1].position;
@@ -54,8 +54,8 @@ std::optional<intersection> Mesh::intersects(const Ray &ray) const {
         if (t > 0.0001 && t < tNear) {
             tNear = t;
             hit = true;
-            uNear = u;
-            vNear = v;
+            //uNear = u;
+            //vNear = v;
 
             // Interpolate normal
             hit_normal = (1 - u - v) * vertices[face.v1].normal +

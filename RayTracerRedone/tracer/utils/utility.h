@@ -10,7 +10,6 @@ namespace utility
 {
 	//static std::mt19937 generator;
 	//A counter, for debugging reasons, leave it there
-	static int counter;
 	inline std::mt19937 generator(time(NULL));
 	inline Vector3 random()
 	{

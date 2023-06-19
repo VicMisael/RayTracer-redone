@@ -4,7 +4,7 @@
 #include <iostream>
 
 #define SDL_MAIN_HANDLED
-#define GLM_FORCE_MESSAGES
+//#define GLM_FORCE_MESSAGES
 
 #include <thread>
 #include "tracer/scene/Scene.h"
@@ -36,9 +36,9 @@ int main() {
 
     auto* canvas = new sdl2canvas(w, h);
 
-    const auto sampler = generateSampler(100);
+    const auto sampler = generateSampler(10);
 
-    auto selectedWorld= worlds::refractanceTest();
+    auto selectedWorld= worlds::generateWorld1();
     Scene scene(selectedWorld, canvas);
 
     constexpr int32_t recursion_depth_limit = 10;
@@ -53,7 +53,7 @@ int main() {
             const auto seconds = ms_double.count() / 1000;
             std::cout << " Took";
             std::cout << seconds << "s" << std::endl;
-            std::cout << "Intersection Test with triangle called" << utility::counter << std::endl;
+            //std::cout << "Intersection Test with triangle called" << utility::counter << std::endl;
         }
     };
 
