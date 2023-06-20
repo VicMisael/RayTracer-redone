@@ -83,9 +83,6 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     objects.push_back(std::make_shared<Ball>(Point3(5, -20, -625), 120, phong_metal));
 
 
-    objects.push_back(std::make_shared<Ball>(Point3(0, 40, -650), 40,
-                                             mirror));
-
     objects.push_back(std::make_shared<Ball>(Point3(0, 600, -195), 95,
                                              phong_black_reflective));
 
@@ -93,13 +90,9 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     objects.push_back(std::make_shared<Ball>(Point3(400, 150, -350), 150,
                                              textured));
 
-    objects.push_back(std::make_shared<Ball>(Point3(0, 100, -925), 256,
-                                             mirror));
 
     const auto textured_test_material = std::make_shared<TexturedMaterial>(checkeredTexture, phong_black_reflective);
 
-    objects.push_back(std::make_shared<Ball>(Point3(0, 650, -125), 120,
-                                             phong_reflective_higher_exp));
 
     const auto earthtexture = std::make_shared<ImageTexture>("assets/textures/earthmap.jpg");
 
@@ -125,9 +118,6 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     //cylinder->transform(mat);
     objects.push_back(cylinder);
 
-    const auto dielectric = std::make_shared<SampleDielectric>(0.3f);
-
-    objects.push_back(std::make_shared<Ball>(Point3(-100, 120, -355), 300, dielectric));
 
     return objects;
 }

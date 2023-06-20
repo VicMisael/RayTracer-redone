@@ -130,7 +130,10 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/scene/materials/Transparent.h
         RayTracerRedone/tracer/scene/materials/Transparent.cpp
         RayTracerRedone/tracer/scene/BxDF/FresnelReflector.h
-        RayTracerRedone/tracer/scene/BxDF/FresnelReflector.cpp)
+        RayTracerRedone/tracer/scene/BxDF/FresnelReflector.cpp
+        RayTracerRedone/imageoutputcanvas/imagecanvas.cpp
+        RayTracerRedone/imageoutputcanvas/imagecanvas.h
+        RayTracerRedone/imageoutputcanvas/stb/image_canvas_stb_image.h RayTracerRedone/imageoutputcanvas/stb/stb_image_write.h)
 
 
 target_link_libraries(RayTracer_redone glm::glm)

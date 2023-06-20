@@ -9,8 +9,8 @@
 #include <thread>
 #include "tracer/scene/Scene.h"
 #include "sdl2canvas/sdl2canvas.h"
+#include "imageoutputcanvas/imagecanvas.h"
 #include "worlds.h"
-
 
 
 #include "tracer/utils/sampler/diagonal_point_sampler.h"
@@ -21,47 +21,74 @@
 #include "tracer/utils/sampler/horizontal_point_sampler.h"
 
 #include "tracer/utils/utility.h"
-std::shared_ptr<sampler> generateSampler(int numsamples){
+
+std::shared_ptr<sampler> generateSampler(int numsamples) {
     return std::make_shared<mt19937_point_sampler>(numsamples);
 }
 
 int main() {
     static int display_in_use = 0; /* Only using first display */
+    constexpr bool png = true;
 
 
-    const uint32_t w = 400;
-    const uint32_t h = 400;
+    const uint32_t w = 2000;
+    const uint32_t h = 2000;
     //TODO: ARea Lights, Refractance, BumpMapping,
 
 
-    auto* canvas = new sdl2canvas(w, h);
+
 
     const auto sampler = generateSampler(10);
 
-    auto selectedWorld= worlds::generateWorld1();
-    Scene scene(selectedWorld, canvas);
+    auto selectedWorld = worlds::generateWorld1();
+    Canvas *drawcanvas;
 
+    if (png) {
+        drawcanvas = new imagecanvas(w,h);
+    } else {
+        drawcanvas = new sdl2canvas(w, h);
+    }
     constexpr int32_t recursion_depth_limit = 10;
 
-    auto draw = [&] {
+    Scene scene(selectedWorld, drawcanvas);
+
+    if (!png) {
+        auto *canvas = dynamic_cast<sdl2canvas*>(drawcanvas);
+        auto draw = [&] {
+            while (!canvas->should_stop()) {
+                auto t1 = std::chrono::high_resolution_clock::now();
+                scene.render(recursion_depth_limit, sampler);
+
+                auto t2 = std::chrono::high_resolution_clock::now();
+                std::chrono::duration<double, std::milli> ms_double = t2 - t1;
+                const auto seconds = ms_double.count() / 1000;
+                std::cout << " Took";
+                std::cout << seconds << "s" << std::endl;
+                //std::cout << "Intersection Test with triangle called" << utility::counter << std::endl;
+            }
+        };
+
+        std::thread t(draw);
+
         while (!canvas->should_stop()) {
-            auto t1 = std::chrono::high_resolution_clock::now();
-            scene.render(recursion_depth_limit,sampler);
-
-            auto t2 = std::chrono::high_resolution_clock::now();
-            std::chrono::duration<double, std::milli> ms_double = t2 - t1;
-            const auto seconds = ms_double.count() / 1000;
-            std::cout << " Took";
-            std::cout << seconds << "s" << std::endl;
-            //std::cout << "Intersection Test with triangle called" << utility::counter << std::endl;
+            scene.draw();
         }
-    };
 
-    std::thread t(draw);
+    }else{
 
-    while (!canvas->should_stop()) {
+        auto t1 = std::chrono::high_resolution_clock::now();
+        scene.render(recursion_depth_limit, sampler);
+
+        auto t2 = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double, std::milli> ms_double = t2 - t1;
+        const auto seconds = ms_double.count() / 1000;
+
         scene.draw();
+
+        std::cout << " Took";
+        std::cout << seconds << "s" << std::endl;
     }
+
 }
 
 // Executar programa: Ctrl + F5 ou Menu Depurar > Iniciar Sem Depuração
