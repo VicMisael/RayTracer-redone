@@ -7,22 +7,24 @@
 #include "Disk.h"
 
 std::tuple<float, float> Disk::getUVMapping(const Point3 point) const {
-    const auto N = normalize(normal);
-    const auto radius = sqrtf(this->r_squared);
-    Vector3 referencevec;
-    if (glm::length2(N - Vector3(0, 1, 0)) < glm::epsilon<float>()) {
-        referencevec = Vector3(1, 0, 0);
-    } else {
-        referencevec = Vector3(0, 1, 0);
-    }
-    const auto U = normalize(cross(referencevec, N));
-    const auto V = cross(N, U);
-    const float u = dot(point - center, U);
-    const float v = dot(point - center, V);
-    const auto r = sqrt(u * u + v * v) / radius;
-    const auto theta = atan2f(v, u);
-    constexpr auto PI = (float) Constants::pi;
-    return {r, (theta + PI) / 2 * PI};
+    glm::vec3 vecToPoint = point - center;
+
+    // Normalize the vector
+    glm::vec3 vecToPointNormalized = glm::normalize(vecToPoint);
+
+    // Calculate the angle between the normalized vector and the disk's normal
+    const float angle = std::acos(glm::dot(normal, vecToPointNormalized));
+
+    // Calculate the radius from the center of the disk to the point
+    const float radius = glm::length(vecToPoint);
+
+    // Calculate the U coordinate (angle in radians divided by 2*pi)
+    const float u = angle / (2.0f * glm::pi<float>());
+
+    // Calculate the V coordinate (normalized radius)
+    const float v = radius/sqrtf(r_squared);
+
+    return {u, v};
     // Calculate the vector from the center of the disk to the point
 }
 
