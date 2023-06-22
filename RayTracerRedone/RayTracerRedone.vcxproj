@@ -155,10 +155,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="imageoutputcanvas\imagecanvas.cpp" />
+    <ClCompile Include="tracer\objects\Disk.cpp" />
     <ClCompile Include="tracer\scene\BxDF\FresnelReflector.cpp" />
     <ClCompile Include="tracer\scene\BxDF\FresnelTransmitter.cpp" />
     <ClCompile Include="tracer\scene\BxDF\PerfectTransmitter.cpp" />
     <ClCompile Include="tracer\scene\Camera.cpp" />
+    <ClCompile Include="tracer\scene\materials\BumpMapping.cpp" />
     <ClCompile Include="tracer\scene\materials\SampleDielectric.cpp" />
     <ClCompile Include="tracer\scene\materials\TexturedPhongReflective.cpp" />
     <ClCompile Include="tracer\scene\materials\Transparent.cpp" />
@@ -208,11 +210,13 @@
     <ClInclude Include="imageoutputcanvas\imagecanvas.h" />
     <ClInclude Include="imageoutputcanvas\stb\image_canvas_stb_image.h" />
     <ClInclude Include="imageoutputcanvas\stb\stb_image_write.h" />
+    <ClInclude Include="tracer\objects\Disk.h" />
     <ClInclude Include="tracer\scene\BxDF\FresnelReflector.h" />
     <ClInclude Include="tracer\scene\BxDF\BTDF.h" />
     <ClInclude Include="tracer\scene\BxDF\FresnelTransmitter.h" />
     <ClInclude Include="tracer\scene\BxDF\PerfectTransmitter.h" />
     <ClInclude Include="tracer\scene\Camera.h" />
+    <ClInclude Include="tracer\scene\materials\BumpMapping.h" />
     <ClInclude Include="tracer\scene\materials\SampleDielectric.h" />
     <ClInclude Include="tracer\scene\materials\TexturedPhongReflective.h" />
     <ClInclude Include="tracer\scene\materials\Transparent.h" />
@@ -254,7 +258,7 @@
     <ClInclude Include="tracer\objects\Ball.h" />
     <ClInclude Include="tracer\objects\Plane.h" />
     <ClInclude Include="tracer\utils\Constants.h" />
-    <ClInclude Include="tracer\utils\intersection.h" />
+    <ClInclude Include="tracer\utils\intersectionRec.h" />
     <ClInclude Include="tracer\scene\Ray.h" />
     <ClInclude Include="tracer\scene\materials\Material.h" />
     <ClInclude Include="tracer\utils\sampler\diagonal_point_sampler.h" />

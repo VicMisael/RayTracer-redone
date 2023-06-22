@@ -2,7 +2,7 @@
 #include <glm/geometric.hpp>
 #include "../World.h"
 
-ColorVec PhongReflective::shade(const World& world, const Ray& ray, const intersection& intersection,
+ColorVec PhongReflective::shade(const World& world, const Ray& ray, const intersectionRec& intersection,
                                 int32_t depth) const
 {
 	ColorVec L = Phong::shade(world, ray, intersection, depth);

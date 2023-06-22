@@ -15,7 +15,7 @@ class World
 {
 private:
 
-	[[nodiscard]] ColorVec shade(const intersection&, const Ray&,const int32_t depth) const;
+	[[nodiscard]] ColorVec shade(const intersectionRec&, const Ray&, const int32_t depth) const;
 	std::shared_ptr<ViewPlane> viewPlane;
 	std::vector<std::shared_ptr<VirtualObject>> objects_;
 	std::vector<std::shared_ptr<VectorialLight>> lights_;
@@ -46,7 +46,7 @@ public:
 
 	void render(Canvas*, int32_t, const std::shared_ptr<sampler>&)  ;
 
-    [[nodiscard]] std::optional<intersection> hit(const Ray &ray) const;
+    [[nodiscard]] std::optional<intersectionRec> hit(const Ray &ray) const;
 
 	[[nodiscard]] std::vector<std::shared_ptr<VectorialLight>> lights() const
 	{

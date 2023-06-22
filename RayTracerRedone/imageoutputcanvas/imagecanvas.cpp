@@ -36,8 +36,8 @@ void imagecanvas::draw() {
     int channels = 4;
     auto const data = rgba;
 
-    const std::string name = "raytracing_redone.png";
-    stbi_write_png(name.c_str(), width, height, channels, data, width * channels);
+    const std::string name = "raytracing_redone.bmp";
+    stbi_write_bmp(name.c_str(), width, height, channels, data);
 }
 
 

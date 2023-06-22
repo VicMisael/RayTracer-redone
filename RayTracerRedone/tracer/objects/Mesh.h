@@ -30,7 +30,7 @@ protected:
 public:
     explicit Mesh(std::string filename, const std::shared_ptr<Material> &material);
 
-    [[nodiscard]] std::optional<intersection> intersects(const Ray &ray) const override;
+    [[nodiscard]] std::optional<intersectionRec> intersects(const Ray &ray) const override;
 
     [[nodiscard]] std::shared_ptr<AABB> bounding_box() const  override;
 
@@ -63,7 +63,7 @@ private:
         Triangle(Face &face_,std::vector<Vertex> &vertices_,const std::shared_ptr<Material> meshMaterial):face(face_),vertices(vertices_),VirtualObject(meshMaterial){
             generateBoundingBox();
         };
-        [[nodiscard]] std::optional<intersection> intersects(const Ray &ray) const override;
+        [[nodiscard]] std::optional<intersectionRec> intersects(const Ray &ray) const override;
 
         void transform(Matrix4x4 m) override{};
 

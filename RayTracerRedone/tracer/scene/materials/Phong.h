@@ -15,6 +15,6 @@ public:
 	
 	Phong(const ColorVec color, const float kspecular, const float exp) :lambertian_(1.0f, color), glossy_specular_(kspecular, exp) {};
 
-	ColorVec shade(const World& world, const Ray& ray, const intersection& intersection, int32_t depth) const override;
+	ColorVec shade(const World& world, const Ray& ray, const intersectionRec& intersection, int32_t depth) const override;
 };
 

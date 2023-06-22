@@ -18,7 +18,7 @@ public:
     reflective_brdf(r){
     }
 
-    ColorVec shade(const World &world, const Ray &ray, const intersection &intersection, int32_t depth) const override;
+    ColorVec shade(const World &world, const Ray &ray, const intersectionRec &intersection, int32_t depth) const override;
 };
 
 

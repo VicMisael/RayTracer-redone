@@ -26,7 +26,7 @@ inline void sort(std::vector<std::shared_ptr<VirtualObject>>& objects){
     }
 }
 
-std::optional<intersection> BVH::intersects(const Ray &ray) const {
+std::optional<intersectionRec> BVH::intersects(const Ray &ray) const {
     float t_min = Constants::MAX_FLOAT;
     return BVH::intersects(ray,t_min);
 }
@@ -74,9 +74,9 @@ std::shared_ptr<AABB> BVH::bounding_box() const  {
     return this->aabb;
 }
 
-std::optional<intersection> BVH::intersects(const Ray &ray, float t_min) const {
+std::optional<intersectionRec> BVH::intersects(const Ray &ray, float t_min) const {
 
-    std::optional<intersection> selintersection={};
+    std::optional<intersectionRec> selintersection={};
     if(!unboundables.empty()){
         for (const std::shared_ptr<VirtualObject> &object : unboundables) {
             const auto intersectsoptional=object->intersects(ray);

@@ -13,6 +13,8 @@
 #include "tracer/objects/Ball.h"
 #include "tracer/objects/Mesh.h"
 #include "tracer/objects/OpenCylinder.h"
+#include "tracer/objects/Disk.h"
+
 
 #include "tracer/scene/Scene.h"
 #include "tracer/scene/light/DirectionalLight.h"
@@ -29,6 +31,7 @@
 #include "tracer/scene/materials/TexturedMatte.h"
 #include "tracer/scene/materials/TexturedMaterial.h"
 #include "tracer/scene/materials/TexturedPhongReflective.h"
+#include "tracer/scene/materials/BumpMapping.h"
 #include "tracer/scene/materials/Diffuse.h"
 
 #include "tracer/scene/textures/CheckerTexture.h"
@@ -75,7 +78,7 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
             std::make_shared<Ball>(Point3(0, -1000, -1000), 1000, white_matte));
 
 
-    objects.push_back(std::make_shared<Ball>(Point3(1350, 0, -1000), 1000,phong_metal));
+    objects.push_back(std::make_shared<Ball>(Point3(1350, 0, -1000), 1000, phong_metal));
 
     objects.push_back(
             std::make_shared<Ball>(Point3(-1250, 0, -1000), 1000, textured));
@@ -118,6 +121,11 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     //cylinder->transform(mat);
     objects.push_back(cylinder);
 
+    objects.push_back(std::make_shared<Ball>(Point3(0, 100, -925), 256,
+                                             phong_reflective_higher_exp));
+
+    objects.push_back(std::make_shared<Ball>(Point3(0, 40, -650), 40,
+                                             mirror));
 
     return objects;
 }
@@ -152,8 +160,8 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjectsMoonEarth() {
 
 std::vector<std::shared_ptr<VectorialLight>> generate_moon_earth_scenario_lights() {
     std::vector<std::shared_ptr<VectorialLight>> lights;
-    //lights.push_back(std::make_shared<PointLight>(Point3(7200, 0, -1000), Constants::pi * 1000,
-    //                                            normalize(ColorVec(1.2, 1.2, 1))));
+    lights.push_back(std::make_shared<PointLight>(Point3(7200, 0, -1000), Constants::pi * 1000,
+                                                  normalize(ColorVec(1.2, 1.2, 1))));
 
     return lights;
 }
@@ -187,7 +195,7 @@ namespace worlds {
 
         AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
 
-        return {view_plane, generateObjectsMoonEarth(),generate_moon_earth_scenario_lights(),
+        return {view_plane, generateObjectsMoonEarth(), generate_moon_earth_scenario_lights(),
                 ab, {0.2, 0.2, 0.2}, projection};
 
     }
@@ -201,10 +209,11 @@ namespace worlds {
 
         AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
 
-        return {view_plane, generateObjectsMoonEarth(),generate_moon_earth_scenario_lights(),
+        return {view_plane, generateObjectsMoonEarth(), generate_moon_earth_scenario_lights(),
                 ab, {0.2, 0.2, 0.2}, projection};
 
     }
+
     World refractanceTest() {
 
 //        constexpr bool projection = true;
@@ -227,7 +236,7 @@ namespace worlds {
         const auto moontexture = std::make_shared<ImageTexture>("assets/textures/moon.jpg");
         const auto moonmaterial = std::make_shared<TexturedMatte>(moontexture, 1);
 
-        const auto blue_matte = std::make_shared<Matte>(1, ColorVec(0.3, 0.9 , 1));
+        const auto blue_matte = std::make_shared<Matte>(1, ColorVec(0.3, 0.9, 1));
 
         objects.push_back(ball);
         //const auto ball2 = std::make_shared<Ball>(Point3(500, 0, -1050), 350.0f, blue_matte);
@@ -248,7 +257,6 @@ namespace worlds {
         objects.push_back(std::make_shared<Ball>(Point3(0, 150, -255), 150, transparent));
 
 
-
         const auto tex_phong = std::make_shared<TexturedPhong>(black_white_texture);
         objects.push_back(std::make_shared<Ball>(Point3(350, 0, -655), 150, tex_phong));
         objects.push_back(std::make_shared<Ball>(Point3(50, 0, -655), 150, tex_phong));
@@ -256,12 +264,11 @@ namespace worlds {
         objects.push_back(std::make_shared<Ball>(Point3(-450, 0, -655), 150, tex_phong));
 
         objects.push_back(
-            std::make_shared<Ball>(Point3(0, -1000, -1000), 1000, moonmaterial));
+                std::make_shared<Ball>(Point3(0, -1000, -1000), 1000, moonmaterial));
 
- 
 
         objects.push_back(
-            std::make_shared<Ball>(Point3(0, 0, -3000), 1000, jupitermaterial));
+                std::make_shared<Ball>(Point3(0, 0, -3000), 1000, jupitermaterial));
 
         const auto bw_matte = std::make_shared<TexturedMatte>(black_white_texture, 1);
 
@@ -273,14 +280,12 @@ namespace worlds {
         AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
 
 
-
-
-        return { view_plane, objects, lights,
-                ab, {1, 1, 1}, projection };
+        return {view_plane, objects, lights,
+                ab, {1, 1, 1}, projection};
 
     }
 
-    World meshTest(){
+    World meshTest() {
         constexpr bool projection = false;
 
         const auto view_plane = std::make_shared<ViewPlane>(2000, 2000, 50, 01.0f);
@@ -292,7 +297,7 @@ namespace worlds {
         auto mesh = std::make_shared<Mesh>("assets/objs/teapot.obj", white_phong);
         auto mat = glm::translate(Matrix4x4(1.0f), Vector3(0, -100, -300));
         float angle = 1.5708;
-        mat = glm::rotate(mat, angle/2 , Vector3(0, 1, 0));
+        mat = glm::rotate(mat, angle / 2, Vector3(0, 1, 0));
         mat = glm::scale(mat, Vector3(100));
         mesh->transform(mat);
         objects.push_back(mesh);
@@ -322,5 +327,51 @@ namespace worlds {
 
         return {view_plane, objects, lights,
                 ab, {0.9, 0.9, 1}, projection};
+    }
+
+    World testeFeatures(bool projection) {
+
+        const auto jupitertexture = std::make_shared<ImageTexture>("assets/textures/jupiter.jpg");
+        const auto jupitermaterial = std::make_shared<TexturedPhong>(jupitertexture);
+        const auto earthtexture = std::make_shared<ImageTexture>("assets/textures/earthmap.jpg");
+        const auto earthmaterial = std::make_shared<TexturedMatte>(earthtexture, 1);
+        const auto moontexture = std::make_shared<ImageTexture>("assets/textures/moon.jpg");
+        const auto moonmaterial = std::make_shared<TexturedMatte>(moontexture, 1);
+
+
+        const auto orangenormalmap = std::make_shared<ImageTexture>("assets/normalmaps/orangenm.jpg");
+        const auto orangephong = std::make_shared<Phong>(ColorVec(1, .64705882352f, 0), Constants::WHITE,
+                                                         1, 1, 10);
+        const auto orangeBumpmappedPhong=std::make_shared<BumpMapping>(orangephong,orangenormalmap);
+
+        const auto red_specular_phong = std::make_shared<Phong>(ColorVec(0.4, 0.5, 0.5),
+                                                                ColorVec(1, 0, 0), 1, 1,
+                                                                23);
+
+        const auto view_plane = projection ? std::make_shared<ViewPlane>(120, 120, 60, 1) : std::make_shared<ViewPlane>(
+                2000, 2000, 50, 2.0f);
+
+        AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
+
+        std::vector<std::shared_ptr<VirtualObject>> objects;
+
+        objects.push_back(std::make_shared<Ball>(Point3(-400, -60, -1000), 620,
+                                                 earthmaterial));
+        objects.push_back(std::make_shared<Ball>(Point3(800, -54, -1000), 620 / 4,
+                                                 moonmaterial));
+        objects.push_back(std::make_shared<Ball>(Point3(1400, -20, -6000), 1000,
+                                                 jupitermaterial));
+        objects.push_back(std::make_shared<Disk>(Point3(0, 1000, -1000), Vector3(0, 1, -1), 100, red_specular_phong));
+
+        objects.push_back(std::make_shared<Ball>(Point3(-1400, 600, -500), 350,
+                                                 orangeBumpmappedPhong));
+
+        std::vector<std::shared_ptr<VectorialLight>> lights;
+        lights.push_back(std::make_shared<PointLight>(Point3(7200, 0, -1000), Constants::pi * 250,
+                                                      normalize(ColorVec(1.2, 1.2, 1))));
+
+
+        return {view_plane, objects, lights,
+                ab, {0.2, 0.2, 0.2}, projection};
     }
 };

@@ -20,7 +20,7 @@ ColorVec DirectionalLight::intensityAtPoint(const Point3) const {
 bool DirectionalLight::shadow_hit(const World &world, const Ray &outgoing) const {
 
 
-    const std::optional<intersection> intersection = world.hit(outgoing);
+    const std::optional<intersectionRec> intersection = world.hit(outgoing);
     if (intersection.has_value()) {
         const auto &intersection_data = intersection.value();
         if (intersection_data.tmin > 0.01f) {

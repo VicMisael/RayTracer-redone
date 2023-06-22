@@ -12,6 +12,6 @@ public:
 	PhongReflective(const ColorVec color, const float ks,const float kd, const float exp, const float reflectance) :
 		Phong( color,  ks, kd,  exp), reflective_brdf(reflectance) {};
 
-	ColorVec shade(const World& world, const Ray& ray, const intersection& intersection, int32_t depth) const override;
+	ColorVec shade(const World& world, const Ray& ray, const intersectionRec& intersection, int32_t depth) const override;
 };
 

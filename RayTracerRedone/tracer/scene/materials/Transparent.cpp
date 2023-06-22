@@ -5,7 +5,7 @@
 #include "Transparent.h"
 #include "../World.h"
 
-ColorVec Transparent::shade(const World &world, const Ray &ray, const intersection &intersection, int32_t depth) const {
+ColorVec Transparent::shade(const World &world, const Ray &ray, const intersectionRec &intersection, int32_t depth) const {
     ColorVec L = Phong::shade(world, ray, intersection, depth);
     Vector3 wo = -ray.direction;
     const auto [colorfr, wi, pdf] = reflective_brdf.sample_f(intersection, wo);

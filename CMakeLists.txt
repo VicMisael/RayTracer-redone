@@ -133,7 +133,7 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/scene/BxDF/FresnelReflector.cpp
         RayTracerRedone/imageoutputcanvas/imagecanvas.cpp
         RayTracerRedone/imageoutputcanvas/imagecanvas.h
-        RayTracerRedone/imageoutputcanvas/stb/image_canvas_stb_image.h RayTracerRedone/imageoutputcanvas/stb/stb_image_write.h)
+        RayTracerRedone/imageoutputcanvas/stb/image_canvas_stb_image.h RayTracerRedone/imageoutputcanvas/stb/stb_image_write.h RayTracerRedone/tracer/objects/Disk.cpp RayTracerRedone/tracer/objects/Disk.h RayTracerRedone/tracer/scene/materials/BumpMapping.cpp RayTracerRedone/tracer/scene/materials/BumpMapping.h)
 
 
 target_link_libraries(RayTracer_redone glm::glm)

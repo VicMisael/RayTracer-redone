@@ -12,7 +12,7 @@ public:
                 center - Vector3 (radius, radius, radius),
                 center + Vector3(radius, radius, radius)));
 	};
-	[[nodiscard]] std::optional<intersection> intersects(const Ray &ray) const override;
+	[[nodiscard]] std::optional<intersectionRec> intersects(const Ray &ray) const override;
 
     [[nodiscard]] std::shared_ptr<AABB> bounding_box() const override;
 

@@ -14,12 +14,12 @@ private:
     std::unique_ptr<BVH> right;
     std::shared_ptr<AABB> aabb;
     std::vector<std::shared_ptr<VirtualObject>> unboundables;
-    [[nodiscard]] std::optional<intersection> intersects(const Ray &ray,float t_min) const;
+    [[nodiscard]] std::optional<intersectionRec> intersects(const Ray &ray, float t_min) const;
 public:
      explicit BVH(std::vector<std::shared_ptr<VirtualObject>> objectList);
 
 
-    [[nodiscard]] std::optional<intersection> intersects(const Ray &ray) const override;
+    [[nodiscard]] std::optional<intersectionRec> intersects(const Ray &ray) const override;
 
     [[nodiscard]] std::shared_ptr<AABB> bounding_box() const  override;
 

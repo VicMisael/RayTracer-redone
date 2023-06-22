@@ -12,7 +12,7 @@ public:
                                                                                  point(_point),
                                                                                  normal(normalize(_normal)) {};
 
-    std::optional<intersection> intersects(const Ray &ray) const override;
+    std::optional<intersectionRec> intersects(const Ray &ray) const override;
 
     bool hasBoundingBox() const override  {
         return false;

@@ -41,7 +41,7 @@ std::tuple<float,float> getUV(const Vector3& point, const Vector3& base, const V
     v /= height;
     return { u,v };
 }
-std::optional<intersection> OpenCylinder::intersects(const Ray &ray) const {
+std::optional<intersectionRec> OpenCylinder::intersects(const Ray &ray) const {
 
     float t_min = INFINITY;
     const Point3 &p0 = ray.origin;
@@ -80,7 +80,7 @@ std::optional<intersection> OpenCylinder::intersects(const Ray &ray) const {
         const auto W = intersectionPoint - base_;
         const auto unnormalizedNormal = (W-axis_*(dot(W,axis_)));
         const auto  [ u, v ] = getUV(intersectionPoint,base_,axis_,height_,radius_);
-        return intersection{t_min,intersectionPoint, normalize(unnormalizedNormal),material.value(),u,v};
+        return intersectionRec{t_min, intersectionPoint, normalize(unnormalizedNormal), material.value(), u, v};
     };
     return {};
 

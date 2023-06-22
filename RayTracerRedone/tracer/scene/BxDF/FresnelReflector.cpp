@@ -1,6 +1,6 @@
 #include "FresnelReflector.h"
 
-float FresnelReflector::total_internal_reflection(const Ray &ray, const intersection &intersection) const {
+float FresnelReflector::total_internal_reflection(const Ray &ray, const intersectionRec &intersection) const {
     return 0;
 }
 
@@ -8,10 +8,10 @@ ColorVec FresnelReflector::rho(const Vector3 &wo) const {
     return ColorVec();
 }
 
-ColorVec FresnelReflector::f(const intersection &intersection, const Vector3 &wo, const Vector3 &wi) const {
+ColorVec FresnelReflector::f(const intersectionRec &intersection, const Vector3 &wo, const Vector3 &wi) const {
     return ColorVec();
 }
 
-sample_f_out FresnelReflector::sample_f(const intersection &intersection, const Vector3 &wo) const {
+sample_f_out FresnelReflector::sample_f(const intersectionRec &intersection, const Vector3 &wo) const {
     return sample_f_out();
 }

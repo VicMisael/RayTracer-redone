@@ -25,7 +25,7 @@ std::tuple<float,float> computeUV(glm::vec3 pointInPlane, glm::vec3 otherPoint, 
 
     return { uCoordinate/100, vCoordinate/100 };
 }
-std::optional<intersection> Plane::intersects(const Ray &ray) const
+std::optional<intersectionRec> Plane::intersects(const Ray &ray) const
 {
 	using namespace glm;
 	const float dot_dir_normal = dot(ray.direction, normal);
@@ -33,7 +33,7 @@ std::optional<intersection> Plane::intersects(const Ray &ray) const
 	if (t > Constants::EPSILON+0.001f) {
         const auto intersectionPoint=ray.point_at(t);
         const auto [u,v] = computeUV(point, intersectionPoint,normal);
-		return intersection{t,ray.point_at(t),normal,material.value(),u,v};
+		return intersectionRec{t, ray.point_at(t), normal, material.value(), u, v};
 	}
 	
 	return {};
@@ -41,5 +41,5 @@ std::optional<intersection> Plane::intersects(const Ray &ray) const
 
 void Plane::transform(Matrix4x4 m) {
         point=Vector3(m*Vector4(point,1));
-        normal=Vector3(m*Vector4(point,0));
+        normal=Vector3(m*Vector4(normal,0));
 }

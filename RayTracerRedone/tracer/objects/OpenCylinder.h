@@ -16,7 +16,7 @@ public:
 
     }
 
-    [[nodiscard]] std::optional<intersection> intersects(const Ray &ray) const override;
+    [[nodiscard]] std::optional<intersectionRec> intersects(const Ray &ray) const override;
 
 
     virtual bool hasBoundingBox() const override{

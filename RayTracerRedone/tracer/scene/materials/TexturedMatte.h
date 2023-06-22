@@ -17,7 +17,7 @@ public:
     TexturedMatte(std::shared_ptr<Texture> texture,const Matte _matte): Matte(_matte),texture_(std::move(texture)){
     }
 
-    ColorVec shade(const World &world, const Ray &ray, const intersection &intersection, int32_t depth) const override;
+    ColorVec shade(const World &world, const Ray &ray, const intersectionRec &intersection, int32_t depth) const override;
 
 };
 

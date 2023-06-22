@@ -5,11 +5,11 @@
 
 class Material;
 
-struct intersection
+struct intersectionRec
 {
 	const float tmin;
 	const Point3 hit_point;
-	const Vector3 normal;
+    Vector3 normal;
     std::shared_ptr<Material> material;
     const float u=0;
     const float v=0;

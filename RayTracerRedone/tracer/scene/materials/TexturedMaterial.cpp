@@ -5,6 +5,6 @@
 #include "../../utils/Intersection.h"
 
 ColorVec
-TexturedMaterial::shade(const World &world, const Ray &ray, const intersection &intersection, int32_t depth) const {
+TexturedMaterial::shade(const World &world, const Ray &ray, const intersectionRec &intersection, int32_t depth) const {
     return texture_->value(intersection.u,intersection.v,intersection.hit_point)*this->material_->shade(world,ray,intersection,depth);
 }

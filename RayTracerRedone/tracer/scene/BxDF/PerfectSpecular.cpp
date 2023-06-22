@@ -7,12 +7,12 @@ ColorVec PerfectSpecular::rho(const Vector3& wo) const
 	return Constants::BLACK;
 }
 
-ColorVec PerfectSpecular::f(const intersection& intersection, const Vector3& wo, const Vector3& wi) const
+ColorVec PerfectSpecular::f(const intersectionRec& intersection, const Vector3& wo, const Vector3& wi) const
 {
 	return Constants::BLACK;
 }
 
-sample_f_out PerfectSpecular::sample_f(const intersection& intersection, const Vector3& wo) const
+sample_f_out PerfectSpecular::sample_f(const intersectionRec& intersection, const Vector3& wo) const
 {
 	
 	const float ndotwo =dot(intersection.normal ,wo);

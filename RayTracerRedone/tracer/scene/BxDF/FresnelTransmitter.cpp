@@ -8,14 +8,14 @@ ColorVec FresnelTransmitter::rho(const Vector3 &wo) const {
     return ColorVec();
 }
 
-ColorVec FresnelTransmitter::f(const intersection &intersection, const Vector3 &wo, const Vector3 &wi) const {
+ColorVec FresnelTransmitter::f(const intersectionRec &intersection, const Vector3 &wo, const Vector3 &wi) const {
     return ColorVec();
 }
 
-sample_f_out FresnelTransmitter::sample_f(const intersection &intersection, const Vector3 &wo) const {
+sample_f_out FresnelTransmitter::sample_f(const intersectionRec &intersection, const Vector3 &wo) const {
     return sample_f_out();
 }
 
-float FresnelTransmitter::total_internal_reflection(const Ray &ray, const intersection &intersection) const {
+float FresnelTransmitter::total_internal_reflection(const Ray &ray, const intersectionRec &intersection) const {
     return 0;
 }

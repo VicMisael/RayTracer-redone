@@ -22,7 +22,7 @@ std::tuple<float,float> get_sphere_uv(const Point3 p) {
     return {u,v};
 }
 
-std::optional<intersection> Ball::intersects(const Ray& ray) const
+std::optional<intersectionRec> Ball::intersects(const Ray& ray) const
 {
      if(!aabb->intersects(ray)){
         return {};
@@ -44,7 +44,7 @@ std::optional<intersection> Ball::intersects(const Ray& ray) const
 	const float closest = std::min(t1, t2);
 	const Vector3 normal = (origin_minus_center + closest * ray_direction) / radius;
     const auto [u,v]=get_sphere_uv(normal);
-	return intersection{ closest,ray.point_at(closest),normal,material.value(),u,v };
+	return intersectionRec{closest, ray.point_at(closest), normal, material.value(), u, v };
 }
 
 std::shared_ptr<AABB> Ball::bounding_box() const {
@@ -60,7 +60,7 @@ Ball::Ball(Point3 _center, float _radius) {
     center=_center;
     radius=_radius;
     class internal:public Material{
-        [[nodiscard]] ColorVec shade(const World& world, const Ray& ray, const intersection& intersection, int32_t depth) const override{
+        [[nodiscard]] ColorVec shade(const World& world, const Ray& ray, const intersectionRec& intersection, int32_t depth) const override{
             const auto& hitPoint = intersection.hit_point;
             const Ray reflected(hitPoint, utility::reflect_vector(normalize(ray.direction), intersection.normal));
             return 0.5f*world.trace_ray(reflected, depth - 1);

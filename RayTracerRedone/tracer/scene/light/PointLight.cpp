@@ -27,7 +27,7 @@ Vector3 PointLight::getNormalizedDirection(const Point3 p) const {
 bool PointLight::shadow_hit(const World &world, const Ray &outgoing) const {
 
     const float distance = length(outgoing.origin - this->point);
-    const std::optional<intersection> intersection = world.hit(outgoing);
+    const std::optional<intersectionRec> intersection = world.hit(outgoing);
     if (intersection) {
         const auto &intersection_data = intersection.value();
         if (intersection_data.tmin > 0.01f && intersection_data.tmin <= distance) {

@@ -9,7 +9,7 @@
 
 class BTDF : public BxDF {
 public:
-    virtual float total_internal_reflection(const Ray &ray, const intersection &intersection) const= 0;
+    virtual float total_internal_reflection(const Ray &ray, const intersectionRec &intersection) const= 0;
 };
 
 

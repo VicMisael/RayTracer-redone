@@ -4,7 +4,7 @@
 
 #include "../World.h"
 
-ColorVec Phong::shade(const World& world, const Ray& ray, const intersection& intersection, int32_t depth) const
+ColorVec Phong::shade(const World& world, const Ray& ray, const intersectionRec& intersection, int32_t depth) const
 {
 	const Vector3 wo = -ray.direction;
 	const auto al = world.getAmbientLight();

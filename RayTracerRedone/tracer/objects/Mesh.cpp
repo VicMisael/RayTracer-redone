@@ -9,7 +9,7 @@
 #include <assimp/postprocess.h>
 #include "../utils/utility.h"
 
-std::optional<intersection> Mesh::intersects(const Ray &ray) const {
+std::optional<intersectionRec> Mesh::intersects(const Ray &ray) const {
     if (!aabb->intersects(ray)) {
         return std::nullopt;
     }
@@ -73,7 +73,7 @@ std::optional<intersection> Mesh::intersects(const Ray &ray) const {
     }
 
     if (hit) {
-        intersection result{
+        intersectionRec result{
                 tNear,
                 ray.origin + tNear * ray.direction,
                 normalize(hit_normal),
@@ -238,7 +238,7 @@ void Mesh::Triangle::generateBoundingBox()
     aabb= std::make_shared<AABB>(minPoint, maxPoint);
 }
 
-std::optional<intersection> Mesh::Triangle::intersects(const Ray &ray) const {
+std::optional<intersectionRec> Mesh::Triangle::intersects(const Ray &ray) const {
     float tNear = std::numeric_limits<float>::max();
     bool hit = false;
     glm::vec3 hit_normal;
@@ -291,7 +291,7 @@ std::optional<intersection> Mesh::Triangle::intersects(const Ray &ray) const {
     }
 
     if (hit) {
-        return intersection{
+        return intersectionRec{
                 tNear,
                 ray.origin + tNear * ray.direction,
                 normalize(hit_normal),

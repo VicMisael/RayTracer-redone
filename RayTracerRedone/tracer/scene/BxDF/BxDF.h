@@ -29,13 +29,13 @@ public:
 		different wavelengths is decoupled—energy at one wavelength will not be reflected at
 		a different wavelength
 	*/
-	virtual ColorVec f(const intersection &intersection,const Vector3 &wo,const Vector3 &wi) const = 0;
+	virtual ColorVec f(const intersectionRec &intersection, const Vector3 &wo, const Vector3 &wi) const = 0;
 	;/*
 			 computes the direction of incident light ωi given an outgoing direction
 		ωo and returns the value of the BxDF for the pair of directions. For delta distributions, it
 		is necessary for the BxDF to choose the incident light direction in this way, since the caller
 		has no chance of generating the appropriate wi direction.
 	*/
-	virtual sample_f_out sample_f(const intersection& intersection,const Vector3 &wo) const = 0;
+	virtual sample_f_out sample_f(const intersectionRec& intersection, const Vector3 &wo) const = 0;
 };
 

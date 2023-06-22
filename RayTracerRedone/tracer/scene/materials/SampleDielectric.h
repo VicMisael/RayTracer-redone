@@ -17,6 +17,6 @@ public:
     explicit SampleDielectric(float ref_):_reflectance(ref_){}
     ~SampleDielectric() override = default;
 
-    [[nodiscard]] ColorVec shade(const World &world, const Ray &ray, const intersection &intersection, int32_t depth) const override;
+    [[nodiscard]] ColorVec shade(const World &world, const Ray &ray, const intersectionRec &intersection, int32_t depth) const override;
 
 };

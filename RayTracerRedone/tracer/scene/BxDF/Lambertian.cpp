@@ -9,13 +9,13 @@ ColorVec Lambertian::rho(const Vector3& wo) const
 	return kd_ * cd_;
 }
 
-ColorVec Lambertian::f(const intersection& intersection, const Vector3& wo, const Vector3& wi) const 
+ColorVec Lambertian::f(const intersectionRec& intersection, const Vector3& wo, const Vector3& wi) const
 {
 	 return kd_ * cd_ * Constants::INVPI_FLT;
 }
 
 
-sample_f_out Lambertian::sample_f(const intersection& intersection, const Vector3& wo) const
+sample_f_out Lambertian::sample_f(const intersectionRec& intersection, const Vector3& wo) const
 {
 	const Vector3 inNormal = intersection.normal;
 	//TODO: Explain these magic numbers

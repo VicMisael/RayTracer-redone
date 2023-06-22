@@ -7,7 +7,7 @@
 #include "../../utils/utility.h"
 
 ColorVec
-SampleDielectric::shade(const World &world, const Ray &ray, const intersection &intersection, int32_t depth) const {
+SampleDielectric::shade(const World &world, const Ray &ray, const intersectionRec &intersection, int32_t depth) const {
     auto material = intersection.material;
     bool front_face = dot(ray.direction, intersection.normal) < 0;
     auto normal = intersection.normal;

@@ -8,11 +8,11 @@ ColorVec PerfectTransmitter::rho(const Vector3 &wo) const {
     return Constants::BLACK;
 }
 
-ColorVec PerfectTransmitter::f(const intersection &intersection, const Vector3 &wo, const Vector3 &wi) const {
+ColorVec PerfectTransmitter::f(const intersectionRec &intersection, const Vector3 &wo, const Vector3 &wi) const {
     return Constants::BLACK;
 }
 
-sample_f_out PerfectTransmitter::sample_f(const intersection &intersection, const Vector3 &wo) const {
+sample_f_out PerfectTransmitter::sample_f(const intersectionRec &intersection, const Vector3 &wo) const {
     Vector3 normal(intersection.normal);
     float cos_thetai = dot(normal, wo);
     float eta = ior;
@@ -31,7 +31,7 @@ sample_f_out PerfectTransmitter::sample_f(const intersection &intersection, cons
     return {(kt / (eta * eta)) * Constants::WHITE * k, wt, 0};
 }
 
-float PerfectTransmitter::total_internal_reflection(const Ray &ray, const intersection &intersection) const {
+float PerfectTransmitter::total_internal_reflection(const Ray &ray, const intersectionRec &intersection) const {
 
     Vector3 wo(-ray.direction);
     float cos_thetai = dot(intersection.normal, wo);

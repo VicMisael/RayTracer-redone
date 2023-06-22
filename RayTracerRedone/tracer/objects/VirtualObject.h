@@ -23,7 +23,7 @@ public:
         material = std::move(_material);
     };
 
-    [[nodiscard]] virtual std::optional<intersection> intersects(const Ray &ray) const = 0;
+    [[nodiscard]] virtual std::optional<intersectionRec> intersects(const Ray &ray) const = 0;
 
     virtual void transform(Matrix4x4 m) {};
 

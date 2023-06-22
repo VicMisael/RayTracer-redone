@@ -6,7 +6,7 @@
 #include <glm/geometric.hpp>
 #include "../World.h"
 
-ColorVec TexturedPhongReflective::shade(const World &world, const Ray &ray, const intersection &intersection,
+ColorVec TexturedPhongReflective::shade(const World &world, const Ray &ray, const intersectionRec &intersection,
                                         int32_t depth) const {
     ColorVec L = texture_->value(intersection.u,intersection.v,intersection.hit_point)*Phong::shade(world, ray, intersection, depth);
     const auto wo = -ray.direction;
