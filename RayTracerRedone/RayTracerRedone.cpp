@@ -27,7 +27,7 @@ std::shared_ptr<sampler> generateSampler(int numsamples) {
 }
 
 int main() {
-    constexpr bool png = true;
+    constexpr bool png = false;
 
 
     const uint32_t w = 900;
@@ -37,7 +37,7 @@ int main() {
 
 
 
-    const auto sampler = generateSampler(100);
+    const auto sampler = generateSampler(3);
 
     auto selectedWorld = worlds::testeFeatures(false);
     Canvas *drawcanvas;

@@ -348,6 +348,10 @@ namespace worlds {
                                                                 ColorVec(1, 0, 0), 1, 1,
                                                                 23);
 
+        const auto _8balltexture = std::make_shared<ImageTexture>("assets/textures/8ball.jpg");
+        const auto eight_ball_material = std::make_shared<TexturedPhongReflective>(_8balltexture, 0.4);
+
+
         const auto view_plane = projection ? std::make_shared<ViewPlane>(120, 120, 60, 1) : std::make_shared<ViewPlane>(
                 2000, 2000, 50, 2.0f);
 

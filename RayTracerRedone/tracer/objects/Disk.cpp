@@ -3,29 +3,27 @@
 //
 
 #include <optional>
+#include <glm/gtx/norm.hpp>
 #include "Disk.h"
 
-std::tuple<float,float> getUVMapping(const glm::vec3& point, const glm::vec3& center, const glm::vec3& normal, float radiusSquared)
-{
+std::tuple<float, float> Disk::getUVMapping(const Point3 point) const {
+    const auto N = normalize(normal);
+    const auto radius = sqrtf(this->r_squared);
+    Vector3 referencevec;
+    if (glm::length2(N - Vector3(0, 1, 0)) < glm::epsilon<float>()) {
+        referencevec = Vector3(1, 0, 0);
+    } else {
+        referencevec = Vector3(0, 1, 0);
+    }
+    const auto U = normalize(cross(referencevec, N));
+    const auto V = cross(N, U);
+    const float u = dot(point - center, U);
+    const float v = dot(point - center, V);
+    const auto r = sqrt(u * u + v * v) / radius;
+    const auto theta = atan2f(v, u);
+    constexpr auto PI = (float) Constants::pi;
+    return {r, (theta + PI) / 2 * PI};
     // Calculate the vector from the center of the disk to the point
-    glm::vec3 vecToPoint = point - center;
-
-    // Normalize the vector
-    glm::vec3 vecToPointNormalized = glm::normalize(vecToPoint);
-
-    // Calculate the angle between the normalized vector and the disk's normal
-    float angle = std::acos(glm::dot(normal, vecToPointNormalized));
-
-    // Calculate the radius from the center of the disk to the point
-    float radius = glm::length(vecToPoint);
-
-    // Calculate the U coordinate (angle in radians divided by 2*pi)
-    float u = angle / (2.0f * glm::pi<float>());
-
-    // Calculate the V coordinate (normalized radius)
-    float v = radius/sqrt(radiusSquared);
-
-    return {u, v};
 }
 
 std::optional<intersectionRec> Disk::intersects(const Ray &ray) const {
@@ -38,8 +36,8 @@ std::optional<intersectionRec> Disk::intersects(const Ray &ray) const {
     Point3 p = ray.origin + t * ray.direction;
     const float dist2 = powf(glm::distance(center, p), 2);
     if (dist2 < r_squared) {
-       const auto [u,v] =getUVMapping(p,center, normalize(normal),r_squared);
-       return intersectionRec{t, p, normalize(normal), material.value(), u, v};
+        const auto [u, v] = getUVMapping(p);
+        return intersectionRec{t, p, normalize(normal), material.value(), u, v};
     } else {
         return {};
     }

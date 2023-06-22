@@ -24,5 +24,7 @@ public:
 
     bool hasBoundingBox() const override;
 
+
+    std::tuple<float, float> getUVMapping(const Point3 point) const;
 };
 

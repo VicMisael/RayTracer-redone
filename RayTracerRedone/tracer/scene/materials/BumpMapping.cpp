@@ -12,21 +12,22 @@ BumpMapping::shade(const World &world, const Ray &ray, const intersectionRec &in
     const Vector3 bumpMapping = (2.0f * Vector3(col)) - Vector3(1.0f);
 
 
-    vec3 t;
-    vec3 b;
+    Vector3 t;
+    Vector3 b;
 
-    vec3 c1 = cross(normal, vec3(0.0, 0.0, 1.0));
-    vec3 c2 = cross(normal, vec3(0.0, 1.0, 0.0));
+    Vector3 c1 = cross(normal, Vector3(0.0, 0.0, 1.0));
+    Vector3 c2 = cross(normal, Vector3(0.0, 1.0, 0.0));
 
     if (length(c1) > length(c2))
         t = c1;
     else
         t = c2;
+
     t = normalize(t);
     b = normalize(cross(normal, t));
     normal = mat3(t, b, normal) * bumpMapping;
     auto intersection = intersectionRec{ intersectionIn.tmin, intersectionIn.hit_point, normal, intersectionIn.material,
-                                    0, 0 };
+                                         intersectionIn.u, intersectionIn.v };
     return this->material->shade(world, ray, intersection, depth);
 
 }
