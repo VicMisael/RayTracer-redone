@@ -344,7 +344,7 @@ namespace worlds {
                                                          1, 1, 10);
         const auto orangeBumpmappedPhong=std::make_shared<BumpMapping>(orangephong,orangenormalmap);
 
-        const auto red_specular_phong = std::make_shared<Phong>(ColorVec(0.4, 0.5, 0.5),
+        const auto red_specular_phong = std::make_shared<Phong>(ColorVec(1, 0, 0),
                                                                 ColorVec(1, 0, 0), 1, 1,
                                                                 23);
 
@@ -361,7 +361,7 @@ namespace worlds {
                                                  moonmaterial));
         objects.push_back(std::make_shared<Ball>(Point3(1400, -20, -6000), 1000,
                                                  jupitermaterial));
-        objects.push_back(std::make_shared<Disk>(Point3(0, 1000, -1000), Vector3(0, 1, -1), 100, red_specular_phong));
+        objects.push_back(std::make_shared<Disk>(Point3(0, 1000, -300), Vector3(0, 0,-1), 200, earthmaterial));
 
         objects.push_back(std::make_shared<Ball>(Point3(-1400, 600, -500), 350,
                                                  orangeBumpmappedPhong));

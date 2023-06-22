@@ -27,17 +27,17 @@ std::shared_ptr<sampler> generateSampler(int numsamples) {
 }
 
 int main() {
-    constexpr bool png = false;
+    constexpr bool png = true;
 
 
-    const uint32_t w = 1600;
-    const uint32_t h = 1600;
+    const uint32_t w = 900;
+    const uint32_t h = 900;
     //TODO: ARea Lights, Refractance, BumpMapping,
 
 
 
 
-    const auto sampler = generateSampler(1000);
+    const auto sampler = generateSampler(100);
 
     auto selectedWorld = worlds::testeFeatures(false);
     Canvas *drawcanvas;
