@@ -361,7 +361,7 @@ namespace worlds {
 
         const auto earthmaterialBumpMapped = std::make_shared<BumpMapping>(earthmaterial,std::make_shared<ImageTexture>("assets/normalmaps/earthbumpmap.png"));
 
-        objects.push_back(std::make_shared<Ball>(Point3(-400, -60, -900), 800,
+        objects.push_back(std::make_shared<Ball>(Point3(-400, -60, -1600), 800,
                                                  earthmaterialBumpMapped));
         objects.push_back(std::make_shared<Ball>(Point3(800, -54, -1000), 620 / 4,
                                                  moonmaterial));
