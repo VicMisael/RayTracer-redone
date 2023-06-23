@@ -6,10 +6,15 @@
 #include "BTDF.h"
 
 class FresnelTransmitter: public BTDF {
+    float n_in;
+    float n_out;
+    [[nodiscard]] float fresnel(const Vector3 &wo, const intersectionRec& intersection) const;
 public:
-    float total_internal_reflection(const Ray &ray, const intersectionRec &intersection) const override;
+    FresnelTransmitter(float nIn, float nOut) : n_in(nIn), n_out(nOut) {}
 
-    [[maybe_unused]] ColorVec rho(const Vector3 &wo) const override;
+    float internal_reflection(const Vector3 &wo, const intersectionRec &intersection) const override;
+
+     [[nodiscard]] ColorVec rho(const Vector3 &wo) const override;
 
     [[nodiscard]] ColorVec f(const intersectionRec &intersection, const Vector3 &wo, const Vector3 &wi) const override;
 

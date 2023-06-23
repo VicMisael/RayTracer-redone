@@ -367,7 +367,7 @@ namespace worlds {
                                                  moonmaterial));
         objects.push_back(std::make_shared<Ball>(Point3(1400, -20, -6000), 1000,
                                                  jupitermaterial));
-        objects.push_back(std::make_shared<Disk>(Point3(0, 1000, -300), Vector3(0, 0,-1), 200, earthmaterial));
+        objects.push_back(std::make_shared<Disk>(Point3(1400, -20, -100), Vector3(0.5, 0.5 , -1), 200, earthmaterial));
 
         objects.push_back(std::make_shared<Ball>(Point3(-1400, 600, -900), 350,
                                                  orangeBumpmappedPhong));

@@ -1,11 +1,11 @@
 #pragma once
-#include "BTDF.h"
+#include "BxDF.h"
 class FresnelReflector :
-    public BTDF
+    public BxDF
 {
+
 public:
 
-    float total_internal_reflection(const Ray& ray, const intersectionRec& intersection) const override;
 
     [[maybe_unused]] ColorVec rho(const Vector3& wo) const override;
 

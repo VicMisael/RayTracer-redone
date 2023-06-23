@@ -24,7 +24,7 @@ public:
 
     [[nodiscard]] sample_f_out sample_f(const intersectionRec &intersection, const Vector3 &wo) const override;
 
-    float total_internal_reflection(const Ray &ray, const intersectionRec &intersection) const override;
+    float internal_reflection(const Vector3 &wo, const intersectionRec &intersection) const override;
 
 };
 

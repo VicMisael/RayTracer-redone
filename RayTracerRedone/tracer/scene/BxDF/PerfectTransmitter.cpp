@@ -31,10 +31,10 @@ sample_f_out PerfectTransmitter::sample_f(const intersectionRec &intersection, c
     return {(kt / (eta * eta)) * Constants::WHITE * k, wt, 0};
 }
 
-float PerfectTransmitter::total_internal_reflection(const Ray &ray, const intersectionRec &intersection) const {
+float PerfectTransmitter::internal_reflection(const Vector3 &wo, const intersectionRec &intersection) const {
 
-    Vector3 wo(-ray.direction);
-    float cos_thetai = dot(intersection.normal, wo);
+
+    float cos_thetai = dot(intersection.normal, -wo);
     float eta = ior;
 
     if (cos_thetai < 0.0f) {

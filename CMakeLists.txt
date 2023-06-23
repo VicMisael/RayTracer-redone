@@ -140,7 +140,7 @@ target_link_libraries(RayTracer_redone glm::glm)
 target_link_libraries(RayTracer_redone assimp::assimp)
 target_link_libraries(RayTracer_redone ${SDL2_LIBRARIES})
 
-set(CMAKE_CXX_FLAGS_RELEASE "-Ofast -march=native -Wall")
+set(CMAKE_CXX_FLAGS_RELEASE "-Ofast -march=native")
 set(CMAKE_CXX_FLAGS_MINSIZEREL  " ")
 SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-Ofast -mavx2 -g")
 set_property(TARGET RayTracer_redone PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
