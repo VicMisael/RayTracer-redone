@@ -359,15 +359,17 @@ namespace worlds {
 
         std::vector<std::shared_ptr<VirtualObject>> objects;
 
-        objects.push_back(std::make_shared<Ball>(Point3(-400, -60, -1000), 620,
-                                                 earthmaterial));
+        const auto earthmaterialBumpMapped = std::make_shared<BumpMapping>(earthmaterial,std::make_shared<ImageTexture>("assets/normalmaps/earthbumpmap.png"));
+
+        objects.push_back(std::make_shared<Ball>(Point3(-400, -60, -900), 800,
+                                                 earthmaterialBumpMapped));
         objects.push_back(std::make_shared<Ball>(Point3(800, -54, -1000), 620 / 4,
                                                  moonmaterial));
         objects.push_back(std::make_shared<Ball>(Point3(1400, -20, -6000), 1000,
                                                  jupitermaterial));
         objects.push_back(std::make_shared<Disk>(Point3(0, 1000, -300), Vector3(0, 0,-1), 200, earthmaterial));
 
-        objects.push_back(std::make_shared<Ball>(Point3(-1400, 600, -500), 350,
+        objects.push_back(std::make_shared<Ball>(Point3(-1400, 600, -900), 350,
                                                  orangeBumpmappedPhong));
 
         std::vector<std::shared_ptr<VectorialLight>> lights;

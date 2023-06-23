@@ -37,7 +37,7 @@ int main() {
 
 
 
-    const auto sampler = generateSampler(3);
+    const auto sampler = generateSampler(5);
 
     auto selectedWorld = worlds::testeFeatures(false);
     Canvas *drawcanvas;
