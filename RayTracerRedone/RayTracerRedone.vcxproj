@@ -161,6 +161,7 @@
     <ClCompile Include="tracer\scene\BxDF\PerfectTransmitter.cpp" />
     <ClCompile Include="tracer\scene\Camera.cpp" />
     <ClCompile Include="tracer\scene\materials\BumpMapping.cpp" />
+    <ClCompile Include="tracer\scene\materials\Dielectric.cpp" />
     <ClCompile Include="tracer\scene\materials\SampleDielectric.cpp" />
     <ClCompile Include="tracer\scene\materials\TexturedPhongReflective.cpp" />
     <ClCompile Include="tracer\scene\materials\Transparent.cpp" />
@@ -197,6 +198,7 @@
     <ClCompile Include="tracer\scene\textures\Texture.cpp" />
     <ClCompile Include="tracer\scene\World.cpp" />
     <ClCompile Include="tracer\scene\ViewPlane.cpp" />
+    <ClCompile Include="tracer\utils\ColorVec.cpp" />
     <ClCompile Include="tracer\utils\sampler\diagonal_point_sampler.cpp" />
     <ClCompile Include="tracer\utils\sampler\equidistant_point_sampler.cpp" />
     <ClCompile Include="tracer\utils\sampler\horizontal_point_sampler.cpp" />
@@ -217,6 +219,7 @@
     <ClInclude Include="tracer\scene\BxDF\PerfectTransmitter.h" />
     <ClInclude Include="tracer\scene\Camera.h" />
     <ClInclude Include="tracer\scene\materials\BumpMapping.h" />
+    <ClInclude Include="tracer\scene\materials\Dielectric.h" />
     <ClInclude Include="tracer\scene\materials\SampleDielectric.h" />
     <ClInclude Include="tracer\scene\materials\TexturedPhongReflective.h" />
     <ClInclude Include="tracer\scene\materials\Transparent.h" />
@@ -258,6 +261,7 @@
     <ClInclude Include="tracer\objects\Ball.h" />
     <ClInclude Include="tracer\objects\Plane.h" />
     <ClInclude Include="tracer\utils\Constants.h" />
+    <ClInclude Include="tracer\utils\Intersection.h" />
     <ClInclude Include="tracer\utils\intersectionRec.h" />
     <ClInclude Include="tracer\scene\Ray.h" />
     <ClInclude Include="tracer\scene\materials\Material.h" />

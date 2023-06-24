@@ -343,7 +343,7 @@ namespace worlds {
         const auto orangenormalmap = std::make_shared<ImageTexture>("assets/normalmaps/orangenm.jpg");
         const auto orangephong = std::make_shared<Phong>(ColorVec(1, .64705882352f, 0), Constants::WHITE,
                                                          1, 1, 10);
-        const auto orangeBumpmappedPhong=std::make_shared<BumpMapping>(orangephong,orangenormalmap);
+        const auto orangeBumpmappedPhong = std::make_shared<BumpMapping>(orangephong, orangenormalmap);
 
         const auto red_specular_phong = std::make_shared<Phong>(ColorVec(1, 0, 0),
                                                                 ColorVec(1, 0, 0), 1, 1,
@@ -360,7 +360,9 @@ namespace worlds {
 
         std::vector<std::shared_ptr<VirtualObject>> objects;
 
-        const auto earthmaterialBumpMapped = std::make_shared<BumpMapping>(earthmaterial,std::make_shared<ImageTexture>("assets/normalmaps/earthbumpmap.png"));
+        const auto earthmaterialBumpMapped = std::make_shared<BumpMapping>(earthmaterial,
+                                                                           std::make_shared<ImageTexture>(
+                                                                                   "assets/normalmaps/earthbumpmap.png"));
 
         objects.push_back(std::make_shared<Ball>(Point3(-400, -60, -1600), 800,
                                                  earthmaterialBumpMapped));
@@ -368,15 +370,17 @@ namespace worlds {
                                                  moonmaterial));
         objects.push_back(std::make_shared<Ball>(Point3(1400, -20, -6000), 1000,
                                                  jupitermaterial));
-        objects.push_back(std::make_shared<Disk>(Point3(1400, -20, -1900), Vector3(0.5, 0.5 , -1), 200, earthmaterial));
+        objects.push_back(std::make_shared<Disk>(Point3(1400, -20, -1900), Vector3(0.5, 0.5, -1), 200, earthmaterial));
 
         objects.push_back(std::make_shared<Ball>(Point3(-1400, 600, -1900), 350,
                                                  orangeBumpmappedPhong));
 
         const auto teste = std::make_shared<SampleDielectric>(6.9);
         objects.push_back(std::make_shared<Ball>(Point3(900, 0, -800), 600, teste));
-        const auto teste2 = std::make_shared<Transparent>(1.24,0.61);
-        objects.push_back(std::make_shared<Ball>(Point3(-900, 0, -800), 600, teste2));
+        const auto teste2 = std::make_shared<Transparent>(1.569, 0.61);
+        objects.push_back(std::make_shared<Ball>(Point3(1500, 600, -800), 600, teste2));
+        const auto teste3 = std::make_shared<Dielectric>(Constants::YELLOW, Constants::BLUE, 1.24, 1.61, 1, 2);
+        objects.push_back(std::make_shared<Ball>(Point3(0, -900, -800), 600, teste2));
 
 
         std::vector<std::shared_ptr<VectorialLight>> lights;

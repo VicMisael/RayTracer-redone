@@ -32,7 +32,7 @@ int main() {
 
     const uint32_t w = 1000;
     const uint32_t h = 1000;
-    //TODO: ARea Lights, Camera,
+    //TODO: ARea Lights, Camera
 
 
 

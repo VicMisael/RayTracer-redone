@@ -21,7 +21,7 @@ private:
 	std::vector<std::shared_ptr<VectorialLight>> lights_;
 	ColorVec bgColor;
 	AmbientLight ambient_light;
-	std::shared_ptr<BVH> bvh;
+	//std::shared_ptr<BVH> bvh;
 	bool perspective_{};
 public:
 	[[nodiscard]] ColorVec trace_ray(const Ray& ray, const int32_t depth) const;
@@ -40,12 +40,12 @@ public:
 		bgColor(_bgColor),
 		ambient_light(std::move(_ambient_light)),perspective_(perspective)
 	{
-		bvh = std::make_shared<BVH>(objects_);
+		//bvh = std::make_shared<BVH>(objects_);
 	}
 
 
 
-	void render(Canvas*, int32_t, const std::shared_ptr<sampler>&)  ;
+	void render(Canvas*, int32_t, const std::shared_ptr<sampler>&);
 
     [[nodiscard]] std::optional<intersectionRec> hit(const Ray &ray) const;
 
