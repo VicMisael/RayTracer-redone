@@ -375,7 +375,7 @@ namespace worlds {
 
         const auto teste = std::make_shared<SampleDielectric>(6.9);
         objects.push_back(std::make_shared<Ball>(Point3(900, 0, -800), 600, teste));
-        const auto teste2 = std::make_shared<Transparent>(1.35,0.01);
+        const auto teste2 = std::make_shared<Transparent>(1.24,0.61);
         objects.push_back(std::make_shared<Ball>(Point3(-900, 0, -800), 600, teste2));
 
 
