@@ -3,14 +3,8 @@
 static int i = 0;
 
 ColorVec World::trace_ray(const Ray &ray, const int32_t depth) const {
-    if (depth >= 0) {
-        const auto intersection = hit(ray);
-        if (intersection.has_value()) {
-            return shade(intersection.value(), ray, depth);
-        }
-        return bgColor;
-    }
-    return {0, 0, 0};
+    float t = 0;
+    return World::trace_ray(ray, t, depth);
 }
 
 ColorVec World::shade(const intersectionRec &intersection, const Ray &ray, const int32_t depth) const {
@@ -76,4 +70,16 @@ std::optional<intersectionRec> World::hit(const Ray &ray) const {
         }
     }
     return selintersection;
+}
+
+ColorVec World::trace_ray(const Ray &ray, float &tmin, const int32_t depth) const {
+    if (depth >= 0) {
+        const auto intersection = hit(ray);
+        if (intersection.has_value()) {
+            tmin = intersection->tmin;
+            return shade(intersection.value(), ray, depth);
+        }
+        return bgColor;
+    }
+    return {0, 0, 0};
 }

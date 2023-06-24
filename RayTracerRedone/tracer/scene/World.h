@@ -25,6 +25,7 @@ private:
 	bool perspective_{};
 public:
 	[[nodiscard]] ColorVec trace_ray(const Ray& ray, const int32_t depth) const;
+	[[nodiscard]] ColorVec trace_ray(const Ray& ray, float &tmin,const int32_t depth) const;
 
 
 	World(std::shared_ptr<ViewPlane> _viewPlane,

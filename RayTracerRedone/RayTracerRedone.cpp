@@ -27,7 +27,7 @@ std::shared_ptr<sampler> generateSampler(int numsamples) {
 }
 
 int main() {
-    constexpr bool png = true;
+    constexpr bool png = false;
 
 
     const uint32_t w = 1000;
@@ -39,11 +39,11 @@ int main() {
 
     const auto sampler = generateSampler(1);
 
-    auto selectedWorld = worlds::refractanceTest();
+    auto selectedWorld = worlds::testeFeatures(false);
     Canvas *drawcanvas;
 
     if (png) {
-        drawcanvas = new imagecanvas(w,h);
+        drawcanvas = new imagecanvas(w, h);
     } else {
         drawcanvas = new sdl2canvas(w, h);
     }
@@ -52,7 +52,7 @@ int main() {
     Scene scene(selectedWorld, drawcanvas);
 
     if (!png) {
-        auto *canvas = dynamic_cast<sdl2canvas*>(drawcanvas);
+        auto *canvas = dynamic_cast<sdl2canvas *>(drawcanvas);
         auto draw = [&] {
             while (!canvas->should_stop()) {
                 auto t1 = std::chrono::high_resolution_clock::now();
@@ -73,7 +73,7 @@ int main() {
             scene.draw();
         }
 
-    }else{
+    } else {
 
         auto t1 = std::chrono::high_resolution_clock::now();
         scene.render(recursion_depth_limit, sampler);

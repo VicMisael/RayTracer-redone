@@ -38,6 +38,7 @@
 #include "tracer/scene/textures/PointCheckerTexture.h"
 #include "tracer/scene/textures/ImageTexture.h"
 #include "tracer/scene/materials/SampleDielectric.h"
+#include "tracer/scene/materials/Dielectric.h"
 #include "tracer/scene/materials/Transparent.h"
 
 
@@ -363,14 +364,20 @@ namespace worlds {
 
         objects.push_back(std::make_shared<Ball>(Point3(-400, -60, -1600), 800,
                                                  earthmaterialBumpMapped));
-        objects.push_back(std::make_shared<Ball>(Point3(800, -54, -1000), 620 / 4,
+        objects.push_back(std::make_shared<Ball>(Point3(800, -54, -1600), 620 / 4,
                                                  moonmaterial));
         objects.push_back(std::make_shared<Ball>(Point3(1400, -20, -6000), 1000,
                                                  jupitermaterial));
-        objects.push_back(std::make_shared<Disk>(Point3(1400, -20, -100), Vector3(0.5, 0.5 , -1), 200, earthmaterial));
+        objects.push_back(std::make_shared<Disk>(Point3(1400, -20, -1900), Vector3(0.5, 0.5 , -1), 200, earthmaterial));
 
-        objects.push_back(std::make_shared<Ball>(Point3(-1400, 600, -900), 350,
+        objects.push_back(std::make_shared<Ball>(Point3(-1400, 600, -1900), 350,
                                                  orangeBumpmappedPhong));
+
+        const auto teste = std::make_shared<SampleDielectric>(6.9);
+        objects.push_back(std::make_shared<Ball>(Point3(900, 0, -800), 600, teste));
+        const auto teste2 = std::make_shared<Dielectric>(ColorVec(1,1,0),ColorVec(1,1,1));
+        objects.push_back(std::make_shared<Ball>(Point3(-900, 0, -800), 600, teste2));
+
 
         std::vector<std::shared_ptr<VectorialLight>> lights;
         lights.push_back(std::make_shared<PointLight>(Point3(7200, 0, -1000), Constants::pi * 250,
