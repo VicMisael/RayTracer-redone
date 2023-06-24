@@ -12,7 +12,10 @@ class PerfectTransmitter : public BTDF {
     float ior = 1.0f;  // index of refraction
     float kt = 0.0f;    // transmission coefficient;
 public:
-    PerfectTransmitter(float kt, float ior);
+    PerfectTransmitter(float kt, float ior) : ior(ior), kt(kt){
+
+    }
+
     PerfectTransmitter() {
 
     }

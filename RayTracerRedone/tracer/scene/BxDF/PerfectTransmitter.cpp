@@ -44,4 +44,4 @@ float PerfectTransmitter::internal_reflection(const Vector3 &wo, const intersect
     return 1.0f - (1.0f - cos_thetai * cos_thetai) / (eta * eta);
 }
 
-PerfectTransmitter::PerfectTransmitter(float kt, float ior) : ior(ior), kt(kt) {}
+
