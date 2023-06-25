@@ -33,6 +33,7 @@
 #include "tracer/scene/materials/TexturedPhongReflective.h"
 #include "tracer/scene/materials/BumpMapping.h"
 #include "tracer/scene/materials/Diffuse.h"
+#include "tracer/scene/materials/DiffuseLight.h"
 
 #include "tracer/scene/textures/CheckerTexture.h"
 #include "tracer/scene/textures/PointCheckerTexture.h"
@@ -67,9 +68,7 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     const auto yellow_matte = std::make_shared<Matte>(1, ColorVec(1, 1, 0));
 
     const auto textured_test_material2 = std::make_shared<TexturedMaterial>(blue_white_texture, white_matte);
-    const auto textured_test_material3 = std::make_shared<TexturedMaterial>(black_white_texture, white_matte);
 
-    const auto textured_test_material4 = std::make_shared<TexturedMaterial>(black_white_texture, white_phong);
 
     objects.push_back(std::make_shared<Plane>(Point3(0, 0, -1600), Vector3(0, -1, 1), textured_test_material2));
 
@@ -83,9 +82,6 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
 
     objects.push_back(
             std::make_shared<Ball>(Point3(-1250, 0, -1000), 1000, textured));
-
-    objects.push_back(std::make_shared<Ball>(Point3(5, -20, -625), 120, phong_metal));
-
 
     objects.push_back(std::make_shared<Ball>(Point3(0, 600, -195), 95,
                                              phong_black_reflective));
@@ -168,25 +164,16 @@ std::vector<std::shared_ptr<VectorialLight>> generate_moon_earth_scenario_lights
 }
 
 namespace worlds {
-    World generateWorld1() {
+    World generateWorld1(bool projection) {
         //True=Perspective False=parallel
-        constexpr bool projection = false;
 
-        const auto view_plane = std::make_shared<ViewPlane>(2000, 2000, 50, 01.0f);
+ 
+        const auto view_plane =!projection ? std::make_shared<ViewPlane>(2000, 2000, 50, 01.0f) : std::make_shared<ViewPlane>(60, 60, 20, 0.50);
 
-        AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
-        return {view_plane, generateObjects(), generate_vectorial_lights(),
-                ab, {0.9, 0.9, 1}, projection};
-    }
-
-    World generateWorld2() {
-        constexpr bool projection = true;
-
-        const auto view_plane = std::make_shared<ViewPlane>(60, 60, 20, 0.50);
 
         AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
         return {view_plane, generateObjects(), generate_vectorial_lights(),
-                ab, {0.9, 0.9, 1}, projection};
+                ab, {0.3, 0.3, 0.3 }, projection };
     }
 
     World moonEarth() {

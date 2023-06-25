@@ -162,6 +162,7 @@
     <ClCompile Include="tracer\scene\Camera.cpp" />
     <ClCompile Include="tracer\scene\materials\BumpMapping.cpp" />
     <ClCompile Include="tracer\scene\materials\Dielectric.cpp" />
+    <ClCompile Include="tracer\scene\materials\DiffuseLight.cpp" />
     <ClCompile Include="tracer\scene\materials\SampleDielectric.cpp" />
     <ClCompile Include="tracer\scene\materials\TexturedPhongReflective.cpp" />
     <ClCompile Include="tracer\scene\materials\Transparent.cpp" />
@@ -220,6 +221,7 @@
     <ClInclude Include="tracer\scene\Camera.h" />
     <ClInclude Include="tracer\scene\materials\BumpMapping.h" />
     <ClInclude Include="tracer\scene\materials\Dielectric.h" />
+    <ClInclude Include="tracer\scene\materials\DiffuseLight.h" />
     <ClInclude Include="tracer\scene\materials\SampleDielectric.h" />
     <ClInclude Include="tracer\scene\materials\TexturedPhongReflective.h" />
     <ClInclude Include="tracer\scene\materials\Transparent.h" />
