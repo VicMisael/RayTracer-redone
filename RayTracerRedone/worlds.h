@@ -14,6 +14,7 @@
 #include "tracer/objects/Mesh.h"
 #include "tracer/objects/OpenCylinder.h"
 #include "tracer/objects/Disk.h"
+#include "tracer/objects/Rectangle.h"
 
 
 #include "tracer/scene/Scene.h"
@@ -167,13 +168,14 @@ namespace worlds {
     World generateWorld1(bool projection) {
         //True=Perspective False=parallel
 
- 
-        const auto view_plane =!projection ? std::make_shared<ViewPlane>(2000, 2000, 50, 01.0f) : std::make_shared<ViewPlane>(60, 60, 20, 0.50);
+
+        const auto view_plane = !projection ? std::make_shared<ViewPlane>(2000, 2000, 50, 01.0f)
+                                            : std::make_shared<ViewPlane>(60, 60, 20, 0.50);
 
 
         AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
         return {view_plane, generateObjects(), generate_vectorial_lights(),
-                ab, {0.3, 0.3, 0.3 }, projection };
+                ab, {0.3, 0.3, 0.3}, projection};
     }
 
     World moonEarth() {
@@ -369,7 +371,10 @@ namespace worlds {
         const auto teste3 = std::make_shared<Dielectric>(Constants::YELLOW, Constants::BLUE, 1.24, 1.61, 1, 2);
         objects.push_back(std::make_shared<Ball>(Point3(0, -900, -800), 600, teste2));
 
+        objects.push_back(std::make_shared<Ball>(Point3(-600, 900, -800), 600));
 
+        objects.push_back(
+                std::make_shared<Rectangle>(Point3(0, 0, -400), Vector3(0, 0, 1), 400, jupitermaterial));
         std::vector<std::shared_ptr<VectorialLight>> lights;
         lights.push_back(std::make_shared<PointLight>(Point3(7200, 0, -1000), Constants::pi * 250,
                                                       normalize(ColorVec(1.2, 1.2, 1))));

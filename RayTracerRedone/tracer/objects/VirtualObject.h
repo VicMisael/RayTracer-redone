@@ -11,13 +11,14 @@
 
 #include "BoundingBox/AABB.h"
 
+
 class VirtualObject {
 protected:
 
 public:
     std::optional<std::shared_ptr<Material>> material;
 
-    explicit VirtualObject() = default;
+    explicit VirtualObject();
 
     explicit VirtualObject(std::shared_ptr<Material> _material) {
         material = std::move(_material);

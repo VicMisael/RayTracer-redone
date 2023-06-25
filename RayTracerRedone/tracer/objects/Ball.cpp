@@ -56,21 +56,6 @@ void Ball::transform(Matrix4x4 m) {
     calculateBoundingBox();
 }
 
-Ball::Ball(Point3 _center, float _radius) {
-    center=_center;
-    radius=_radius;
-    class internal:public Material{
-        [[nodiscard]] ColorVec shade(const World& world, const Ray& ray, const intersectionRec& intersection, int32_t depth) const override{
-            const auto& hitPoint = intersection.hit_point;
-            const Ray reflected(hitPoint, utility::reflect_vector(normalize(ray.direction), intersection.normal));
-            return 0.5f*world.trace_ray(reflected, depth - 1);
-        }
-    }  t;
-    material=std::make_shared<internal>(t);
-    aabb=std::make_shared<AABB>(AABB(
-            center - Vector3 (radius, radius, radius),
-            center + Vector3(radius, radius, radius)));
-}
 
 void Ball::calculateBoundingBox() {
     this->aabb=std::make_shared<AABB>(AABB(

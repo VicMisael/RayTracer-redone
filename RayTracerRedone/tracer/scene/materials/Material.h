@@ -10,10 +10,12 @@ struct intersectionRec;
 
 class Material
 {
+protected:
 
 public:
-	virtual ~Material() = default;
     Material()= default;
+	virtual ~Material() = default;
+
 
 	virtual ColorVec shade(const World& world, const Ray& ray, const intersectionRec& intersection, int32_t depth) const = 0;
 };
