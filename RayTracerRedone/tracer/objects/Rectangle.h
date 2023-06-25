@@ -22,20 +22,21 @@ public:
         normal = normalize(normal);
     }
 
-    Rectangle(const Point3 &_p0, const Vector3 &normal, const float side_length, std::shared_ptr<Material> _material)
+    Rectangle(const Point3 &_p0, const Vector3 &_normal, const float side_length, std::shared_ptr<Material> _material)
             : VirtualObject(_material), p0(_p0) {
         Vector3 refDir;
-        auto axisNormalized = normalize(normal);
+        auto axisNormalized = normalize(_normal);
         if (glm::length2(axisNormalized - Vector3(0, 1, 0)) < glm::epsilon<float>()) {
             refDir = Vector3(1, 0, 0);
         } else {
             refDir = Vector3(0, 1, 0);
         }
 
-        auto t = cross(axisNormalized, refDir);
-        auto bvec = cross(axisNormalized, t);
+        auto t = cross(refDir,axisNormalized);
+        auto bvec = cross(axisNormalized,t);
         a = t * side_length;
         b = bvec * side_length;
+        normal = axisNormalized;
     }
 
     Rectangle(const Point3 &_p0, const Vector3 &_a, const Vector3 &_b, const Vector3 &_normal,std::shared_ptr<Material> _material)

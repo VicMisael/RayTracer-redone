@@ -30,9 +30,14 @@ std::optional<intersectionRec> Rectangle::intersects(const Ray &ray) const {
     if (ddotb < 0.0f || ddotb > b_len_squared) {
         return {};
     }
+    const auto aNormalized = normalize(a);
+    const auto bNormalized = normalize(b);
 
+    const float u = fabs(dot(d, aNormalized))/length(a);
+    const float v = fabs(dot(d, bNormalized))/length(b);
+    
 
-    return intersectionRec{t, p, normalize(normal), material.value(), ddota / length(a), 1 - ddotb / length(b)};
+     return intersectionRec{ t, p, normalize(normal), material.value(),u ,v };
 }
 
 void Rectangle::transform(Matrix4x4 m) {

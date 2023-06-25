@@ -374,10 +374,12 @@ namespace worlds {
         objects.push_back(std::make_shared<Ball>(Point3(-600, 900, -800), 600));
 
         objects.push_back(
-                std::make_shared<Rectangle>(Point3(0, 0, -400), Vector3(0, 0, 1), 400, jupitermaterial));
+                std::make_shared<Rectangle>(Point3(0, 500, -400), Vector3(0, 0, 1), 400, earthmaterial));
         std::vector<std::shared_ptr<VectorialLight>> lights;
         lights.push_back(std::make_shared<PointLight>(Point3(7200, 0, -1000), Constants::pi * 250,
                                                       normalize(ColorVec(1.2, 1.2, 1))));
+
+        lights.push_back(std::make_shared<PointLight>(Point3(0, 0, 0), Constants::pi * 10,ColorVec(1,1,1)));
 
 
         return {view_plane, objects, lights,

@@ -5,7 +5,7 @@ class Light
 {
 protected:
 	float intensity;
-	ColorVec color;
+	ColorVec color = ColorVec(1, 1, 1);
 
 	Light(const float _intensity, const ColorVec _color) :intensity(_intensity), color(_color) {}
 public:
