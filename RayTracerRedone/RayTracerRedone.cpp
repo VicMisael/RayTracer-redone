@@ -23,23 +23,23 @@
 #include "tracer/utils/utility.h"
 
 std::shared_ptr<sampler> generateSampler(int numsamples) {
-    return std::make_shared<mt19937_point_sampler>(numsamples);
+    return std::make_shared<horizontal_point_sampler>(numsamples);
 }
 
 int main() {
     constexpr bool png = false;
 
 
-    const uint32_t w = 1000;
-    const uint32_t h = 1000;
+    const uint32_t w = 600;
+    const uint32_t h = 600;
     //TODO: ARea Lights, Camera
 
 
 
 
-    const auto sampler = generateSampler(10);
+    const auto sampler = generateSampler(2);
 
-    auto selectedWorld = worlds::testeFeatures(false);
+    auto selectedWorld = worlds::meshTest();
     Canvas *drawcanvas;
 
     if (png) {
@@ -47,7 +47,7 @@ int main() {
     } else {
         drawcanvas = new sdl2canvas(w, h);
     }
-    constexpr int32_t recursion_depth_limit = 10;
+    constexpr int32_t recursion_depth_limit = 1;
 
     Scene scene(selectedWorld, drawcanvas);
 

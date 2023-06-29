@@ -304,7 +304,7 @@ namespace worlds {
 
         std::vector<std::shared_ptr<VectorialLight>> lights;
         //lights.push_back(std::make_shared<DirectionalLight>(Vector3(0, 1, 1), 3.15, ColorVec(1, 1, 1)));
-        lights.push_back(std::make_shared<PointLight>(Point3(0, 0, 0), Constants::pi * 60, ColorVec(1, 1, 1)));
+//        lights.push_back(std::make_shared<PointLight>(Point3(0, 0, 0), Constants::pi * 60, ColorVec(1, 1, 1)));
         AmbientLight ab(0.2, ColorVec(1.0, 1.0, 1));
 
 
@@ -314,6 +314,12 @@ namespace worlds {
         mat = glm::scale(mat, Vector3(20));
         mesh2->transform(mat);
         objects.push_back(mesh2);
+
+        auto mesh3 = std::make_shared<Mesh>("assets/objs/test.obj", eight_ball_material);
+        mat = glm::translate(Matrix4x4(1.0f), Vector3(400, -640, -900));
+        mat = glm::scale(mat, Vector3(100));
+        mesh3->transform(mat);
+        objects.push_back(mesh3);
 
         return {view_plane, objects, lights,
                 ab, {0.9, 0.9, 1}, projection};
@@ -371,18 +377,17 @@ namespace worlds {
         const auto teste3 = std::make_shared<Dielectric>(Constants::YELLOW, Constants::BLUE, 1.24, 1.61, 1, 2);
         objects.push_back(std::make_shared<Ball>(Point3(0, -900, -800), 600, teste2));
 
-        objects.push_back(std::make_shared<Ball>(Point3(-600, 900, -800), 600));
+        objects.push_back(std::make_shared<Ball>(Point3(-600, 900, -800), 500));
 
         objects.push_back(
-                std::make_shared<Rectangle>(Point3(0, 500, -400), Vector3(0, 0, 1), 400, earthmaterial));
+                std::make_shared<Rectangle>(Point3(0, 300, -100), Vector3(0.9, 0, 1), 400, earthmaterial));
         std::vector<std::shared_ptr<VectorialLight>> lights;
         lights.push_back(std::make_shared<PointLight>(Point3(7200, 0, -1000), Constants::pi * 250,
                                                       normalize(ColorVec(1.2, 1.2, 1))));
 
-        lights.push_back(std::make_shared<PointLight>(Point3(0, 0, 0), Constants::pi * 10,ColorVec(1,1,1)));
-
+        lights.push_back(std::make_shared<PointLight>(Point3(0, 0, 0), Constants::pi * 100,ColorVec(1,1,1)));
 
         return {view_plane, objects, lights,
-                ab, {0.2, 0.2, 0.2}, projection};
+                ab, {0.2, 0.2, 0.9}, projection};
     }
 };
