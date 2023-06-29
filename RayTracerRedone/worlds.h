@@ -325,7 +325,7 @@ namespace worlds {
                 ab, {0.9, 0.9, 1}, projection};
     }
 
-    World testeFeatures(bool projection) {
+    World testeFeatures(bool projection=false) {
 
         const auto jupitertexture = std::make_shared<ImageTexture>("assets/textures/jupiter.jpg");
         const auto jupitermaterial = std::make_shared<TexturedPhong>(jupitertexture);

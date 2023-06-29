@@ -37,9 +37,9 @@ int main() {
 
 
 
-    const auto sampler = generateSampler(2);
+    const auto sampler = generateSampler(50);
 
-    auto selectedWorld = worlds::meshTest();
+    auto selectedWorld = worlds::testeFeatures(true);
     Canvas *drawcanvas;
 
     if (png) {
@@ -47,7 +47,7 @@ int main() {
     } else {
         drawcanvas = new sdl2canvas(w, h);
     }
-    constexpr int32_t recursion_depth_limit = 1;
+    constexpr int32_t recursion_depth_limit = 10;
 
     Scene scene(selectedWorld, drawcanvas);
 

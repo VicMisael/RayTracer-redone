@@ -2,6 +2,7 @@
 #include <random>
 #include <glm/vec3.hpp>
 #include <glm/geometric.hpp>
+#include <glm/gtc/random.hpp>
 
 #include "Constants.h"
 #include "Types.h"
@@ -37,13 +38,16 @@ namespace utility
 	}
 	inline Vector3 random_in_unit_sphere()
 	{
-		auto r1 = random_double();
-		auto r2 = random_double();
-		auto x = cos(2 * Constants::pi * r1) * 2 * sqrt(r2 * (1 - r2));
-		auto y = sin(2 * Constants::pi * r1) * 2 * sqrt(r2 * (1 - r2));
-		auto z = 1 - r2;
-		return Vector3(x, y, z);
-	}
+
+//		auto r1 = random_double();
+//		auto r2 = random_double();
+//		auto x = cos(2 * Constants::pi * r1) * 2 * sqrt(r2 * (1 - r2));
+//		auto y = sin(2 * Constants::pi * r1) * 2 * sqrt(r2 * (1 - r2));
+//		auto z = 1 - r2;
+//		return Vector3(x, y, z);
+
+        return glm::sphericalRand(1.0f);
+    }
 
 	inline Vector3 random_in_hemisphere(const vec3& normal) {
 		Vector3 in_unit_sphere = random_in_unit_sphere();

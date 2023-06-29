@@ -54,9 +54,6 @@ std::optional<intersectionRec> Mesh::intersects(const Ray &ray) const {
         if (t > 0.0001 && t < tNear) {
             tNear = t;
             hit = true;
-            //uNear = u;
-            //vNear = v;
-
             // Interpolate normal
             hit_normal = (1 - u - v) * vertices[face.v1].normal +
                 u * vertices[face.v2].normal +
