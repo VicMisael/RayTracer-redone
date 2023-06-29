@@ -1,4 +1,5 @@
 #include "World.h"
+#include "Camera.h"
 
 static int i = 0;
 
@@ -13,6 +14,8 @@ ColorVec World::shade(const intersectionRec &intersection, const Ray &ray, const
 
 
 void World::render(Canvas *canvas, const int32_t depth, const std::shared_ptr<sampler> &_sampler) {
+    const Camera camera(Vector3(0, 300, 120), Vector3(0, 120, -500), Vector3(0, 1, 0));
+    auto inv = camera.getLookAtInverse();
     const uint32_t height = canvas->getHeight();
     const uint32_t width = canvas->getWidth();
     const float ystep = canvas->step_size_y(viewPlane);
@@ -35,8 +38,12 @@ void World::render(Canvas *canvas, const int32_t depth, const std::shared_ptr<sa
                     const float y_coord = viewPlane->pixelsize * (vp_y - 0.5f * (viewPlane->hsize - 1.0f));
                     const float x_coord = -viewPlane->pixelsize * (vp_x - 0.5f * (viewPlane->wsize - 1.0f));
                     const Vector3 vp_r(x_coord + x_sample_point, y_coord + y_sample_point, zw);
-                    const Point3 origin(0, 0, 0);
-                    const Vector3 direction = origin - vp_r;
+                    Point3 origin(0, 0, 0);
+                    Vector3 direction = origin - vp_r;
+
+                    origin = Vector3(inv * Vector4(origin, 1));
+                    direction = Vector3(inv * Vector4(direction, 0));
+
                     const Ray r(origin, direction);
                     colorVec += trace_ray(r, depth);
                     //canvas->write_pixel(x, y, ColorRGBA(trace_ray(r, 0)));
@@ -44,7 +51,9 @@ void World::render(Canvas *canvas, const int32_t depth, const std::shared_ptr<sa
                     const float y_coord = viewPlane->pixelsize * (vp_y - 0.5f * (viewPlane->hsize - 1.0f));
                     const float x_coord = viewPlane->pixelsize * (vp_x - 0.5f * (viewPlane->wsize - 1.0f));
                     const Vector3 vp_r(x_coord + x_sample_point, -y_coord + y_sample_point, zw);
-                    const Ray r(vp_r, Vector3(0, 0, -1));
+
+
+                    const Ray r(Vector3(inv * Vector4(vp_r, 1)), Vector3(inv * Vector4(Vector3(0, 0, -1), 0)));
                     colorVec += trace_ray(r, depth);
                     //canvas->write_pixel(x, y, ColorRGBA(trace_ray(r, 0)));
                 }

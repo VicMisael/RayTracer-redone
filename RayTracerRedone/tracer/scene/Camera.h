@@ -3,15 +3,27 @@
 //
 
 #pragma once
+
+#include <glm/ext/matrix_transform.hpp>
 #include "../utils/Types.h"
+
 class Camera {
 public:
-    Camera(const Vector3 &up, const Vector3 &lookAt, const Vector3 &eye) : up(up), look_at(lookAt), eye(eye) {}
+    Camera( const Vector3 &eye, const Vector3 &lookAt,const Vector3 &up) : up(up), look_at(lookAt), eye(eye) {
+        lookAtMatrix = glm::lookAt(eye, look_at, up);
+    }
+
+    Camera() = delete;
+
+    [[nodiscard]] Matrix4x4 getLookAtInverse() const {
+        return glm::inverse(lookAtMatrix);
+    }
 
 private:
     Vector3 up;
     Vector3 look_at;
     Vector3 eye;
+    Matrix4x4 lookAtMatrix;
 
 };
 
