@@ -27,19 +27,19 @@ std::shared_ptr<sampler> generateSampler(int numsamples) {
 }
 
 int main() {
-    constexpr bool png = false;
+    constexpr bool png = true;
 
 
-    const uint32_t w = 600;
-    const uint32_t h = 600;
+    const uint32_t w = 1800;
+    const uint32_t h = 1800;
     //TODO: ARea Lights, Camera
 
 
 
 
-    const auto sampler = generateSampler(50);
+    const auto sampler = generateSampler(160);
 
-    auto selectedWorld = worlds::testeFeatures(true);
+    auto selectedWorld = worlds::testeFeatures(false);
     Canvas *drawcanvas;
 
     if (png) {
