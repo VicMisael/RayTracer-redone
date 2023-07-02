@@ -17,7 +17,13 @@ public:
 		world.render(canvas, recursion_depth,sampler);
 	}
 
-	void draw() const {
+    void render(const int32_t recursion_depth,const std::shared_ptr<sampler>& sampler,std::shared_ptr<Camera> camera)
+    {
+        world.render(canvas, recursion_depth,sampler,camera);
+    }
+
+
+    void draw() const {
 		canvas->draw();
 	};
 };

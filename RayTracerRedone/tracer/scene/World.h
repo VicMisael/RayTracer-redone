@@ -9,6 +9,7 @@
 #include "../objects/VirtualObject.h"
 #include "light/VectorialLight.h"
 #include "../objects/BoundingBox/BVH.h"
+#include "Camera.h"
 
 
 class World
@@ -46,6 +47,7 @@ public:
 
 
 	void render(Canvas*, int32_t, const std::shared_ptr<sampler>&);
+    void render(Canvas*, int32_t, const std::shared_ptr<sampler>&,std::shared_ptr<Camera> camera);
 
     [[nodiscard]] std::optional<intersectionRec> hit(const Ray &ray) const;
 

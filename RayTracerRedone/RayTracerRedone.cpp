@@ -27,19 +27,19 @@ std::shared_ptr<sampler> generateSampler(int numsamples) {
 }
 
 int main() {
-    constexpr bool png = true;
+    constexpr bool png = false;
 
 
-    const uint32_t w = 1800;
-    const uint32_t h = 1800;
-    //TODO: ARea Lights, Camera
+    const uint32_t w = 800;
+    const uint32_t h = 800;
+    //TODO: ARea Lights, Camera(Doing)
 
 
 
 
-    const auto sampler = generateSampler(160);
+    const auto sampler = generateSampler(2);
 
-    auto selectedWorld = worlds::testeFeatures(false);
+    auto selectedWorld = worlds::generateWorld1(false);
     Canvas *drawcanvas;
 
     if (png) {
@@ -50,13 +50,13 @@ int main() {
     constexpr int32_t recursion_depth_limit = 10;
 
     Scene scene(selectedWorld, drawcanvas);
-
+    std::shared_ptr<Camera> camera=std::make_shared<Camera>(Vector3(-300, 300, 0), Vector3(300, 120, -500), Vector3(0, 1, 0));
     if (!png) {
         auto *canvas = dynamic_cast<sdl2canvas *>(drawcanvas);
         auto draw = [&] {
             while (!canvas->should_stop()) {
                 auto t1 = std::chrono::high_resolution_clock::now();
-                scene.render(recursion_depth_limit, sampler);
+                scene.render(recursion_depth_limit, sampler,camera);
 
                 auto t2 = std::chrono::high_resolution_clock::now();
                 std::chrono::duration<double, std::milli> ms_double = t2 - t1;
