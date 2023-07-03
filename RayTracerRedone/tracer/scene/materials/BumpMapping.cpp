@@ -20,7 +20,7 @@ BumpMapping::shade(const World &world, const Ray &ray, const intersectionRec &in
     }
     Vector3 t = normalize(cross(normal, refVector));
     Vector3 b = normalize(cross(normal, t));
-    normal = mat3(t, b, normal) * bumpMapping;
+    normal = Matrix3x3(t, b, normal) * bumpMapping;
     auto intersection = intersectionRec{intersectionIn.tmin, intersectionIn.hit_point, normal, intersectionIn.material,
                                         intersectionIn.u, intersectionIn.v};
     return this->material->shade(world, ray, intersection, depth);

@@ -16,7 +16,7 @@ ColorVec GlossySpecular::f(const intersectionRec& intersection, const Vector3& w
 	float r_dot_two = dot(normalize(r), normalize(wo));
 	if (r_dot_two > 0.0){
 		
-		L = color_ * ks_ * pow(r_dot_two, exp_);
+		L = color_ * ks_ * powf(r_dot_two, exp_);
 	}
 	return L;
 }

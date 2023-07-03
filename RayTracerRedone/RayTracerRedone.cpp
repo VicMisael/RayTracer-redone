@@ -50,13 +50,13 @@ int main() {
     constexpr int32_t recursion_depth_limit = 10;
 
     Scene scene(selectedWorld, drawcanvas);
-    std::shared_ptr<Camera> camera=std::make_shared<Camera>(Vector3(-300, 300, 0), Vector3(300, 120, -500), Vector3(0, 1, 0));
+    std::shared_ptr<Camera> camera=std::make_shared<Camera>(Vector3(-0, 300, 0), Vector3(2300, 120, -500), Vector3(0, 1, 0));
     if (!png) {
         auto *canvas = dynamic_cast<sdl2canvas *>(drawcanvas);
         auto draw = [&] {
             while (!canvas->should_stop()) {
                 auto t1 = std::chrono::high_resolution_clock::now();
-                scene.render(recursion_depth_limit, sampler,camera);
+                scene.render(recursion_depth_limit, sampler);
 
                 auto t2 = std::chrono::high_resolution_clock::now();
                 std::chrono::duration<double, std::milli> ms_double = t2 - t1;

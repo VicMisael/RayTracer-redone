@@ -2,7 +2,7 @@
 #include "ColorVec.h"
 #include <cstdint>
 #include "Types.h"
-typedef vec<4, uint8_t, defaultp> bytevec4;
+typedef glm::vec<4, uint8_t, glm::defaultp> bytevec4;
 class ColorRGBA:public bytevec4
 {
 public:

@@ -1,18 +1,17 @@
 #include "PointLight.h"
 #include "../Ray.h"
 #include "../World.h"
+#include "../../utils/utility.h"
 
 #include <glm/geometric.hpp>
 
-inline float distanceAtenuation(float vectorLength) {
-    return glm::inversesqrt(vectorLength);
-}
 
 float length(const Vector3 a) {
     return glm::length(a);
 }
 
 ColorVec PointLight::intensityAtPoint(const Point3 p) const {
+    using namespace utility;
     return inversesqrt(length(getVector(p))) * intensity * color;
 }
 

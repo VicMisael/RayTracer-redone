@@ -2,17 +2,16 @@
 
 #include <glm/vec4.hpp>
 
-using namespace glm;
 
-class ColorVec : public vec4 {
+class ColorVec : public glm::vec4 {
 public:
-    constexpr ColorVec() : vec4(0, 0, 0, 1) {};
+    constexpr ColorVec() : glm::vec4(0, 0, 0, 1) {};
 
-    constexpr ColorVec(vec4 vec) : vec4(vec) {};
+    constexpr ColorVec(glm::vec4 vec) : glm::vec4(vec) {};
 
-    constexpr ColorVec(float r, float g, float b) : vec4(r, g, b, 1.0f) {};
+    constexpr ColorVec(float r, float g, float b) : glm::vec4(r, g, b, 1.0f) {};
 
-    constexpr ColorVec(float r, float g, float b, float a) : vec4(r, g, b, a) {};
+    constexpr ColorVec(float r, float g, float b, float a) : glm::vec4(r, g, b, a) {};
 
     void clamp_to_x_if_bigger_than(float x, float val) {
         this->r = this->r > x ? val : this->r;

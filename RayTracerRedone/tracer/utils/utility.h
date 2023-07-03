@@ -7,6 +7,8 @@
 #include "Constants.h"
 #include "Types.h"
 
+#include <smmintrin.h>
+
 namespace utility
 {
 	//static std::mt19937 generator;
@@ -24,6 +26,17 @@ namespace utility
 		// Returns a random real in [0,1).
 		return rand() / (RAND_MAX + 1.0);
 	}
+
+    [[maybe_unused]] inline float inversesqrt(float x){
+        return glm::inversesqrt(x);
+    }
+
+    inline float dot_product_intrinsic(Vector3 a,Vector3 b){
+//        __m128 lhs=_mm_set_ps(a.x,a.y,a.z,0);
+//        __m128 rhs=_mm_set_ps(b.x,b.y,b.z,0);
+//        const auto result= _mm_dp_ps(lhs,rhs,0xFF);
+//        return _mm_cvtss_f32(result);
+    }
 
 	inline Vector3 random(float min,float max)
 	{
@@ -49,7 +62,7 @@ namespace utility
         return glm::sphericalRand(1.0f);
     }
 
-	inline Vector3 random_in_hemisphere(const vec3& normal) {
+	inline Vector3 random_in_hemisphere(const Vector3 normal) {
 		Vector3 in_unit_sphere = random_in_unit_sphere();
 		if (dot(in_unit_sphere, normal) > 0.0) 
 			return in_unit_sphere;
