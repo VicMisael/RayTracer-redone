@@ -31,12 +31,12 @@ namespace utility
         return glm::inversesqrt(x);
     }
 
-    inline float dot_product_intrinsic(Vector3 a,Vector3 b){
-//        __m128 lhs=_mm_set_ps(a.x,a.y,a.z,0);
-//        __m128 rhs=_mm_set_ps(b.x,b.y,b.z,0);
-//        const auto result= _mm_dp_ps(lhs,rhs,0xFF);
-//        return _mm_cvtss_f32(result);
-    }
+	inline float dot_product_intrinsic(Vector3 a, Vector3 b) {
+		__m128 lhs = _mm_set_ps(a.x, a.y, a.z, 0);
+		__m128 rhs = _mm_set_ps(b.x, b.y, b.z, 0);
+		const auto result = _mm_dp_ps(lhs, rhs, 0xFF);
+		return _mm_cvtss_f32(result);
+	};
 
 	inline Vector3 random(float min,float max)
 	{
