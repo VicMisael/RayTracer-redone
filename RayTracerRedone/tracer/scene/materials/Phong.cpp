@@ -11,7 +11,7 @@ ColorVec Phong::shade(const World& world, const Ray& ray, const intersectionRec&
 	ColorVec L = lambertian_.rho(wo) * al.intensityAtPoint(intersection.hit_point) * al.getColor();
 	for (const auto& light : world.lights())
 	{
-		const auto wi = light->getNormalizedDirection(intersection.hit_point);
+		const auto wi = light->getVectorNormalized(intersection.hit_point);
 		const float ndotwi = glm::dot(intersection.normal, wi);
 		if (ndotwi > 0)
 		{

@@ -162,6 +162,7 @@
     <ClCompile Include="tracer\scene\BxDF\FresnelTransmitter.cpp" />
     <ClCompile Include="tracer\scene\BxDF\PerfectTransmitter.cpp" />
     <ClCompile Include="tracer\scene\Camera.cpp" />
+    <ClCompile Include="tracer\scene\light\AreaLight.cpp" />
     <ClCompile Include="tracer\scene\materials\BumpMapping.cpp" />
     <ClCompile Include="tracer\scene\materials\Dielectric.cpp" />
     <ClCompile Include="tracer\scene\materials\DiffuseLight.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="tracer\scene\BxDF\FresnelTransmitter.h" />
     <ClInclude Include="tracer\scene\BxDF\PerfectTransmitter.h" />
     <ClInclude Include="tracer\scene\Camera.h" />
+    <ClInclude Include="tracer\scene\light\AreaLight.h" />
     <ClInclude Include="tracer\scene\materials\BumpMapping.h" />
     <ClInclude Include="tracer\scene\materials\Dielectric.h" />
     <ClInclude Include="tracer\scene\materials\DiffuseLight.h" />

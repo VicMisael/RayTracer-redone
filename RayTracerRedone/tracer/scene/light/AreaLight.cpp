@@ -8,7 +8,7 @@ Vector3 AreaLight::getVector(const Point3 point3) const {
     return Vector3();
 }
 
-Vector3 AreaLight::getNormalizedDirection(const Point3 point3) const {
+Vector3 AreaLight::getVectorNormalized(const Point3 point3) const {
     return Vector3();
 }
 

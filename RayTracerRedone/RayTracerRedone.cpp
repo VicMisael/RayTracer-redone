@@ -23,21 +23,21 @@
 #include "tracer/utils/utility.h"
 
 std::shared_ptr<sampler> generateSampler(int numsamples) {
-    return std::make_shared<horizontal_point_sampler>(numsamples);
+    return std::make_shared<mt19937_point_sampler>(numsamples);
 }
 
 int main() {
-    constexpr bool png = false;
+    constexpr bool png = true;
 
 
     const uint32_t w = 800;
     const uint32_t h = 800;
-    //TODO: ARea Lights, Camera(Doing)
+    //TODO: ARea Lights
 
 
 
 
-    const auto sampler = generateSampler(2);
+    const auto sampler = generateSampler(120);
 
     auto selectedWorld = worlds::generateWorld1(false);
     Canvas *drawcanvas;
@@ -50,7 +50,7 @@ int main() {
     constexpr int32_t recursion_depth_limit = 10;
 
     Scene scene(selectedWorld, drawcanvas);
-    std::shared_ptr<Camera> camera=std::make_shared<Camera>(Vector3(-0, 300, 0), Vector3(2300, 120, -500), Vector3(0, 1, 0));
+   // std::shared_ptr<Camera> camera=std::make_shared<Camera>(Vector3(-0, 300, 1500), Vector3(0, 120, -3000), Vector3(0, 1, 0));
     if (!png) {
         auto *canvas = dynamic_cast<sdl2canvas *>(drawcanvas);
         auto draw = [&] {

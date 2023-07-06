@@ -10,7 +10,7 @@ class AreaLight: public VectorialLight {
 public:
     Vector3 getVector(const Point3 point3) const override;
 
-    Vector3 getNormalizedDirection(const Point3 point3) const override;
+    Vector3 getVectorNormalized(const Point3 point3) const override;
 
     ColorVec intensityAtPoint(const Point3 point3) const override;
 

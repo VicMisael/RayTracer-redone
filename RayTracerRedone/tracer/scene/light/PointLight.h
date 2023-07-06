@@ -11,7 +11,7 @@ public:
 
 	ColorVec intensityAtPoint( const Point3) const override;
 	Vector3 getVector(const Point3) const override;
-	Vector3 getNormalizedDirection(const Point3) const override;
+	Vector3 getVectorNormalized(const Point3) const override;
 	bool shadow_hit(const World& world, const Ray& outgoing) const override;
 };
 

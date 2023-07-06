@@ -9,7 +9,7 @@ Vector3 DirectionalLight::getVector(const Point3 p) const {
     return direction_;
 }
 
-Vector3 DirectionalLight::getNormalizedDirection(const Point3 p) const {
+Vector3 DirectionalLight::getVectorNormalized(const Point3 p) const {
     return glm::normalize(getVector(p));
 }
 
