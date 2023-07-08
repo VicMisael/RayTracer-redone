@@ -4,7 +4,6 @@
 #include <iostream>
 
 #define SDL_MAIN_HANDLED
-//#define GLM_FORCE_MESSAGES
 
 #include <thread>
 #include "tracer/scene/Scene.h"
@@ -20,14 +19,12 @@
 #include "tracer/utils/sampler/vertical_point_sampler.h"
 #include "tracer/utils/sampler/horizontal_point_sampler.h"
 
-#include "tracer/utils/utility.h"
-
 std::shared_ptr<sampler> generateSampler(int numsamples) {
     return std::make_shared<mt19937_point_sampler>(numsamples);
 }
 
 int main() {
-    constexpr bool png = true;
+    constexpr bool png = false;
 
 
     const uint32_t w = 800;
@@ -37,7 +34,7 @@ int main() {
 
 
 
-    const auto sampler = generateSampler(120);
+    const auto sampler = generateSampler(10);
 
     auto selectedWorld = worlds::generateWorld1(false);
     Canvas *drawcanvas;
