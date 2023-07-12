@@ -71,6 +71,8 @@ private:
 
         [[nodiscard]] std::shared_ptr<AABB> bounding_box() const override  ;
 
+        float getArea() const override;
+
     };
 
 

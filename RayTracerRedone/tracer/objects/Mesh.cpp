@@ -221,16 +221,8 @@ void Mesh::GenerateBvh() {
 }
 
 
-float triangleArea(const glm::vec3 A, const glm::vec3 B, const glm::vec3 C) {
-    // Create vectors AB and AC
-    const Vector3 AB = B - A;
-    const Vector3 AC = C - A;
-
-    // Calculate the cross product
-    Vector3 crossProduct = glm::cross(AB, AC);
-
-    // Compute the area using the magnitude (length) of the cross product
-    return 0.5f * glm::length(crossProduct);
+float triangleArea(const Vector3 &A, const Vector3 &B, const Vector3 &C) {
+   return 0.5f * glm::length(glm::cross(B - A, C - A));
 }
 
 float Mesh::getArea() const {
@@ -338,4 +330,11 @@ std::shared_ptr<AABB> Mesh::Triangle::bounding_box() const {
     return std::make_shared<AABB>(minPoint, maxPoint);
         */
     return aabb;
+}
+
+float Mesh::Triangle::getArea() const {
+    glm::vec3 v0 = vertices[face.v1].position;
+    glm::vec3 v1 = vertices[face.v2].position;
+    glm::vec3 v2 = vertices[face.v3].position;
+    return triangleArea(v0, v1, v2);
 }

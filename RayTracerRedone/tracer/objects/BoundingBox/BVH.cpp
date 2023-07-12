@@ -131,4 +131,8 @@ std::optional<intersectionRec> BVH::intersects(const Ray &ray, float t_min) cons
 
 }
 
+float BVH::getArea() const {
+    return 0;
+}
+
 

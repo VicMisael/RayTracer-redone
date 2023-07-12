@@ -36,7 +36,7 @@ int main() {
 
     const auto sampler = generateSampler(10);
 
-    auto selectedWorld = worlds::generateWorld1(false);
+    auto selectedWorld = worlds::meshTest();
     Canvas *drawcanvas;
 
     if (png) {

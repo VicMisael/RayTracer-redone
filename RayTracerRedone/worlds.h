@@ -173,7 +173,10 @@ std::vector<std::shared_ptr<VectorialLight>> generate_moon_earth_scenario_lights
     return lights;
 }
 
+
 namespace worlds {
+
+
     World generateWorld1(bool projection) {
         //True=Perspective False=parallel
 
@@ -181,9 +184,9 @@ namespace worlds {
         const auto view_plane = !projection ? std::make_shared<ViewPlane>(2000, 2000, 50, 01.0f)
                                             : std::make_shared<ViewPlane>(160, 160, 70, 1);
 
-
+        const auto objects = generateObjects();
         AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
-        return {view_plane, generateObjects(), generate_vectorial_lights(),
+        return {view_plane, objects, generate_vectorial_lights(),
                 ab, {1, 1, 1}, projection};
     }
 
