@@ -7,7 +7,6 @@
 #include "Constants.h"
 #include "Types.h"
 
-#include <smmintrin.h>
 
 namespace utility
 {
