@@ -221,10 +221,10 @@ void Mesh::GenerateBvh() {
 }
 
 
-float triangleArea(glm::vec3 A, glm::vec3 B, glm::vec3 C) {
+float triangleArea(const glm::vec3 A, const glm::vec3 B, const glm::vec3 C) {
     // Create vectors AB and AC
-    Vector3 AB = B - A;
-    Vector3 AC = C - A;
+    const Vector3 AB = B - A;
+    const Vector3 AC = C - A;
 
     // Calculate the cross product
     Vector3 crossProduct = glm::cross(AB, AC);
