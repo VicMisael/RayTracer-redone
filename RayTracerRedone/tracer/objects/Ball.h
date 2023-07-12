@@ -27,6 +27,8 @@ public:
 
     void transform(Matrix4x4 m) override;
 
+    float getArea() const override;
+
 protected:
     void calculateBoundingBox();
 

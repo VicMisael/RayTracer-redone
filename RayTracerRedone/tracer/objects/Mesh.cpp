@@ -14,14 +14,14 @@ std::optional<intersectionRec> Mesh::intersects(const Ray &ray) const {
         return std::nullopt;
     }
 
-	//return bvh->intersects(ray);
+    //return bvh->intersects(ray);
 
     float tNear = std::numeric_limits<float>::max();
     bool hit = false;
     glm::vec3 hit_normal;
     //float uNear, vNear;
     float uTexture, vTexture;
-    for (const Face& face : faces) {
+    for (const Face &face: faces) {
         glm::vec3 v0 = vertices[face.v1].position;
         glm::vec3 v1 = vertices[face.v2].position;
         glm::vec3 v2 = vertices[face.v3].position;
@@ -56,16 +56,16 @@ std::optional<intersectionRec> Mesh::intersects(const Ray &ray) const {
             hit = true;
             // Interpolate normal
             hit_normal = (1 - u - v) * vertices[face.v1].normal +
-                u * vertices[face.v2].normal +
-                v * vertices[face.v3].normal;
+                         u * vertices[face.v2].normal +
+                         v * vertices[face.v3].normal;
 
             // Interpolate texture coordinates
             uTexture = (1 - u - v) * vertices[face.v1].tex_coord.x +
-                u * vertices[face.v2].tex_coord.x +
-                v * vertices[face.v3].tex_coord.x;
+                       u * vertices[face.v2].tex_coord.x +
+                       v * vertices[face.v3].tex_coord.x;
             vTexture = (1 - u - v) * vertices[face.v1].tex_coord.y +
-                u * vertices[face.v2].tex_coord.y +
-                v * vertices[face.v3].tex_coord.y;
+                       u * vertices[face.v2].tex_coord.y +
+                       v * vertices[face.v3].tex_coord.y;
         }
     }
 
@@ -79,14 +79,13 @@ std::optional<intersectionRec> Mesh::intersects(const Ray &ray) const {
                 vTexture
         };
         return result;
-    }
-    else {
+    } else {
         return std::nullopt;
     }
 
 }
 
-std::shared_ptr<AABB>Mesh::bounding_box()  const {
+std::shared_ptr<AABB> Mesh::bounding_box() const {
     return aabb;
 }
 
@@ -108,7 +107,7 @@ Mesh::Mesh(const std::string filename, const std::shared_ptr<Material> &material
 
 
     processNode(scene->mRootNode, scene);
-   // processScene(scene);
+    // processScene(scene);
     this->calculateBoundingBox();
     GenerateBvh();
 }
@@ -213,7 +212,7 @@ void Mesh::processScene(const aiScene *pScene) {
 
 void Mesh::GenerateBvh() {
 
-    std::vector<std::shared_ptr<VirtualObject>> triangleList={};
+    std::vector<std::shared_ptr<VirtualObject>> triangleList = {};
     for (auto &item: faces) {
         auto triangle = std::make_shared<Triangle>(item, vertices, material.value());
         triangleList.push_back(triangle);
@@ -222,17 +221,40 @@ void Mesh::GenerateBvh() {
 }
 
 
-void Mesh::Triangle::generateBoundingBox()
-{
+float triangleArea(glm::vec3 A, glm::vec3 B, glm::vec3 C) {
+    // Create vectors AB and AC
+    Vector3 AB = B - A;
+    Vector3 AC = C - A;
+
+    // Calculate the cross product
+    Vector3 crossProduct = glm::cross(AB, AC);
+
+    // Compute the area using the magnitude (length) of the cross product
+    return 0.5f * glm::length(crossProduct);
+}
+
+float Mesh::getArea() const {
+    float total = 0;
+    for (const Face &face: faces) {
+        glm::vec3 v0 = vertices[face.v1].position;
+        glm::vec3 v1 = vertices[face.v2].position;
+        glm::vec3 v2 = vertices[face.v3].position;
+        total += triangleArea(v0, v1, v2);
+    }
+    return total;
+}
+
+
+void Mesh::Triangle::generateBoundingBox() {
     glm::vec3 minPoint = glm::vec3(FLT_MAX, FLT_MAX, FLT_MAX);
     glm::vec3 maxPoint = glm::vec3(FLT_MIN, FLT_MIN, FLT_MIN);
 
-    for (const auto& vertex : { vertices[face.v1], vertices[face.v2], vertices[face.v3] }) {
+    for (const auto &vertex: {vertices[face.v1], vertices[face.v2], vertices[face.v3]}) {
         glm::vec3 pos = vertex.position;
         minPoint = glm::min(minPoint, pos);
         maxPoint = glm::max(maxPoint, pos);
     }
-    aabb= std::make_shared<AABB>(minPoint, maxPoint);
+    aabb = std::make_shared<AABB>(minPoint, maxPoint);
 }
 
 std::optional<intersectionRec> Mesh::Triangle::intersects(const Ray &ray) const {
@@ -316,4 +338,4 @@ std::shared_ptr<AABB> Mesh::Triangle::bounding_box() const {
     return std::make_shared<AABB>(minPoint, maxPoint);
         */
     return aabb;
- }
+}

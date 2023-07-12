@@ -18,7 +18,9 @@ public:
         return false;
     }
 
-    void transform(Matrix4x4 m) override;;
+    void transform(Matrix4x4 m) override;
+
+    float getArea() const override ;
 
 
 };

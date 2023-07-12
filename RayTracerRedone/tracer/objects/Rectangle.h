@@ -13,7 +13,7 @@ class Rectangle : public VirtualObject {
     Vector3 b = Vector3(2.0f, 0.0f, 0.0f);   // side
 
     Vector3 normal = Vector3(0.0f, 1.0f, 0.0f);
-    float area = 4.0f;
+    float area ;
 public:
     Rectangle(const Point3 &_p0, const Vector3 &_a, const Vector3 &_b, std::shared_ptr<Material> _material)
             : VirtualObject(_material), p0(_p0), a(_a), b(_b),
@@ -49,7 +49,9 @@ public:
 
     void transform(Matrix4x4 m) override;
 
-    std::shared_ptr<AABB> bounding_box() const override;;
+    std::shared_ptr<AABB> bounding_box() const override;
+
+    float getArea() const override;;
 };
 
 

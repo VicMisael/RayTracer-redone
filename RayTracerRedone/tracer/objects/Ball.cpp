@@ -14,11 +14,12 @@ std::tuple<float, float> get_sphere_uv(const Point3 p) {
     //     <0 0 1> yields <0.25 0.50>       < 0  0 -1> yields <0.75 0.50>
 
     using namespace Constants;
+    const auto f_pi=static_cast<float>(pi);
     const float theta = acosf(-p.y);
-    const float phi = atan2f(-p.z, p.x) + Constants::pi;
+    const float phi = atan2f(-p.z, p.x) + f_pi;
 
-    const float u = phi / (2 * Constants::pi);
-    const float v = theta / Constants::pi;
+    const float u = phi / (2 * pi);
+    const float v = theta / pi;
     return {u, v};
 }
 
@@ -60,4 +61,8 @@ void Ball::calculateBoundingBox() {
     this->aabb = std::make_shared<AABB>(AABB(
             center - Vector3(radius, radius, radius),
             center + Vector3(radius, radius, radius)));
+}
+
+float Ball::getArea() const {
+    return 4.0f*static_cast<float>(Constants::pi)*radius*radius;
 }

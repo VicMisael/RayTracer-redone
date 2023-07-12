@@ -33,11 +33,11 @@ std::optional<intersectionRec> Rectangle::intersects(const Ray &ray) const {
     const auto aNormalized = normalize(a);
     const auto bNormalized = normalize(b);
 
-    const float u = fabs(dot(d, aNormalized))/length(a);
-    const float v = fabs(dot(d, bNormalized))/length(b);
-    
+    const float u = fabs(dot(d, aNormalized)) / length(a);
+    const float v = fabs(dot(d, bNormalized)) / length(b);
 
-     return intersectionRec{ t, p, normalize(normal), material.value(),u ,v };
+
+    return intersectionRec{t, p, normalize(normal), material.value(), u, v};
 }
 
 void Rectangle::transform(Matrix4x4 m) {
@@ -49,4 +49,8 @@ std::shared_ptr<AABB> Rectangle::bounding_box() const {
     const auto min = glm::min(p0, p0 + a + b - Vector3(delta));
     const auto max = glm::max(p0, p0 + a + b + Vector3(delta));
     return std::make_shared<AABB>(AABB(min, max));
+}
+
+float Rectangle::getArea() const {
+    return length(a) * length(b);
 }

@@ -11,7 +11,8 @@
 #include <glm/gtx/rotate_vector.hpp>
 
 
-std::tuple<float,float> getUV(const Vector3& point, const Vector3& base, const Vector3& axis, float height, float radius) {
+std::tuple<float, float>
+getUV(const Vector3 &point, const Vector3 &base, const Vector3 &axis, float height, float radius) {
     // Normalize axis
     Vector3 axisNormalized = glm::normalize(axis);
 
@@ -25,12 +26,9 @@ std::tuple<float,float> getUV(const Vector3& point, const Vector3& base, const V
     Vector3 radialVec = relPoint - v * axisNormalized;
     Vector3 refDir;
     // Compute 'u' coordinate as the angle between radialVec and a reference direction (e.g., (1,0,0))
-    if(glm::length2(axisNormalized - Vector3(0,1,0)) < glm::epsilon<float>())
-    {
+    if (glm::length2(axisNormalized - Vector3(0, 1, 0)) < glm::epsilon<float>()) {
         refDir = Vector3(1, 0, 0);
-    }
-    else
-    {
+    } else {
         refDir = Vector3(0, 1, 0);
     }
     float dotProduct = dot(radialVec, refDir);
@@ -39,8 +37,9 @@ std::tuple<float,float> getUV(const Vector3& point, const Vector3& base, const V
 
     // Normalize 'v' to [0,1] by dividing by the height of the cylinder
     v /= height;
-    return { u,v };
+    return {u, v};
 }
+
 std::optional<intersectionRec> OpenCylinder::intersects(const Ray &ray) const {
 
     float t_min = INFINITY;
@@ -53,7 +52,7 @@ std::optional<intersectionRec> OpenCylinder::intersects(const Ray &ray) const {
     const float b = dot(v, w);
     const float c = dot(v, v) - radius_ * radius_;
     const float delta = b * b - (a * c);
-    if(delta<0){
+    if (delta < 0) {
         return {};
     }
     const auto intersection1 = (-1 * b + sqrtf(delta)) / a;
@@ -64,22 +63,20 @@ std::optional<intersectionRec> OpenCylinder::intersects(const Ray &ray) const {
     float hPo = dot(base_ - p0r, axis_);
     float hPo1 = dot(base_ - p1r, axis_);
     int intersecs = 0;
-    if ((0 <= hPo && hPo <= height_))
-    {
+    if ((0 <= hPo && hPo <= height_)) {
         intersecs++;
         t_min = std::min(intersection1, t_min);
     }
-    if ((0 <= hPo1 && hPo1 <= height_))
-    {
+    if ((0 <= hPo1 && hPo1 <= height_)) {
         intersecs++;
         t_min = std::min(intersection2, t_min);
     }
 
-    if(intersecs>0 && std::fabs(t_min)>glm::epsilon<float>()){
-        const auto intersectionPoint= ray.point_at(t_min);
+    if (intersecs > 0 && std::fabs(t_min) > glm::epsilon<float>()) {
+        const auto intersectionPoint = ray.point_at(t_min);
         const auto W = intersectionPoint - base_;
-        const auto unnormalizedNormal = (W-axis_*(dot(W,axis_)));
-        const auto  [ u, v ] = getUV(intersectionPoint,base_,axis_,height_,radius_);
+        const auto unnormalizedNormal = (W - axis_ * (dot(W, axis_)));
+        const auto [u, v] = getUV(intersectionPoint, base_, axis_, height_, radius_);
         return intersectionRec{t_min, intersectionPoint, normalize(unnormalizedNormal), material.value(), u, v};
     };
     return {};
@@ -112,7 +109,12 @@ std::optional<intersectionRec> OpenCylinder::intersects(const Ray &ray) const {
 //}
 
 void OpenCylinder::transform(Matrix4x4 m) {
-    base_=Vector3(m*Vector4(base_,1));
-    axis_=Vector3(m*Vector4(axis_,0));
+    base_ = Vector3(m * Vector4(base_, 1));
+    axis_ = Vector3(m * Vector4(axis_, 0));
     VirtualObject::transform(m);
+}
+
+float OpenCylinder::getArea() const{
+    constexpr auto fpi=static_cast<float>(Constants::pi);
+    return 2 * fpi * radius_ * height_;
 }

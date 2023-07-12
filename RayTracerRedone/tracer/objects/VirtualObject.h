@@ -30,6 +30,8 @@ public:
 
     virtual std::shared_ptr<AABB> bounding_box() const;
 
+    virtual float getArea() const;
+
     // the case where there is no bounding box is the edge case
     [[nodiscard]] virtual bool hasBoundingBox() const {
         return true;

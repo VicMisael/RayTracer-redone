@@ -14,7 +14,7 @@ glm::vec3 computeV(glm::vec3 normal, glm::vec3 u) {
     return glm::cross(normal, u);
 }
 
-std::tuple<float,float> computeUV(glm::vec3 pointInPlane, glm::vec3 otherPoint, glm::vec3 normal) {
+std::tuple<float, float> computeUV(glm::vec3 pointInPlane, glm::vec3 otherPoint, glm::vec3 normal) {
     glm::vec3 u = computeU(normal);
     glm::vec3 v = computeV(normal, u);
 
@@ -23,23 +23,27 @@ std::tuple<float,float> computeUV(glm::vec3 pointInPlane, glm::vec3 otherPoint, 
     float uCoordinate = glm::dot(delta, u);
     float vCoordinate = glm::dot(delta, v);
 
-    return { uCoordinate/100, vCoordinate/100 };
+    return {uCoordinate / 100, vCoordinate / 100};
 }
-std::optional<intersectionRec> Plane::intersects(const Ray &ray) const
-{
-	using namespace glm;
-	const float dot_dir_normal = dot(ray.direction, normal);
-	const float t = dot(point - ray.origin, normal) / dot_dir_normal;
-	if (t > Constants::EPSILON+0.001f) {
-        const auto intersectionPoint=ray.point_at(t);
-        const auto [u,v] = computeUV(point, intersectionPoint,normal);
-		return intersectionRec{t, ray.point_at(t), normal, material.value(), u, v};
-	}
-	
-	return {};
+
+std::optional<intersectionRec> Plane::intersects(const Ray &ray) const {
+    using namespace glm;
+    const float dot_dir_normal = dot(ray.direction, normal);
+    const float t = dot(point - ray.origin, normal) / dot_dir_normal;
+    if (t > Constants::EPSILON + 0.001f) {
+        const auto intersectionPoint = ray.point_at(t);
+        const auto [u, v] = computeUV(point, intersectionPoint, normal);
+        return intersectionRec{t, ray.point_at(t), normal, material.value(), u, v};
+    }
+
+    return {};
 }
 
 void Plane::transform(Matrix4x4 m) {
-        point=Vector3(m*Vector4(point,1));
-        normal=Vector3(m*Vector4(normal,0));
+    point = Vector3(m * Vector4(point, 1));
+    normal = Vector3(m * Vector4(normal, 0));
+}
+
+float Plane::getArea() const{
+    return INFINITY;
 }

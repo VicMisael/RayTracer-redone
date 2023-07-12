@@ -22,7 +22,7 @@ std::tuple<float, float> Disk::getUVMapping(const Point3 point) const {
     const float u = angle / (2.0f * glm::pi<float>());
 
     // Calculate the V coordinate (normalized radius)
-    const float v = radius/sqrtf(r_squared);
+    const float v = radius / sqrtf(r_squared);
 
     return {u, v};
     // Calculate the vector from the center of the disk to the point
@@ -57,5 +57,10 @@ std::shared_ptr<AABB> Disk::bounding_box() const {
 
 bool Disk::hasBoundingBox() const {
     return false;
+}
+
+float Disk::getArea() const {
+    constexpr auto f_pi = static_cast<float>(Constants::pi);
+    return 2 * f_pi * this->r_squared;
 }
 

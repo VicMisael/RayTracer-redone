@@ -26,5 +26,7 @@ public:
 
 
     std::tuple<float, float> getUVMapping(const Point3 point) const;
+
+    float getArea() const override;
 };
 
