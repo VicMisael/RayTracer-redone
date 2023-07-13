@@ -133,7 +133,24 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/scene/BxDF/FresnelReflector.cpp
         RayTracerRedone/imageoutputcanvas/imagecanvas.cpp
         RayTracerRedone/imageoutputcanvas/imagecanvas.h
-        RayTracerRedone/imageoutputcanvas/stb/image_canvas_stb_image.h RayTracerRedone/imageoutputcanvas/stb/stb_image_write.h RayTracerRedone/tracer/objects/Disk.cpp RayTracerRedone/tracer/objects/Disk.h RayTracerRedone/tracer/scene/materials/BumpMapping.cpp RayTracerRedone/tracer/scene/materials/BumpMapping.h RayTracerRedone/tracer/scene/materials/Dielectric.cpp RayTracerRedone/tracer/scene/materials/Dielectric.h RayTracerRedone/tracer/utils/ColorVec.cpp RayTracerRedone/tracer/scene/materials/DiffuseLight.cpp RayTracerRedone/tracer/scene/materials/DiffuseLight.h RayTracerRedone/tracer/objects/Rectangle.cpp RayTracerRedone/tracer/objects/Rectangle.h RayTracerRedone/tracer/objects/Box.cpp RayTracerRedone/tracer/objects/Box.h RayTracerRedone/tracer/scene/light/AreaLight.cpp RayTracerRedone/tracer/scene/light/AreaLight.h RayTracerRedone/tracer/utils/OrthonormalBase.cpp RayTracerRedone/tracer/utils/OrthonormalBase.h)
+        RayTracerRedone/imageoutputcanvas/stb/image_canvas_stb_image.h
+        RayTracerRedone/imageoutputcanvas/stb/stb_image_write.h
+        RayTracerRedone/tracer/objects/Disk.cpp RayTracerRedone/tracer/objects/Disk.h
+        RayTracerRedone/tracer/scene/materials/BumpMapping.cpp
+        RayTracerRedone/tracer/scene/materials/BumpMapping.h
+        RayTracerRedone/tracer/scene/materials/Dielectric.cpp
+        RayTracerRedone/tracer/scene/materials/Dielectric.h RayTracerRedone/tracer/utils/ColorVec.cpp
+        RayTracerRedone/tracer/scene/materials/DiffuseLight.cpp RayTracerRedone/tracer/scene/materials/DiffuseLight.h
+        RayTracerRedone/tracer/objects/Rectangle.cpp
+        RayTracerRedone/tracer/objects/Rectangle.h
+        RayTracerRedone/tracer/objects/Box.cpp
+        RayTracerRedone/tracer/objects/Box.h
+        RayTracerRedone/tracer/scene/light/AreaLight.cpp
+        RayTracerRedone/tracer/scene/light/AreaLight.h
+        RayTracerRedone/tracer/utils/OrthonormalBase.cpp
+        RayTracerRedone/tracer/utils/OrthonormalBase.h
+        RayTracerRedone/tracer/scene/materials/NullMaterial.cpp
+        RayTracerRedone/tracer/scene/materials/NullMaterial.h)
 
 
 target_link_libraries(RayTracer_redone glm::glm)

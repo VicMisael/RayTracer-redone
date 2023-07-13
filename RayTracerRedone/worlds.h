@@ -36,6 +36,7 @@
 #include "tracer/scene/materials/BumpMapping.h"
 #include "tracer/scene/materials/Diffuse.h"
 #include "tracer/scene/materials/DiffuseLight.h"
+#include "tracer/scene/materials/NullMaterial.h"
 
 #include "tracer/scene/textures/CheckerTexture.h"
 #include "tracer/scene/textures/PointCheckerTexture.h"
@@ -127,7 +128,7 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     objects.push_back(std::make_shared<Ball>(Point3(-450, 0, -800), 150, teste));
 
     const auto teste3 = std::make_shared<Dielectric>(Constants::YELLOW, Constants::BLACK, 1.24, 1.61, 1, 2);
-    objects.push_back(std::make_shared<Ball>(Point3(120, 190, -200), 150, teste3));
+    objects.push_back(std::make_shared<Ball>(Point3(120, 190, -200), 150,teste3));
 
     auto rng = std::default_random_engine{};
     std::shuffle(objects.begin(), objects.end(), rng);
@@ -388,8 +389,13 @@ namespace worlds {
 
         objects.push_back(std::make_shared<Ball>(Point3(-600, 900, -800), 500));
 
+        objects.push_back(std::make_shared<Ball>(Point3(-600, -900, -800), 500, std::make_shared<NullMaterial>()));
+
+
         objects.push_back(
                 std::make_shared<Rectangle>(Point3(0, 300, -100), Vector3(0.9, 0, 1), 400, earthmaterial));
+
+
         std::vector<std::shared_ptr<VectorialLight>> lights;
         lights.push_back(std::make_shared<PointLight>(Point3(7200, 0, -1000), Constants::pi * 250,
                                                       normalize(ColorVec(1.2, 1.2, 1))));
