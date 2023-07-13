@@ -34,9 +34,9 @@ int main() {
 
 
 
-    const auto sampler = generateSampler(1);
+    const auto sampler = generateSampler(50);
 
-    auto selectedWorld = worlds::testeFeatures();
+    auto selectedWorld = worlds::generateWorld1(false);
     Canvas *drawcanvas;
 
     if (png) {

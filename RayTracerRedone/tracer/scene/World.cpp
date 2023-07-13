@@ -1,5 +1,9 @@
+
 #include "World.h"
 #include "Camera.h"
+#include <glm/common.hpp>
+#include <glm/vector_relational.hpp>
+
 
 static int i = 0;
 
@@ -31,7 +35,7 @@ void World::render(Canvas *canvas, const int32_t depth, const std::shared_ptr<sa
 
                 x_sample_point *= xstep;
                 y_sample_point *= ystep;
-
+                ColorVec actualColor;
                 if (perspective_) {
                     const float y_coord = viewPlane->pixelsize * (vp_y - 0.5f * (viewPlane->hsize - 1.0f));
                     const float x_coord = -viewPlane->pixelsize * (vp_x - 0.5f * (viewPlane->wsize - 1.0f));
@@ -39,22 +43,28 @@ void World::render(Canvas *canvas, const int32_t depth, const std::shared_ptr<sa
                     Point3 origin(0, 0, 0);
                     Vector3 direction = origin - vp_r;
 
-                    origin = Vector3(  Vector4(origin, 1));
-                    direction = Vector3( Vector4(direction, 0));
+                    origin = Vector3(Vector4(origin, 1));
+                    direction = Vector3(Vector4(direction, 0));
 
                     const Ray r(origin, direction);
-                    colorVec += trace_ray(r, depth);
+                    actualColor = trace_ray(r, depth);
                     //canvas->write_pixel(x, y, ColorRGBA(trace_ray(r, 0)));
                 } else {
                     const float y_coord = viewPlane->pixelsize * (vp_y - 0.5f * (viewPlane->hsize - 1.0f));
                     const float x_coord = viewPlane->pixelsize * (vp_x - 0.5f * (viewPlane->wsize - 1.0f));
                     Vector3 vp_r(x_coord + x_sample_point, -y_coord + y_sample_point, zw);
-                    vp_r = Vector3(  Vector4(vp_r, 1));
+                    vp_r = Vector3(Vector4(vp_r, 1));
                     auto dir = Vector3(Vector4(Vector3(0, 0, -1), 0));
                     const Ray r(vp_r, dir);
-                    colorVec += trace_ray(r, depth);
+                    actualColor = trace_ray(r, depth);
                     //canvas->write_pixel(x, y, ColorRGBA(trace_ray(r, 0)));
                 }
+                
+                //I DONT KNOW WHY MSVC BOTHERS WITH MY COLORVEC TYPE
+                if (glm::any(glm::isnan(static_cast<Vector4>(actualColor)))) {
+                    actualColor = ColorVec(0, 0, 0);
+                }
+                colorVec += actualColor;
             }
             const ColorVec out = (colorVec * 1.0f / static_cast<float>(num_samples));
             canvas->write_pixel(x, y, ColorRGBA(out));
@@ -92,7 +102,8 @@ ColorVec World::trace_ray(const Ray &ray, float &tmin, const int32_t depth) cons
     return {0, 0, 0};
 }
 
-void World::render(Canvas * canvas, int32_t depth, const std::shared_ptr<sampler> & _sampler, std::shared_ptr<Camera> camera) {
+void
+World::render(Canvas *canvas, int32_t depth, const std::shared_ptr<sampler> &_sampler, std::shared_ptr<Camera> camera) {
 
     //const Camera camera(Vector3(0, 300, 120), Vector3(0, 120, -500), Vector3(0, 1, 0));
     auto inv = camera->getLookAtInverse();
