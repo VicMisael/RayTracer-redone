@@ -59,11 +59,8 @@ void World::render(Canvas *canvas, const int32_t depth, const std::shared_ptr<sa
                     actualColor = trace_ray(r, depth);
                     //canvas->write_pixel(x, y, ColorRGBA(trace_ray(r, 0)));
                 }
-                
+
                 //I DONT KNOW WHY MSVC BOTHERS WITH MY COLORVEC TYPE
-                if (glm::any(glm::isnan(static_cast<Vector4>(actualColor)))) {
-                    actualColor = ColorVec(0, 0, 0);
-                }
                 colorVec += actualColor;
             }
             const ColorVec out = (colorVec * 1.0f / static_cast<float>(num_samples));
@@ -105,7 +102,6 @@ ColorVec World::trace_ray(const Ray &ray, float &tmin, const int32_t depth) cons
 void
 World::render(Canvas *canvas, int32_t depth, const std::shared_ptr<sampler> &_sampler, std::shared_ptr<Camera> camera) {
 
-    //const Camera camera(Vector3(0, 300, 120), Vector3(0, 120, -500), Vector3(0, 1, 0));
     auto inv = camera->getLookAtInverse();
     const uint32_t height = canvas->getHeight();
     const uint32_t width = canvas->getWidth();
@@ -124,7 +120,7 @@ World::render(Canvas *canvas, int32_t depth, const std::shared_ptr<sampler> &_sa
 
                 x_sample_point *= xstep;
                 y_sample_point *= ystep;
-
+                ColorVec actualColor;
                 if (perspective_) {
                     const float y_coord = viewPlane->pixelsize * (vp_y - 0.5f * (viewPlane->hsize - 1.0f));
                     const float x_coord = -viewPlane->pixelsize * (vp_x - 0.5f * (viewPlane->wsize - 1.0f));
@@ -136,7 +132,7 @@ World::render(Canvas *canvas, int32_t depth, const std::shared_ptr<sampler> &_sa
                     direction = Vector3(inv * Vector4(direction, 0));
 
                     const Ray r(origin, direction);
-                    colorVec += trace_ray(r, depth);
+                    actualColor = trace_ray(r, depth);
                     //canvas->write_pixel(x, y, ColorRGBA(trace_ray(r, 0)));
                 } else {
                     const float y_coord = viewPlane->pixelsize * (vp_y - 0.5f * (viewPlane->hsize - 1.0f));
@@ -145,9 +141,10 @@ World::render(Canvas *canvas, int32_t depth, const std::shared_ptr<sampler> &_sa
                     vp_r = Vector3(inv * Vector4(vp_r, 1));
                     auto dir = Vector3(inv * Vector4(Vector3(0, 0, -1), 0));
                     const Ray r(vp_r, dir);
-                    colorVec += trace_ray(r, depth);
+                    actualColor = trace_ray(r, depth);
                     //canvas->write_pixel(x, y, ColorRGBA(trace_ray(r, 0)));
                 }
+                colorVec += actualColor;
             }
             const ColorVec out = (colorVec * 1.0f / static_cast<float>(num_samples));
             canvas->write_pixel(x, y, ColorRGBA(out));
