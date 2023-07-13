@@ -30,6 +30,8 @@ public:
 
     virtual std::shared_ptr<AABB> bounding_box() const;
 
+    virtual Point3 pointAtSurface(const Point3 &origin) const = 0;
+
     [[nodiscard]] virtual float getArea() const = 0;
 
     // the case where there is no bounding box is the edge case

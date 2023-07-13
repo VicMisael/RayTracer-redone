@@ -5,8 +5,11 @@
 #pragma once
 
 #include "VectorialLight.h"
+#include "../objects/VirtualObject.h"
 
-class AreaLight: public VectorialLight {
+class AreaLight : public VectorialLight {
+private:
+    std::shared_ptr <VirtualObject> object;
 public:
     Vector3 getVector(const Point3 point3) const override;
 
