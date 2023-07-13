@@ -5,6 +5,8 @@
 #include <glm/gtx/norm.hpp>
 #include "BumpMapping.h"
 #include "../../utils/Intersection.h"
+#include "../../utils/OrthonormalBase.h"
+#include <iostream>
 
 ColorVec
 BumpMapping::shade(const World &world, const Ray &ray, const intersectionRec &intersectionIn, int32_t depth) const {
@@ -14,6 +16,7 @@ BumpMapping::shade(const World &world, const Ray &ray, const intersectionRec &in
 
     Vector3 refVector;
     //Orthonormal base
+    /*
     if (glm::length2(normal - Vector3(0, 1, 0)) < glm::epsilon<float>()) {
         refVector = Vector3(1, 0, 0);
     } else {
@@ -21,9 +24,11 @@ BumpMapping::shade(const World &world, const Ray &ray, const intersectionRec &in
     }
     Vector3 t = normalize(cross(normal, refVector));
     Vector3 b = normalize(cross(normal, t));
-
+    
 
     normal = Matrix3x3(t, b, normal) * bumpMapping;
+    */
+    normal = OrthonormalBase(normal).local(bumpMapping);
     auto intersection = intersectionRec{intersectionIn.tmin, intersectionIn.hit_point, normal, intersectionIn.material,
                                         intersectionIn.u, intersectionIn.v};
     return this->material->shade(world, ray, intersection, depth);

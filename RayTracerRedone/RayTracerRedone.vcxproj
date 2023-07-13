@@ -203,6 +203,7 @@
     <ClCompile Include="tracer\scene\World.cpp" />
     <ClCompile Include="tracer\scene\ViewPlane.cpp" />
     <ClCompile Include="tracer\utils\ColorVec.cpp" />
+    <ClCompile Include="tracer\utils\OrthonormalBase.cpp" />
     <ClCompile Include="tracer\utils\sampler\diagonal_point_sampler.cpp" />
     <ClCompile Include="tracer\utils\sampler\equidistant_point_sampler.cpp" />
     <ClCompile Include="tracer\utils\sampler\horizontal_point_sampler.cpp" />
@@ -273,6 +274,7 @@
     <ClInclude Include="tracer\utils\intersectionRec.h" />
     <ClInclude Include="tracer\scene\Ray.h" />
     <ClInclude Include="tracer\scene\materials\Material.h" />
+    <ClInclude Include="tracer\utils\OrthonormalBase.h" />
     <ClInclude Include="tracer\utils\sampler\diagonal_point_sampler.h" />
     <ClInclude Include="tracer\utils\sampler\equidistant_point_sampler.h" />
     <ClInclude Include="tracer\utils\sampler\horizontal_point_sampler.h" />

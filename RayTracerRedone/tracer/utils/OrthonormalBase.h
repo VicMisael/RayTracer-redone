@@ -20,6 +20,8 @@ public:
 
     [[nodiscard]] Vector3 w() const ;
 
+    [[nodiscard]] Matrix3x3 onb() const;
+
     Point3 local(const Point3 point) const;
 };
 

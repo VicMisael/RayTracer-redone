@@ -30,7 +30,9 @@ public:
 
     virtual std::shared_ptr<AABB> bounding_box() const;
 
-    virtual Point3 pointAtSurface(const Point3 &origin) const = 0;
+    [[nodiscard]] virtual Point3 pointAtSurface(const Point3 &origin) const {
+        return Point3();
+    };
 
     [[nodiscard]] virtual float getArea() const = 0;
 

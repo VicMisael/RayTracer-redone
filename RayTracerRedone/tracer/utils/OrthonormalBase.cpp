@@ -9,8 +9,8 @@ OrthonormalBase::OrthonormalBase(Vector3 W) {
     Vector3 a =
             glm::length2(W - Vector3(0, 1, 0)) < glm::epsilon<float>() ? Vector3(1, 0, 0) : Vector3(0, 1, 0);
 
-    Vector3 V = normalize(cross(W, a));
-    Vector3 U = normalize(cross(W, V));
+    Vector3 U = normalize(cross(W, a));
+    Vector3 V = normalize(cross(W, U));
     UVW = Matrix3x3(U, V, W);
 }
 
@@ -28,4 +28,8 @@ Vector3 OrthonormalBase::w() const {
 
 Point3 OrthonormalBase::local(const Point3 point) const {
     return UVW * point;
+}
+
+Matrix3x3 OrthonormalBase::onb() const {
+    return UVW;
 }

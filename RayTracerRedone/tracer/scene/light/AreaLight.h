@@ -5,7 +5,7 @@
 #pragma once
 
 #include "VectorialLight.h"
-#include "../objects/VirtualObject.h"
+#include "../../objects/VirtualObject.h"
 
 class AreaLight : public VectorialLight {
 private:
@@ -19,4 +19,6 @@ public:
 
     bool shadow_hit(const World &world, const Ray &outgoing) const override;
 
+
+    AreaLight() = default;
 };
