@@ -27,14 +27,14 @@ int main() {
     constexpr bool png = false;
 
 
-    const uint32_t w = 800;
-    const uint32_t h = 800;
+    const uint32_t w = 950;
+    const uint32_t h = 950;
     //TODO: ARea Lights
 
 
 
 
-    const auto sampler = generateSampler(50);
+    const auto sampler = generateSampler(20);
 
     auto selectedWorld = worlds::generateWorld1(false);
     Canvas *drawcanvas;

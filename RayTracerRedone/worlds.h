@@ -104,7 +104,7 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     const auto eight_ball_material = std::make_shared<TexturedPhongReflective>(_8balltexture, 0.4);
 
 
-    objects.push_back(std::make_shared<Ball>(Point3(-600, 450, -300), 280,
+    objects.push_back(std::make_shared<Ball>(Point3(-300, 650, -500), 280,
                                              eight_ball_material));
 
 
@@ -123,13 +123,10 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     objects.push_back(std::make_shared<Ball>(Point3(0, 100, -925), 256,
                                              phong_reflective_higher_exp));
 
-    objects.push_back(std::make_shared<Ball>(Point3(0, 40, -650), 40,
-                                             mirror));
-
     const auto teste = std::make_shared<SampleDielectric>(6.9);
-    objects.push_back(std::make_shared<Ball>(Point3(-450, 0, -800), 550, teste));
+    objects.push_back(std::make_shared<Ball>(Point3(-450, 0, -800), 150, teste));
 
-    const auto teste3 = std::make_shared<Dielectric>(Constants::YELLOW, Constants::BLUE, 1.24, 1.61, 1, 2);
+    const auto teste3 = std::make_shared<Dielectric>(Constants::YELLOW, Constants::BLACK, 1.24, 1.61, 1, 2);
     objects.push_back(std::make_shared<Ball>(Point3(120, 190, -200), 150, teste3));
 
     auto rng = std::default_random_engine{};
