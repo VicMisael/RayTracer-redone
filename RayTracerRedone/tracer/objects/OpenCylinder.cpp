@@ -9,6 +9,7 @@
 #include <glm/gtc/constants.hpp>
 #include <glm/gtx/norm.hpp>
 #include <glm/gtx/rotate_vector.hpp>
+#include "../utils/utility.h"
 
 
 std::tuple<float, float>
@@ -114,7 +115,32 @@ void OpenCylinder::transform(Matrix4x4 m) {
     VirtualObject::transform(m);
 }
 
-float OpenCylinder::getArea() const{
-    constexpr auto fpi=static_cast<float>(Constants::pi);
+float OpenCylinder::getArea() const {
+    constexpr auto fpi = static_cast<float>(Constants::pi);
     return 2 * fpi * radius_ * height_;
+}
+
+Point3 OpenCylinder::pointAtSurface(const Point3 &origin) const {
+    float theta = 2.0f * Constants::pi * utility::random_in_interval(0,1); // Azimuthal angle
+    float h = height_ * utility::random_in_interval(0,1);  // height along the cylinder
+
+    glm::vec3 point_on_circle = radius_* glm::vec3(cos(theta), sin(theta), 0.0f);
+
+    // Rotation matrix
+    glm::vec3 up(0.0f, 0.0f, 1.0f);
+    glm::vec3 axis = glm::normalize(axis);
+    float angle = acos(glm::dot(up, axis));
+    glm::vec3 rotation_axis = glm::cross(up, axis);
+
+    if (glm::length(rotation_axis) != 0) {
+        rotation_axis = glm::normalize(rotation_axis);
+    }
+
+    glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), angle, rotation_axis);
+    glm::vec3 rotated_point = glm::vec3(rotation * glm::vec4(point_on_circle, 1.0f));
+
+    // Positioning at the base of the cylinder and offset by the height
+    glm::vec3 point_on_cylinder = base_ + h * axis + rotated_point;
+
+    return point_on_cylinder;
 }

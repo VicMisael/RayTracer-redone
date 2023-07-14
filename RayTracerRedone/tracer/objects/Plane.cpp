@@ -1,5 +1,7 @@
 #include "Plane.h"
 #include <glm/geometric.hpp>
+#include "../utils/utility.h"
+#include "../utils/OrthonormalBase.h"
 
 
 glm::vec3 computeU(glm::vec3 normal) {
@@ -44,6 +46,12 @@ void Plane::transform(Matrix4x4 m) {
     normal = Vector3(m * Vector4(normal, 0));
 }
 
-float Plane::getArea() const{
+float Plane::getArea() const {
     return INFINITY;
+}
+
+Point3 Plane::pointAtSurface(const Point3 &origin) const {
+    const OrthonormalBase uvw(this->normal);
+    return this->point + utility::random(FLT_MIN, FLT_MAX) * (uvw.u() + uvw.v());
+
 }

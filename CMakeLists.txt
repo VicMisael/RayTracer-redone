@@ -143,8 +143,6 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/scene/materials/DiffuseLight.cpp RayTracerRedone/tracer/scene/materials/DiffuseLight.h
         RayTracerRedone/tracer/objects/Rectangle.cpp
         RayTracerRedone/tracer/objects/Rectangle.h
-        RayTracerRedone/tracer/objects/Box.cpp
-        RayTracerRedone/tracer/objects/Box.h
         RayTracerRedone/tracer/scene/light/AreaLight.cpp
         RayTracerRedone/tracer/scene/light/AreaLight.h
         RayTracerRedone/tracer/utils/OrthonormalBase.cpp

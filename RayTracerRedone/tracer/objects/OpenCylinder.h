@@ -26,6 +26,8 @@ public:
     void transform(Matrix4x4 m) override;
 
     float getArea() const override;
+
+    Point3 pointAtSurface(const Point3 &origin) const override;
 };
 
 

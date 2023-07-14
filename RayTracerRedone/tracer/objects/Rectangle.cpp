@@ -4,6 +4,7 @@
 
 #include <optional>
 #include "Rectangle.h"
+#include "../utils/utility.h"
 
 std::optional<intersectionRec> Rectangle::intersects(const Ray &ray) const {
     float t = dot((p0 - ray.origin), normal) / dot(ray.direction, normal);
@@ -53,4 +54,9 @@ std::shared_ptr<AABB> Rectangle::bounding_box() const {
 
 float Rectangle::getArea() const {
     return length(a) * length(b);
+}
+
+Point3 Rectangle::pointAtSurface(const Point3 &origin) const {
+    const auto sample_point = utility::random_unit_square();
+    return (p0 + sample_point.x*a + sample_point.y*b);
 }

@@ -9,13 +9,17 @@
 
 class AreaLight : public VectorialLight {
 private:
-    std::shared_ptr <VirtualObject> object;
+    std::shared_ptr<VirtualObject> object;
 public:
     Vector3 getVector(const Point3 point3) const override;
 
     Vector3 getVectorNormalized(const Point3 point3) const override;
 
     ColorVec intensityAtPoint(const Point3 point3) const override;
+
+    float pdf() {
+        return 1 / object->getArea();
+    }
 
     bool shadow_hit(const World &world, const Ray &outgoing) const override;
 

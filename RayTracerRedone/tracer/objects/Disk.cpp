@@ -64,3 +64,7 @@ float Disk::getArea() const {
     return 2 * f_pi * this->r_squared;
 }
 
+Point3 Disk::pointAtSurface(const Point3 &origin) const {
+    return VirtualObject::pointAtSurface(origin);
+}
+

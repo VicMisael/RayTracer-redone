@@ -51,7 +51,9 @@ public:
 
     std::shared_ptr<AABB> bounding_box() const override;
 
-    float getArea() const override;;
+    float getArea() const override;
+
+    Point3 pointAtSurface(const Point3 &origin) const override;;
 };
 
 

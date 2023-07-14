@@ -14,7 +14,7 @@ std::tuple<float, float> get_sphere_uv(const Point3 p) {
     //     <0 0 1> yields <0.25 0.50>       < 0  0 -1> yields <0.75 0.50>
 
     using namespace Constants;
-    const auto f_pi=static_cast<float>(pi);
+    const auto f_pi = static_cast<float>(pi);
     const float theta = acosf(-p.y);
     const float phi = atan2f(-p.z, p.x) + f_pi;
 
@@ -64,5 +64,16 @@ void Ball::calculateBoundingBox() {
 }
 
 float Ball::getArea() const {
-    return 4.0f*static_cast<float>(Constants::pi)*radius*radius;
+    return 4.0f * static_cast<float>(Constants::pi) * radius * radius;
+}
+
+Point3 Ball::pointAtSurface(const Point3 &origin) const {
+    float theta = 2.0f * glm::pi<float>() * glm::linearRand(0.0f, 1.0f); // azimuthal angle
+    float phi = acos(2.0f * glm::linearRand(0.0f, 1.0f) - 1.0f); // polar angle
+
+    const float x = center.x + radius * sin(phi) * cos(theta);
+    const float y = center.y + radius * sin(phi) * sin(theta);
+    const float z = center.z + radius * cos(phi);
+
+    return {x, y, z};
 }
