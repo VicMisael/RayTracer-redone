@@ -148,7 +148,8 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/utils/OrthonormalBase.cpp
         RayTracerRedone/tracer/utils/OrthonormalBase.h
         RayTracerRedone/tracer/scene/materials/NullMaterial.cpp
-        RayTracerRedone/tracer/scene/materials/NullMaterial.h)
+        RayTracerRedone/tracer/scene/materials/NullMaterial.h
+        RayTracerRedone/tracer/utils/utility.cpp )
 
 
 target_link_libraries(RayTracer_redone glm::glm)

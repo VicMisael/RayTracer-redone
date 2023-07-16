@@ -120,11 +120,11 @@ float OpenCylinder::getArea() const {
     return 2 * fpi * radius_ * height_;
 }
 
-Point3 OpenCylinder::pointAtSurface(const Point3 &origin) const {
-    float theta = 2.0f * Constants::pi * utility::random_in_interval(0,1); // Azimuthal angle
-    float h = height_ * utility::random_in_interval(0,1);  // height along the cylinder
+std::tuple<Point3, Vector3> OpenCylinder::pointAtSurface() const {
+    float theta = 2.0f * Constants::pi * utility::random_in_interval(0, 1); // Azimuthal angle
+    float h = height_ * utility::random_in_interval(0, 1);  // height along the cylinder
 
-    glm::vec3 point_on_circle = radius_* glm::vec3(cos(theta), sin(theta), 0.0f);
+    glm::vec3 point_on_circle = radius_ * glm::vec3(cos(theta), sin(theta), 0.0f);
 
     // Rotation matrix
     glm::vec3 up(0.0f, 0.0f, 1.0f);
@@ -142,5 +142,8 @@ Point3 OpenCylinder::pointAtSurface(const Point3 &origin) const {
     // Positioning at the base of the cylinder and offset by the height
     glm::vec3 point_on_cylinder = base_ + h * axis + rotated_point;
 
-    return point_on_cylinder;
+    const auto W = point_on_cylinder - base_;
+    const auto unnormalizedNormal = (W - axis_ * (dot(W, axis_)));
+
+    return {point_on_cylinder, glm::normalize(unnormalizedNormal)};
 }

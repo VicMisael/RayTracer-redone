@@ -30,11 +30,15 @@ public:
 
     virtual std::shared_ptr<AABB> bounding_box() const;
 
-    [[nodiscard]] virtual Point3 pointAtSurface(const Point3 &origin) const {
-        return Point3(0, 0, 0);
+    [[nodiscard]] virtual std::tuple<Point3, Vector3> pointAtSurface() const {
+        return {Point3(0, 0, 0), Vector3()};
     };
 
     [[nodiscard]] virtual float getArea() const = 0;
+
+    virtual float getPdf() const {
+        return 1 / getArea();
+    }
 
     // the case where there is no bounding box is the edge case
     [[nodiscard]] virtual bool hasBoundingBox() const {

@@ -6,7 +6,7 @@
 #define RAYTRACER_REDONE_IMAGECANVAS_H
 
 #include <utility>
-
+#include<string>
 #include "../tracer/scene/Canvas.h"
 
 

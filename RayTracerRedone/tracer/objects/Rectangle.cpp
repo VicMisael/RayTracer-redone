@@ -56,7 +56,11 @@ float Rectangle::getArea() const {
     return length(a) * length(b);
 }
 
-Point3 Rectangle::pointAtSurface(const Point3 &origin) const {
+std::tuple<Point3, Vector3> Rectangle::pointAtSurface() const {
     const auto sample_point = utility::random_unit_square();
-    return (p0 + sample_point.x*a + sample_point.y*b);
+    return {(p0 + sample_point.x * a + sample_point.y * b), normal};
+}
+
+float Rectangle::getPdf() const {
+    return 1 / getArea();
 }

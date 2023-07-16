@@ -50,8 +50,8 @@ float Plane::getArea() const {
     return INFINITY;
 }
 
-Point3 Plane::pointAtSurface(const Point3 &origin) const {
+std::tuple<Point3, Vector3> Plane::pointAtSurface() const {
     const OrthonormalBase uvw(this->normal);
-    return this->point + utility::random(FLT_MIN, FLT_MAX) * (uvw.u() + uvw.v());
+    return {this->point + utility::random(FLT_MIN, FLT_MAX) * (uvw.u() + uvw.v()), normal};
 
 }

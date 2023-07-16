@@ -155,7 +155,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="imageoutputcanvas\imagecanvas.cpp" />
-    <ClCompile Include="tracer\objects\Box.cpp" />
     <ClCompile Include="tracer\objects\Disk.cpp" />
     <ClCompile Include="tracer\objects\Rectangle.cpp" />
     <ClCompile Include="tracer\scene\BxDF\FresnelReflector.cpp" />
@@ -166,6 +165,7 @@
     <ClCompile Include="tracer\scene\materials\BumpMapping.cpp" />
     <ClCompile Include="tracer\scene\materials\Dielectric.cpp" />
     <ClCompile Include="tracer\scene\materials\DiffuseLight.cpp" />
+    <ClCompile Include="tracer\scene\materials\NullMaterial.cpp" />
     <ClCompile Include="tracer\scene\materials\SampleDielectric.cpp" />
     <ClCompile Include="tracer\scene\materials\TexturedPhongReflective.cpp" />
     <ClCompile Include="tracer\scene\materials\Transparent.cpp" />
@@ -212,12 +212,12 @@
     <ClCompile Include="tracer\utils\sampler\vertical_point_sampler.cpp" />
     <ClCompile Include="tracer\scene\materials\WhiteMetal.cpp" />
     <ClCompile Include="tracer\scene\materials\PhongMetal.cpp" />
+    <ClCompile Include="tracer\utils\utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imageoutputcanvas\imagecanvas.h" />
     <ClInclude Include="imageoutputcanvas\stb\image_canvas_stb_image.h" />
     <ClInclude Include="imageoutputcanvas\stb\stb_image_write.h" />
-    <ClInclude Include="tracer\objects\Box.h" />
     <ClInclude Include="tracer\objects\Disk.h" />
     <ClInclude Include="tracer\objects\Rectangle.h" />
     <ClInclude Include="tracer\scene\BxDF\FresnelReflector.h" />
@@ -229,6 +229,7 @@
     <ClInclude Include="tracer\scene\materials\BumpMapping.h" />
     <ClInclude Include="tracer\scene\materials\Dielectric.h" />
     <ClInclude Include="tracer\scene\materials\DiffuseLight.h" />
+    <ClInclude Include="tracer\scene\materials\NullMaterial.h" />
     <ClInclude Include="tracer\scene\materials\SampleDielectric.h" />
     <ClInclude Include="tracer\scene\materials\TexturedPhongReflective.h" />
     <ClInclude Include="tracer\scene\materials\Transparent.h" />

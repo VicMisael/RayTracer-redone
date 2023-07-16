@@ -5,6 +5,8 @@
 #include <optional>
 #include <glm/gtx/norm.hpp>
 #include "Disk.h"
+#include "../utils/OrthonormalBase.h"
+#include "../utils/utility.h"
 
 std::tuple<float, float> Disk::getUVMapping(const Point3 point) const {
     glm::vec3 vecToPoint = point - center;
@@ -64,7 +66,8 @@ float Disk::getArea() const {
     return 2 * f_pi * this->r_squared;
 }
 
-Point3 Disk::pointAtSurface(const Point3 &origin) const {
-    return VirtualObject::pointAtSurface(origin);
+std::tuple<Point3, Vector3> Disk::pointAtSurface() const {
+    const OrthonormalBase uvw(this->normal);
+    return {this->center + utility::random(0, 1) * (uvw.u() + uvw.v()) * sqrtf(this->r_squared), normal};
 }
 

@@ -1,4 +1,5 @@
 #pragma once
+
 #include <iostream>
 #include <utility>
 #include <vector>
@@ -8,11 +9,10 @@
 #include "../utils/sampler/sampler.h"
 #include "../objects/VirtualObject.h"
 #include "light/VectorialLight.h"
+#include "light/AreaLight.h"
 #include "../objects/BoundingBox/BVH.h"
 #include "Camera.h"
 #include "../utils/utility.h"
-
-
 
 
 class World {
@@ -23,6 +23,7 @@ private:
     std::shared_ptr<ViewPlane> viewPlane;
     std::vector<std::shared_ptr<VirtualObject>> objects_;
     std::vector<std::shared_ptr<VectorialLight>> lights_;
+    std::vector<std::shared_ptr<AreaLight>> areaLights_;
     ColorVec bgColor;
     AmbientLight ambient_light;
     //std::shared_ptr<BVH> bvh;
@@ -34,6 +35,7 @@ private:
             std::cout << "The area of the object " << typeid(*obj).name() << " is:" << obj->getArea() << std::endl;
         }
     }
+
 public:
     [[nodiscard]] ColorVec trace_ray(const Ray &ray, const int32_t depth) const;
 
@@ -47,14 +49,34 @@ public:
           ColorVec _bgColor,
           bool perspective) :
             viewPlane(std::move(_viewPlane)),
-            objects_(_objects),
+            objects_(std::move(_objects)),
             lights_(std::move(lights)),
             bgColor(_bgColor),
             ambient_light(std::move(_ambient_light)), perspective_(perspective) {
         //bvh = std::make_shared<BVH>(objects_);
         printAreas(objects_);
+
     }
 
+    World(std::shared_ptr<ViewPlane> _viewPlane,
+          std::vector<std::shared_ptr<VirtualObject>> _objects,
+          std::vector<std::shared_ptr<VectorialLight>> lights,
+          std::vector<std::shared_ptr<AreaLight>> areaLights,
+          AmbientLight _ambient_light,
+          ColorVec _bgColor,
+          bool perspective) :
+            viewPlane(std::move(_viewPlane)),
+            objects_(std::move(_objects)),
+            lights_(std::move(lights)),
+            areaLights_(areaLights),
+            bgColor(_bgColor),
+            ambient_light(std::move(_ambient_light)), perspective_(perspective) {
+        //bvh = std::make_shared<BVH>(objects_);
+        printAreas(objects_);
+        for (const auto &areaLight: areaLights) {
+            objects_.push_back((*areaLight).getObject());
+        }
+    }
 
     void render(Canvas *, int32_t, const std::shared_ptr<sampler> &);
 
@@ -66,6 +88,9 @@ public:
         return lights_;
     }
 
+    [[nodiscard]] std::vector<std::shared_ptr<AreaLight>> areaLights() const {
+        return areaLights_;
+    }
 
     [[nodiscard]] AmbientLight getAmbientLight() const {
         return ambient_light;

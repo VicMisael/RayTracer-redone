@@ -7,22 +7,44 @@
 #include "VectorialLight.h"
 #include "../../objects/VirtualObject.h"
 
-class AreaLight : public VectorialLight {
+
+class AreaLight : public Light {
 private:
+
     std::shared_ptr<VirtualObject> object;
+    struct AreaLightState {
+        Vector3 sample_point;
+        Vector3 normal_at_point;
+        Vector3 wi;
+    };
 public:
-    Vector3 getVector(const Point3 point3) const override;
 
-    Vector3 getVectorNormalized(const Point3 point3) const override;
+    AreaLight() = delete;
 
-    ColorVec intensityAtPoint(const Point3 point3) const override;
+    AreaLight(const float intensity, const ColorVec &color, const std::shared_ptr<VirtualObject> &object);
+    //Do not store state in a class
+    //May cause race condition when Multithreading
 
-    float pdf() {
-        return 1 / object->getArea();
+    AreaLightState generateState(Point3 hitpoint) const;
+
+    float pdf() const;
+
+
+    [[nodiscard]] const std::shared_ptr<VirtualObject> &getObject() const {
+        return object;
     }
 
-    bool shadow_hit(const World &world, const Ray &outgoing) const override;
+    virtual Vector3 getVectorNormalized(AreaLightState areaLightState) const;
+
+    bool casts_shadow() {
+        return true;
+    }
+
+    [[nodiscard]] ColorVec intensityAtPoint(const Point3 p, const AreaLightState areaLightState) const;
+
+    [[nodiscard]] float G(const Point3 hitpoint, const AreaLightState areaLightState) const;
+
+    [[nodiscard]] bool shadow_hit(const World &world, const Ray &outgoing, const AreaLightState) const;
 
 
-    AreaLight() = default;
 };

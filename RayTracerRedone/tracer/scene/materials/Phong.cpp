@@ -26,6 +26,25 @@ ColorVec Phong::shade(const World& world, const Ray& ray, const intersectionRec&
 		}
 	}
 	//Scoped
+    for (const auto &light: world.areaLights()) {
+        const auto state = light->generateState(intersection.hit_point);
+        const auto wi = light->getVectorNormalized(state);
+        const float ndotwi = dot(intersection.normal, wi);
+        if (ndotwi > 0) {
+            bool in_shadow = false;
+
+            if (light->casts_shadow())
+                in_shadow = light->shadow_hit(world, Ray(intersection.hit_point, normalize(wi)), state);
+
+            if (!in_shadow) {
+                const auto intensity = light->intensityAtPoint(intersection.hit_point, state)
+                                       * light->G(intersection.hit_point, state);
+				L += (glossy_specular_.f(intersection, wo, wi) + lambertian_.f(intersection, wo, wi)) * intensity * ndotwi/light->pdf();
+            }
+        }
+    }
+
+
 	{
 		const auto [color, wi, pdf] = lambertian_.sample_f(intersection, wo);
 		const float ndotwi = glm::dot(intersection.normal, wi);

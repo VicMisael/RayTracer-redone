@@ -42,9 +42,11 @@ std::optional<intersectionRec> Ball::intersects(const Ray &ray) const {
     const float t1 = (-b + sqrtf(disc)) / (2.0f * a);
     const float t2 = (-b - sqrtf(disc)) / (2.0f * a);
     const float closest = std::min(t1, t2);
-    const Vector3 normal = (origin_minus_center + closest * ray_direction) / radius;
+    const Vector3 closestPoint = (ray.point_at(closest));
+    const Vector3 normal = normalize(closestPoint - center);
+    //const Vector3 normal= (origin_minus_center + closest * ray_direction) / radius;
     const auto [u, v] = get_sphere_uv(normal);
-    return intersectionRec{closest, ray.point_at(closest), normal, material.value(), u, v};
+    return intersectionRec{closest, closestPoint, normal, material.value(), u, v};
 }
 
 std::shared_ptr<AABB> Ball::bounding_box() const {
@@ -67,13 +69,14 @@ float Ball::getArea() const {
     return 4.0f * static_cast<float>(Constants::pi) * radius * radius;
 }
 
-Point3 Ball::pointAtSurface(const Point3 &origin) const {
+std::tuple<Point3, Vector3> Ball::pointAtSurface() const {
     float theta = 2.0f * glm::pi<float>() * glm::linearRand(0.0f, 1.0f); // azimuthal angle
     float phi = acos(2.0f * glm::linearRand(0.0f, 1.0f) - 1.0f); // polar angle
 
     const float x = center.x + radius * sin(phi) * cos(theta);
     const float y = center.y + radius * sin(phi) * sin(theta);
     const float z = center.z + radius * cos(phi);
-
-    return {x, y, z};
+    const Point3 point(x, y, z);
+    const Vector3 normal = normalize(point - center);
+    return {point, normal};
 }

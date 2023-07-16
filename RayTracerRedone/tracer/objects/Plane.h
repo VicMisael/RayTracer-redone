@@ -22,7 +22,7 @@ public:
 
     float getArea() const override ;
 
-    Point3 pointAtSurface(const Point3 &origin) const override;
+    std::tuple<Point3, Vector3> pointAtSurface() const override;
 
 
 };
