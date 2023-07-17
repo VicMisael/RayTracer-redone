@@ -10,8 +10,7 @@ ColorVec Phong::shade(const World& world, const Ray& ray, const intersectionRec&
 	const auto al = world.getAmbientLight();
 	ColorVec L = lambertian_.rho(wo) * al.intensityAtPoint(intersection.hit_point) * al.getColor();
     L = getVec(world, intersection, wo, L);
-
-
+    //Scoped
     {
 		const auto [color, wi, pdf] = lambertian_.sample_f(intersection, wo);
 		const float ndotwi = glm::dot(intersection.normal, wi);
@@ -39,7 +38,7 @@ ColorVec &Phong::getVec(const World &world, const intersectionRec &intersection,
             }
         }
     }
-    //Scoped
+
     for (const auto &light: world.areaLights()) {
         const auto state = light->generateState(intersection.hit_point);
         const auto wi = light->getVectorNormalized(state);
@@ -57,5 +56,6 @@ ColorVec &Phong::getVec(const World &world, const intersectionRec &intersection,
             }
         }
     }
+
     return L;
 }
