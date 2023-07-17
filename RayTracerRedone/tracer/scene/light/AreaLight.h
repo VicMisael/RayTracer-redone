@@ -7,7 +7,7 @@
 #include "VectorialLight.h"
 #include "../../objects/VirtualObject.h"
 
-
+//DONT USE THIS
 class AreaLight : public Light {
 private:
 

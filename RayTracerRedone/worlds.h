@@ -128,7 +128,7 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     objects.push_back(std::make_shared<Ball>(Point3(-450, 0, -800), 150, teste));
 
     const auto teste3 = std::make_shared<Dielectric>(Constants::YELLOW, Constants::BLACK, 1.24, 1.61, 1, 2);
-    objects.push_back(std::make_shared<Ball>(Point3(120, 190, -200), 150, teste3));
+    objects.push_back(std::make_shared<Ball>(Point3(120, 190, -200), 150,teste3));
 
     auto rng = std::default_random_engine{};
     std::shuffle(objects.begin(), objects.end(), rng);
@@ -165,8 +165,8 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjectsMoonEarth() {
 
 std::vector<std::shared_ptr<VectorialLight>> generate_moon_earth_scenario_lights() {
     std::vector<std::shared_ptr<VectorialLight>> lights;
-//    lights.push_back(std::make_shared<PointLight>(Point3(7200, 0, -1000), Constants::pi * 1000,
-//                                                  normalize(ColorVec(1.2, 1.2, 1))));
+    lights.push_back(std::make_shared<PointLight>(Point3(7200, 0, -1000), Constants::pi * 1000,
+                                                  normalize(ColorVec(1.2, 1.2, 1))));
 
     return lights;
 }
@@ -175,28 +175,17 @@ std::vector<std::shared_ptr<VectorialLight>> generate_moon_earth_scenario_lights
 namespace worlds {
 
 
-    World generateWorld1(bool projection = false) {
+    World generateWorld1(bool projection) {
         //True=Perspective False=parallel
 
 
         const auto view_plane = !projection ? std::make_shared<ViewPlane>(2000, 2000, 50, 01.0f)
                                             : std::make_shared<ViewPlane>(160, 160, 70, 1);
 
-        auto objects = generateObjects();
-        std::vector<std::shared_ptr<AreaLight>> arealights;
-        const auto arealightobj = std::make_shared<Ball>(Point3(-300, 0, -200), 150,
-                                                         std::make_shared<DiffuseLight>(ColorVec(1, 1, 1), 1.0f));
-
-//
-//        const auto arealightobj = std::make_shared<Rectangle>(Point3(100, 690, -600), Vector3(0, -1, 0.9), 400,
-//                                                              std::make_shared<DiffuseLight>(ColorVec(1, 0.9, 0.8),
-//                                                                                             1.0f));
-
-        objects.push_back(arealightobj);
-        arealights.push_back(std::make_shared<AreaLight>(5.1, ColorVec(1, 1, 1), arealightobj));
+        const auto objects = generateObjects();
         AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
-        return {view_plane, objects, generate_vectorial_lights(), arealights,
-                ab, {0, 0, 0}, projection};
+        return {view_plane, objects, generate_vectorial_lights(),
+                ab, {1, 1, 1}, projection};
     }
 
     World moonEarth() {
@@ -250,6 +239,10 @@ namespace worlds {
         const auto blue_matte = std::make_shared<Matte>(1, ColorVec(0.3, 0.9, 1));
 
         objects.push_back(ball);
+        //const auto ball2 = std::make_shared<Ball>(Point3(500, 0, -1050), 350.0f, blue_matte);
+
+        //objects.push_back(ball2);
+
         const auto dielectric = std::make_shared<SampleDielectric>(.93);
 
         objects.push_back(std::make_shared<Ball>(Point3(0, 0, -255), 150, dielectric));

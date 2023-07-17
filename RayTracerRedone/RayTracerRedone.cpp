@@ -53,7 +53,7 @@ int main() {
         auto draw = [&] {
             while (!canvas->should_stop()) {
                 auto t1 = std::chrono::high_resolution_clock::now();
-                scene.render(recursion_depth_limit, sampler);
+                scene.render(recursion_depth_limit, sampler,camera);
 
                 auto t2 = std::chrono::high_resolution_clock::now();
                 std::chrono::duration<double, std::milli> ms_double = t2 - t1;
