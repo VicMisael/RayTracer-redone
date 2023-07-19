@@ -6,7 +6,7 @@ ColorVec PhongReflective::shade(const World& world, const Ray& ray, const inters
                                 int32_t depth) const
 {
 	ColorVec L = Phong::shade(world, ray, intersection, depth);
-	const auto wo = -ray.direction;
+	const auto wo = -1.0f* ray.direction;
 	const auto [color,wi,pdf] = reflective_brdf.sample_f(intersection, wo);
 	const Ray reflected(intersection.hit_point, wi);
 

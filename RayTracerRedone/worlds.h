@@ -294,7 +294,7 @@ namespace worlds {
 
         //const auto black_white_texture = std::make_shared<CheckerTexture>(Constants::BLACK, Constants::WHITE, 1);
         const auto white_phong = std::make_shared<Phong>(Constants::RED, 1, 1, 25);
-        auto mesh = std::make_shared<Mesh>("assets/objs/teapot.obj", white_phong);
+        auto mesh = std::make_shared<Mesh>("assets/objs/building3.obj", white_phong);
         auto mat = glm::translate(Matrix4x4(1.0f), Vector3(0, -100, -300));
         float angle = 1.5708;
         mat = glm::rotate(mat, angle / 2, Vector3(0, 1, 0));
@@ -404,42 +404,44 @@ namespace worlds {
     }
 
     World cornellBox() {
-        auto red = std::make_shared<Matte>(2, ColorVec(0.65, .5, .5));;
+        auto red = std::make_shared<Matte>(2, ColorVec(0.65, .21, .21));;
         auto white = std::make_shared<Matte>(2, ColorVec(0.73, 0.73, 0.73));
         auto green = std::make_shared<Matte>(2, ColorVec(0.12, 0.45, 0.15));;
         auto diffuse = std::make_shared<Matte>(2, ColorVec(0.12, 0.45, 0.15));
-        auto diffuse_light = std::make_shared<DiffuseLight>(Constants::WHITE, 7);
+        auto diffuse_light = std::make_shared<DiffuseLight>(Constants::WHITE, 1);
 
         std::vector<std::shared_ptr<VirtualObject>> objects;
         const auto side1 = std::make_shared<Rectangle>(Point3(0, 0, 0), Point3(0, 555, 0), Point3(0, 0, 555), green);
         const auto side2 = std::make_shared<Rectangle>(Point3(555, 0, 555), Vector3(1, 0, 0), 555, red);
         const auto floor = std::make_shared<Rectangle>(Point3(0, 0, 0), Vector3(0, 1, 0), 555, white);;
-        const auto ceiling = std::make_shared<Rectangle>(Point3(0, 555, 0), Vector3(0, 0, 555), Point3(555, 0, 0), white);
-        const auto back = std::make_shared<Rectangle>(Point3(555, 0, 555), Vector3(0,0,-1),555, white);
-        const auto light = std::make_shared<Rectangle>(Point3(277, 544, 327), Vector3(0,0,120),Vector3(120,0,0), diffuse_light);
+        const auto ceiling = std::make_shared<Rectangle>(Point3(0, 555, 0), Vector3(0, 0, 555), Point3(555, 0, 0),
+                                                         white);
+        const auto back = std::make_shared<Rectangle>(Point3(555, 0, 555), Vector3(0, 0, -1), 555, white);
+        const auto light = std::make_shared<Rectangle>(Point3(227, 554, 227), Vector3(0, -1, 0), 60,
+                                                       diffuse_light);
 
 
         const auto jupitertexture = std::make_shared<ImageTexture>("assets/textures/jupiter.jpg");
         const auto jupitermaterial = std::make_shared<TexturedPhong>(jupitertexture);
 
-        const auto teste4 = std::make_shared<SampleDielectric>(6.9);
-        objects.push_back(std::make_shared<Ball>(Point3(450, 200, 355), 120, teste4));
+        const auto teste4 = std::make_shared<Mirror>();
+        objects.push_back(std::make_shared<Ball>(Point3(450, 200, 320), 120, teste4));
 
         objects.push_back(std::make_shared<Ball>(Point3(120, 100, 300), 100,
                                                  jupitermaterial));
 
 
         const auto phong_black_reflective = std::make_shared<PhongReflective>(Constants::WHITE, 1, 12, 1);
-        objects.push_back(std::make_shared<Ball>(Point3(100, 400, 355), 50, phong_black_reflective));
+        objects.push_back(std::make_shared<Ball>(Point3(100, 400, 355), 50, std::make_shared<Mirror>()));
 
         const auto teste3 = std::make_shared<Dielectric>(Constants::YELLOW, Constants::BLACK, 1.24, 1.61, 1, 2);
         objects.push_back(std::make_shared<Ball>(Point3(320, 120, 200), 100, teste3));
 
         objects.push_back(std::make_shared<Ball>(Point3(420, 400, 400), 60,
-            diffuse_light));
-
-        auto cylinder = std::make_shared<OpenCylinder>(Vector3(0, 1, 0), Point3(00, 150, 400), 150, 20, diffuse_light);
-        objects.push_back(cylinder);
+                                                 diffuse_light));
+//
+//        auto cylinder = std::make_shared<OpenCylinder>(Vector3(0, 1, 0), Point3(00, 150, 400), 150, 20, diffuse_light);
+//        objects.push_back(cylinder);
 
         objects.push_back(side1);
         objects.push_back(side2);
@@ -450,23 +452,85 @@ namespace worlds {
 
         const auto vp = std::make_shared<ViewPlane>(500, 500, 700, 1);
         std::vector<std::shared_ptr<VectorialLight>> lights;
+        std::vector<std::shared_ptr<AreaLight>> arealights;
+        arealights.push_back(std::make_shared<AreaLight>(0.20, Constants::WHITE, light));
 
         auto cornell = std::make_shared<Camera>(Point3(278, 278, -800), Point3(278, 278, 0), Vector3(0, 1, 0));
-        auto world = World(vp, objects, lights, AmbientLight(0.2, ColorVec(1, 1, 1)), ColorVec(0, 0, 0), true);
+        auto world = World(vp, objects, lights, AmbientLight(0, ColorVec(1, 1, 1)), ColorVec(0, 0, 0), true);
         world.withCamera(cornell);
+        world.withAreaLights(arealights);
         return world;
 
     }
-    /*
+
     World buildingsScene() {
         std::vector<std::shared_ptr<VirtualObject>> objects;
-        const auto view_plane = std::make_shared<ViewPlane>(40, 40, 2, 01.0f);
-        const auto black_white_texture = std::make_shared<CheckerTexture>(Constants::BLACK, Constants::WHITE, 1);
+        const auto black_white_texture = std::make_shared<CheckerTexture>(Constants::BLACK, Constants::WHITE, 10);
         const auto textured_bw = std::make_shared<TexturedMatte>(black_white_texture);
-        objects.push_back(std::make_shared<Plane>(Point3(0, 900, 1000), Vector3(0, 1, 1), textured_bw));
+        const auto phong_reflective_higher_exp = std::make_shared<PhongReflective>(ColorVec(Constants::BLACK), 1, 25,
+                                                                                   1);
 
-        
-    } 
+        auto mat = Matrix4x4(1.0f);
 
-    */
+        objects.push_back(std::make_shared<Plane>(Point3(0, 0, 0), Vector3(0, 1, 0), textured_bw));
+        auto building1 = std::make_shared<Mesh>("assets/objs/building1.obj",
+                                                std::make_shared<Phong>(ColorVec(0.5, 0.4, 0.5), 1, 1, 25));
+        mat = Matrix4x4(1.0f);
+        mat = glm::translate(mat, Vector3(20, 0, 55));
+        mat = glm::scale(mat, Vector3(15));
+        mat = glm::rotate(mat, (float) glm::radians(45.0f), Vector3(0, 1, 0));
+
+        building1->transform(mat);
+
+        auto building2 = std::make_shared<Mesh>("assets/objs/building2.obj",
+                                                std::make_shared<Phong>(ColorVec(0.5, 0.4, 0.5), 1, 1, 25));
+        mat = Matrix4x4(1.0f);
+        mat = glm::translate(mat, Vector3(76, 0, 50));
+        mat = glm::scale(mat, Vector3(15));
+        mat = glm::rotate(mat, (float) glm::radians(45.0f), Vector3(0, 1, 0));
+        building2->transform(mat);
+
+        auto building3 = std::make_shared<Mesh>("assets/objs/building3.obj",
+                                                std::make_shared<Phong>(ColorVec(0.5, 0.4, 0.5), 1, 1, 25));
+
+        mat = Matrix4x4(1.0f);
+        mat = glm::translate(mat, Vector3(130, 0, 60));
+        mat = glm::scale(mat, Vector3(15));
+        mat = glm::rotate(mat, (float) glm::radians(45.0f), Vector3(0, 1, 0));
+        const auto transparent = std::make_shared<Transparent>(1.20, 0.22);
+
+
+        building3->transform(mat);
+
+        objects.push_back(building1);
+        objects.push_back(building2);
+        objects.push_back(building3);
+        const auto vp = std::make_shared<ViewPlane>(20, 20, 10, 1);
+
+        objects.push_back(std::make_shared<Ball>(Point3(5, 30, 35), 25,
+                                                 phong_reflective_higher_exp));
+
+        objects.push_back(std::make_shared<Ball>(Point3(90, 25, 0), 10, transparent));
+
+        std::vector<std::shared_ptr<VectorialLight>> lights;
+        //lights.push_back(std::make_shared<PointLight>(Point3(90, 30, 90), Constants::pi * 6, ColorVec(1, 1, 1)));
+
+        std::vector<std::shared_ptr<AreaLight>> arealights;
+        auto diffuse_light = std::make_shared<DiffuseLight>(Constants::WHITE, 1);
+        //Rectangle
+        const auto light = std::make_shared<Ball>(Point3(190, 230, 190), 2.9 ,
+                                                  diffuse_light);
+
+        objects.push_back(light);
+        arealights.push_back(std::make_shared<AreaLight>(20, Constants::WHITE, light));
+
+        auto world = World(vp, objects, lights, AmbientLight(0, ColorVec(1, 1, 1)), ColorVec(0, 0, 0), true);
+        auto cam = std::make_shared<Camera>(Point3(60, 100, 70), Point3(60, 40, 20), Vector3(0, 1, 0));
+        world.withCamera(cam);
+        world.withAreaLights(arealights);
+        return world;
+
+    }
+
+
 };

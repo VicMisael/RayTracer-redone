@@ -11,23 +11,17 @@
 std::tuple<float, float> Disk::getUVMapping(const Point3 point) const {
     glm::vec3 vecToPoint = point - center;
 
-    // Normalize the vector
     glm::vec3 vecToPointNormalized = glm::normalize(vecToPoint);
 
-    // Calculate the angle between the normalized vector and the disk's normal
     const float angle = std::acos(glm::dot(normal, vecToPointNormalized));
 
-    // Calculate the radius from the center of the disk to the point
     const float radius = glm::length(vecToPoint);
 
-    // Calculate the U coordinate (angle in radians divided by 2*pi)
     const float u = angle / (2.0f * glm::pi<float>());
 
-    // Calculate the V coordinate (normalized radius)
     const float v = radius / sqrtf(r_squared);
 
     return {u, v};
-    // Calculate the vector from the center of the disk to the point
 }
 
 std::optional<intersectionRec> Disk::intersects(const Ray &ray) const {

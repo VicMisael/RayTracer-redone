@@ -27,28 +27,28 @@ int main() {
     constexpr bool png = true;
 
 
-    const uint32_t w = 850;
-    const uint32_t h = 850;
+    const uint32_t w = 950;
+    const uint32_t h = 950;
     //TODO: ARea Lights
 
 
 
 
-    const auto sampler = generateSampler(1200);
+    const auto sampler = generateSampler(30);
 
 
-    auto selectedWorld = worlds::cornellBox();
+    auto selectedWorld = worlds::buildingsScene();
     Canvas *drawcanvas;
 
     if (png) {
-        drawcanvas = new imagecanvas(w, h, "cornell1200");
+        drawcanvas = new imagecanvas(w, h, "buildings");
     } else {
         drawcanvas = new sdl2canvas(w, h);
     }
-    constexpr int32_t recursion_depth_limit = 30;
+    constexpr int32_t recursion_depth_limit = 10;
 
     Scene scene(selectedWorld, drawcanvas);
-    std::shared_ptr<Camera> camera=std::make_shared<Camera>(Vector3(1, 152, 200), Vector3(1, 600, -3000), Vector3(0, 1, 0));
+    std::shared_ptr<Camera> camera=std::make_shared<Camera>(Vector3(1, 352, 300), Vector3(9, 200, -3000), Vector3(0, 1, 0));
     if (!png) {
         auto *canvas = dynamic_cast<sdl2canvas *>(drawcanvas);
         auto draw = [&] {

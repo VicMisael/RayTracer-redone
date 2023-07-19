@@ -20,6 +20,7 @@ ColorVec Matte::shade(const World &world, const Ray &ray, const intersectionRec 
 
             if (!in_shadow) {
                 const auto intensity = light->intensityAtPoint(intersection.hit_point);
+
                 L += brdf_.f(intersection, wo, wi) * intensity * ndotwi;
             }
 
@@ -33,13 +34,15 @@ ColorVec Matte::shade(const World &world, const Ray &ray, const intersectionRec 
         if (ndotwi > 0) {
             bool in_shadow = false;
 
-            if (intersection.material->castShadow() &&  light->casts_shadow())
+            if (light->casts_shadow())
                 in_shadow = 
                           light->shadow_hit(world, Ray(intersection.hit_point, normalize(wi)), state);
 
             if (!in_shadow) {
                 const auto intensity = light->intensityAtPoint(intersection.hit_point, state)
                                        * light->G(intersection.hit_point, state);
+//                const auto intensity =
+//                        world.trace_ray(Ray(intersection.hit_point, wi),depth-1) * light->G(intersection.hit_point, state);
                 L += brdf_.f(intersection, wo, wi) * intensity * ndotwi / light->pdf();
             }
         }

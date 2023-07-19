@@ -26,9 +26,9 @@ ColorVec &Phong::getVec(const World &world, const intersectionRec &intersection,
         const float ndotwi = glm::dot(intersection.normal, wi);
         if (ndotwi > 0) {
             bool inshadow = false;
-            if (intersection.material->castShadow() &&  light->casts_shadow())
-                inshadow = 
-                           light->shadow_hit(world, Ray(intersection.hit_point, normalize(wi)));
+            if (intersection.material->castShadow() && light->casts_shadow())
+                inshadow =
+                        light->shadow_hit(world, Ray(intersection.hit_point, normalize(wi)));
 
             if (!inshadow) {
                 const auto l_intensity = light->intensityAtPoint(intersection.hit_point);
@@ -45,14 +45,17 @@ ColorVec &Phong::getVec(const World &world, const intersectionRec &intersection,
         if (ndotwi > 0) {
             bool in_shadow = false;
 
-            if (intersection.material->castShadow() && light->casts_shadow())
-                in_shadow = light->shadow_hit(world, Ray(intersection.hit_point, normalize(wi)), state);
+            if (light->casts_shadow())
+                in_shadow = light->shadow_hit(world, Ray(intersection.hit_point, wi), state);
 
             if (!in_shadow) {
                 const auto intensity = light->intensityAtPoint(intersection.hit_point, state)
                                        * light->G(intersection.hit_point, state);
-                L += (glossy_specular_.f(intersection, wo, wi) + lambertian_.f(intersection, wo, wi)) * intensity *
-                     ndotwi / light->pdf();
+
+                // const auto intensity =
+                  //      world.trace_ray(Ray(intersection.hit_point, wi),3) * light->G(intersection.hit_point, state);
+                L += (glossy_specular_.f(intersection, wo, wi) + lambertian_.f(intersection, wo, wi)) * intensity / light->pdf();
+
             }
         }
     }
