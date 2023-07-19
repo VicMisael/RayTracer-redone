@@ -18,6 +18,14 @@ ColorVec World::shade(const intersectionRec &intersection, const Ray &ray, const
 
 
 void World::render(Canvas *canvas, const int32_t depth, const std::shared_ptr<sampler> &_sampler) {
+    if (this->camera.has_value()) {
+        this->render(canvas, depth, _sampler, this->camera.value());
+    }else{
+        nocamera(canvas, depth, _sampler);
+    }
+}
+
+void World::nocamera(Canvas *canvas, const int32_t depth, const std::shared_ptr<sampler> &_sampler) const {
     const uint32_t height = canvas->getHeight();
     const uint32_t width = canvas->getWidth();
     const float ystep = canvas->step_size_y(viewPlane);
@@ -38,7 +46,7 @@ void World::render(Canvas *canvas, const int32_t depth, const std::shared_ptr<sa
                 ColorVec actualColor;
                 if (perspective_) {
                     const float y_coord = viewPlane->pixelsize * (vp_y - 0.5f * (viewPlane->hsize - 1.0f));
-                    const float x_coord = -viewPlane->pixelsize * (vp_x - 0.5f * (viewPlane->wsize - 1.0f));
+                    const float x_coord = viewPlane->pixelsize * (vp_x - 0.5f * (viewPlane->wsize - 1.0f));
                     const Vector3 vp_r(x_coord + x_sample_point, y_coord + y_sample_point, zw);
                     Point3 origin(0, 0, 0);
                     Vector3 direction = origin - vp_r;
@@ -67,7 +75,6 @@ void World::render(Canvas *canvas, const int32_t depth, const std::shared_ptr<sa
             canvas->write_pixel(x, y, ColorRGBA(out));
         }
     }
-
 }
 
 std::optional<intersectionRec> World::hit(const Ray &ray) const {
@@ -100,7 +107,7 @@ ColorVec World::trace_ray(const Ray &ray, float &tmin, const int32_t depth) cons
 }
 
 void
-World::render(Canvas *canvas, int32_t depth, const std::shared_ptr<sampler> &_sampler, std::shared_ptr<Camera> camera) {
+World::render(Canvas *canvas, int32_t depth, const std::shared_ptr<sampler> &_sampler, std::shared_ptr<Camera> &camera) {
 
     auto inv = camera->getLookAtInverse();
     const uint32_t height = canvas->getHeight();
@@ -123,7 +130,7 @@ World::render(Canvas *canvas, int32_t depth, const std::shared_ptr<sampler> &_sa
                 ColorVec actualColor;
                 if (perspective_) {
                     const float y_coord = viewPlane->pixelsize * (vp_y - 0.5f * (viewPlane->hsize - 1.0f));
-                    const float x_coord = -viewPlane->pixelsize * (vp_x - 0.5f * (viewPlane->wsize - 1.0f));
+                    const float x_coord = viewPlane->pixelsize * (vp_x - 0.5f * (viewPlane->wsize - 1.0f));
                     const Vector3 vp_r(x_coord + x_sample_point, y_coord + y_sample_point, zw);
                     Point3 origin(0, 0, 0);
                     Vector3 direction = origin - vp_r;

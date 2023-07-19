@@ -27,33 +27,34 @@ int main() {
     constexpr bool png = false;
 
 
-    const uint32_t w = 400;
-    const uint32_t h = 400;
+    const uint32_t w = 850;
+    const uint32_t h = 850;
     //TODO: ARea Lights
 
 
 
 
-    const auto sampler = generateSampler(10);
+    const auto sampler = generateSampler(50);
 
-    auto selectedWorld = worlds::generateWorld1(false);
+
+    auto selectedWorld = worlds::cornellBox();
     Canvas *drawcanvas;
 
     if (png) {
-        drawcanvas = new imagecanvas(w, h, "rdr2");
+        drawcanvas = new imagecanvas(w, h, "cornell");
     } else {
         drawcanvas = new sdl2canvas(w, h);
     }
-    constexpr int32_t recursion_depth_limit = 10;
+    constexpr int32_t recursion_depth_limit = 30;
 
     Scene scene(selectedWorld, drawcanvas);
-    std::shared_ptr<Camera> camera=std::make_shared<Camera>(Vector3(1, 12, 1), Vector3(1, 1, -3000), Vector3(0, 1, 0));
+    std::shared_ptr<Camera> camera=std::make_shared<Camera>(Vector3(1, 152, 200), Vector3(1, 600, -3000), Vector3(0, 1, 0));
     if (!png) {
         auto *canvas = dynamic_cast<sdl2canvas *>(drawcanvas);
         auto draw = [&] {
             while (!canvas->should_stop()) {
                 auto t1 = std::chrono::high_resolution_clock::now();
-                scene.render(recursion_depth_limit, sampler,camera);
+                scene.render(recursion_depth_limit, sampler);
 
                 auto t2 = std::chrono::high_resolution_clock::now();
                 std::chrono::duration<double, std::milli> ms_double = t2 - t1;

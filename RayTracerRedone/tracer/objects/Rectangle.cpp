@@ -38,7 +38,7 @@ std::optional<intersectionRec> Rectangle::intersects(const Ray &ray) const {
     const float v = fabs(dot(d, bNormalized)) / length(b);
 
 
-    return intersectionRec{t, p, normalize(normal), material.value(), u, v};
+    return intersectionRec{t, p, normalize(normal), material, u, v};
 }
 
 void Rectangle::transform(Matrix4x4 m) {

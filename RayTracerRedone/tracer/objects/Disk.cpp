@@ -41,7 +41,7 @@ std::optional<intersectionRec> Disk::intersects(const Ray &ray) const {
     const float dist2 = powf(glm::distance(center, p), 2);
     if (dist2 < r_squared) {
         const auto [u, v] = getUVMapping(p);
-        return intersectionRec{t, p, normalize(normal), material.value(), u, v};
+        return intersectionRec{t, p, normalize(normal), material, u, v};
     } else {
         return {};
     }

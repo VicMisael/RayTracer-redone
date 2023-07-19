@@ -14,9 +14,10 @@
 
 class VirtualObject {
 protected:
+   
 
 public:
-    std::optional<std::shared_ptr<Material>> material;
+        std::shared_ptr<Material> material;
 
     explicit VirtualObject();
 
@@ -38,6 +39,10 @@ public:
 
     virtual float getPdf() const {
         return 1 / getArea();
+    }
+
+    void setCastsShadow(bool castsShadow) {
+        material->setcastsShadow(castsShadow);
     }
 
     // the case where there is no bounding box is the edge case

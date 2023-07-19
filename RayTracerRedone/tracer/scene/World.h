@@ -26,6 +26,7 @@ private:
     std::vector<std::shared_ptr<AreaLight>> areaLights_;
     ColorVec bgColor;
     AmbientLight ambient_light;
+    std::optional<std::shared_ptr<Camera>> camera;
     //std::shared_ptr<BVH> bvh;
     bool perspective_{};
 
@@ -58,29 +59,19 @@ public:
 
     }
 
-    World(std::shared_ptr<ViewPlane> _viewPlane,
-          std::vector<std::shared_ptr<VirtualObject>> _objects,
-          std::vector<std::shared_ptr<VectorialLight>> lights,
-          std::vector<std::shared_ptr<AreaLight>> areaLights,
-          AmbientLight _ambient_light,
-          ColorVec _bgColor,
-          bool perspective) :
-            viewPlane(std::move(_viewPlane)),
-            objects_(std::move(_objects)),
-            lights_(std::move(lights)),
-            areaLights_(areaLights),
-            bgColor(_bgColor),
-            ambient_light(std::move(_ambient_light)), perspective_(perspective) {
-        //bvh = std::make_shared<BVH>(objects_);
-        printAreas(objects_);
-        for (const auto &areaLight: areaLights) {
-            objects_.push_back((*areaLight).getObject());
-        }
+
+    void withCamera(std::shared_ptr<Camera> camera) {
+        this->camera.emplace(camera);
+    }
+
+    void withAreaLights(std::vector<std::shared_ptr<AreaLight>> _areaLights) {
+        areaLights_ = std::move(_areaLights);
     }
 
     void render(Canvas *, int32_t, const std::shared_ptr<sampler> &);
 
-    void render(Canvas *, int32_t, const std::shared_ptr<sampler> &, std::shared_ptr<Camera> camera);
+    void render(Canvas *, int32_t, const std::shared_ptr<sampler> &, std::shared_ptr<Camera> &camera);
+
 
     [[nodiscard]] std::optional<intersectionRec> hit(const Ray &ray) const;
 
@@ -95,4 +86,6 @@ public:
     [[nodiscard]] AmbientLight getAmbientLight() const {
         return ambient_light;
     }
+
+    void nocamera(Canvas *canvas, const int32_t depth, const std::shared_ptr<sampler> &_sampler) const;
 };

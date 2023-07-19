@@ -74,7 +74,7 @@ std::optional<intersectionRec> Mesh::intersects(const Ray &ray) const {
                 tNear,
                 ray.origin + tNear * ray.direction,
                 normalize(hit_normal),
-                material.value(),
+                material,
                 uTexture,
                 vTexture
         };
@@ -214,7 +214,7 @@ void Mesh::GenerateBvh() {
 
     std::vector<std::shared_ptr<VirtualObject>> triangleList = {};
     for (auto &item: faces) {
-        auto triangle = std::make_shared<Triangle>(item, vertices, material.value());
+        auto triangle = std::make_shared<Triangle>(item, vertices, material);
         triangleList.push_back(triangle);
     }
     bvh = std::make_unique<BVH>(triangleList);
@@ -306,7 +306,7 @@ std::optional<intersectionRec> Mesh::Triangle::intersects(const Ray &ray) const 
                 tNear,
                 ray.origin + tNear * ray.direction,
                 normalize(hit_normal),
-                material.value(),
+                material,
                 uTexture,
                 vTexture
         };

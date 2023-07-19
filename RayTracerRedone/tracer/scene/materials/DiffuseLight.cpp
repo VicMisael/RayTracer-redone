@@ -5,9 +5,13 @@
 #include "DiffuseLight.h"
 #include "../../utils/utility.h"
 #include "../World.h"
+
 ColorVec
 DiffuseLight::shade(const World &world, const Ray &ray, const intersectionRec &intersection, int32_t depth) const {
-    return  intensity*color;
+    return intensity * color;
 }
 
-DiffuseLight::DiffuseLight(const ColorVec &color, float intensity) : color(color), intensity(intensity) {}
+DiffuseLight::DiffuseLight(const ColorVec &color, float intensity) : color(color),
+                                                                     intensity(intensity) {
+    castsShadow = false;
+}

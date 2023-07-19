@@ -15,19 +15,6 @@ BumpMapping::shade(const World &world, const Ray &ray, const intersectionRec &in
     const Vector3 bumpMapping = (2.0f * Vector3(col)) - Vector3(1.0f);
 
     Vector3 refVector;
-    //Orthonormal base
-    /*
-    if (glm::length2(normal - Vector3(0, 1, 0)) < glm::epsilon<float>()) {
-        refVector = Vector3(1, 0, 0);
-    } else {
-        refVector = Vector3(0, 1, 0);
-    }
-    Vector3 t = normalize(cross(normal, refVector));
-    Vector3 b = normalize(cross(normal, t));
-    
-
-    normal = Matrix3x3(t, b, normal) * bumpMapping;
-    */
     normal = OrthonormalBase(normal).local(bumpMapping);
     auto intersection = intersectionRec{intersectionIn.tmin, intersectionIn.hit_point, normal, intersectionIn.material,
                                         intersectionIn.u, intersectionIn.v};

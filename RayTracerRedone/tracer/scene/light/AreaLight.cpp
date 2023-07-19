@@ -45,7 +45,8 @@ AreaLight::AreaLightState AreaLight::generateState(Point3 p) const {
 }
 
 AreaLight::AreaLight(const float intensity, const ColorVec &color, const std::shared_ptr<VirtualObject> &object)
-        : Light(intensity, color), object(object) {}
+        : Light(intensity, color), object(object) {
+}
 
 Vector3 AreaLight::getVectorNormalized(AreaLight::AreaLightState areaLightState) const {
     return glm::normalize(areaLightState.wi);

@@ -6,6 +6,7 @@
 
 #include <glm/gtx/norm.hpp>
 #include "VirtualObject.h"
+#include "../utils/OrthonormalBase.h"
 
 class Rectangle : public VirtualObject {
     Point3 p0 = Point3(-1.0f, 0.0f, -1.0f);  // corner vertex
@@ -24,9 +25,12 @@ public:
 
     Rectangle(const Point3 &_p0, const Vector3 &_normal, const float side_length, std::shared_ptr<Material> _material)
             : VirtualObject(_material), p0(_p0) {
-        Vector3 refDir;
+
         auto axisNormalized = normalize(_normal);
-        if (glm::length2(axisNormalized - Vector3(0, 1, 0)) < glm::epsilon<float>()) {
+
+        //ONB
+        Vector3 refDir;
+        if (glm::length2(glm::abs(axisNormalized) - Vector3(0, 1, 0)) < glm::epsilon<float>()) {
             refDir = Vector3(1, 0, 0);
         } else {
             refDir = Vector3(0, 1, 0);

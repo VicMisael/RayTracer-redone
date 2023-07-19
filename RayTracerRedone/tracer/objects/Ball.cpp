@@ -46,7 +46,7 @@ std::optional<intersectionRec> Ball::intersects(const Ray &ray) const {
     const Vector3 normal = normalize(closestPoint - center);
     //const Vector3 normal= (origin_minus_center + closest * ray_direction) / radius;
     const auto [u, v] = get_sphere_uv(normal);
-    return intersectionRec{closest, closestPoint, normal, material.value(), u, v};
+    return intersectionRec{closest, closestPoint, normal, material, u, v};
 }
 
 std::shared_ptr<AABB> Ball::bounding_box() const {
