@@ -52,6 +52,9 @@ Vector3 utility::random_in_unit_sphere() {
     return glm::sphericalRand(1.0f);
 }
 
+Vector3 utility::random_in_hemisphere() {
+   return random_in_hemisphere( Vector3(0, 1, 0));
+}
 Vector3 utility::random_in_hemisphere(const Vector3 normal) {
     Vector3 in_unit_sphere = random_in_unit_sphere();
     if (dot(in_unit_sphere, normal) > 0.0)

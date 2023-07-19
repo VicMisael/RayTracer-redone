@@ -33,6 +33,8 @@ namespace utility {
 
      Vector3 random_in_unit_sphere();
 
+     Vector3 random_in_hemisphere();
+
      Vector3 random_in_hemisphere(const Vector3 normal);
 
      float clamp(float x, float min, float max);

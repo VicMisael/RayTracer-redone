@@ -34,10 +34,10 @@ int main() {
 
 
 
-    const auto sampler = generateSampler(50);
+    const auto sampler = generateSampler(1);
 
 
-    auto selectedWorld = worlds::cornellBox();
+    auto selectedWorld = worlds::generateWorld1();
     Canvas *drawcanvas;
 
     if (png) {

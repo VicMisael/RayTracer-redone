@@ -75,7 +75,7 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
 
     objects.push_back(std::make_shared<Plane>(Point3(0, 0, -1600), Vector3(0, -1, 1), textured_test_material2));
 
-    objects.push_back(std::make_shared<Plane>(Point3(0, 900, 1000), Vector3(0, 1, 1), textured_bw));
+    objects.push_back(std::make_shared<Plane>(Point3(0, 900, 1000), Vector3(0, 1, 1), plane_material));
 
     objects.push_back(
             std::make_shared<Ball>(Point3(0, -1000, -1000), 1000, white_matte));
@@ -414,10 +414,9 @@ namespace worlds {
         const auto side1 = std::make_shared<Rectangle>(Point3(0, 0, 0), Point3(0, 555, 0), Point3(0, 0, 555), green);
         const auto side2 = std::make_shared<Rectangle>(Point3(555, 0, 555), Vector3(1, 0, 0), 555, red);
         const auto floor = std::make_shared<Rectangle>(Point3(0, 0, 0), Vector3(0, 1, 0), 555, white);;
-        const auto ceiling = std::make_shared<Rectangle>(Point3(0, 555, 0), Vector3(0, 1, 0), 555, white);
-        const auto back = std::make_shared<Rectangle>(Point3(0, 0, 554), Vector3(0.4, 0.4 , 1), 555, white);
-
-        const auto light = std::make_shared<Rectangle>(Point3(277, 544, 327), Vector3(0,-1, 0), 65, diffuse_light);
+        const auto ceiling = std::make_shared<Rectangle>(Point3(0, 555, 0), Vector3(0, 0, 555), Point3(555, 0, 0), white);
+        const auto back = std::make_shared<Rectangle>(Point3(555, 0, 555), Vector3(0,0,-1),555, white);
+        const auto light = std::make_shared<Rectangle>(Point3(277, 544, 327), Vector3(0,0,120),Vector3(120,0,0), diffuse_light);
 
 
         const auto jupitertexture = std::make_shared<ImageTexture>("assets/textures/jupiter.jpg");
@@ -453,7 +452,7 @@ namespace worlds {
         std::vector<std::shared_ptr<VectorialLight>> lights;
 
         auto cornell = std::make_shared<Camera>(Point3(278, 278, -800), Point3(278, 278, 0), Vector3(0, 1, 0));
-        auto world = World(vp, objects, lights, AmbientLight(0.0, ColorVec(1, 1, 1)), ColorVec(0, 0, 0), true);
+        auto world = World(vp, objects, lights, AmbientLight(0.2, ColorVec(1, 1, 1)), ColorVec(0, 0, 0), true);
         world.withCamera(cornell);
         return world;
 

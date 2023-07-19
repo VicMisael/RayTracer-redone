@@ -13,13 +13,17 @@ ColorVec Lambertian::f(const intersectionRec &intersection, const Vector3 &wo, c
 
 
 sample_f_out Lambertian::sample_f(const intersectionRec &intersection, const Vector3 &wo) const {
-    const Vector3 inNormal = intersection.normal;
+    const Vector3 w = intersection.normal;
 
-    OrthonormalBase orthonormalBase(inNormal);
 
-    auto wi = utility::random_in_hemisphere(inNormal);
+     
+    OrthonormalBase orthonormalBase(w);
+    auto wi = utility::random_in_hemisphere();
     wi = orthonormalBase.onb() * wi;
-    const float pdf = dot(inNormal, wi) * Constants::INVPI_FLT;
+    
+    const float pdf = dot(w, wi) * Constants::INVPI_FLT;
 
     return {kd_ * cd_ * Constants::INVPI_FLT, wi, pdf};
 }
+
+

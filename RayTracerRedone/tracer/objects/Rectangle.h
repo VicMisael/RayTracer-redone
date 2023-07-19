@@ -14,11 +14,10 @@ class Rectangle : public VirtualObject {
     Vector3 b = Vector3(2.0f, 0.0f, 0.0f);   // side
 
     Vector3 normal = Vector3(0.0f, 1.0f, 0.0f);
-    float area ;
+
 public:
     Rectangle(const Point3 &_p0, const Vector3 &_a, const Vector3 &_b, std::shared_ptr<Material> _material)
-            : VirtualObject(_material), p0(_p0), a(_a), b(_b),
-              area(length(a) * length(b)) {
+            : VirtualObject(_material), p0(_p0), a(_a), b(_b) {
         normal = cross(a, b);
         normal = normalize(normal);
     }
@@ -41,12 +40,6 @@ public:
         a = t * side_length;
         b = bvec * side_length;
         normal = axisNormalized;
-    }
-
-    Rectangle(const Point3 &_p0, const Vector3 &_a, const Vector3 &_b, const Vector3 &_normal,std::shared_ptr<Material> _material)
-            : VirtualObject(_material), p0(_p0), a(_a), b(_b),
-              area(length(a) * length(b)), normal(_normal) {
-        normal = normalize(normal);
     }
 
     [[nodiscard]] std::optional<intersectionRec> intersects(const Ray &ray) const override;
