@@ -24,7 +24,7 @@ std::shared_ptr<sampler> generateSampler(int numsamples) {
 }
 
 int main() {
-    constexpr bool png = false;
+    constexpr bool png = true;
 
 
     const uint32_t w = 850;
@@ -34,14 +34,14 @@ int main() {
 
 
 
-    const auto sampler = generateSampler(1);
+    const auto sampler = generateSampler(1200);
 
 
-    auto selectedWorld = worlds::generateWorld1();
+    auto selectedWorld = worlds::cornellBox();
     Canvas *drawcanvas;
 
     if (png) {
-        drawcanvas = new imagecanvas(w, h, "cornell");
+        drawcanvas = new imagecanvas(w, h, "cornell1200");
     } else {
         drawcanvas = new sdl2canvas(w, h);
     }

@@ -448,7 +448,7 @@ namespace worlds {
         objects.push_back(back);
         objects.push_back(light);
 
-        const auto vp = std::make_shared<ViewPlane>(500, 500, 650, 1);
+        const auto vp = std::make_shared<ViewPlane>(500, 500, 700, 1);
         std::vector<std::shared_ptr<VectorialLight>> lights;
 
         auto cornell = std::make_shared<Camera>(Point3(278, 278, -800), Point3(278, 278, 0), Vector3(0, 1, 0));
