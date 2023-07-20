@@ -24,18 +24,18 @@ std::shared_ptr<sampler> generateSampler(int numsamples) {
 }
 
 int main() {
-    constexpr bool png = true;
+    constexpr bool png = false;
 
 
-    const uint32_t w = 1600;
-    const uint32_t h = 1600;
+    const uint32_t w = 750;
+    const uint32_t h = 750;
 
 
 
-    const auto sampler = generateSampler(200);
+    const auto sampler = generateSampler(2);
 
 
-    auto selectedWorld = worlds::buildingsScene();
+    auto selectedWorld = worlds::generateWorld1();
     Canvas *drawcanvas;
 
     if (png) {

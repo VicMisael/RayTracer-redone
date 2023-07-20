@@ -4,7 +4,6 @@
 #include <glm/ext/scalar_constants.hpp>
 #include "ColorVec.h"
 #include <cmath>
-
 namespace Constants {
     constexpr double pi = glm::pi<double>();
 
