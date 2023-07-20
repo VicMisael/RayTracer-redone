@@ -37,5 +37,7 @@ public:
 		has no chance of generating the appropriate wi direction.
 	*/
 	virtual sample_f_out sample_f(const intersectionRec& intersection, const Vector3 &wo) const = 0;
+
+	//TODO implement for an arbitrary outgoing directly for true area lights
 };
 

@@ -24,28 +24,26 @@ std::shared_ptr<sampler> generateSampler(int numsamples) {
 }
 
 int main() {
-    constexpr bool png = false;
+    constexpr bool png = true;
 
 
-    const uint32_t w = 950;
-    const uint32_t h = 950;
-    //TODO: ARea Lights
-
+    const uint32_t w = 1600;
+    const uint32_t h = 1600;
 
 
 
-    const auto sampler = generateSampler(1);
+    const auto sampler = generateSampler(200);
 
 
     auto selectedWorld = worlds::buildingsScene();
     Canvas *drawcanvas;
 
     if (png) {
-        drawcanvas = new imagecanvas(w, h, "buildings");
+        drawcanvas = new imagecanvas(w, h, "buildingsfinalnonm");
     } else {
         drawcanvas = new sdl2canvas(w, h);
     }
-    constexpr int32_t recursion_depth_limit = 10;
+    constexpr int32_t recursion_depth_limit = 20;
 
     Scene scene(selectedWorld, drawcanvas);
     std::shared_ptr<Camera> camera=std::make_shared<Camera>(Vector3(1, 352, 300), Vector3(9, 200, -3000), Vector3(0, 1, 0));
