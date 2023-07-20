@@ -53,8 +53,8 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     const auto plane_material2 = std::make_shared<Phong>(ColorVec(0.4, 0.9, 0.2), 1, 1, 25);
     const auto white_phong = std::make_shared<Phong>(Constants::WHITE, 1, 1, 25);
     const auto checkeredTexture = std::make_shared<CheckerTexture>(10);
-    const auto blue_white_texture = std::make_shared<CheckerTexture>(ColorVec(0.4, 0.4, 0.8), Constants::WHITE, 1);
-    const auto black_white_texture = std::make_shared<CheckerTexture>(Constants::BLACK, Constants::WHITE, 1);
+    const auto blue_white_texture = std::make_shared<CheckerTexture>(ColorVec(0.4, 0.4, 0.8), Constants::WHITE, 5);
+    const auto black_white_texture = std::make_shared<CheckerTexture>(Constants::BLACK, Constants::WHITE, 10);
 
     const auto textured_bw = std::make_shared<TexturedMatte>(black_white_texture);
     const auto textured = std::make_shared<TexturedPhong>(checkeredTexture);
