@@ -13,13 +13,18 @@ public:
         lookAtMatrix = glm::lookAt(eye, look_at, up);
     }
 
-    Camera() = delete;
+    Camera() {
+        lookAtMatrix=Matrix4x4(1.0f);
+        nocam = true;
+       
+    };
 
     [[nodiscard]] Matrix4x4 getLookAtInverse() const {
         return glm::inverse(lookAtMatrix);
     }
 
 private:
+    bool nocam = 0;
     Vector3 up;
     Vector3 look_at;
     Vector3 eye;

@@ -26,17 +26,15 @@ private:
     std::vector<std::shared_ptr<AreaLight>> areaLights_;
     ColorVec bgColor;
     AmbientLight ambient_light;
-    std::optional<std::shared_ptr<Camera>> camera;
+    std::shared_ptr<Camera> camera;
     //std::shared_ptr<BVH> bvh;
     bool perspective_{};
-
     static void printAreas(const std::vector<std::shared_ptr<VirtualObject>> &objects) {
         for (const auto &obj: objects) {
 
             std::cout << "The area of the object " << typeid(*obj).name() << " is:" << obj->getArea() << std::endl;
         }
     }
-
 public:
     [[nodiscard]] ColorVec trace_ray(const Ray &ray, const int32_t depth) const;
 
@@ -56,12 +54,12 @@ public:
             ambient_light(std::move(_ambient_light)), perspective_(perspective) {
         //bvh = std::make_shared<BVH>(objects_);
         printAreas(objects_);
-
+        camera = std::make_shared<Camera>();
     }
 
 
     void withCamera(std::shared_ptr<Camera> camera) {
-        this->camera.emplace(camera);
+        this->camera=camera;
     }
 
     void withAreaLights(std::vector<std::shared_ptr<AreaLight>> _areaLights) {
@@ -87,5 +85,4 @@ public:
         return ambient_light;
     }
 
-    void nocamera(Canvas *canvas, const int32_t depth, const std::shared_ptr<sampler> &_sampler) const;
 };
