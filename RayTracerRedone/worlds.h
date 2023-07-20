@@ -466,15 +466,16 @@ namespace worlds {
     World buildingsScene() {
         std::vector<std::shared_ptr<VirtualObject>> objects;
         const auto black_white_texture = std::make_shared<CheckerTexture>(Constants::BLACK, Constants::WHITE, 10);
-        const auto textured_bw = std::make_shared<TexturedMatte>(black_white_texture);
+        const auto ground_texture = std::make_shared<ImageTexture>("assets/textures/ground.jpg");
+        const auto textured = std::make_shared<TexturedMatte>(ground_texture);
         const auto phong_reflective_higher_exp = std::make_shared<PhongReflective>(ColorVec(Constants::BLACK), 1, 25,
                                                                                    1);
-
+        const auto building_material =std::make_shared<Phong>(ColorVec(0.5, 0.4, 0.5), 1, 1, 25);
         auto mat = Matrix4x4(1.0f);
 
-        objects.push_back(std::make_shared<Plane>(Point3(0, 0, 0), Vector3(0, 1, 0), textured_bw));
+        objects.push_back(std::make_shared<Plane>(Point3(0, 2, 0), Vector3(0, 1, 0), textured));
         auto building1 = std::make_shared<Mesh>("assets/objs/building1.obj",
-                                                std::make_shared<Phong>(ColorVec(0.5, 0.4, 0.5), 1, 1, 25));
+                                                building_material);
         mat = Matrix4x4(1.0f);
         mat = glm::translate(mat, Vector3(20, 0, 55));
         mat = glm::scale(mat, Vector3(15));
@@ -483,7 +484,7 @@ namespace worlds {
         building1->transform(mat);
 
         auto building2 = std::make_shared<Mesh>("assets/objs/building2.obj",
-                                                std::make_shared<Phong>(ColorVec(0.5, 0.4, 0.5), 1, 1, 25));
+                                                building_material);
         mat = Matrix4x4(1.0f);
         mat = glm::translate(mat, Vector3(76, 0, 50));
         mat = glm::scale(mat, Vector3(15));
@@ -491,7 +492,7 @@ namespace worlds {
         building2->transform(mat);
 
         auto building3 = std::make_shared<Mesh>("assets/objs/building3.obj",
-                                                std::make_shared<Phong>(ColorVec(0.5, 0.4, 0.5), 1, 1, 25));
+                                                building_material);
 
         mat = Matrix4x4(1.0f);
         mat = glm::translate(mat, Vector3(130, 0, 60));
@@ -505,9 +506,9 @@ namespace worlds {
         objects.push_back(building1);
         objects.push_back(building2);
         objects.push_back(building3);
-        const auto vp = std::make_shared<ViewPlane>(20, 20, 10, 1);
+        const auto vp = std::make_shared<ViewPlane>(20, 20, 10, 0.75);
 
-        objects.push_back(std::make_shared<Ball>(Point3(5, 30, 35), 25,
+        objects.push_back(std::make_shared<Ball>(Point3(40, 30, 105), 25,
                                                  phong_reflective_higher_exp));
 
         objects.push_back(std::make_shared<Ball>(Point3(90, 25, 0), 10, transparent));
@@ -525,7 +526,7 @@ namespace worlds {
         arealights.push_back(std::make_shared<AreaLight>(20, Constants::WHITE, light));
 
         auto world = World(vp, objects, lights, AmbientLight(0, ColorVec(1, 1, 1)), ColorVec(0, 0, 0), true);
-        auto cam = std::make_shared<Camera>(Point3(60, 100, 70), Point3(60, 40, 20), Vector3(0, 1, 0));
+        auto cam = std::make_shared<Camera>(Point3(60, 120, -70), Point3(60, 40, 20), Vector3(0, 1, 0));
         world.withCamera(cam);
         world.withAreaLights(arealights);
         return world;
