@@ -6,5 +6,5 @@
 
 ColorVec ColorVec::powc(float power) const {
     //  return glm::pow(*this, vec4(power));
-    return {powf(r, power), powf(g, power), powf(b, power)};
+    return {powf(r, power), powf(g, power), powf(b, power),1.0f};
 }

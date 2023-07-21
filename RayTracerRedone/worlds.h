@@ -472,6 +472,9 @@ namespace worlds {
         const auto textured = std::make_shared<TexturedPhong>(ground_texture,1,25);
         const auto ground_bm = std::make_shared<ImageTexture>("assets/normalmaps/ground_bm.png");
 
+        const auto moontexture = std::make_shared<ImageTexture>("assets/textures/moon.jpg");
+        const auto moonmaterial = std::make_shared<TexturedMatte>(moontexture, 1);
+
         const auto textured_bp = std::make_shared<BumpMapping>(textured, ground_bm);
         const auto phong_reflective_higher_exp = std::make_shared<PhongReflective>(ColorVec(Constants::BLACK), 1, 25,
                                                                                    1);
@@ -479,7 +482,8 @@ namespace worlds {
         const auto building_material =std::make_shared<Phong>(ColorVec(0.5, 0.5, 0.5), 1, 1, 25);
         auto mat = Matrix4x4(1.0f);
 
-        objects.push_back(std::make_shared<Plane>(Point3(0, 0, 0), Vector3(0, 1, 0), textured_bp));
+        //objects.push_back(std::make_shared<Plane>(Point3(0, 0, 0), Vector3(0, 1, 0), textured_bp));
+        objects.push_back(std::make_shared<Ball>(Point3(0,-100000,0),100000,building_material));
         auto building1 = std::make_shared<Mesh>("assets/objs/building1.obj",
                                                 building_material);
         mat = Matrix4x4(1.0f);
@@ -536,7 +540,7 @@ namespace worlds {
                                                   diffuse_light);
 
         objects.push_back(light);
-        arealights.push_back(std::make_shared<AreaLight>(0.03, Constants::WHITE, light));
+        arealights.push_back(std::make_shared<AreaLight>(0.023, Constants::WHITE, light));
 
         auto world = World(vp, objects, lights, AmbientLight(0, ColorVec(1, 1, 1)), ColorVec(0.1, 0.1, 0.4), true);
         auto cam = std::make_shared<Camera>(Point3(60, 120, -90), Point3(40, 30, 105), Vector3(0, 1, 0));
