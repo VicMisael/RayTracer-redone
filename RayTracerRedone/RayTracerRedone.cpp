@@ -27,15 +27,15 @@ int main() {
     constexpr bool png = false;
 
 
-    const uint32_t w = 750;
-    const uint32_t h = 750;
+    const uint32_t w = 800;
+    const uint32_t h = 800;
 
 
 
-    const auto sampler = generateSampler(2);
+    const auto sampler = generateSampler(10);
 
 
-    auto selectedWorld = worlds::generateWorld1();
+    auto selectedWorld = worlds::buildingsScene();
     Canvas *drawcanvas;
 
     if (png) {
