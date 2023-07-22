@@ -85,4 +85,9 @@ public:
         return ambient_light;
     }
 
+    void
+    draw_pixel(Canvas *canvas, int32_t depth, const Matrix4x4 &inv, const float ystep, const float xstep,
+               const float zw,
+               const std::vector<std::tuple<float, float>> &points, const unsigned int &num_samples, uint16_t y,
+               uint16_t x) const;
 };

@@ -467,7 +467,9 @@ namespace worlds {
 
     World buildingsScene() {
         std::vector<std::shared_ptr<VirtualObject>> objects;
-        const auto black_white_texture = std::make_shared<CheckerTexture>(Constants::BLACK, Constants::WHITE, 10);
+        const auto black_white_texture = std::make_shared<CheckerTexture>(Constants::YELLOW, Constants::WHITE, 10);
+        const auto mirror = std::make_shared<Mirror>();
+        const auto bw_matte_textured = std::make_shared<TexturedPhong>(black_white_texture,1,25);
         const auto ground_texture = std::make_shared<ImageTexture>("assets/textures/ground.jpg");
         const auto textured = std::make_shared<TexturedPhong>(ground_texture,1,25);
         const auto ground_bm = std::make_shared<ImageTexture>("assets/normalmaps/ground_bm.png");
@@ -482,8 +484,9 @@ namespace worlds {
         const auto building_material =std::make_shared<Phong>(ColorVec(0.5, 0.5, 0.5), 1, 1, 25);
         auto mat = Matrix4x4(1.0f);
 
-        //objects.push_back(std::make_shared<Plane>(Point3(0, 0, 0), Vector3(0, 1, 0), textured_bp));
-        objects.push_back(std::make_shared<Ball>(Point3(0,-100000,0),100000,building_material));
+        objects.push_back(std::make_shared<Plane>(Point3(0, 0, 0), Vector3(0, 1, 0), textured_bp));
+        //constexpr float a = 100000;
+        //objects.push_back(std::make_shared<Ball>(Point3(0,-a,0), a, building_material));
         auto building1 = std::make_shared<Mesh>("assets/objs/building1.obj",
                                                 building_material);
         mat = Matrix4x4(1.0f);
@@ -535,7 +538,6 @@ namespace worlds {
 
         std::vector<std::shared_ptr<AreaLight>> arealights;
         auto diffuse_light = std::make_shared<DiffuseLight>(Constants::WHITE, 1);
-        //Rectangle
         const auto light = std::make_shared<Ball>(Point3(0,1690, 10090), 400 ,
                                                   diffuse_light);
 

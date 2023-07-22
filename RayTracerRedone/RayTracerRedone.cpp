@@ -24,7 +24,7 @@ std::shared_ptr<sampler> generateSampler(int numsamples) {
 }
 
 int main() {
-    constexpr bool png = true;
+    constexpr bool png = false;
 
 
     const uint32_t w = 850;
@@ -32,7 +32,7 @@ int main() {
 
 
 
-    const auto sampler = generateSampler(1000);
+    const auto sampler = generateSampler(10);
 
 
     auto selectedWorld = worlds::buildingsScene();
