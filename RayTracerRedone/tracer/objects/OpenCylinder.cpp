@@ -129,7 +129,7 @@ std::tuple<Point3, Vector3> OpenCylinder::pointAtSurface() const {
     // Rotation matrix
     glm::vec3 up(0.0f, 0.0f, 1.0f);
     glm::vec3 axis = glm::normalize(axis);
-    float angle = acos(glm::dot(up, axis));
+    float angle = glm::acos(glm::dot(up, axis));
     glm::vec3 rotation_axis = glm::cross(up, axis);
 
     if (glm::length(rotation_axis) != 0) {

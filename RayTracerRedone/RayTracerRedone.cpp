@@ -24,15 +24,15 @@ std::shared_ptr<sampler> generateSampler(int numsamples) {
 }
 
 int main() {
-    constexpr bool png = false;
+    constexpr bool png = true;
 
 
-    const uint32_t w = 850;
-    const uint32_t h = 850;
+    const uint32_t w = 1850;
+    const uint32_t h = 1850;
 
 
 
-    const auto sampler = generateSampler(10);
+    const auto sampler = generateSampler(300);
 
 
     auto selectedWorld = worlds::buildingsScene();

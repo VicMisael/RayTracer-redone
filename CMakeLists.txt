@@ -156,9 +156,10 @@ target_link_libraries(RayTracer_redone glm::glm)
 target_link_libraries(RayTracer_redone assimp::assimp)
 target_link_libraries(RayTracer_redone ${SDL2_LIBRARIES})
 
-set(CMAKE_CXX_FLAGS_RELEASE "-O2 --fast-math -march=native")
-set(CMAKE_CXX_FLAGS_MINSIZEREL  " ")
-SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 --fast-math -march=native -g")
 set_property(TARGET RayTracer_redone PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+set(CMAKE_CXX_FLAGS_RELEASE "-O2 -ffast-math -mavx2")
+set(CMAKE_CXX_FLAGS_MINSIZEREL  "-Oz ")
+SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -ffast-math -mavx2 -g")
+
 
 file(COPY RayTracerRedone/assets DESTINATION ${CMAKE_BINARY_DIR})

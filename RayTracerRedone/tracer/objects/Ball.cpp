@@ -14,8 +14,8 @@ std::tuple<float, float> get_sphere_uv(const Point3 p) {
     //     <0 0 1> yields <0.25 0.50>       < 0  0 -1> yields <0.75 0.50>
 
     using namespace Constants;
-    const auto f_pi = static_cast<float>(pi);
-    const float theta = acosf(-p.y);
+    constexpr auto f_pi = static_cast<float>(pi);
+    const float theta = glm::acos(-p.y);
     const float phi = atan2f(-p.z, p.x) + f_pi;
 
     const float u = phi / (2 * pi);
@@ -70,8 +70,8 @@ float Ball::getArea() const {
 }
 
 std::tuple<Point3, Vector3> Ball::pointAtSurface() const {
-    float theta = 2.0f * glm::pi<float>() * glm::linearRand(0.0f, 1.0f); // azimuthal angle
-    float phi = acos(2.0f * glm::linearRand(0.0f, 1.0f) - 1.0f); // polar angle
+    float theta = 2.0f * glm::pi<float>() * utility::random_in_interval(0, 1); // azimuthal angle
+    float phi = acos(2.0f * utility::random_in_interval(0, 1) - 1.0f); // polar angle
 
     const float x = center.x + radius * sin(phi) * cos(theta);
     const float y = center.y + radius * sin(phi) * sin(theta);

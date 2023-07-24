@@ -64,7 +64,7 @@ World::render(Canvas *canvas, int32_t depth, const std::shared_ptr<sampler> &_sa
     const float zw = viewPlane->zw;
     const auto &points = _sampler->generate_points();
     const auto &num_samples = _sampler->num_samples;
-
+    /*
     auto drawblock1 = [&] {
         for (uint16_t y = 0; y < height / 4; y++) {
             for (uint16_t x = 0; x < width; x++) {
@@ -98,19 +98,18 @@ World::render(Canvas *canvas, int32_t depth, const std::shared_ptr<sampler> &_sa
     std::thread t2(drawblock2);
     std::thread t3(drawblock3);
     std::thread t4(drawblock4);
-
     t1.join();
     t2.join();
     t3.join();
     t4.join();
-    
-    /*
+    */
+
     for (uint16_t y = 0; y < height; y++) {
         for (uint16_t x = 0; x < width; x++) {
             draw_pixel(canvas, depth, inv, ystep, xstep, zw, points, num_samples, y, x);
         }
     }
-    */
+    
 }
 
 inline void World::draw_pixel(Canvas *canvas, int32_t depth, const Matrix4x4 &inv, const float ystep, const float xstep,

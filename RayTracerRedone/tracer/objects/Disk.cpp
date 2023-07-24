@@ -13,7 +13,7 @@ std::tuple<float, float> Disk::getUVMapping(const Point3 point) const {
 
     glm::vec3 vecToPointNormalized = glm::normalize(vecToPoint);
 
-    const float angle = std::acos(glm::dot(normal, vecToPointNormalized));
+    const float angle = glm::acos(glm::dot(normal, vecToPointNormalized));
 
     const float radius = glm::length(vecToPoint);
 
