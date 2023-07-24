@@ -440,4 +440,10 @@
       <Filter>Arquivos de Recurso</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\Users\Misael\Desktop\building4.mtl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="..\..\..\..\Users\Misael\Desktop\building4.obj" />
+  </ItemGroup>
 </Project>
