@@ -147,6 +147,7 @@ inline void World::draw_pixel(Canvas *canvas, int32_t depth, const Matrix4x4 &in
             actualColor = trace_ray(r, depth);
             //canvas->write_pixel(x, y, ColorRGBA(trace_ray(r, 0)));
         }
+        actualColor.fixNans();
         colorVec += actualColor;
     }
     const ColorVec out = (colorVec * 1.0f / static_cast<float>(num_samples));

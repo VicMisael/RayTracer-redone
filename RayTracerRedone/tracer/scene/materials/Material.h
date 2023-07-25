@@ -9,7 +9,14 @@ class World;
 
 struct intersectionRec;
 
+enum MaterialType {
+    EMISSIVE,
+    NORMAL,
+    TEXTURE
+};
+
 class Material {
+
 protected:
     bool castsShadow = true;
 
@@ -26,5 +33,9 @@ public:
 
     virtual ColorVec
     shade(const World &world, const Ray &ray, const intersectionRec &intersection, int32_t depth) const = 0;
+
+    virtual MaterialType getMaterialType(){
+        return MaterialType::NORMAL;
+    }
 };
 

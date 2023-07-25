@@ -26,4 +26,15 @@ sample_f_out Lambertian::sample_f(const intersectionRec &intersection, const Vec
     return {kd_ * cd_ * Constants::INVPI_FLT, wi, pdf};
 }
 
+sample_f_out Lambertian::sample_f(const intersectionRec &intersection, const Vector3 &wo, const Vector3 &wi_in) const {
+    const Vector3 w = intersection.normal;
+
+    OrthonormalBase orthonormalBase(w);
+    auto wi = orthonormalBase.onb() *Vector3( wi_in);
+
+    const float pdf = dot(w, wi) * Constants::INVPI_FLT;
+
+    return {kd_ * cd_ * Constants::INVPI_FLT, wi, pdf};
+}
+
 

@@ -5,9 +5,10 @@
 typedef glm::vec<4, uint8_t, glm::defaultp> bytevec4;
 class ColorRGBA:public bytevec4
 {
+private:
 public:
 
-	ColorRGBA(const ColorVec _color) :bytevec4
+	explicit ColorRGBA(const ColorVec _color) :bytevec4
 		(
 		_color.r > 1.0f ? 255 : _color.r*255,
 		_color.g > 1.0f ? 255 : _color.g*255,
@@ -15,7 +16,7 @@ public:
 		255//_color.a > 1.0f ? 255 : _color.a*255
 		) {};
 
-	ColorRGBA(const RGBA _color) :bytevec4
+	explicit ColorRGBA(const RGBA _color) :bytevec4
 	(
 		_color._r,
 		_color._g,

@@ -20,4 +20,6 @@ public:
 	ColorVec rho(const Vector3& wo) const override;
 	ColorVec f(const intersectionRec& intersection, const Vector3& wo, const Vector3& wi) const override;
 	::sample_f_out sample_f(const intersectionRec& intersection, const Vector3& wo) const override;
+
+    sample_f_out sample_f(const intersectionRec &intersection, const Vector3 &wo, const Vector3 &wi) const override;
 };

@@ -39,3 +39,15 @@ sample_f_out GlossySpecular::sample_f(const intersectionRec &intersection, const
 
     return {ks_ * color_ * phong_lobe, wi, pdf};
 }
+
+sample_f_out GlossySpecular::sample_f(const intersectionRec &intersection, const Vector3 &wo, const Vector3 &wi) const {
+    const Vector3 &normal = intersection.normal;
+    const float n_dot_two = dot(normal, wo);
+    const Vector3 r = -wo + 2.0f * normal * n_dot_two;
+
+
+    const float phong_lobe = pow(dot(r, wi), exp_);
+    const float pdf = phong_lobe * (dot(normal, wi));
+
+    return {ks_ * color_ * phong_lobe, wi, pdf};
+}
