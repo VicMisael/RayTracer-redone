@@ -22,8 +22,8 @@ bool AABB::intersects(const Ray& ray, float& t_min) const
         auto t1 = (max()[a] - ray.origin[a]) * invD;
         if (invD < 0.0f)
             std::swap(t0, t1);
-        t_min = t0 > t_min ? t0 : t_min;
-        t_max = t1 < t_max ? t1 : t_max;
+        t_min = std::max(t0, t_min);
+        t_max = std::min(t_max, t1);
         if (t_max <= t_min)
             return false;
     }

@@ -17,7 +17,8 @@ protected:
    
 
 public:
-        std::shared_ptr<Material> material;
+
+	std::shared_ptr<Material> material;
 
     explicit VirtualObject();
 

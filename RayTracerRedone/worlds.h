@@ -454,7 +454,7 @@ namespace worlds {
         const auto vp = std::make_shared<ViewPlane>(500, 500, 700, 1);
         std::vector<std::shared_ptr<VectorialLight>> lights;
         std::vector<std::shared_ptr<AreaLight>> arealights;
-        arealights.push_back(std::make_shared<AreaLight>(0.20, Constants::WHITE, light));
+        arealights.push_back(std::make_shared<AreaLight>(light));
         //arealights.push_back(std::make_shared<AreaLight>(0.20, Constants::WHITE, balllight));
 
         auto cornell = std::make_shared<Camera>(Point3(278, 278, -800), Point3(278, 278, 0), Vector3(0, 1, 0));
@@ -485,8 +485,8 @@ namespace worlds {
         auto mat = Matrix4x4(1.0f);
 
         objects.push_back(std::make_shared<Plane>(Point3(0, 0, 0), Vector3(0, 1, 0), textured_bp));
-        //constexpr float a = 100000;
-        //objects.push_back(std::make_shared<Ball>(Point3(0,-a,0), a, building_material));
+        constexpr float a = 100000;
+        objects.push_back(std::make_shared<Ball>(Point3(0,-a,0), a, building_material));
         auto building1 = std::make_shared<Mesh>("assets/objs/building1.obj",
                                                 building_material);
         mat = Matrix4x4(1.0f);
@@ -499,18 +499,18 @@ namespace worlds {
         auto building2 = std::make_shared<Mesh>("assets/objs/building2.obj",
                                                 building_material);
         mat = Matrix4x4(1.0f);
-        mat = glm::translate(mat, Vector3(76, 0, 50));
-        mat = glm::scale(mat, Vector3(15));
-        mat = glm::rotate(mat, (float) glm::radians(45.0f), Vector3(0, 1, 0));
+        mat = translate(mat, Vector3(76, 0, 50));
+        mat = scale(mat, Vector3(15));
+        mat = rotate(mat, (float) glm::radians(45.0f), Vector3(0, 1, 0));
         building2->transform(mat);
 
         auto building3 = std::make_shared<Mesh>("assets/objs/building3.obj",
                                                 building_material);
 
         mat = Matrix4x4(1.0f);
-        mat = glm::translate(mat, Vector3(130, 0, 60));
-        mat = glm::scale(mat, Vector3(15));
-        mat = glm::rotate(mat, (float) glm::radians(45.0f), Vector3(0, 1, 0));
+        mat = translate(mat, Vector3(130, 0, 60));
+        mat = scale(mat, Vector3(15));
+        mat = rotate(mat, (float) glm::radians(45.0f), Vector3(0, 1, 0));
         building3->transform(mat);
 
 
@@ -518,9 +518,9 @@ namespace worlds {
                                                 building_material);
 
         mat = Matrix4x4(1.0f);
-        mat = glm::translate(mat, Vector3(130, 0, 180));
-        mat = glm::scale(mat, Vector3(15));
-        mat = glm::rotate(mat, (float) glm::radians(-45.0f), Vector3(0, 1, 0));
+        mat = translate(mat, Vector3(130, 0, 180));
+        mat = scale(mat, Vector3(15));
+        mat = rotate(mat, (float) glm::radians(-45.0f), Vector3(0, 1, 0));
         building4->transform(mat);
 
         objects.push_back(building1);
@@ -531,8 +531,7 @@ namespace worlds {
 
         const auto soccerball_texture = std::make_shared<ImageTexture>("assets/textures/football-diffuse-512.png");
         const auto soccerball = std::make_shared<TexturedPhong>(soccerball_texture, 1, 2);
-        const auto socceball_bm = std::make_shared<BumpMapping>(soccerball, std::make_shared<ImageTexture>(
-                "assets/normalmaps/football-normals-512.png"));
+        const auto socceball_bm = std::make_shared<BumpMapping>(soccerball, std::make_shared<ImageTexture>("assets/normalmaps/football-normals-512.png"));
 
         objects.push_back(std::make_shared<Ball>(Point3(-20, 25, 40), 10, socceball_bm));
 
@@ -551,30 +550,28 @@ namespace worlds {
         std::vector<std::shared_ptr<AreaLight>> arealights;
 
         //Light 1
-        auto diffuse_light = std::make_shared<DiffuseLight>(Constants::WHITE, 1000);
-        auto light = std::make_shared<Rectangle>(Point3(0, 690, 790),Vector3(500,0,0),Vector3(0,-500,0),
-                                            diffuse_light);
 
-        objects.push_back(light);
-        arealights.push_back(std::make_shared<AreaLight>(0.143, Constants::WHITE, light));
-//        //light2
-//        auto col=Constants::YELLOW;
-//        diffuse_light = std::make_shared<DiffuseLight>(col, 1);
-//        light = std::make_shared<Ball>(Point3(-5900, 1690, 10090), 400,
-//                                       diffuse_light);
-//
-//        objects.push_back(light);
-//        arealights.push_back(std::make_shared<AreaLight>(0.021, col, light));
-//
-//        //light3
-//        col=ColorVec(0.4,0.4,0.9);
-//        diffuse_light = std::make_shared<DiffuseLight>(col, 1);
-//        light = std::make_shared<Ball>(Point3(5900, 1690, 10090), 400,
-//                                       diffuse_light);
-//
-//        objects.push_back(light);
-//        arealights.push_back(std::make_shared<AreaLight>(0.021, col, light));
+        auto diffuse_light = std::make_shared<DiffuseLight>(ColorVec(1,1,0.4), 1);
 
+        
+        //light2
+        auto col=ColorVec(1,1,0.6);
+        diffuse_light = std::make_shared<DiffuseLight>(col, 0.05);
+        auto light2 = std::make_shared<Ball>(Point3(-5900, 1690, 10090), 400,diffuse_light);
+
+        objects.push_back(light2);
+        arealights.push_back(std::make_shared<AreaLight>( light2));
+
+        //light3
+        /*
+    	col=ColorVec(0.4,0.4,0.9);
+        diffuse_light = std::make_shared<DiffuseLight>(col, 1);
+        light2 = std::make_shared<Ball>(Point3(5900, 1690, 10090), 400,
+                                       diffuse_light);
+
+        objects.push_back(light2);
+        arealights.push_back(std::make_shared<AreaLight>(0.021, col, light2));
+        */
 
 
         auto world = World(vp, objects, lights, AmbientLight(0, ColorVec(1, 1, 1)), ColorVec(0.1, 0.1, 0.4), true);

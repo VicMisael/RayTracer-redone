@@ -32,7 +32,7 @@ std::optional<intersectionRec> Plane::intersects(const Ray &ray) const {
     using namespace glm;
     const float dot_dir_normal = dot(ray.direction, normal);
     const float t = dot(point - ray.origin, normal) / dot_dir_normal;
-    if (t > Constants::EPSILON + 0.001f) {
+    if (t > Constants::EPSILON) {
         const auto intersectionPoint = ray.point_at(t);
         const auto [u, v] = computeUV(point, intersectionPoint, normal);
         return intersectionRec{t, ray.point_at(t), normal, material, u, v};

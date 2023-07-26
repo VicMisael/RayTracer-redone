@@ -21,7 +21,7 @@ public:
 
     AreaLight() = delete;
 
-    AreaLight(const float intensity, const ColorVec &color, const std::shared_ptr<VirtualObject> &object);
+    AreaLight( const std::shared_ptr<VirtualObject> &object);
     //Do not store state in a class
     //May cause race condition when Multithreading
 
@@ -40,11 +40,11 @@ public:
         return true;
     }
 
-    [[nodiscard]] ColorVec intensityAtPoint(const Point3 p, const AreaLightState areaLightState) const;
+    [[nodiscard]] ColorVec intensityAtPoint(const Point3 p, const AreaLightState& areaLightState) const;
 
-    [[nodiscard]] float G(const Point3 hitpoint, const AreaLightState areaLightState) const;
+    [[nodiscard]] float G(const Point3 hitpoint, const AreaLightState& areaLightState) const;
 
-    [[nodiscard]] bool shadow_hit(const World &world, const Ray &outgoing, const AreaLightState) const;
+    [[nodiscard]] bool shadow_hit(const World &world, const Ray &outgoing, const AreaLightState&) const;
 
 
 };

@@ -104,6 +104,7 @@ World::render(Canvas *canvas, int32_t depth, const std::shared_ptr<sampler> &_sa
     t4.join();
     */
 
+    
     for (uint16_t y = 0; y < height; y++) {
         for (uint16_t x = 0; x < width; x++) {
             draw_pixel(canvas, depth, inv, ystep, xstep, zw, points, num_samples, y, x);
