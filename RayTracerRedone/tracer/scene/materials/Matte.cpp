@@ -26,7 +26,7 @@ ColorVec Matte::shade(const World &world, const Ray &ray, const intersectionRec 
 
         }
     }
-//Area Light
+
     for (const auto &light: world.areaLights()) {
         const auto state = light->generateState(intersection.hit_point);
         const auto wi = light->getVectorNormalized(state);

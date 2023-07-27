@@ -19,7 +19,7 @@
 #include "tracer/utils/sampler/vertical_point_sampler.h"
 #include "tracer/utils/sampler/horizontal_point_sampler.h"
 
-std::shared_ptr<sampler> generateSampler(int numsamples) {
+ std::shared_ptr<sampler> generateSampler(const int numsamples) {
     return std::make_shared<equidistant_point_sampler>(numsamples);
 }
 
@@ -32,10 +32,10 @@ int main() {
 
 
 
-    const auto sampler = generateSampler(20);
+    const auto sampler = generateSampler(100);
 
 
-    auto selectedWorld = worlds::buildingsScene();
+    auto selectedWorld = worlds::cornellBox();
     Canvas *drawcanvas;
 
     if (png) {

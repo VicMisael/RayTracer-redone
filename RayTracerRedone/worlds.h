@@ -408,7 +408,7 @@ namespace worlds {
         auto white = std::make_shared<Matte>(2, ColorVec(0.73, 0.73, 0.73));
         auto green = std::make_shared<Matte>(2, ColorVec(0.12, 0.45, 0.15));;
         auto diffuse = std::make_shared<Matte>(2, ColorVec(0.12, 0.45, 0.15));
-        auto diffuse_light = std::make_shared<DiffuseLight>(Constants::WHITE, 12);
+        auto diffuse_light = std::make_shared<DiffuseLight>(Constants::WHITE, 1);
 
         std::vector<std::shared_ptr<VirtualObject>> objects;
         const auto side1 = std::make_shared<Rectangle>(Point3(0, 0, 0), Point3(0, 555, 0), Point3(0, 0, 555), green);
@@ -485,6 +485,7 @@ namespace worlds {
         auto mat = Matrix4x4(1.0f);
 
         objects.push_back(std::make_shared<Plane>(Point3(0, 0, 0), Vector3(0, 1, 0), textured_bp));
+        objects.push_back(std::make_shared<Plane>(Point3(0, 0, 95090), Vector3(0, 1, -1), building_material));
         constexpr float a = 100000;
         //objects.push_back(std::make_shared<Ball>(Point3(0,-a,0), a, building_material));
         auto building1 = std::make_shared<Mesh>("assets/objs/building1.obj",
