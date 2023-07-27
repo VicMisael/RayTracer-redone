@@ -6,6 +6,7 @@
 #include "BumpMapping.h"
 #include "../../utils/Intersection.h"
 #include "../../utils/OrthonormalBase.h"
+#include "../../utils/utility.h"
 #include <iostream>
 
 ColorVec
@@ -14,9 +15,9 @@ BumpMapping::shade(const World &world, const Ray &ray, const intersectionRec &in
     Vector3 normal = normalize(intersectionIn.normal);
     const Vector3 bumpMapping = (2.0f * Vector3(col)) - Vector3(1.0f);
 
-    Vector3 refVector;
-    normal = OrthonormalBase(normal).local(bumpMapping);
-    auto intersection = intersectionRec{intersectionIn.tmin, intersectionIn.hit_point, normal, intersectionIn.material,
+
+    normal = utility::ONBTransform(normal,bumpMapping);
+    const auto intersection = intersectionRec{intersectionIn.tmin, intersectionIn.hit_point, normal, intersectionIn.material,
                                         intersectionIn.u, intersectionIn.v};
     return this->material->shade(world, ray, intersection, depth);
 

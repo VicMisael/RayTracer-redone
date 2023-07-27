@@ -3,6 +3,8 @@
 //
 #include "utility.h"
 
+#include <glm/gtx/norm.hpp>
+
 
 std::mt19937 generator(time(NULL));
 
@@ -33,6 +35,18 @@ Vector3 utility::random(float min, float max) {
     std::uniform_real_distribution dis(min, max);
     //std::uniform_int_distribution<float> dist();
     return {dis(generator), dis(generator), dis(generator)};
+}
+
+Vector3 utility::ONBTransform(Vector3 W, Vector3 in)
+{
+    W = glm::normalize(W);
+    const Vector3 a =
+        glm::length2(W - Vector3(0, 1, 0)) < glm::epsilon<float>() ? Vector3(1, 0, 0) : Vector3(0, 1, 0);
+
+    const Vector3 U = normalize(cross(W, a));
+    const Vector3 V = normalize(cross(W, U));
+    const Matrix3x3 UVW = Matrix3x3(U, V, W);
+    return UVW * in;
 }
 
 float utility::random_in_interval(float min, float max) {

@@ -30,8 +30,7 @@ sample_f_out GlossySpecular::sample_f(const intersectionRec &intersection, const
 //    const auto v = cross(u, w);
 //    Matrix3x3 uvw(u, v, w);
 
-    OrthonormalBase onb(r);
-    const auto wi = onb.onb() * utility::random_in_hemisphere(normal);
+    const auto wi = utility::ONBTransform(r, normal);
 
 
     const float phong_lobe = pow(dot(r, wi), exp_);

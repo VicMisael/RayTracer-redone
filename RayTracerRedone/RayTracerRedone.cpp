@@ -27,12 +27,12 @@ int main() {
     constexpr bool png = false;
 
 
-    const uint32_t w = 600;
-    const uint32_t h = 600;
+    const uint32_t w = 650;
+    const uint32_t h = 650;
 
 
 
-    const auto sampler = generateSampler(100);
+    const auto sampler = generateSampler(20);
 
 
     auto selectedWorld = worlds::buildingsScene();
@@ -46,7 +46,7 @@ int main() {
     constexpr int32_t recursion_depth_limit = 4;
 
     Scene scene(selectedWorld, drawcanvas);
-    std::shared_ptr<Camera> camera=std::make_shared<Camera>(Vector3(1, 352, 300), Vector3(9, 200, -3000), Vector3(0, 1, 0));
+    //auto cam = std::make_shared<Camera>(Point3(690, 710, 180), Point3(40, 30, 105), Vector3(0, 1, 0));
     if (!png) {
         auto *canvas = dynamic_cast<sdl2canvas *>(drawcanvas);
         auto draw = [&] {

@@ -24,7 +24,7 @@ public:
 #ifdef _MSC_VER
         setvbuf(stdout, 0, _IOLBF, 8192);
 #endif
-    };
+    }
 
     void write_pixel(const uint16_t x, const uint16_t y, const ColorRGBA colorrgba) override;
 

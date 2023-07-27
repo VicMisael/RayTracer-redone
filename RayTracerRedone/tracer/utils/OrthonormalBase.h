@@ -8,7 +8,7 @@
 #include "Types.h"
 
 class OrthonormalBase {
-    Matrix3x3 UVW;
+    Matrix3x3 UVW{};
 public:
     OrthonormalBase() = delete;
 

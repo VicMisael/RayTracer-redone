@@ -28,6 +28,8 @@ namespace utility {
 
      Vector3 random(float min, float max);
 
+     Vector3 ONBTransform(Vector3 W, Vector3 in);
+
      float random_in_interval(float min, float max);
 
      Vector3 random_in_unit_sphere();

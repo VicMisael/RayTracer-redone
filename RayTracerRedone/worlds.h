@@ -486,7 +486,7 @@ namespace worlds {
 
         objects.push_back(std::make_shared<Plane>(Point3(0, 0, 0), Vector3(0, 1, 0), textured_bp));
         constexpr float a = 100000;
-        objects.push_back(std::make_shared<Ball>(Point3(0,-a,0), a, building_material));
+        //objects.push_back(std::make_shared<Ball>(Point3(0,-a,0), a, building_material));
         auto building1 = std::make_shared<Mesh>("assets/objs/building1.obj",
                                                 building_material);
         mat = Matrix4x4(1.0f);
