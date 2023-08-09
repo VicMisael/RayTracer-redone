@@ -408,7 +408,7 @@ namespace worlds {
         auto white = std::make_shared<Matte>(2, ColorVec(0.73, 0.73, 0.73));
         auto green = std::make_shared<Matte>(2, ColorVec(0.12, 0.45, 0.15));;
         auto diffuse = std::make_shared<Matte>(2, ColorVec(0.12, 0.45, 0.15));
-        auto diffuse_light = std::make_shared<DiffuseLight>(Constants::WHITE, 1);
+        auto diffuse_light = std::make_shared<DiffuseLight>(Constants::WHITE, 0.25);
 
         std::vector<std::shared_ptr<VirtualObject>> objects;
         const auto side1 = std::make_shared<Rectangle>(Point3(0, 0, 0), Point3(0, 555, 0), Point3(0, 0, 555), green);
@@ -438,7 +438,7 @@ namespace worlds {
         objects.push_back(std::make_shared<Ball>(Point3(320, 120, 200), 100, teste3));
 
         const auto balllight = std::make_shared<Ball>(Point3(420, 400, 400), 60,
-                                                      std::make_shared<DiffuseLight>(Constants::WHITE, 2));
+                                                      std::make_shared<DiffuseLight>(Constants::WHITE, 0.25));
         //objects.push_back(balllight);
 //
 //        auto cylinder = std::make_shared<OpenCylinder>(Vector3(0, 1, 0), Point3(00, 150, 400), 150, 20, diffuse_light);

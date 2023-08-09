@@ -53,7 +53,6 @@ public:
             bgColor(_bgColor),
             ambient_light(std::move(_ambient_light)), perspective_(perspective) {
         //bvh = std::make_shared<BVH>(objects_);
-        printAreas(objects_);
         camera = std::make_shared<Camera>();
     }
 

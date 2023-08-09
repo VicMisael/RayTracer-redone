@@ -8,7 +8,7 @@
 
 ColorVec
 DiffuseLight::shade(const World &world, const Ray &ray, const intersectionRec &intersection, int32_t depth) const {
-//	return color;
+	return color;
 //
 //	const auto o_to_hit_point = ray.origin - intersection.hit_point;
 //	const auto len = length(o_to_hit_point);
