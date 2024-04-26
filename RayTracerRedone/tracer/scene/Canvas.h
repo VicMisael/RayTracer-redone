@@ -16,7 +16,7 @@ public:
 		return viewPlane->hsize / static_cast<float>(height);
 	};
 	float step_size_x(const std::shared_ptr<ViewPlane> viewPlane) const {
-		return viewPlane->hsize / static_cast<float>(width);
+		return viewPlane->wsize / static_cast<float>(width);
 	};
 	uint32_t getWidth() const {
 		return width;

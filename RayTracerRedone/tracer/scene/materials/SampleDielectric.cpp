@@ -15,9 +15,9 @@ SampleDielectric::shade(const World &world, const Ray &ray, const intersectionRe
         normal = -normal;
     }
 
-    const float refraction_ratio = front_face ? (1.0 / _reflectance) : _reflectance;
+    const float refraction_ratio = front_face ? (1.0f / _reflectance) : _reflectance;
     const Vector3 unit_dir = normalize(ray.direction);
-    const float cos_theta = fmin(dot(-unit_dir, normal), 1.0);
+    const float cos_theta = fmin(dot(-unit_dir, normal), 1.0f);
     const double sin_theta = sqrt(1.0 - cos_theta * cos_theta);
     bool cannot_refract = refraction_ratio * sin_theta > 1.0;
     Vector3 direction;

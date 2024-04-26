@@ -97,7 +97,7 @@
       <ConformanceMode>true</ConformanceMode>
       <FloatingPointModel>Fast</FloatingPointModel>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <OmitFramePointers>true</OmitFramePointers>
     </ClCompile>
@@ -138,7 +138,7 @@
       <ConformanceMode>true</ConformanceMode>
       <FloatingPointModel>Fast</FloatingPointModel>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <Optimization>MaxSpeed</Optimization>
       <OmitFramePointers>true</OmitFramePointers>
@@ -218,6 +218,7 @@
     <ClInclude Include="imageoutputcanvas\imagecanvas.h" />
     <ClInclude Include="imageoutputcanvas\stb\image_canvas_stb_image.h" />
     <ClInclude Include="imageoutputcanvas\stb\stb_image_write.h" />
+    <ClInclude Include="splash.h" />
     <ClInclude Include="tracer\objects\Disk.h" />
     <ClInclude Include="tracer\objects\Rectangle.h" />
     <ClInclude Include="tracer\scene\BxDF\FresnelReflector.h" />

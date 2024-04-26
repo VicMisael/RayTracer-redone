@@ -428,6 +428,9 @@
     <ClInclude Include="tracer\scene\materials\NullMaterial.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="splash.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\textures\earthmap.jpg">

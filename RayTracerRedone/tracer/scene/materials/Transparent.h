@@ -14,7 +14,7 @@ class Transparent: public Phong{
 public:
     Transparent():Phong(Constants::BLACK,1,1,25),reflective_brdf(1.0f){
     };
-    Transparent(float ior,float kt):Phong(Constants::BLACK,1,1,25),reflective_brdf(1.0f), specular_btdf(kt,ior){
+    Transparent(float ior,float kt):Phong(Constants::RED,1,1,25),reflective_brdf(1.0f), specular_btdf(kt,ior){
     };
     [[nodiscard]] ColorVec shade(const World &world, const Ray &ray, const intersectionRec &intersection, int32_t depth) const override;
 

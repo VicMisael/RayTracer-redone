@@ -18,25 +18,29 @@
 #include "tracer/utils/sampler/random_point_sampler.h"
 #include "tracer/utils/sampler/vertical_point_sampler.h"
 #include "tracer/utils/sampler/horizontal_point_sampler.h"
+#include "splash.h"
 
 std::shared_ptr<sampler> generateSampler(const int numsamples) {
     return std::make_shared<equidistant_point_sampler>(numsamples);
 }
 
 int main(int argc, char *argv[]) {
+    for(unsigned char c:splash_txt)
+        std::cout<<c;
+    std::cout << std::endl;
 
-    constexpr bool png = false;
+    constexpr bool png = true;
     if (argc == 1 || argc > 1 && std::string("all") != argv[1]) {
 
 
-        const uint32_t w = 650;
-        const uint32_t h = 650;
+        const uint32_t w = 1200;
+        const uint32_t h = 600;
 
 
-        const auto sampler = generateSampler(100);
+        const auto sampler = generateSampler(120);
 
 
-        auto selectedWorld = worlds::cornellBox();
+        const auto selectedWorld = worlds::buildingsScene();
         Canvas *drawcanvas;
 
         if (png) {
@@ -44,7 +48,7 @@ int main(int argc, char *argv[]) {
         } else {
             drawcanvas = new sdl2canvas(w, h);
         }
-        constexpr int32_t recursion_depth_limit = 4;
+        constexpr int32_t recursion_depth_limit = 100;
 
         Scene scene(selectedWorld, drawcanvas);
         //auto cam = std::make_shared<Camera>(Point3(690, 710, 180), Point3(40, 30, 105), Vector3(0, 1, 0));

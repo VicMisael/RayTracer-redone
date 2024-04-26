@@ -149,7 +149,8 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/utils/OrthonormalBase.h
         RayTracerRedone/tracer/scene/materials/NullMaterial.cpp
         RayTracerRedone/tracer/scene/materials/NullMaterial.h
-        RayTracerRedone/tracer/utils/utility.cpp )
+        RayTracerRedone/tracer/utils/utility.cpp
+        RayTracerRedone/splash.h)
 
 
 target_link_libraries(RayTracer_redone glm::glm)
@@ -157,7 +158,7 @@ target_link_libraries(RayTracer_redone assimp::assimp)
 target_link_libraries(RayTracer_redone ${SDL2_LIBRARIES})
 
 set_property(TARGET RayTracer_redone PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
-set(CMAKE_CXX_FLAGS_RELEASE "-O2 -mavx2")
+set(CMAKE_CXX_FLAGS_RELEASE "-Ofast -march=native")
 set(CMAKE_CXX_FLAGS_MINSIZEREL  "-Oz ")
 SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2  -mavx2 -g")
 

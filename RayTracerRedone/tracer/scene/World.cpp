@@ -50,7 +50,7 @@ ColorVec World::trace_ray(const Ray &ray, float &tmin, const int32_t depth) cons
         }
         return bgColor;
     }
-    return {0, 0, 0};
+    return {1, 1, 1};
 }
 
 void
