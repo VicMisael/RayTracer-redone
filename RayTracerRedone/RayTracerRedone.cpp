@@ -25,19 +25,20 @@ std::shared_ptr<sampler> generateSampler(const int numsamples) {
 }
 
 int main(int argc, char *argv[]) {
-    for(unsigned char c:splash_txt)
-        std::cout<<c;
+    for (unsigned char c: splash_txt)
+        std::cout << c;
     std::cout << std::endl;
-
-    constexpr bool png = true;
+//    auto result = utility::ONBTransform( {0, -1, 0}, {-0.681978881f, 0.676145434f, -0.278804928});
+//    assert(utility::nanBugCheck(glm::vec4(result, 1)));
+    constexpr bool png = false;
     if (argc == 1 || argc > 1 && std::string("all") != argv[1]) {
 
 
-        const uint32_t w = 1200;
-        const uint32_t h = 600;
+        const uint32_t w = 400;
+        const uint32_t h = 200;
 
 
-        const auto sampler = generateSampler(120);
+        const auto sampler = generateSampler(20);
 
 
         const auto selectedWorld = worlds::buildingsScene();
@@ -48,7 +49,7 @@ int main(int argc, char *argv[]) {
         } else {
             drawcanvas = new sdl2canvas(w, h);
         }
-        constexpr int32_t recursion_depth_limit = 100;
+        constexpr int32_t recursion_depth_limit = 10;
 
         Scene scene(selectedWorld, drawcanvas);
         //auto cam = std::make_shared<Camera>(Point3(690, 710, 180), Point3(40, 30, 105), Vector3(0, 1, 0));

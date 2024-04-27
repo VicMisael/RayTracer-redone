@@ -1,12 +1,13 @@
 #pragma once
 
 #include <random>
+#include "Types.h"
 #include <glm/vec3.hpp>
 #include <glm/geometric.hpp>
 #include <glm/gtc/random.hpp>
 
 #include "Constants.h"
-#include "Types.h"
+
 
 
 namespace utility {
@@ -38,12 +39,14 @@ namespace utility {
 
      Vector3 random_in_hemisphere(const Vector3 normal);
 
-     float clamp(float x, float min, float max);
-
      Vector2 random_unit_square();
 
      Vector3 random_unit_cube();
 
      Vector3 reflect_vector(const Vector3 in, const Vector3 normal);
+
+      bool nanBugCheck(glm::vec4 x);
+
+     float clamp(float x, float min, float max);
 }
 

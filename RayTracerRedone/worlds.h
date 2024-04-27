@@ -484,11 +484,11 @@ namespace worlds {
         const auto building_material = std::make_shared<Phong>(ColorVec(0.5, 0.5, 0.5), 1, 1, 25);
         auto mat = Matrix4x4(1.0f);
 
-        //objects.push_back(std::make_shared<Plane>(Point3(0, 0, 0), Vector3(0, 1, 0), textured_bp));
+        objects.push_back(std::make_shared<Plane>(Point3(0, 0, 0), Vector3(0, 1, 0), textured_bp));
         objects.push_back(std::make_shared<Plane>(Point3(0, 0, 13509), Vector3(0, 1, -1), building_material));
         objects.push_back(std::make_shared<Ball>(Point3(0, 3000, 11509), 1000, moonmaterial));
         constexpr float a = 100000;
-        objects.push_back(std::make_shared<Ball>(Point3(0,-a,0), a, building_material));
+        //objects.push_back(std::make_shared<Ball>(Point3(0,-a,0), a, building_material));
 
         auto building1 = std::make_shared<Mesh>("assets/objs/building1.obj",
                                                 building_material);
@@ -543,10 +543,9 @@ namespace worlds {
         objects.push_back(std::make_shared<Ball>(Point3(40, 30, 105), 25,
                                                  phong_reflective_higher_exp));
 
-       	    const auto transparent2 = std::make_shared<Transparent>(1.569, 0.61);
-            const auto transparent = std::make_shared<SampleDielectric>(0.7);
+        const auto transparent = std::make_shared<SampleDielectric>(0.7);
 //
-        objects.push_back(std::make_shared<Ball>(Point3(90, 60, 90), 25, transparent));
+        objects.push_back(std::make_shared<Ball>(Point3(90, 60, 390), 25, transparent));
         //objects.push_back(std::make_shared<Ball>(Point3(-20, 60, 0), 25, transparent2));
 
         std::vector<std::shared_ptr<VectorialLight>> lights;

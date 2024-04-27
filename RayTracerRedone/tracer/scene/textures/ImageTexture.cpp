@@ -29,8 +29,8 @@ ColorVec ImageTexture::value(float u, float v, const Point3 &p) const {
     u=fabs(u);
     v=fabs(v);
     // Clamp input texture coordinates to [0,1] x [1,0]
-    u = utility::clamp(u, 0.0, 1.0);
-    v = 1.0 - utility::clamp(v, 0.0, 1.0);  // Flip V to image coordinates
+    u = utility::clamp(u, 0.0f, 1.0f);
+    v = 1.0 - utility::clamp(v, 0.0f, 1.0f);  // Flip V to image coordinates
     auto i = static_cast<int>(u * width);
     auto j = static_cast<int>(v * height);
     // Clamp integer mapping, since actual coordinates should be less than 1.0

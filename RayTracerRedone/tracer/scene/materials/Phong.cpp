@@ -10,13 +10,13 @@ ColorVec Phong::shade(const World &world, const Ray &ray, const intersectionRec 
     ColorVec L = lambertian_.rho(wo) * al.intensityAtPoint(intersection.hit_point) * al.getColor();
     L = getVec(world, intersection, wo, L);
     //Scoped
-    {
-        const auto [color, wi, pdf] = lambertian_.sample_f(intersection, wo);
-        const float ndotwi = glm::dot(intersection.normal, wi);
-        const Ray reflected(intersection.hit_point, wi);
 
-        L += color * world.trace_ray(reflected, depth - 1) * ndotwi / pdf;
-    }
+    const auto [color, wi, pdf] = lambertian_.sample_f(intersection, wo);
+    const float ndotwi = glm::dot(intersection.normal, wi);
+    const Ray reflected(intersection.hit_point, wi);
+
+    L += color * world.trace_ray(reflected, depth - 1) * ndotwi / pdf;
+
     return L;
 }
 

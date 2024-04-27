@@ -160,7 +160,7 @@ target_link_libraries(RayTracer_redone ${SDL2_LIBRARIES})
 set_property(TARGET RayTracer_redone PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
 set(CMAKE_CXX_FLAGS_RELEASE "-Ofast -march=native")
 set(CMAKE_CXX_FLAGS_MINSIZEREL  "-Oz ")
-SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2  -mavx2 -g")
+SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-Ofast -g -mavx2")
 
 
 file(COPY RayTracerRedone/assets DESTINATION ${CMAKE_BINARY_DIR})
