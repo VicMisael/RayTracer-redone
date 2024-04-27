@@ -41,12 +41,12 @@ Vector3 utility::ONBTransform(Vector3 W, Vector3 in)
 {
     W = glm::normalize(W);
     const Vector3 a =
-        glm::length2(W - Vector3(0, 1, 0)) < glm::epsilon<float>() ? Vector3(1, 0, 0) : Vector3(0, 1, 0);
-
+        glm::length2(glm::abs(W) - Vector3(0, 1, 0)) < glm::epsilon<float>() ? Vector3(1, 0, 0) : Vector3(0, 1, 0);
     const Vector3 U = normalize(cross(W, a));
     const Vector3 V = normalize(cross(W, U));
     const Matrix3x3 UVW = Matrix3x3(U, V, W);
-    return UVW * in;
+    auto result= UVW * in;
+    return result;
 }
 
 float utility::random_in_interval(float min, float max) {
@@ -56,12 +56,6 @@ float utility::random_in_interval(float min, float max) {
 
 Vector3 utility::random_in_unit_sphere() {
 
-//		auto r1 = random_double();
-//		auto r2 = random_double();
-//		auto x = cos(2 * Constants::pi * r1) * 2 * sqrt(r2 * (1 - r2));
-//		auto y = sin(2 * Constants::pi * r1) * 2 * sqrt(r2 * (1 - r2));
-//		auto z = 1 - r2;
-//		return Vector3(x, y, z);
 
     return glm::sphericalRand(1.0f);
 }
@@ -76,12 +70,32 @@ Vector3 utility::random_in_hemisphere(const Vector3 normal) {
     return -in_unit_sphere;
 }
 
+
 float utility::clamp(float x, float min, float max) {
     if (x < min) return min;
     if (x > max) return max;
     return x;
 }
+//Only on Dark Scenes, FAlse positives on Bright ones
+ bool utility::nanBugCheck(glm::vec4 _color) {
+    const uint8_t r = _color.r > 1.0f ? 255 : _color.r * 255;
+    const uint8_t g = _color.g > 1.0f ? 255 : _color.g * 255;
+    const uint8_t b = _color.b > 1.0f ? 255 : _color.b * 255;
 
+    if(r==255 && g==255 && b==255){
+        printf(" R %f ",_color.r);
+        printf(" G %f ",_color.g);
+        printf(" B %f \n",_color.b);
+        if(std::isnan(_color.r)||std::isnan(_color.g)||std::isnan(_color.b)){
+            printf("SHOULD BE HERE");
+        }
+        if (std::isnan(-_color.r)||std::isnan(-_color.r)||std::isnan(-_color.b)){
+            printf("NOT HERE");
+        }
+        return false;
+    }
+    return true;
+}
 Vector2 utility::random_unit_square() {
     return {random_in_interval(0, 1), random_in_interval(0, 1)};
 }
