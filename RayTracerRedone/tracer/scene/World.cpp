@@ -136,7 +136,7 @@ inline void World::draw_pixel(Canvas *canvas, int32_t depth, const Matrix4x4 &in
 
             const Ray r(origin, direction);
             actualColor = trace_ray(r, depth);
-            //canvas->write_pixel(x, y, ColorRGBA(trace_ray(r, 0)));
+            //canvas->write_pixel(x, y, ColorRGBA(trace_ray(r, 2)));
         } else {
             const float y_coord = viewPlane->pixelsize * (vp_y - 0.5f * (viewPlane->hsize - 1.0f));
             const float x_coord = viewPlane->pixelsize * (vp_x - 0.5f * (viewPlane->wsize - 1.0f));
@@ -147,7 +147,6 @@ inline void World::draw_pixel(Canvas *canvas, int32_t depth, const Matrix4x4 &in
             actualColor = trace_ray(r, depth);
             //canvas->write_pixel(x, y, ColorRGBA(trace_ray(r, 0)));
         }
-        actualColor.fixNans();
         colorVec += actualColor;
     }
     const ColorVec out = (colorVec * 1.0f / static_cast<float>(num_samples));

@@ -7,7 +7,7 @@
 OrthonormalBase::OrthonormalBase(Vector3 W) {
     W = glm::normalize(W);
     Vector3 a =
-            glm::length2(W - Vector3(0, 1, 0)) < glm::epsilon<float>() ? Vector3(1, 0, 0) : Vector3(0, 1, 0);
+            glm::length2(glm::abs(W) - Vector3(0, 1, 0)) < glm::epsilon<float>() ? Vector3(1, 0, 0) : Vector3(0, 1, 0);
 
     Vector3 U = normalize(cross(W, a));
     Vector3 V = normalize(cross(W, U));

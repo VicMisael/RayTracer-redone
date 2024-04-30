@@ -19,8 +19,7 @@ public:
 
 
     imagecanvas(const uint32_t w, const uint32_t h, const std::string name) : Canvas(w, h), totalPixels(w * h),
-                                                                              filename(name) {
-        rgba = new uint32_t[w * h];
+                                                                              filename(name),rgba(new uint32_t[w * h]) {
 #ifdef _MSC_VER
         setvbuf(stdout, 0, _IOLBF, 8192);
 #endif
