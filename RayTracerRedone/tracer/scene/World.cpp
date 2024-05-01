@@ -140,7 +140,7 @@ inline void World::draw_pixel(Canvas *canvas, int32_t depth, const Matrix4x4 &in
         } else {
             const float y_coord = viewPlane->pixelsize * (vp_y - 0.5f * (viewPlane->hsize - 1.0f));
             const float x_coord = viewPlane->pixelsize * (vp_x - 0.5f * (viewPlane->wsize - 1.0f));
-            Vector3 vp_r(x_coord + x_sample_point, -y_coord + y_sample_point, zw);
+            Vector3 vp_r(-x_coord + x_sample_point, -y_coord + y_sample_point, zw);
             vp_r = Vector3(inv * Vector4(vp_r, 1));
             auto dir = Vector3(inv * Vector4(Vector3(0, 0, -1), 0));
             const Ray r(vp_r, dir);
