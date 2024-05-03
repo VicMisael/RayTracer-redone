@@ -32,15 +32,15 @@ int main(int argc, char *argv[]) {
     std::cout << std::endl;
 
 //    assert(utility::nanBugCheck(glm::vec4(result, 1)));
-    constexpr bool png = false;
+    constexpr bool png = true;
     if (argc == 1 || argc > 1 && std::string("all") != argv[1]) {
 
 
-        const uint32_t w = 600;
-        const uint32_t h = 300;
+        const uint32_t w = 1800;
+        const uint32_t h = w/2;
 
 
-        const auto sampler = generateSampler(120);
+        const auto sampler = generateSampler(40);
 
 
         const auto selectedWorld = worlds::buildingsScene();

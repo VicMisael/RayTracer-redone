@@ -467,7 +467,7 @@ namespace worlds {
 
     World buildingsScene() {
         std::vector<std::shared_ptr<VirtualObject>> objects;
-        const auto black_white_texture = std::make_shared<CheckerTexture>(Constants::YELLOW, Constants::WHITE, 10);
+        const auto black_white_texture = std::make_shared<CheckerTexture>(Constants::BLACK, Constants::WHITE, 10);
         const auto mirror = std::make_shared<Mirror>();
         const auto bw_matte_textured = std::make_shared<TexturedPhong>(black_white_texture, 1, 25);
         const auto ground_texture = std::make_shared<ImageTexture>("assets/textures/ground.jpg");
@@ -489,13 +489,13 @@ namespace worlds {
         const auto textured_bw = std::make_shared<TexturedMatte>(black_white_texture);
 
         //objects.push_back(std::make_shared<Plane>(Point3(0, 0, 0), Vector3(0, 1, 0), textured_bp));
-        //objects.push_back(std::make_shared<Plane>(Point3(0, 0, 13509), Vector3(0, 1, -1), building_material));
+        //objects.push_back(std::make_shared<Plane>(Point3(0, 0, 13509), Vector3(0, 1, -1), bw_matte_textured));
         objects.push_back(std::make_shared<Ball>(Point3(0, 3000, 11509), 1000, moonmaterial));
         
         constexpr float a = 100000;
-        objects.push_back(std::make_shared<Ball>(Point3(0,-a+0.1f,0), a, building_material));
+        objects.push_back(std::make_shared<Ball>(Point3(0,-a-0.2f,0), a, building_material));
 
-        objects.push_back(std::make_shared<Ball>(Point3(10000, 6000, 100000), 80000, building_material));
+        //objects.push_back(std::make_shared<Ball>(Point3(10000, 6000, 100000), 80000, building_material));
         //objects.push_back(std::make_shared<Ball>(Point3(0, 0, 0), 10000, building_material));
         auto building1 = std::make_shared<Mesh>("assets/objs/building1.obj",
                                                 building_material);
@@ -545,14 +545,15 @@ namespace worlds {
 
         objects.push_back(std::make_shared<Ball>(Point3(-20, 25, 40), 10, socceball_bm));
 
-        const auto vp = std::make_shared<ViewPlane>(40, 20, 10, 1);
+        // const auto vp = std::make_shared<ViewPlane>(800, 400, 15, 1);
+        const auto vp = std::make_shared<ViewPlane>(60, 30, 15, 1);
 
-        objects.push_back(std::make_shared<Ball>(Point3(40, 30, 105), 25,
+        objects.push_back(std::make_shared<Ball>(Point3(120, 60, 125), 35,
                                                  phong_reflective_higher_exp));
 
         const auto transparent = std::make_shared<SampleDielectric>(0.7);
 //
-        objects.push_back(std::make_shared<Ball>(Point3(90, 60, 390), 25, transparent));
+        objects.push_back(std::make_shared<Ball>(Point3(90, 160, 390), 15, transparent));
         objects.push_back(std::make_shared<Ball>(Point3(-20, 152, 250), 60,  std::make_shared<SampleDielectric>(4.5)));
 
         std::vector<std::shared_ptr<VectorialLight>> lights;
@@ -585,7 +586,7 @@ namespace worlds {
 
 
         auto world = World(vp, objects, lights, AmbientLight(0, ColorVec(1, 1, 1)), ColorVec(0.1, 0.1, 0.4), true);
-        auto cam = std::make_shared<Camera>(Point3(00, 120, -150), Point3(40, 60, 105), Vector3(0, 1, 0));
+        auto cam = std::make_shared<Camera>(Point3(120, 80, -60), Point3(120, 80, 105), Vector3(0, 1, 0));
         world.withCamera(cam);
         world.withAreaLights(arealights);
         return world;
