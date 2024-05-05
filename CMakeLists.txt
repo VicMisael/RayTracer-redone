@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 find_package(glm REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(assimp CONFIG REQUIRED)
+find_package(OpenMP)
 include_directories(${SDL2_INCLUDE_DIRS})
 
 include_directories(RayTracerRedone/sdl2canvas)
@@ -156,11 +157,12 @@ add_executable(RayTracer_redone
 target_link_libraries(RayTracer_redone glm::glm)
 target_link_libraries(RayTracer_redone assimp::assimp)
 target_link_libraries(RayTracer_redone ${SDL2_LIBRARIES})
+target_link_libraries(RayTracer_redone  OpenMP::OpenMP_CXX)
 
 set_property(TARGET RayTracer_redone PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
 set(CMAKE_CXX_FLAGS_RELEASE "-Ofast -march=native")
 set(CMAKE_CXX_FLAGS_MINSIZEREL  "-Oz ")
-SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -ffast-math -g -march=native")
+SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -mfpmath=387 -g")
 
 
 file(COPY RayTracerRedone/assets DESTINATION ${CMAKE_BINARY_DIR})

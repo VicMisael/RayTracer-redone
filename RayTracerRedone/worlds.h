@@ -73,9 +73,9 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
     const auto textured_test_material2 = std::make_shared<TexturedMaterial>(blue_white_texture, white_matte);
 
 
-    objects.push_back(std::make_shared<Plane>(Point3(0, 0, -1600), Vector3(0, -1, 1), textured_test_material2));
+    //objects.push_back(std::make_shared<Plane>(Point3(0, 0, -1600), Vector3(0, -1, 1), textured_test_material2));
 
-    objects.push_back(std::make_shared<Plane>(Point3(0, 900, 1000), Vector3(0, 1, 1), plane_material));
+    //objects.push_back(std::make_shared<Plane>(Point3(0, 900, 1000), Vector3(0, 1, 1), plane_material));
 
     objects.push_back(
             std::make_shared<Ball>(Point3(0, -1000, -1000), 1000, white_matte));
@@ -138,7 +138,7 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
 std::vector<std::shared_ptr<VectorialLight>> generate_vectorial_lights() {
     std::vector<std::shared_ptr<VectorialLight>> lights;
     //lights.push_back(std::make_shared<DirectionalLight>(Vector3(0, 1, 1), 3.15, ColorVec(1, 1, 1)));
-    //lights.push_back(std::make_shared<PointLight>(Point3(90, 0, 0), Constants::pi * 6, ColorVec(1, 1, 1)));
+    lights.push_back(std::make_shared<PointLight>(Point3(0, 100, -1600), Constants::pi * 16, ColorVec(1, 1, 1)));
 
     return lights;
 }
@@ -179,13 +179,16 @@ namespace worlds {
         //True=Perspective False=parallel
 
 
-        const auto view_plane = !projection ? std::make_shared<ViewPlane>(2000, 2000, 50, 01.0f)
-                                            : std::make_shared<ViewPlane>(160, 160, 70, 1);
+        const auto view_plane = !projection ? std::make_shared<ViewPlane>(4000, 2000, 50, 01.0f)
+                                            : std::make_shared<ViewPlane>(320, 160, 100, 1);
 
         const auto objects = generateObjects();
         AmbientLight ab(0, ColorVec(1.0, 1.0, 1));
-        return {view_plane, objects, generate_vectorial_lights(),
-                ab, {1, 1, 1}, projection};
+        auto camera = std::make_shared<Camera>(Point3(0, 1000, -3200), Point3(0, 0, 0), Vector3(0, 1, 0));
+        World world = {view_plane, objects, generate_vectorial_lights(),
+                ab, {0.1, 0.2, .5}, projection };
+        world.withCamera(camera);
+        return world;
     }
 
     World moonEarth() {
@@ -220,8 +223,8 @@ namespace worlds {
 //
 //        const auto view_plane = std::make_shared<ViewPlane>(60, 60, 20, 0.50);
 //
-        constexpr bool projection = false;
-        const auto view_plane = std::make_shared<ViewPlane>(2000, 2000, 50, 0.5f);
+        constexpr bool projection = true;
+        const auto view_plane = std::make_shared<ViewPlane>(40, 20, 10, 0.5f);
 
         std::vector<std::shared_ptr<VirtualObject>> objects;
 
@@ -545,7 +548,7 @@ namespace worlds {
 
         objects.push_back(std::make_shared<Ball>(Point3(-20, 25, 40), 10, socceball_bm));
 
-        // const auto vp = std::make_shared<ViewPlane>(800, 400, 15, 1);
+         //const auto vp = std::make_shared<ViewPlane>(800, 400, 15, 1);
         const auto vp = std::make_shared<ViewPlane>(60, 30, 15, 1);
 
         objects.push_back(std::make_shared<Ball>(Point3(120, 60, 125), 35,
@@ -555,6 +558,17 @@ namespace worlds {
 //
         objects.push_back(std::make_shared<Ball>(Point3(90, 160, 390), 15, transparent));
         objects.push_back(std::make_shared<Ball>(Point3(-20, 152, 250), 60,  std::make_shared<SampleDielectric>(4.5)));
+
+
+        auto mesh = std::make_shared<Mesh>("assets/objs/cow.obj", building_material);
+        mat = glm::translate(Matrix4x4(1.0f), Vector3(240, 50, 300));
+        float angle = 1.5708;
+        mat = glm::rotate(mat, angle / 2, Vector3(0, 1, 0));
+        mat = glm::scale(mat, Vector3(10));
+        mesh->transform(mat);
+        objects.push_back(mesh);
+
+
 
         std::vector<std::shared_ptr<VectorialLight>> lights;
         //lights.push_back(std::make_shared<PointLight>(Point3(90, 30, 90), Constants::pi * 6, ColorVec(1, 1, 1)));
@@ -586,7 +600,7 @@ namespace worlds {
 
 
         auto world = World(vp, objects, lights, AmbientLight(0, ColorVec(1, 1, 1)), ColorVec(0.1, 0.1, 0.4), true);
-        auto cam = std::make_shared<Camera>(Point3(120, 80, -60), Point3(120, 80, 105), Vector3(0, 1, 0));
+        auto cam = std::make_shared<Camera>(Point3(120, 100, -160), Point3(120, 80, 105), Vector3(0, 1, 0));
         world.withCamera(cam);
         world.withAreaLights(arealights);
         return world;

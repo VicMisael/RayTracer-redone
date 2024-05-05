@@ -76,8 +76,8 @@ std::shared_ptr<AABB> BVH::bounding_box() const  {
 
 std::optional<intersectionRec> BVH::intersects(const Ray &ray, float t_min) const {
 
-    std::optional<intersectionRec> selintersection={};
-    if(!unboundables.empty()){
+ std::optional<intersectionRec> selintersection = {};
+ /* if(!unboundables.empty()){
         for (const std::shared_ptr<VirtualObject> &object : unboundables) {
             const auto intersectsoptional=object->intersects(ray);
             if(intersectsoptional){
@@ -89,6 +89,7 @@ std::optional<intersectionRec> BVH::intersects(const Ray &ray, float t_min) cons
             }
         }
     }
+    */
 
     if(aabb==nullptr){
         return selintersection;

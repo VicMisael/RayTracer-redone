@@ -36,11 +36,11 @@ int main(int argc, char *argv[]) {
     if (argc == 1 || argc > 1 && std::string("all") != argv[1]) {
 
 
-        const uint32_t w = 1800;
+        const uint32_t w = 1450;
         const uint32_t h = w/2;
 
 
-        const auto sampler = generateSampler(40);
+        const auto sampler = generateSampler(50);
 
 
         const auto selectedWorld = worlds::buildingsScene();
@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
         } else {
             drawcanvas = new sdl2canvas(w, h);
         }
-        constexpr int32_t recursion_depth_limit = 65;
+        constexpr int32_t recursion_depth_limit = 20;
 
         Scene scene(selectedWorld, drawcanvas);
         //auto cam = std::make_shared<Camera>(Point3(690, 710, 180), Point3(40, 30, 105), Vector3(0, 1, 0));
