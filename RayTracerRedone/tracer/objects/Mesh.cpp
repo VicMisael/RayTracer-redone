@@ -15,75 +15,75 @@ std::optional<intersectionRec> Mesh::intersects(const Ray &ray) const {
         return std::nullopt;
     }
 
-    return bvh->intersects(ray);
-    /*
-    float tNear = std::numeric_limits<float>::max();
-    bool hit = false;
-    glm::vec3 hit_normal;
-    //float uNear, vNear;
-    float uTexture, vTexture;
-    for (const Face &face: faces) {
-        const glm::vec3 v0 = vertices[face.v1].position;
-        const glm::vec3 v1 = vertices[face.v2].position;
-        const glm::vec3 v2 = vertices[face.v3].position;
-        const glm::vec3 edge1 = v1 - v0;
-        const glm::vec3 edge2 = v2 - v0;
-        const glm::vec3 h = glm::cross(ray.direction, edge2);
-        float a = glm::dot(edge1, h);
+     return bvh->intersects(ray);
+    
+    //float tNear = std::numeric_limits<float>::max();
+    //bool hit = false;
+    //glm::vec3 hit_normal;
+    ////float uNear, vNear;
+    //float uTexture, vTexture;
+    //for (const Face &face: faces) {
+    //    const glm::vec3 v0 = vertices[face.v1].position;
+    //    const glm::vec3 v1 = vertices[face.v2].position;
+    //    const glm::vec3 v2 = vertices[face.v3].position;
+    //    const glm::vec3 edge1 = v1 - v0;
+    //    const glm::vec3 edge2 = v2 - v0;
+    //    const glm::vec3 h = glm::cross(ray.direction, edge2);
+    //    float a = glm::dot(edge1, h);
 
-        if (a < 0) {
-            continue;
-        }
+    //    if (a < 0) {
+    //        continue;
+    //    }
 
-        float f = 1.0f / a;
-        glm::vec3 s = ray.origin - v0;
-        float u = f * glm::dot(s, h);
+    //    float f = 1.0f / a;
+    //    glm::vec3 s = ray.origin - v0;
+    //    float u = f * glm::dot(s, h);
 
-        if (u < 0.0 || u > 1.0) {
-            continue;
-        }
+    //    if (u < 0.0 || u > 1.0) {
+    //        continue;
+    //    }
 
-        glm::vec3 q = glm::cross(s, edge1);
-        float v = f * glm::dot(ray.direction, q);
+    //    glm::vec3 q = glm::cross(s, edge1);
+    //    float v = f * glm::dot(ray.direction, q);
 
-        if (v < 0.0 || u + v > 1.0) {
-            continue;
-        }
+    //    if (v < 0.0 || u + v > 1.0) {
+    //        continue;
+    //    }
 
-        float t = f * glm::dot(edge2, q);
+    //    float t = f * glm::dot(edge2, q);
 
-        if (t > 0.0001 && t < tNear) {
-            tNear = t;
-            hit = true;
-            // Interpolate normal
-            hit_normal = (1 - u - v) * vertices[face.v1].normal +
-                         u * vertices[face.v2].normal +
-                         v * vertices[face.v3].normal;
+    //    if (t > 0.0001 && t < tNear) {
+    //        tNear = t;
+    //        hit = true;
+    //        // Interpolate normal
+    //        hit_normal = (1 - u - v) * vertices[face.v1].normal +
+    //                     u * vertices[face.v2].normal +
+    //                     v * vertices[face.v3].normal;
 
-            // Interpolate texture coordinates
-            uTexture = (1 - u - v) * vertices[face.v1].tex_coord.x +
-                       u * vertices[face.v2].tex_coord.x +
-                       v * vertices[face.v3].tex_coord.x;
-            vTexture = (1 - u - v) * vertices[face.v1].tex_coord.y +
-                       u * vertices[face.v2].tex_coord.y +
-                       v * vertices[face.v3].tex_coord.y;
-        }
-    }
+    //        // Interpolate texture coordinates
+    //        uTexture = (1 - u - v) * vertices[face.v1].tex_coord.x +
+    //                   u * vertices[face.v2].tex_coord.x +
+    //                   v * vertices[face.v3].tex_coord.x;
+    //        vTexture = (1 - u - v) * vertices[face.v1].tex_coord.y +
+    //                   u * vertices[face.v2].tex_coord.y +
+    //                   v * vertices[face.v3].tex_coord.y;
+    //    }
+    //}
 
-    if (hit) {
-        intersectionRec result{
-                tNear,
-                ray.point_at(tNear),
-                normalize(hit_normal),
-                material,
-                uTexture,
-                vTexture
-        };
-        return result;
-    } else {
-        return std::nullopt;
-    }
-    */
+    //if (hit) {
+    //    intersectionRec result{
+    //            tNear,
+    //            ray.point_at(tNear),
+    //            normalize(hit_normal),
+    //            material,
+    //            uTexture,
+    //            vTexture
+    //    };
+    //    return result;
+    //} else {
+    //    return std::nullopt;
+    //}
+
 
 }
 
@@ -254,7 +254,7 @@ void Mesh::Triangle::generateBoundingBox() {
 
 
 std::optional<intersectionRec> Mesh::Triangle::intersects(const Ray &ray) const {
-    constexpr bool use_glm_intersection = false;
+    constexpr bool use_glm_intersection = true;
 
     float tNear = std::numeric_limits<float>::max();
     bool hit = false;

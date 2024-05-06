@@ -49,19 +49,19 @@ float FresnelTransmitter::fresnel(const Vector3 &wo, const intersectionRec &inte
     Vector3 normal(intersection.normal);
     const float ndotd = dot(-normal, wo);
     float eta;
-    if (ndotd < 0.0) { // ray hits inside surface
+    if (ndotd < 0.0f) { // ray hits inside surface
         normal = -normal;
         eta = n_out / n_in;
     } else
         eta = n_in / n_out;
     float cos_theta_i = dot(-normal, wo);
-    float temp = 1.0 - (1.0 - cos_theta_i * cos_theta_i) / (eta * eta);
+    float temp = 1.0f - (1.0f - cos_theta_i * cos_theta_i) / (eta * eta);
     float cos_theta_t = sqrt(temp);
     float r_parallel = (eta * cos_theta_i - cos_theta_t) /
                        (eta * cos_theta_i + cos_theta_t);
     float r_perpendicular = (cos_theta_i - eta * cos_theta_t) /
                             (cos_theta_i + eta * cos_theta_t);
-    float kr = 0.5 * (r_parallel * r_parallel + r_perpendicular
+    float kr = 0.5f * (r_parallel * r_parallel + r_perpendicular
                                                 * r_perpendicular);
     return (kr);
 }

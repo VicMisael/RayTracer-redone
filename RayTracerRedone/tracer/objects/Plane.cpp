@@ -25,7 +25,7 @@ std::tuple<float, float> computeUV(glm::vec3 pointInPlane, glm::vec3 otherPoint,
     float uCoordinate = glm::dot(delta, u);
     float vCoordinate = glm::dot(delta, v);
 
-    return {glm::mod(uCoordinate / 100,1.0f), glm::mod(vCoordinate / 100,1.0f)};
+    return {glm::mod(uCoordinate / 100.0f,1.0f), glm::mod(vCoordinate / 100.0f,1.0f)};
 }
 
 std::optional<intersectionRec> Plane::intersects(const Ray &ray) const {

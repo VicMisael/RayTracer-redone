@@ -32,26 +32,26 @@ int main(int argc, char *argv[]) {
     std::cout << std::endl;
 
 //    assert(utility::nanBugCheck(glm::vec4(result, 1)));
-    constexpr bool png = true;
+    constexpr bool png = 1;
     if (argc == 1 || argc > 1 && std::string("all") != argv[1]) {
 
 
-        const uint32_t w = 1450;
+        const uint32_t w = 2800;
         const uint32_t h = w/2;
 
 
-        const auto sampler = generateSampler(50);
+        const auto sampler = generateSampler(200);
 
 
-        const auto selectedWorld = worlds::buildingsScene();
+        const auto selectedWorld = worlds::refractanceTest();
         Canvas *drawcanvas;
 
         if (png) {
-            drawcanvas = new imagecanvas(w, h, "buildingsfinalnonm");
+            drawcanvas = new imagecanvas(w, h, "refractance");
         } else {
             drawcanvas = new sdl2canvas(w, h);
         }
-        constexpr int32_t recursion_depth_limit = 20;
+        constexpr int32_t recursion_depth_limit = 35;
 
         Scene scene(selectedWorld, drawcanvas);
         //auto cam = std::make_shared<Camera>(Point3(690, 710, 180), Point3(40, 30, 105), Vector3(0, 1, 0));
@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
             while (!canvas->should_stop()) {
                 scene.draw();
             }
-
+            return 1; 
         } else {
 
             auto t1 = std::chrono::high_resolution_clock::now();

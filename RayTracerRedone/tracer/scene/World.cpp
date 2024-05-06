@@ -25,7 +25,7 @@ void World::render(Canvas *canvas, const int32_t depth, const std::shared_ptr<sa
 }
 
 std::optional<intersectionRec> World::hit(const Ray &ray) const {
-    //return bvh->intersects(ray);
+    // return bvh->intersects(ray);
     float t_min = Constants::MAX_FLOAT;
     std::optional<intersectionRec> selintersection;
     for (const std::shared_ptr<VirtualObject> &object: objects_) {
@@ -56,7 +56,7 @@ ColorVec World::trace_ray(const Ray &ray, float &tmin, const int32_t depth) cons
 void
 World::render(Canvas *canvas, int32_t depth, const std::shared_ptr<sampler> &_sampler, std::shared_ptr<Camera> &camera) {
 
-    auto inv = camera->getLookAtInverse();
+    const auto inv = camera->getLookAtInverse();
     const uint32_t height = canvas->getHeight();
     const uint32_t width = canvas->getWidth();
     const float ystep = canvas->step_size_y(viewPlane);
@@ -64,25 +64,24 @@ World::render(Canvas *canvas, int32_t depth, const std::shared_ptr<sampler> &_sa
     const float zw = viewPlane->zw;
     const auto &points = _sampler->generate_points();
     const auto &num_samples = _sampler->num_samples;
-//#pragma omp parallel for
+#pragma omp parallel for
     for (long y = 0; y < height; y++) {
         for (long x = 0; x < width; x++) {
-            draw_pixel(canvas, depth, inv, ystep, xstep, zw, points, num_samples, y, x);
+            const ColorVec result = draw_pixel( depth, inv, ystep, xstep, zw, points, num_samples, y, x);
+            canvas->write_pixel(x, y, ColorRGBA(result));
         }
     }
-
-    
 }
 
-inline void World::draw_pixel(Canvas *canvas, int32_t depth, const Matrix4x4 &inv, const float ystep, const float xstep,
+inline ColorVec World::draw_pixel( int32_t depth, const Matrix4x4 &inv, const float ystep, const float xstep,
                        const float zw, const std::vector<std::tuple<float, float>> &points,
                        const unsigned int &num_samples, uint16_t y, uint16_t x) const {
     ColorVec colorVec(0, 0, 0);
-
+//#pragma omp parallel for
     for (int it = 0; it < points.size(); it++)
     {
         auto [x_sample_point, y_sample_point] = points[it];
-         const auto vp_y = ystep * y;
+        const auto vp_y = ystep * y;
         const auto vp_x = xstep * x;
 
         x_sample_point *= xstep;
@@ -147,6 +146,6 @@ inline void World::draw_pixel(Canvas *canvas, int32_t depth, const Matrix4x4 &in
     //    }
     //    colorVec += actualColor;
     //}
-    const ColorVec out = (colorVec * 1.0f / static_cast<float>(num_samples));
-    canvas->write_pixel(x, y, ColorRGBA(out));
+    return (colorVec * (1.0f / static_cast<float>(num_samples)));
+ 
 }

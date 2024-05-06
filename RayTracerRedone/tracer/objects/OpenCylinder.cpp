@@ -56,8 +56,8 @@ std::optional<intersectionRec> OpenCylinder::intersects(const Ray &ray) const {
     if (delta < 0) {
         return {};
     }
-    const auto intersection1 = (-1 * b + sqrtf(delta)) / a;
-    const auto intersection2 = (-1 * b - sqrtf(delta)) / a;
+    const auto intersection1 = (-1 * b + sqrtf(delta))*(1.0f/a);
+    const auto intersection2 = (-1 * b - sqrtf(delta))*(1.0f/a);
 
     Point3 p0r = ray.point_at(intersection1);
     Point3 p1r = ray.point_at(intersection2);

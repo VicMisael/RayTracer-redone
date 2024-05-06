@@ -30,14 +30,14 @@ ColorVec ImageTexture::value(float u, float v, const Point3 &p) const {
     v=fabs(v);
     // Clamp input texture coordinates to [0,1] x [1,0]
     u = utility::clamp(u, 0.0f, 1.0f);
-    v = 1.0 - utility::clamp(v, 0.0f, 1.0f);  // Flip V to image coordinates
+    v = 1.0f - utility::clamp(v, 0.0f, 1.0f);  // Flip V to image coordinates
     auto i = static_cast<int>(u * width);
     auto j = static_cast<int>(v * height);
     // Clamp integer mapping, since actual coordinates should be less than 1.0
     if (i >= width)  i = width-1;
     if (j >= height) j = height-1;
 
-    const float color_scale = 1.0 / 255.0;
+    const float color_scale = 1.0f / 255.0f;
     auto pixel = data + j*bytes_per_scanline + i*bytes_per_pixel;
 
     return ColorVec(color_scale*pixel[0], color_scale*pixel[1], color_scale*pixel[2]);

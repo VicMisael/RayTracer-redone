@@ -25,7 +25,7 @@ std::tuple<float, float> get_sphere_uv(const Point3 p) {
 
 std::optional<intersectionRec> Ball::intersects(const Ray &ray) const {
     // if (!aabb->intersects(ray)) {
-     //   return {};
+    //   return {};
     //}
     const Vector3 ray_direction = ray.direction;
     const float &radius = this->radius;
@@ -39,8 +39,8 @@ std::optional<intersectionRec> Ball::intersects(const Ray &ray) const {
     if (disc < 0.0f) {
         return {};
     }
-    const float t1 = (-b + sqrtf(disc)) / (2.0f * a);
-    const float t2 = (-b - sqrtf(disc)) / (2.0f * a);
+    const float t1 = (-b + sqrtf(disc)) * (1.0f / (2.0f * a));
+    const float t2 = (-b - sqrtf(disc)) * (1.0f / (2.0f * a));
     const float closest = std::min(t1, t2);
     const Vector3 closestPoint = (ray.point_at(closest));
     const Vector3 normal = normalize(closestPoint - center);
