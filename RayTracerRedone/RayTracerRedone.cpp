@@ -36,18 +36,18 @@ int main(int argc, char *argv[]) {
     if (argc == 1 || argc > 1 && std::string("all") != argv[1]) {
 
 
-        const uint32_t w = 2800;
+        const uint32_t w = 1600;
         const uint32_t h = w/2;
 
 
-        const auto sampler = generateSampler(200);
+        const auto sampler = generateSampler(160);
 
 
-        const auto selectedWorld = worlds::refractanceTest();
+        const auto selectedWorld = worlds::buildingsScene();
         Canvas *drawcanvas;
 
         if (png) {
-            drawcanvas = new imagecanvas(w, h, "refractance");
+            drawcanvas = new imagecanvas(w, h, "mundo2");
         } else {
             drawcanvas = new sdl2canvas(w, h);
         }

@@ -486,10 +486,16 @@ namespace worlds {
         const auto phong_metal = std::make_shared<PhongMetal>(1.24);
         const auto building_material = std::make_shared<Phong>(ColorVec(0.5, 0.5, 0.5), 1, 1, 25);
         auto mat = Matrix4x4(1.0f);
+        const auto transparent = std::make_shared<SampleDielectric>(0.7);
 
-
-
+        const auto soccerball_texture = std::make_shared<ImageTexture>("assets/textures/football-diffuse-512.png");
+        const auto soccerball = std::make_shared<TexturedPhong>(soccerball_texture, 1, 2);
+        const auto socceball_bm = std::make_shared<BumpMapping>(soccerball, std::make_shared<ImageTexture>("assets/normalmaps/football-normals-512.png"));
         const auto textured_bw = std::make_shared<TexturedMatte>(black_white_texture);
+
+        const auto dielectric = std::make_shared<SampleDielectric>(6.9);
+        const auto dielectric2 = std::make_shared<Dielectric>(Constants::YELLOW, Constants::BLACK, 1.24, 1.61, 1, 2);
+
 
         //objects.push_back(std::make_shared<Plane>(Point3(0, 0, 0), Vector3(0, 1, 0), textured_bp));
         //objects.push_back(std::make_shared<Plane>(Point3(0, 0, 13509), Vector3(0, 1, -1), bw_matte_textured));
@@ -500,8 +506,11 @@ namespace worlds {
 
         //objects.push_back(std::make_shared<Ball>(Point3(10000, 6000, 100000), 80000, building_material));
         //objects.push_back(std::make_shared<Ball>(Point3(0, 0, 0), 10000, building_material));
+
+
+
         auto building1 = std::make_shared<Mesh>("assets/objs/building1.obj",
-                                                building_material);
+            dielectric);
         mat = Matrix4x4(1.0f);
         mat = glm::translate(mat, Vector3(20, 0, 55));
         mat = glm::scale(mat, Vector3(15));
@@ -510,7 +519,7 @@ namespace worlds {
         building1->transform(mat);
 
         auto building2 = std::make_shared<Mesh>("assets/objs/building2.obj",
-                                                building_material);
+            std::make_shared<SampleDielectric>(4.5));
         mat = Matrix4x4(1.0f);
         mat = translate(mat, Vector3(76, 0, 50));
         mat = scale(mat, Vector3(15));
@@ -518,7 +527,7 @@ namespace worlds {
         building2->transform(mat);
 
         auto building3 = std::make_shared<Mesh>("assets/objs/building3.obj",
-                                                building_material);
+            building_material);
 
         mat = Matrix4x4(1.0f);
         mat = translate(mat, Vector3(130, 0, 60));
@@ -542,31 +551,36 @@ namespace worlds {
         objects.push_back(building4);
 
 
-        const auto soccerball_texture = std::make_shared<ImageTexture>("assets/textures/football-diffuse-512.png");
-        const auto soccerball = std::make_shared<TexturedPhong>(soccerball_texture, 1, 2);
-        const auto socceball_bm = std::make_shared<BumpMapping>(soccerball, std::make_shared<ImageTexture>("assets/normalmaps/football-normals-512.png"));
+
 
         objects.push_back(std::make_shared<Ball>(Point3(-20, 25, 40), 10, socceball_bm));
 
-         //const auto vp = std::make_shared<ViewPlane>(800, 400, 15, 1);
-        const auto vp = std::make_shared<ViewPlane>(60, 30, 15, 1);
+         const auto vp = std::make_shared<ViewPlane>(600, 300, 15, 1);
+        //const auto vp = std::make_shared<ViewPlane>(60, 30, 15, 1);
 
         objects.push_back(std::make_shared<Ball>(Point3(120, 60, 125), 35,
                                                  phong_reflective_higher_exp));
 
-        const auto transparent = std::make_shared<SampleDielectric>(0.7);
-//
+        
         objects.push_back(std::make_shared<Ball>(Point3(90, 160, 390), 15, transparent));
         objects.push_back(std::make_shared<Ball>(Point3(-20, 152, 250), 60,  std::make_shared<SampleDielectric>(4.5)));
 
 
         auto mesh = std::make_shared<Mesh>("assets/objs/cow.obj", building_material);
-        mat = glm::translate(Matrix4x4(1.0f), Vector3(240, 50, 300));
+        mat = glm::translate(Matrix4x4(1.0f), Vector3(240, 30, 200));
         float angle = 1.5708;
-        mat = glm::rotate(mat, angle / 2, Vector3(0, 1, 0));
+        mat = glm::rotate(mat, 3*angle / 2, Vector3(0, 1, 0));
         mat = glm::scale(mat, Vector3(10));
         mesh->transform(mat);
         objects.push_back(mesh);
+
+
+        auto mesh2 = std::make_shared<Mesh>("assets/objs/teapot.obj", phong_reflective_higher_exp);
+        mat = glm::translate(Matrix4x4(1.0f), Vector3(450, 0,100));
+        mat = glm::rotate(mat, angle / 2, Vector3(0, 1, 0));
+        mat = glm::scale(mat, Vector3(20));
+        mesh2->transform(mat);
+        objects.push_back(mesh2);
 
 
 
@@ -599,8 +613,9 @@ namespace worlds {
         
 
 
-        auto world = World(vp, objects, lights, AmbientLight(0, ColorVec(1, 1, 1)), ColorVec(0.1, 0.1, 0.4), true);
-        auto cam = std::make_shared<Camera>(Point3(120, 100, -160), Point3(120, 80, 105), Vector3(0, 1, 0));
+        auto world = World(vp, objects, lights, AmbientLight(0, ColorVec(1, 1, 1)), ColorVec(0.1, 0.1, 0.4), false);
+        auto camParallel = std::make_shared<Camera>(Point3(80, 100, -150), Point3(170, 100, 0), Vector3(0, 1, 0));
+        auto cam = std::make_shared<Camera>(Point3(80, 80, -150), Point3(170, 80, 0), Vector3(0, 1, 0));
         world.withCamera(cam);
         world.withAreaLights(arealights);
         return world;
