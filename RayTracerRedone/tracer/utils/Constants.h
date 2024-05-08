@@ -7,7 +7,7 @@
 namespace Constants {
     constexpr double pi = glm::pi<double>();
 
-    constexpr float EPSILON = FLT_EPSILON;
+    constexpr float EPSILON = 0.01f;//arbitrary
     constexpr float MAX_FLOAT = std::numeric_limits<float>::max();
     constexpr float INVPI_FLT = 1 / pi;
 

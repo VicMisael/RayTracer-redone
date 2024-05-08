@@ -7,6 +7,6 @@ public:
 	const Vector3 direction;
 	Ray(Point3 _origin, Vector3 _direction) :origin(_origin), direction(_direction) {};
 
-	Point3 point_at(float t) const;
+	const Point3 point_at(float t) const;
 };
 

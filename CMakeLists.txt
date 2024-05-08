@@ -162,7 +162,7 @@ target_link_libraries(RayTracer_redone  OpenMP::OpenMP_CXX)
 set_property(TARGET RayTracer_redone PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
 set(CMAKE_CXX_FLAGS_RELEASE "-Ofast -march=native")
 set(CMAKE_CXX_FLAGS_MINSIZEREL  "-Oz ")
-SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -mfpmath=387 -g")
+SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-Ofast -march=native -g")
 
 
 file(COPY RayTracerRedone/assets DESTINATION ${CMAKE_BINARY_DIR})

@@ -321,7 +321,7 @@ std::optional<intersectionRec> Mesh::Triangle::intersects(const Ray &ray) const 
         float t = f * glm::dot(edge2, q);
 
 
-        if (t > std::numeric_limits<float>::epsilon()) {
+        if (t > Constants::EPSILON) {
             tNear = t;
 
             // Interpolate normal
