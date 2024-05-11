@@ -550,6 +550,17 @@ namespace worlds {
 		mat = rotate(mat, (float)glm::radians(-45.0f), Vector3(0, 1, 0));
 		building4->transform(mat);
 
+
+		auto house = std::make_shared<Mesh>("assets/objs/house.obj",
+			building_material);
+
+		mat = Matrix4x4(1.0f);
+		mat = translate(mat, Vector3(230, 0, 0));
+		mat = scale(mat, Vector3(15));
+		mat = rotate(mat, (float)glm::radians(-45.0f), Vector3(0, 1, 0));
+		house->transform(mat);
+		objects.push_back(house);
+
 		objects.push_back(building1);
 		objects.push_back(building2);
 		objects.push_back(building3);

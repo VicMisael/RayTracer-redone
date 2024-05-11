@@ -23,7 +23,7 @@
 #include <cfenv>
 
 std::shared_ptr<sampler> generateSampler(const int numsamples) {
-    return std::make_shared<equidistant_point_sampler>(numsamples);
+    return std::make_shared<mt19937_point_sampler>(numsamples);
 }
 
 int main(int argc, char *argv[]) {
@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
     std::cout << std::endl;
 
 //    assert(utility::nanBugCheck(glm::vec4(result, 1)));
-    constexpr bool png = 0;
+    constexpr bool png = 1;
     if (argc == 1 || argc > 1 && std::string("all") != argv[1]) {
 
 
@@ -40,18 +40,18 @@ int main(int argc, char *argv[]) {
         const uint32_t h = w/2;
 
 
-        const auto sampler = generateSampler(225);
+        const auto sampler = generateSampler(110);
 
 
         const auto selectedWorld = worlds::buildingsScene();
         Canvas *drawcanvas;
 
         if (png) {
-            drawcanvas = new imagecanvas(w, h, "buldingsParallel");
+            drawcanvas = new imagecanvas(w, h, "biuding");
         } else {
             drawcanvas = new sdl2canvas(w, h);
         }
-        constexpr int32_t recursion_depth_limit = 20;
+        constexpr int32_t recursion_depth_limit = 15;
 
         Scene scene(selectedWorld, drawcanvas);
         //auto cam = std::make_shared<Camera>(Point3(690, 710, 180), Point3(40, 30, 105), Vector3(0, 1, 0));

@@ -52,7 +52,7 @@ public:
             lights_(std::move(lights)),
             bgColor(_bgColor),
             ambient_light(std::move(_ambient_light)), perspective_(perspective) {
-        //bvh = std::make_shared<BVH>(objects_);
+       // bvh = std::make_shared<BVH>(objects_);
         camera = std::make_shared<Camera>();
     }
 
@@ -87,6 +87,6 @@ public:
     ColorVec
     draw_pixel( int32_t depth, const Matrix4x4 &inv, const float ystep, const float xstep,
                const float zw,
-               const std::vector<std::tuple<float, float>> &points, const unsigned int &num_samples, uint16_t y,
+               const std::vector<std::tuple<float, float>> &points, uint16_t y,
                uint16_t x) const;
 };

@@ -113,18 +113,20 @@ std::optional<intersectionRec> BVH::intersects(const Ray &ray, float t_min) cons
             return {};
     }
     const auto left_int = left->intersects(ray,t_min);
+    const auto right_int = right->intersects(ray, t_min);
+
     if(left_int.has_value()){
         auto temp=*left_int;
-        if(temp.tmin<t_min && temp.tmin>0){
+        if(temp.tmin<t_min && temp.tmin>1){
             t_min=temp.tmin;
             selintersection.emplace(temp);
 
         };
     }
-    const auto right_int= right->intersects(ray,t_min);
+
     if(right_int.has_value()){
         auto temp=*right_int;
-        if(temp.tmin<t_min && temp.tmin>0){
+        if(temp.tmin<t_min && temp.tmin>1){
             selintersection.emplace(temp);
         };
     }
