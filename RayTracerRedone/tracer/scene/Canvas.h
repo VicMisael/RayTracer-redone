@@ -9,6 +9,7 @@ protected:
 	const uint32_t width;
 	const uint32_t height;
 public:
+	virtual ~Canvas() = default;
 
 	Canvas(const uint32_t _w,const uint32_t _h):width(_w),height(_h){}
 

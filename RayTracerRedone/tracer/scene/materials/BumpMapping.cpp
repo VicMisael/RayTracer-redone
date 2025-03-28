@@ -2,12 +2,9 @@
 // Created by Misael on 21/06/2023.
 //
 
-#include <glm/gtx/norm.hpp>
 #include "BumpMapping.h"
 #include "../../utils/Intersection.h"
-#include "../../utils/OrthonormalBase.h"
 #include "../../utils/utility.h"
-#include <iostream>
 
 ColorVec
 BumpMapping::shade(const World &world, const Ray &ray, const intersectionRec &intersectionIn, int32_t depth) const {

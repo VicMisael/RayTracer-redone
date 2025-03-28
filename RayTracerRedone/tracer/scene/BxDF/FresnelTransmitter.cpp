@@ -46,22 +46,35 @@ float FresnelTransmitter::internal_reflection(const Vector3 &wo, const intersect
 }
 
 float FresnelTransmitter::fresnel(const Vector3 &wo, const intersectionRec &intersection) const {
-    Vector3 normal(intersection.normal);
-    const float ndotd = dot(-normal, wo);
+    Vector3 normal = intersection.normal;
+    float ndotd = dot(-normal, wo);
     float eta;
-    if (ndotd < 0.0f) { // ray hits inside surface
+
+    // Determine if the ray is entering or exiting
+    if (ndotd < 0.0f) {
         normal = -normal;
         eta = n_out / n_in;
-    } else
+    } else {
         eta = n_in / n_out;
+    }
+
     float cos_theta_i = dot(-normal, wo);
-    float temp = 1.0f - (1.0f - cos_theta_i * cos_theta_i) / (eta * eta);
-    float cos_theta_t = sqrt(temp);
+    float sin2_theta_i = std::max(0.0f, 1.0f - cos_theta_i * cos_theta_i);
+    float sin2_theta_t = sin2_theta_i / (eta * eta);
+
+    // Check for total internal reflection
+    if (sin2_theta_t > 1.0f) {
+        return 1.0f; // Full reflection
+    }
+
+    float cos_theta_t = sqrt(std::max(0.0f, 1.0f - sin2_theta_t));
+
     float r_parallel = (eta * cos_theta_i - cos_theta_t) /
                        (eta * cos_theta_i + cos_theta_t);
     float r_perpendicular = (cos_theta_i - eta * cos_theta_t) /
                             (cos_theta_i + eta * cos_theta_t);
-    float kr = 0.5f * (r_parallel * r_parallel + r_perpendicular
-                                                * r_perpendicular);
-    return (kr);
+
+    float kr = 0.5f * (r_parallel * r_parallel + r_perpendicular * r_perpendicular);
+
+    return kr;
 }

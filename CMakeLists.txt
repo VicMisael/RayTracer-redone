@@ -159,10 +159,9 @@ target_link_libraries(RayTracer_redone assimp::assimp)
 target_link_libraries(RayTracer_redone ${SDL2_LIBRARIES})
 target_link_libraries(RayTracer_redone  OpenMP::OpenMP_CXX)
 
+add_definitions(-DGLM_ENABLE_EXPERIMENTAL)
+
 set_property(TARGET RayTracer_redone PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
-set(CMAKE_CXX_FLAGS_RELEASE "-Ofast -march=native")
-set(CMAKE_CXX_FLAGS_MINSIZEREL  "-Oz ")
-SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-Ofast -march=native -g")
 
 
 file(COPY RayTracerRedone/assets DESTINATION ${CMAKE_BINARY_DIR})

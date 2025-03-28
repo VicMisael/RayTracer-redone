@@ -1,3 +1,4 @@
 #pragma once
 //#define GLM_FORCE_SWIZZLE
 //#define GLM_FORCE_INTRINSICS
+#define GLM_ENABLE_EXPERIMENTAL 1

@@ -34,7 +34,7 @@ std::optional<intersectionRec> World::hit(const Ray& ray) const {
 		const auto intersectsoptional = object->intersects(ray);
 		if (intersectsoptional.has_value()) {
 			const auto& intersects = *intersectsoptional;
-			if (intersects.tmin < t_min && intersects.tmin>1) {
+			if (intersects.tmin < t_min && intersects.tmin>1.0f) {
 				t_min = intersects.tmin;
 				selintersection.emplace(intersects);
 			}
@@ -67,7 +67,7 @@ World::render(Canvas* canvas, int32_t depth, const std::shared_ptr<sampler>& _sa
 	const float xstep = canvas->step_size_x(viewPlane);
 	const float zw = viewPlane->zw;
 	const auto& points = _sampler->generate_points();
-#pragma omp parallel for schedule(dynamic)
+// #pragma omp parallel for schedule(dynamic)
 	for (long y = 0; y < height; y++) {
 		for (long x = 0; x < width; x++) {
 			const ColorVec result = draw_pixel(depth, inv, ystep, xstep, zw, points, y, x);

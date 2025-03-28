@@ -21,18 +21,32 @@
 #include "splash.h"
 #include <glm/glm.hpp>
 #include <cfenv>
+#include <csignal>
 
 std::shared_ptr<sampler> generateSampler(const int numsamples) {
     return std::make_shared<mt19937_point_sampler>(numsamples);
 }
+void fpe_handler(int sig) {
+    std::cerr << "Floating point exception caught! Signal: " << sig << std::endl;
+    std::exit(1);
+}
+
+
 
 int main(int argc, char *argv[]) {
+    // Register signal handler for SIGFPE
+    std::signal(SIGFPE, fpe_handler);
+
+    // Enable divide-by-zero, invalid, and overflow exceptions
+    feenableexcept(FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW);
+
+
     for (unsigned char c: splash_txt)
         std::cout << c;
     std::cout << std::endl;
 
 //    assert(utility::nanBugCheck(glm::vec4(result, 1)));
-    constexpr bool png = 1;
+    constexpr bool png = 0;
     if (argc == 1 || argc > 1 && std::string("all") != argv[1]) {
 
 
@@ -40,10 +54,10 @@ int main(int argc, char *argv[]) {
         const uint32_t h = w/2;
 
 
-        const auto sampler = generateSampler(110);
+        const auto sampler = generateSampler(60);
 
 
-        const auto selectedWorld = worlds::buildingsScene();
+        const auto selectedWorld = worlds::generateWorld1();
         Canvas *drawcanvas;
 
         if (png) {
@@ -51,12 +65,12 @@ int main(int argc, char *argv[]) {
         } else {
             drawcanvas = new sdl2canvas(w, h);
         }
-        constexpr int32_t recursion_depth_limit = 15;
+        constexpr int32_t recursion_depth_limit = 3;
 
         Scene scene(selectedWorld, drawcanvas);
         //auto cam = std::make_shared<Camera>(Point3(690, 710, 180), Point3(40, 30, 105), Vector3(0, 1, 0));
         if (!png) {
-            auto *canvas = static_cast<sdl2canvas *>(drawcanvas);
+            auto *canvas = dynamic_cast<sdl2canvas *>(drawcanvas);
             auto draw = [&] {
                 while (!canvas->should_stop()) {
                     auto t1 = std::chrono::high_resolution_clock::now();

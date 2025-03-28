@@ -3,7 +3,6 @@
 //
 
 #include <optional>
-#include <glm/gtx/norm.hpp>
 #include "Disk.h"
 #include "../utils/OrthonormalBase.h"
 #include "../utils/utility.h"

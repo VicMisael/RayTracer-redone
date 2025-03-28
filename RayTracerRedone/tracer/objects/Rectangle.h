@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include <glm/gtx/norm.hpp>
 #include "VirtualObject.h"
 #include "../utils/OrthonormalBase.h"
 
