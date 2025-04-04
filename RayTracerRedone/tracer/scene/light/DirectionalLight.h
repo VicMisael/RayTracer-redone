@@ -1,5 +1,6 @@
 #pragma once
 #include "VectorialLight.h"
+#include "../../utils/Types.h"
 
 class DirectionalLight :public VectorialLight
 {

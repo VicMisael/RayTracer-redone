@@ -4,6 +4,8 @@
 
 #include "OrthonormalBase.h"
 
+#include "glm/ext/scalar_constants.hpp"
+
 OrthonormalBase::OrthonormalBase(Vector3 W) {
     W = glm::normalize(W);
     Vector3 a =

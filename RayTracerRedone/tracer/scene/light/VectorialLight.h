@@ -1,5 +1,6 @@
 #pragma once
 #include "Light.h"
+#include "../../utils/Types.h"
 
 class World;
 class Ray;

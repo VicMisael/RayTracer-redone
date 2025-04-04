@@ -2,14 +2,14 @@ cmake_minimum_required(VERSION 3.22)
 project(RayTracer_redone)
 
 set(CMAKE_CXX_STANDARD 20)
+include(FetchContent)
+FetchContent_Declare(
+        glm
+        GIT_REPOSITORY https://github.com/g-truc/glm.git
+        GIT_TAG        master
+)
+FetchContent_MakeAvailable(glm)
 
-find_package(glm REQUIRED)
-find_package(SDL2 REQUIRED)
-find_package(assimp CONFIG REQUIRED)
-find_package(OpenMP)
-include_directories(${SDL2_INCLUDE_DIRS})
-
-include_directories(RayTracerRedone/sdl2canvas)
 include_directories(RayTracerRedone/tracer)
 include_directories(RayTracerRedone/tracer/config)
 include_directories(RayTracerRedone/tracer/objects)
@@ -21,16 +21,12 @@ include_directories(RayTracerRedone/tracer/utils)
 include_directories(RayTracerRedone/tracer/utils/sampler)
 
 add_executable(RayTracer_redone
-        RayTracerRedone/sdl2canvas/sdl2canvas.cpp
-        RayTracerRedone/sdl2canvas/sdl2canvas.h
         RayTracerRedone/tracer/config/glm_definitions.h
         RayTracerRedone/tracer/objects/Ball.cpp
         RayTracerRedone/tracer/objects/Ball.h
         RayTracerRedone/tracer/objects/Plane.cpp
         RayTracerRedone/tracer/objects/Plane.h
         RayTracerRedone/tracer/objects/VirtualObject.h
-        RayTracerRedone/tracer/objects/Mesh.cpp
-        RayTracerRedone/tracer/objects/Mesh.h
         RayTracerRedone/tracer/objects/OpenCylinder.cpp
         RayTracerRedone/tracer/objects/OpenCylinder.h
         RayTracerRedone/tracer/scene/BxDF/BxDF.h
@@ -118,7 +114,6 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/utils/stb/rtr_stb_image.h
         RayTracerRedone/tracer/scene/materials/TexturedPhongReflective.cpp
         RayTracerRedone/tracer/scene/materials/TexturedPhongReflective.h
-        RayTracerRedone/worlds.h
         RayTracerRedone/tracer/scene/Camera.cpp
         RayTracerRedone/tracer/scene/Camera.h
         RayTracerRedone/tracer/scene/materials/SampleDielectric.cpp
@@ -151,17 +146,17 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/scene/materials/NullMaterial.cpp
         RayTracerRedone/tracer/scene/materials/NullMaterial.h
         RayTracerRedone/tracer/utils/utility.cpp
-        RayTracerRedone/splash.h)
+)
 
 
 target_link_libraries(RayTracer_redone glm::glm)
-target_link_libraries(RayTracer_redone assimp::assimp)
 target_link_libraries(RayTracer_redone ${SDL2_LIBRARIES})
-target_link_libraries(RayTracer_redone  OpenMP::OpenMP_CXX)
+#target_link_libraries(RayTracer_redone  OpenMP::OpenMP_CXX)
 
 add_definitions(-DGLM_ENABLE_EXPERIMENTAL)
+#add_definitions(-DGLM_FORCE_PURE)
 
 set_property(TARGET RayTracer_redone PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
 
 
-file(COPY RayTracerRedone/assets DESTINATION ${CMAKE_BINARY_DIR})
+#file(COPY RayTracerRedone/assets DESTINATION ${CMAKE_BINARY_DIR})

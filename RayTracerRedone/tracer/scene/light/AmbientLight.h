@@ -1,6 +1,6 @@
 #pragma once
 #include "Light.h"
-
+#include "../../utils/Types.h"
 
 class AmbientLight:public Light
 {
