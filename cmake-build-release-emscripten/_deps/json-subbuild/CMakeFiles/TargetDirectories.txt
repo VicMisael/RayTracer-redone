@@ -1,3 +1,0 @@
-/mnt/e/Projects/RayTracer-redone/cmake-build-release-emscripten/_deps/json-subbuild/CMakeFiles/json-populate.dir
-/mnt/e/Projects/RayTracer-redone/cmake-build-release-emscripten/_deps/json-subbuild/CMakeFiles/edit_cache.dir
-/mnt/e/Projects/RayTracer-redone/cmake-build-release-emscripten/_deps/json-subbuild/CMakeFiles/rebuild_cache.dir

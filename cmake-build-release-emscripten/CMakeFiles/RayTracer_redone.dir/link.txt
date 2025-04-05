@@ -1,1 +1,0 @@
-/home/visael/emsdk/upstream/emscripten/em++ -O3 -DNDEBUG -flto=thin @CMakeFiles/RayTracer_redone.dir/objects1.rsp -o RayTracer_redone.js @CMakeFiles/RayTracer_redone.dir/linklibs.rsp

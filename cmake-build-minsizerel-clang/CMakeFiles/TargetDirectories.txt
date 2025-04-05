@@ -1,0 +1,5 @@
+/mnt/e/Projects/RayTracer-redone/cmake-build-minsizerel-clang/CMakeFiles/RayTracer_redone.dir
+/mnt/e/Projects/RayTracer-redone/cmake-build-minsizerel-clang/CMakeFiles/edit_cache.dir
+/mnt/e/Projects/RayTracer-redone/cmake-build-minsizerel-clang/CMakeFiles/rebuild_cache.dir
+/mnt/e/Projects/RayTracer-redone/cmake-build-minsizerel-clang/_deps/json-build/CMakeFiles/edit_cache.dir
+/mnt/e/Projects/RayTracer-redone/cmake-build-minsizerel-clang/_deps/json-build/CMakeFiles/rebuild_cache.dir
