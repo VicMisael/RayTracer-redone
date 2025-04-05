@@ -156,6 +156,8 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/utils/utility.cpp
         RayTracerRedone/jscanvas/JSCanvas.h
         RayTracerRedone/jscanvas/JSCanvas.cpp
+        RayTracerRedone/jsonparser/world_factory.h
+        RayTracerRedone/jsonparser/world_factory.cpp
 )
 
 
