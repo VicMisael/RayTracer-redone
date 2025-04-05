@@ -1,0 +1,9 @@
+{
+  "name": "rtr",
+  "version": "1.0",
+  "dependencies": [
+    "assimp",
+    "glm",
+    "sdl2"
+  ]
+}
