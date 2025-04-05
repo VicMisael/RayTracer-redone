@@ -4,13 +4,12 @@
 
 #ifndef JSON_TO_SCENE_H
 #define JSON_TO_SCENE_H
+#include "World.h"
 
 
-
-class json_to_scene {
-
+namespace world_factory{
+  World fromJson(const std::string json);
 };
-
 
 
 #endif //JSON_TO_SCENE_H

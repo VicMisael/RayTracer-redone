@@ -9,6 +9,14 @@ FetchContent_Declare(
         GIT_TAG        master
 )
 FetchContent_MakeAvailable(glm)
+# Declare the JSON library dependency
+FetchContent_Declare(
+        json
+        URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz
+)
+
+FetchContent_MakeAvailable(json)
+
 
 include_directories(RayTracerRedone/tracer)
 include_directories(RayTracerRedone/tracer/config)
@@ -148,11 +156,15 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/utils/utility.cpp
         RayTracerRedone/jscanvas/JSCanvas.h
         RayTracerRedone/jscanvas/JSCanvas.cpp
+        RayTracerRedone/jsonparser/JsonToScene.h
+        RayTracerRedone/jsonparser/JsonToScene.cpp
+        RayTracerRedone/jsonparser/SceneParser.cpp
+        RayTracerRedone/jsonparser/SceneParser.h
 )
 
 
 target_link_libraries(RayTracer_redone glm::glm)
-target_link_libraries(RayTracer_redone ${SDL2_LIBRARIES})
+target_link_libraries(RayTracer_redone nlohmann_json::nlohmann_json)
 #target_link_libraries(RayTracer_redone  OpenMP::OpenMP_CXX)
 
 add_definitions(-DGLM_ENABLE_EXPERIMENTAL)
