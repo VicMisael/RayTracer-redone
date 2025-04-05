@@ -20,22 +20,9 @@ class AmbientLight;
 
 using json = nlohmann::json;
 
-class Scene {
-public:
-    std::shared_ptr<ViewPlane> viewPlane;
-    std::vector<std::shared_ptr<VirtualObject>> objects_;
-    std::vector<std::shared_ptr<VectorialLight>> lights_;
-    std::vector<std::shared_ptr<AreaLight>> areaLights_;
-    std::shared_ptr<Camera> camera;
-    AmbientLight ambient_light;
-    ColorVec bgColor;
-};
-
 class SceneParser {
 public:
-    static Scene parseScene(const json& j);
-
-private:
+    // static Scene parseScene(const json& j);
     static std::shared_ptr<Material> parseMaterial(const json& j);
     static void loadMaterialTemplates(const json& j);
 

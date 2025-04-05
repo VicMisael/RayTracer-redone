@@ -156,10 +156,6 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/utils/utility.cpp
         RayTracerRedone/jscanvas/JSCanvas.h
         RayTracerRedone/jscanvas/JSCanvas.cpp
-        RayTracerRedone/jsonparser/JsonToScene.h
-        RayTracerRedone/jsonparser/JsonToScene.cpp
-        RayTracerRedone/jsonparser/SceneParser.cpp
-        RayTracerRedone/jsonparser/SceneParser.h
 )
 
 

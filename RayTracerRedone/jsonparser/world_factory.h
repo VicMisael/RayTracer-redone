@@ -8,7 +8,7 @@
 
 
 namespace world_factory{
-  World fromJson(const std::string json);
+  World fromJson(const std::string& json);
 };
 
 
