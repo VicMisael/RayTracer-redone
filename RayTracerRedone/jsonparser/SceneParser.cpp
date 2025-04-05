@@ -24,34 +24,6 @@
 // Initialize static material template map
 std::unordered_map<std::string, std::shared_ptr<Material>> SceneParser::materialTemplates_;
 
-Scene SceneParser::parseScene(const json& j) {
-    Scene scene{};
-
-    if (j.contains("materials")) {
-        loadMaterialTemplates(j["materials"]);
-    }
-
-    scene.viewPlane = parseViewPlane(j["viewPlane"]);
-
-    for (const auto& obj : j["objects"]) {
-        scene.objects_.emplace_back(parseObject(obj));
-    }
-
-    for (const auto& light : j["vectorialLights"]) {
-        scene.lights_.emplace_back(parseVectorialLight(light));
-    }
-
-    for (const auto& alight : j["areaLights"]) {
-        scene.areaLights_.emplace_back(parseAreaLight(alight));
-    }
-
-    scene.camera = parseCamera(j["camera"]);
-    scene.ambient_light = parseAmbientLight(j["ambient_light"]);
-    scene.bgColor = ColorVec(j["bgColor"][0], j["bgColor"][1], j["bgColor"][2]);
-
-    return scene;
-}
-
 
 std::shared_ptr<Material> SceneParser::parseMaterial(const json& j) {
     if (j.is_string()) {

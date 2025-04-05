@@ -19,6 +19,13 @@ include_directories(RayTracerRedone/tracer/scene/light)
 include_directories(RayTracerRedone/tracer/scene/materials)
 include_directories(RayTracerRedone/tracer/utils)
 include_directories(RayTracerRedone/tracer/utils/sampler)
+include(FetchContent)
+FetchContent_Declare(
+        json
+        URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz
+)
+
+FetchContent_MakeAvailable(json)
 
 add_executable(RayTracer_redone
         RayTracerRedone/sdl2canvas/sdl2canvas.cpp
@@ -151,13 +158,18 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/scene/materials/NullMaterial.cpp
         RayTracerRedone/tracer/scene/materials/NullMaterial.h
         RayTracerRedone/tracer/utils/utility.cpp
-        RayTracerRedone/splash.h)
+        RayTracerRedone/splash.h
+        RayTracerRedone/jsonparser/world_factory.cpp
+        RayTracerRedone/jsonparser/world_factory.h
+        RayTracerRedone/jsonparser/SceneParser.cpp
+        RayTracerRedone/jsonparser/SceneParser.h)
 
 
 target_link_libraries(RayTracer_redone glm::glm)
 target_link_libraries(RayTracer_redone assimp::assimp)
 target_link_libraries(RayTracer_redone ${SDL2_LIBRARIES})
 target_link_libraries(RayTracer_redone  OpenMP::OpenMP_CXX)
+target_link_libraries(RayTracer_redone nlohmann_json::nlohmann_json)
 
 add_definitions(-DGLM_ENABLE_EXPERIMENTAL)
 
