@@ -41,7 +41,8 @@ World world_factory::fromJson(const std::string& jsonStr) {
     auto cam = SceneParser::parseCamera(j["camera"]);
 
     // Build world
-    std::string projection = j["projection"];
+    std::string projection = j.contains("projection")?std::string(j["projection"]):std::string("perspective");
+
     bool proj = projection == std::string("perspective");
     auto world = World(vp, objects, lights, ambient, bgColor, proj);
     world.withCamera(cam);

@@ -31,10 +31,6 @@
 std::shared_ptr<sampler> generateSampler(const int numsamples) {
     return std::make_shared<mt19937_point_sampler>(numsamples);
 }
-void fpe_handler(int sig) {
-    std::cerr << "Floating point exception caught! Signal: " << sig << std::endl;
-    std::exit(1);
-}
 
 
 void render(const bool png, const uint32_t w, const uint32_t h, const std::shared_ptr<sampler> sampler, const World selectedWorld) {

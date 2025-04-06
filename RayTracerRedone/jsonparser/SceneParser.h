@@ -22,7 +22,6 @@ using json = nlohmann::json;
 
 class SceneParser {
 public:
-    // static Scene parseScene(const json& j);
     static std::shared_ptr<Material> parseMaterial(const json& j);
     static void loadMaterialTemplates(const json& j);
 

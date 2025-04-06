@@ -11,6 +11,7 @@
 #include "Disk.h"
 #include "Matte.h"
 #include "Mirror.h"
+#include "NullMaterial.h"
 #include "OpenCylinder.h"
 #include "Phong.h"
 #include "PhongMetal.h"
@@ -67,7 +68,7 @@ std::shared_ptr<Material> SceneParser::parseMaterial(const json& j) {
         return std::make_shared<PhongReflective>();
     }
 
-    throw std::runtime_error("Unsupported material type: " + type);
+    return std::make_shared<NullMaterial>();
 }
 
 std::shared_ptr<ViewPlane> SceneParser::parseViewPlane(const json& j) {
@@ -152,9 +153,9 @@ std::shared_ptr<AreaLight> SceneParser::parseAreaLight(const json& j) {
 
 
 std::shared_ptr<Camera> SceneParser::parseCamera(const json& j) {
-    const auto eye = j["eye"];
-    const auto lookat = j["lookAt"];
-    const auto up = j["up"];
+    const auto& eye = j["eye"];
+    const auto& lookat = j["lookAt"];
+    const auto& up = j["up"];
 
     return std::make_shared<Camera>(
         Point3(eye[0], eye[1], eye[2]),
