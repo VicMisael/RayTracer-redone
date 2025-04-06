@@ -2,8 +2,8 @@
   "viewPlane": {
     "width": 800,
     "height": 600,
-    "pixelSize": 1.0,
-    "samples": 16
+    "zw":100,
+    "pixelSize": 1.0
   },
   "materials": {
     "mat_diffuse": {

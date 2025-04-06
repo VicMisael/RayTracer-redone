@@ -30,10 +30,10 @@ private:
     //std::shared_ptr<BVH> bvh;
     bool perspective_{};
     static void printAreas(const std::vector<std::shared_ptr<VirtualObject>> &objects) {
-        for (const auto &obj: objects) {
+        // for (const auto &obj: objects) {
 
-            std::cout << "The area of the object " << typeid(*obj).name() << " is:" << obj->getArea() << std::endl;
-        }
+        //     std::cout << "The area of the object " << typeid(*obj).name() << " is:" << obj->getArea() << std::endl;
+        // }
     }
 public:
     [[nodiscard]] ColorVec trace_ray(const Ray &ray, const int32_t depth) const;

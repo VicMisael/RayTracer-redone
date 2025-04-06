@@ -10,7 +10,7 @@
 #include <emscripten/html5.h>
 #include <emscripten/val.h>
 
-class JSCanvas: Canvas {
+class JSCanvas: public Canvas {
 
 private:
     std::vector<uint8_t> pixelBuffer;
@@ -27,6 +27,7 @@ public:
         pixelBuffer[idx + 1] = static_cast<uint8_t>(color.g);  // G
         pixelBuffer[idx + 2] = static_cast<uint8_t>(color.b);  // B
         pixelBuffer[idx + 3] = static_cast<uint8_t>(color.a);  // A
+        draw();
     }
 
     void draw() override {

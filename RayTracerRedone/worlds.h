@@ -97,20 +97,20 @@ std::vector<std::shared_ptr<VirtualObject>> generateObjects() {
 	const auto textured_test_material = std::make_shared<TexturedMaterial>(checkeredTexture, textured_bw);
 
 
-	const auto earthtexture = std::make_shared<ImageTexture>("assets/textures/earthmap.jpg");
+	// const auto earthtexture = std::make_shared<ImageTexture>("assets/textures/earthmap.jpg");
+	//
+	// const auto earthmaterial = std::make_shared<TexturedMatte>(earthtexture, 1);
+	//
+	// const auto _8balltexture = std::make_shared<ImageTexture>("assets/textures/8ball.jpg");
+	// const auto eight_ball_material = std::make_shared<TexturedPhongReflective>(_8balltexture, 0.4);
+	//
 
-	const auto earthmaterial = std::make_shared<TexturedMatte>(earthtexture, 1);
-
-	const auto _8balltexture = std::make_shared<ImageTexture>("assets/textures/8ball.jpg");
-	const auto eight_ball_material = std::make_shared<TexturedPhongReflective>(_8balltexture, 0.4);
-
-
-	objects.push_back(std::make_shared<Ball>(Point3(-300, 650, -500), 280,
-		eight_ball_material));
-
-
-	objects.push_back(std::make_shared<Ball>(Point3(400, -20, -100), 120,
-		earthmaterial));
+	// objects.push_back(std::make_shared<Ball>(Point3(-300, 650, -500), 280,
+	// 	eight_ball_material));
+	//
+	//
+	// objects.push_back(std::make_shared<Ball>(Point3(400, -20, -100), 120,
+	// 	earthmaterial));
 
 	const auto checkeredTexture2 = std::make_shared<CheckerTexture>(10);
 	const auto textured3 = std::make_shared<TexturedMaterial>(checkeredTexture2, white_matte);

@@ -159,6 +159,8 @@ add_executable(RayTracer_redone
         RayTracerRedone/jsonparser/world_factory.h
         RayTracerRedone/jsonparser/world_factory.cpp
         RayTracerRedone/worlds.h
+        RayTracerRedone/jsonparser/SceneParser.cpp
+        RayTracerRedone/jsonparser/SceneParser.h
 )
 
 
@@ -168,8 +170,20 @@ target_link_libraries(RayTracer_redone nlohmann_json::nlohmann_json)
 
 add_definitions(-DGLM_ENABLE_EXPERIMENTAL)
 #add_definitions(-DGLM_FORCE_PURE)
+#set_property(TARGET RayTracer_redone PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
 
-set_property(TARGET RayTracer_redone PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
 
+# Check if using Emscripten
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
+#     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --bind")
+
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} \
+        -lembind \
+        -sNO_DISABLE_EXCEPTION_CATCHING \
+        -sEXPORTED_FUNCTIONS=['_render_scene_from_json'] \
+        -sEXPORTED_RUNTIME_METHODS=['ccall','cwrap'] \
+        -sALLOW_MEMORY_GROWTH=1 \
+")
+endif()
 
 #file(COPY RayTracerRedone/assets DESTINATION ${CMAKE_BINARY_DIR})
