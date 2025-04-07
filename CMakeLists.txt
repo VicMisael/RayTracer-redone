@@ -165,11 +165,11 @@ add_executable(RayTracer_redone
         RayTracerRedone/jsonparser/SceneParser.h)
 
 
-target_link_libraries(RayTracer_redone glm::glm)
-target_link_libraries(RayTracer_redone assimp::assimp)
-target_link_libraries(RayTracer_redone ${SDL2_LIBRARIES})
-target_link_libraries(RayTracer_redone  OpenMP::OpenMP_CXX)
-target_link_libraries(RayTracer_redone nlohmann_json::nlohmann_json)
+target_link_libraries(RayTracer_redone PRIVATE glm::glm)
+target_link_libraries(RayTracer_redone PRIVATE assimp::assimp)
+target_link_libraries(RayTracer_redone PRIVATE ${SDL2_LIBRARIES})
+target_link_libraries(RayTracer_redone PRIVATE OpenMP::OpenMP_CXX)
+target_link_libraries(RayTracer_redone PRIVATE nlohmann_json::nlohmann_json)
 
 add_definitions(-DGLM_ENABLE_EXPERIMENTAL)
 

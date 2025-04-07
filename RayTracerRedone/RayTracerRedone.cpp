@@ -101,7 +101,7 @@ int main(int argc, char *argv[]) {
 
         const uint32_t w = 750;
         const uint32_t h = w/2;
-        const auto sampler = generateSampler(20);
+        const auto sampler = generateSampler(120);
 
         const std::string filename = argv[2];
         std::ifstream inFile(filename);
