@@ -26,6 +26,8 @@ void World::render(Canvas* canvas, const int32_t depth, const std::shared_ptr<sa
 	this->render(canvas, depth, _sampler, this->camera);
 }
 
+
+
 std::optional<intersectionRec> World::hit(const Ray& ray) const {
 	//return bvh->intersects(ray);
 	auto t_min = Constants::MAX_FLOAT;
@@ -67,7 +69,7 @@ World::render(Canvas* canvas, int32_t depth, const std::shared_ptr<sampler>& _sa
 	const float xstep = canvas->step_size_x(viewPlane);
 	const float zw = viewPlane->zw;
 	const auto& points = _sampler->generate_points();
-#pragma omp parallel for schedule(dynamic)
+//#pragma omp parallel for schedule(dynamic)
 	for (long y = 0; y < height; y++) {
 		for (long x = 0; x < width; x++) {
 			const ColorVec result = draw_pixel(depth, inv, ystep, xstep, zw, points, y, x);

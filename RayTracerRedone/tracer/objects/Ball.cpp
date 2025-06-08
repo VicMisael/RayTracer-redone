@@ -50,16 +50,14 @@ std::optional<intersectionRec> Ball::intersects(const Ray& ray) const {
 	if (t1 < Constants::EPSILON && t2 < Constants::EPSILON) {
 		return {};
 	}
-	else {
-		closest = std::min(t1, t2);
-		if (closest <= 0) {
-			closest = std::max(t1, t2);
-			if (closest < .1f) {
-				return {};
-			}
-			normalMultiplier *= -1.0f;
-		}
 
+	closest = std::min(t1, t2);
+	if (closest <= 0) {
+		closest = std::max(t1, t2);
+		if (closest < .1f) {
+			return {};
+		}
+		normalMultiplier *= -1.0f;
 	}
 
 	const Vector3 closestPoint = (ray.point_at(closest));
