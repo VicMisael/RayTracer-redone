@@ -25,9 +25,10 @@ std::tuple<float, float> get_sphere_uv(const Point3 p) {
 }
 
 std::optional<intersectionRec> Ball::intersects(const Ray& ray) const {
-	// if (!aabb->intersects(ray)) {
+	//if (!aabb->intersects(ray)) {
 	//   return {};
 	//}
+	//__debugbreak();
 	const Vector3& ray_direction = ray.direction;
 	const float& radius = this->radius;
 	const Point3& center = this->center;

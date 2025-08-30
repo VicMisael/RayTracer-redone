@@ -67,6 +67,8 @@ void render(const bool png, const uint32_t w, const uint32_t h, const std::share
             scene.draw();
         }
 
+        t.join();
+
     } else {
 
         auto t1 = std::chrono::high_resolution_clock::now();
@@ -122,14 +124,14 @@ int main(int argc, char *argv[]) {
     }else if (argc == 1 || argc > 1 && std::string("all") != argv[1]) {
 
 
-        const uint32_t w = 750;
+        const uint32_t w = 1750;
         const uint32_t h = w/2;
 
 
-        const auto sampler = generateSampler(60);
+        const auto sampler = generateSampler(1);
 
 
-        const auto selectedWorld = worlds::generateWorld1(true);
+        const auto selectedWorld = worlds::buildingsScene();
         int value1;
         render(png, w, h, sampler, selectedWorld);
         return value1;
@@ -156,7 +158,7 @@ int main(int argc, char *argv[]) {
 
             Canvas *drawcanvas = new imagecanvas(w, h, name);
 
-            constexpr int32_t recursion_depth_limit = 10;
+            constexpr int32_t recursion_depth_limit = 3;
 
             Scene scene(selectedWorld, drawcanvas);
 
