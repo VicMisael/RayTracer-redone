@@ -70,6 +70,93 @@ std::optional<intersectionRec> Ball::intersects(const Ray& ray) const {
 
 }
 
+intersectionRecSoA Ball::intersects(const RaySoA& ray) const
+{
+    // We create a full batch where every lane has the same value.
+    batch_type center_x(center.x);
+    batch_type center_y(center.y);
+    batch_type center_z(center.z);
+    batch_type rad(radius);
+    batch_type rad_sq = rad * rad;
+
+    // 2. Calculate vector from ray origin to sphere center (oc)
+    Vector3_SoA oc = {
+        ray.origin.x - center_x,
+        ray.origin.y - center_y,
+        ray.origin.z - center_z
+    };
+
+    // 3. Set up the quadratic equation coefficients (a, b, c) for all 4 rays
+    // a = dot(D, D) where D is ray direction
+    batch_type a = ray.direction.x * ray.direction.x +
+        ray.direction.y * ray.direction.y +
+        ray.direction.z * ray.direction.z;
+
+    // half_b = dot(oc, D)
+    batch_type half_b = oc.x * ray.direction.x +
+        oc.y * ray.direction.y +
+        oc.z * ray.direction.z;
+
+    // c = dot(oc, oc) - r^2
+    batch_type c = oc.x * oc.x + oc.y * oc.y + oc.z * oc.z - rad_sq;
+
+    // 4. Calculate the discriminant
+    batch_type discriminant = half_b * half_b - a * c;
+
+    // 5. Create a mask of which rays *could* have an intersection
+    mask_type hit_mask = (discriminant >= 0.f);
+
+    // If no ray can possibly hit, we can exit early.
+    if (xs::none(hit_mask)) {
+        return { hit_mask }; // Return record with all-false mask
+    }
+
+    // 6. Calculate the smallest positive root 't' for the valid lanes
+    batch_type sqrt_d = xs::sqrt(discriminant);
+    batch_type root = (-half_b - sqrt_d) / a;
+
+    // Check if the first root is valid (t > epsilon)
+    batch_type t_min = 0.0001f;
+    mask_type valid_root_mask = hit_mask & (root > t_min);
+
+    // If the first root is not valid, try the second root
+    batch_type second_root = (-half_b + sqrt_d) / a;
+    // `xs::select(mask, val_if_true, val_if_false)`
+    root = xs::select(valid_root_mask, root, second_root);
+
+    // Final update to the hit mask: only hits with t > t_min are valid
+    hit_mask = hit_mask & (root > t_min);
+
+    // If we filtered out all rays, exit.
+    if (xs::none(hit_mask)) {
+        return { hit_mask };
+    }
+
+    // 7. Populate the intersection record for the rays that hit
+    intersectionRecSoA rec;
+    rec.intersects = hit_mask;
+    rec.tmin = root;
+    rec.hit_point = ray.point_at(root);
+
+    // Calculate normals: (hit_point - center) / radius
+    rec.normal = {
+        (rec.hit_point.x - center_x) / rad,
+        (rec.hit_point.y - center_y) / rad,
+        (rec.hit_point.z - center_z) / rad
+    };
+
+    auto pi = xs::batch<float>(Constants::pi_f);
+    rec.u = xs::atan2(rec.normal.x, rec.normal.z) / (2.f * pi) + 0.5f;
+    rec.v = rec.normal.y * 0.5f + 0.5f;
+
+    // Assign the same material to all hit lanes
+    for (size_t i = 0; i < SIMD_WIDTH; ++i) {
+        rec.materials[i] = this->material;
+    }
+
+    return rec;
+}
+
 std::shared_ptr<AABB> Ball::bounding_box() const {
 	return aabb;
 }

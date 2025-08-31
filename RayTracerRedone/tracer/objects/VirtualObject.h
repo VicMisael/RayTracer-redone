@@ -28,6 +28,8 @@ public:
 
     [[nodiscard]] virtual std::optional<intersectionRec> intersects(const Ray &ray) const = 0;
 
+    virtual bool supports_soa() const { return false; }
+
     virtual void transform(Matrix4x4 m) {};
 
     virtual std::shared_ptr<AABB> bounding_box() const;
@@ -54,3 +56,15 @@ public:
 };
 
 	
+class VirtualObjectSIMD :public VirtualObject {
+public:
+    // Add this constructor to forward the material to the base class
+    explicit VirtualObjectSIMD(std::shared_ptr<Material> _material)
+        : VirtualObject(std::move(_material)) {
+    }
+
+    explicit VirtualObjectSIMD() :VirtualObject() {};
+
+
+    [[nodiscard]] virtual intersectionRecSoA intersects(const RaySoA& ray) const = 0;
+};

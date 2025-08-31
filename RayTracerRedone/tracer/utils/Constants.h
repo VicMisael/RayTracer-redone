@@ -6,6 +6,7 @@
 #include <cmath>
 namespace Constants {
     constexpr double pi = glm::pi<double>();
+    constexpr float pi_f = glm::pi<float>();
 
     constexpr float EPSILON = 0.01f;//arbitrary
     constexpr float MAX_FLOAT = std::numeric_limits<float>::max();

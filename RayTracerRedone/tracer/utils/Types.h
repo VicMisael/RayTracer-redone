@@ -19,3 +19,25 @@ union RGBA {
         uint8_t  _r, _g, _b, _a;
     };
 };
+
+
+//==============================================================================
+// SIMD (SoA - Structure of Arrays) Type Definitions using xsimd
+//==============================================================================
+#include "xsimd/xsimd.hpp"
+
+namespace xs = xsimd;
+
+// We are fixing the SIMD processing width to 4 floats (128 bits, e.g., SSE)
+using batch_type = xs::batch<float>;
+using mask_type = xs::batch_bool<float>;
+constexpr size_t SIMD_WIDTH = batch_type::size;
+
+// SoA struct holding X, Y, Z components for a packet of 4 vectors/points
+struct Vec3_SoA {
+    batch_type x, y, z;
+};
+
+// Define semantic aliases for our SoA types
+using Point3_SoA = Vec3_SoA;
+using Vector3_SoA = Vec3_SoA;

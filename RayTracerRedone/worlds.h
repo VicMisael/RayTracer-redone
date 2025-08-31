@@ -9,7 +9,6 @@
 #include "sdl2canvas/sdl2canvas.h"
 
 #include "tracer/scene/World.h"
-#include "tracer/scene/World.h"
 #include "tracer/objects/Plane.h"
 #include "tracer/objects/Ball.h"
 #include "tracer/objects/Mesh.h"
@@ -510,7 +509,7 @@ namespace worlds {
 		objects.push_back(std::make_shared<Ball>(Point3(0, -a - 0.2f, 0), a, building_material));
 
 		//objects.push_back(std::make_shared<Ball>(Point3(10000, 6000, 100000), 80000, building_material));
-		objects.push_back(std::make_shared<Ball>(Point3(0, 0, 0), 12450, universematerial));
+		//objects.push_back(std::make_shared<Ball>(Point3(0, 0, 0), 12450, universematerial));
 
 
 

@@ -39,6 +39,9 @@ public:
     [[nodiscard]] ColorVec trace_ray(const Ray &ray, const int32_t depth) const;
 
     [[nodiscard]] ColorVec trace_ray(const Ray &ray, float &tmin, const int32_t depth) const;
+    [[nodiscard]] std::array<ColorVec, SIMD_WIDTH> trace_ray(const RaySoA&, const int32_t depth) const;
+    [[nodiscard]] std::array<ColorVec, SIMD_WIDTH> trace_ray(const RaySoA&, float &t_min,const int32_t depth) const;
+
 
 
     World(std::shared_ptr<ViewPlane> _viewPlane,
@@ -71,6 +74,7 @@ public:
 
 
     [[nodiscard]] std::optional<intersectionRec> hit(const Ray &ray) const;
+    [[nodiscard]] intersectionRecSoA hit(const RaySoA& ray) const;
 
     [[nodiscard]] std::vector<std::shared_ptr<VectorialLight>> lights() const {
         return lights_;
