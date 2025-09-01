@@ -43,3 +43,6 @@
 /vcpkg_installed
 /.vs/RayTracer-redone
 /.vs
+/.vs/ProjectSettings.json
+/.vs/slnx.sqlite
+/.vs/VSWorkspaceState.json
