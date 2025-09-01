@@ -131,7 +131,7 @@ int main(int argc, char *argv[]) {
         const auto sampler = generateSampler(16);
 
 
-        const auto selectedWorld = worlds::testeFeatures();
+        const auto selectedWorld = worlds::buildingsScene();
         int value1;
         render(png, w, h, sampler, selectedWorld);
         return value1;

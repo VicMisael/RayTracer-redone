@@ -59,17 +59,17 @@ intersectionRecSoA World::hit(const RaySoA& rays) const
 				best.blend(rec, mask);  // assumes intersectionRecSoA::blend()
 		}
 		else {
-			// --- Fallback: AOS loop per lane ---
-			//for (size_t i = 0; i < SIMD_WIDTH; i++) {
-			//	Ray r = rays.get_lane(i); // extract per-lane Ray
-			//	auto recOpt = object->intersects(r);
-			//	if (recOpt.has_value()) {
-			//		const auto& rec = *recOpt;
-			//		if (rec.tmin < best.tmin.get(i) && rec.tmin > 1.0f) {
-			//			best.set_from_scalar(rec, i);
-			//		}
-			//	}
-			//}
+			 //--- Fallback: AOS loop per lane ---
+			for (size_t i = 0; i < SIMD_WIDTH; i++) {
+				Ray r = rays.get_lane(i); // extract per-lane Ray
+				auto recOpt = object->intersects(r);
+				if (recOpt.has_value()) {
+					const auto& rec = *recOpt;
+					if (rec.tmin < best.tmin.get(i) && rec.tmin > 1.0f) {
+						best.set_from_scalar(rec, i);
+					}
+				}
+			}
 		}
 	}
 

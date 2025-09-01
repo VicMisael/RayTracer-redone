@@ -76,6 +76,45 @@ float utility::clamp(float x, float min, float max) {
     if (x > max) return max;
     return x;
 }
+
+Vector3_SoA utility::cross_SoA(const Vector3_SoA& a, const Vector3_SoA& b)
+{
+    return Vector3_SoA{
+        a.y * b.z - a.z * b.y,
+        a.z * b.x - a.x * b.z,
+        a.x * b.y - a.y * b.x
+    };
+}
+
+Vector3_SoA utility::normalize_SoA(const Vector3_SoA& v)
+{
+    batch_type len_sq = v.x * v.x + v.y * v.y + v.z * v.z;
+    batch_type len = xs::sqrt(len_sq);
+
+    // To avoid division by zero, you might add a small epsilon
+    batch_type inv_len = batch_type(1.0f) / len;
+
+    return Vector3_SoA{
+        v.x * inv_len,
+        v.y * inv_len,
+        v.z * inv_len
+    };
+}
+
+batch_type utility::dot_SoA(const Vector3_SoA& a, const Vector3_SoA& b)
+{
+    return a.x * b.x + a.y * b.y + a.z * b.z;
+}
+
+Vector3_SoA utility::fromComponents(const float& x, const float& y, const float& z)
+{
+    return Vector3_SoA(batch_type(x), batch_type(y), batch_type(z));
+}
+
+ Vector3_SoA utility::fromVec3(const Vector3& vector)
+{
+    return Vector3_SoA(batch_type(vector.x), batch_type(vector.y), batch_type(vector.z));
+}
 //Only on Dark Scenes, FAlse positives on Bright ones
  bool utility::nanBugCheck(glm::vec4 _color) {
     const uint8_t r = _color.r > 1.0f ? 255 : _color.r * 255;
