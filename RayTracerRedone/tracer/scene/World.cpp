@@ -157,7 +157,7 @@ World::render(Canvas* canvas, int32_t depth, const std::shared_ptr<sampler>& _sa
 inline ColorVec World::draw_pixel(int32_t depth, const Matrix4x4& inv, const float ystep, const float xstep,
 	const float zw, const std::vector<std::tuple<float, float>>& points, const uint16_t y, const uint16_t x) const {
 
-	ColorVec colorVec(0, 1, 0);
+	ColorVec colorVec(1, 1, 1);
 	const unsigned int num_samples = points.size();
 	//#pragma omp parallel for schedule(dynamic)
 	std::array<Ray, SIMD_WIDTH> rays;
@@ -202,7 +202,7 @@ inline ColorVec World::draw_pixel(int32_t depth, const Matrix4x4& inv, const flo
 
 		std::array<ColorVec, SIMD_WIDTH> colors = trace_ray(ray, depth);
 
-		for (size_t i = 0; i++; i < SIMD_WIDTH) {
+		for (size_t i = 0; i < SIMD_WIDTH;i++ ) {
 			colorVec += colors[i];
 		}
 	}

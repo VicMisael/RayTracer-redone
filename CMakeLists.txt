@@ -7,6 +7,7 @@ find_package(glm REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(assimp CONFIG REQUIRED)
 find_package(OpenMP)
+find_package(nlohmann_json)
 include_directories(${SDL2_INCLUDE_DIRS})
 
 include_directories(RayTracerRedone/sdl2canvas)
@@ -19,13 +20,7 @@ include_directories(RayTracerRedone/tracer/scene/light)
 include_directories(RayTracerRedone/tracer/scene/materials)
 include_directories(RayTracerRedone/tracer/utils)
 include_directories(RayTracerRedone/tracer/utils/sampler)
-include(FetchContent)
-FetchContent_Declare(
-        json
-        URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz
-)
 
-FetchContent_MakeAvailable(json)
 
 add_executable(RayTracer_redone
         RayTracerRedone/sdl2canvas/sdl2canvas.cpp
@@ -100,6 +95,8 @@ add_executable(RayTracer_redone
         RayTracerRedone/tracer/utils/ColorVec.h
         RayTracerRedone/tracer/utils/Constants.h
         RayTracerRedone/tracer/utils/Intersection.h
+        
+
         RayTracerRedone/tracer/utils/Types.h
         RayTracerRedone/tracer/utils/utility.h
         RayTracerRedone/tracer/objects/BoundingBox/AABB.h

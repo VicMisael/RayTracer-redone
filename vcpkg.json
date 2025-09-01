@@ -4,6 +4,8 @@
   "dependencies": [
     "assimp",
     "glm",
-    "sdl2"
+    "sdl2",
+    "xsimd",
+    "nlohmann-json"
   ]
 }
