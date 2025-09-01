@@ -9,7 +9,6 @@
 #include "sdl2canvas/sdl2canvas.h"
 
 #include "tracer/scene/World.h"
-#include "tracer/scene/World.h"
 #include "tracer/objects/Plane.h"
 #include "tracer/objects/Ball.h"
 #include "tracer/objects/Mesh.h"
@@ -502,14 +501,14 @@ namespace worlds {
 		const auto dielectric2 = std::make_shared<Dielectric>(Constants::YELLOW, Constants::BLACK, 1.24, 1.61, 1, 2);
 
 
-		//objects.push_back(std::make_shared<Plane>(Point3(0, 0, 0), Vector3(0, 1, 0), textured_bp));
-		//objects.push_back(std::make_shared<Plane>(Point3(0, 0, 13509), Vector3(0, 1, -1), bw_matte_textured));
+		objects.push_back(std::make_shared<Plane>(Point3(0, 0, 0), Vector3(0, 1, 0), textured_bp));
+		objects.push_back(std::make_shared<Plane>(Point3(0, 0, 13509), Vector3(0, 1, -1), bw_matte_textured));
 		objects.push_back(std::make_shared<Ball>(Point3(0, 3000, 11509), 1000, moonmaterial));
 
 		constexpr float a = 100000;
 		objects.push_back(std::make_shared<Ball>(Point3(0, -a - 0.2f, 0), a, building_material));
 
-		//objects.push_back(std::make_shared<Ball>(Point3(10000, 6000, 100000), 80000, building_material));
+		objects.push_back(std::make_shared<Ball>(Point3(10000, 6000, 100000), 80000, building_material));
 		objects.push_back(std::make_shared<Ball>(Point3(0, 0, 0), 12450, universematerial));
 
 
@@ -582,21 +581,21 @@ namespace worlds {
 		objects.push_back(std::make_shared<Ball>(Point3(-20, 50, 250), 60, std::make_shared<SampleDielectric>(4.5)));
 
 
-		auto mesh = std::make_shared<Mesh>("assets/objs/cow.obj", building_material);
-		mat = glm::translate(Matrix4x4(1.0f), Vector3(220, 30, 40));
-		float angle = 1.5708;
-		//mat = glm::rotate(mat, 3*angle / 2, Vector3(0, 1, 0));
-		mat = glm::scale(mat, Vector3(6));
-		mesh->transform(mat);
-		objects.push_back(mesh);
+		//auto mesh = std::make_shared<Mesh>("assets/objs/cow.obj", building_material);
+		//mat = glm::translate(Matrix4x4(1.0f), Vector3(220, 30, 40));
+		//float angle = 1.5708;
+		////mat = glm::rotate(mat, 3*angle / 2, Vector3(0, 1, 0));
+		//mat = glm::scale(mat, Vector3(6));
+		//mesh->transform(mat);
+		//objects.push_back(mesh);
 
 
-		auto mesh2 = std::make_shared<Mesh>("assets/objs/teapot.obj", phong_reflective_higher_exp);
-		mat = glm::translate(Matrix4x4(1.0f), Vector3(450, 0, 150));
-		mat = glm::rotate(mat, angle / 2, Vector3(0, 1, 0));
-		mat = glm::scale(mat, Vector3(20));
-		mesh2->transform(mat);
-		objects.push_back(mesh2);
+		//auto mesh2 = std::make_shared<Mesh>("assets/objs/teapot.obj", phong_reflective_higher_exp);
+		//mat = glm::translate(Matrix4x4(1.0f), Vector3(450, 0, 150));
+		//mat = glm::rotate(mat, angle / 2, Vector3(0, 1, 0));
+		//mat = glm::scale(mat, Vector3(20));
+		//mesh2->transform(mat);
+		//objects.push_back(mesh2);
 
 
 
