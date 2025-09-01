@@ -41,3 +41,5 @@
 /out
 /cmake-build-relwithdebinfo-clang
 /vcpkg_installed
+/.vs/RayTracer-redone
+/.vs

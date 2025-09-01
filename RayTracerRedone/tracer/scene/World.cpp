@@ -55,7 +55,7 @@ intersectionRecSoA World::hit(const RaySoA& rays) const
 			auto rec = simdObj->intersects(rays);
 			// Per-lane mask: only replace if closer hit
 			auto mask = rec.tmin < best.tmin;
-			if(xs::any(mask))
+			//if(xs::any(mask))
 				best.blend(rec, mask);  // assumes intersectionRecSoA::blend()
 		}
 		else {
@@ -114,9 +114,9 @@ std::array<ColorVec, SIMD_WIDTH> World::trace_ray(const RaySoA& rays, float& t_m
 	auto recs = hit(rays);
 
 	// Build SIMD mask: valid hit if tmin > 1.0f and < MAX_FLOAT
-	//auto mask = (recs.tmin > 1.0f) & (recs.tmin < Constants::MAX_FLOAT);
+	auto mask = (recs.tmin > 1.0f) & (recs.tmin < Constants::MAX_FLOAT);
 
-	//recs.intersects &= mask;
+	recs.intersects &= mask;
 	// Chame a nova função explode para obter os dados e os índices das intersecções válidas.
 	auto hit_data = explode(recs);
 
