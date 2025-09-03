@@ -91,7 +91,7 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "RelWithDebInfo",
         "CMAKE_INTERPROCEDURAL_OPTIMIZATION": "TRUE",
-        "CMAKE_CXX_FLAGS_RELWITHDEBINFO": "/Ob2 /arch:AVX2 /DNDEBUG  /Zi /Fa"
+        "CMAKE_CXX_FLAGS_RELWITHDEBINFO": "/Ox /arch:AVX2 /DNDEBUG  /Zi /Fa"
       }
     },
     {
@@ -113,9 +113,23 @@
       "description": "Destine ao Windows (32 bits) com o ambiente de desenvolvimento do Visual Studio. (RelWithDebInfo)",
       "inherits": "x86-debug",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_INTERPROCEDURAL_OPTIMIZATION": "TRUE",
+        //"CMAKE_CXX_FLAGS_RELWITHDEBINFO": "/Ob2 /DNDEBUG  /Zi /Fa"
       }
     },
+    {
+      "name": "x86-debug-release",
+      "displayName": "x86 Release",
+      "description": "Destine ao Windows (32 bits) com o ambiente de desenvolvimento do Visual Studio. (RelWithDebInfo)",
+      "inherits": "x86-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "CMAKE_INTERPROCEDURAL_OPTIMIZATION": "TRUE"
+        //"CMAKE_CXX_FLAGS_RELWITHDEBINFO": "/Ob2 /DNDEBUG  /Zi /Fa"
+      }
+    }
+    ,
     {
       "name": "x64-fastest-release",
       "displayName": "x64 Fastest Release",
@@ -124,7 +138,7 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_INTERPROCEDURAL_OPTIMIZATION": "TRUE",
-        "CMAKE_CXX_FLAGS_RELEASE": "/Ob2"
+        "CMAKE_CXX_FLAGS_RELEASE": "/O2 /arch:AVX2"
       }
     }
   ]

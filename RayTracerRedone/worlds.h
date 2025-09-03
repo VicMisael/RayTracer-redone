@@ -508,8 +508,8 @@ namespace worlds {
 		constexpr float a = 100000;
 		objects.push_back(std::make_shared<Ball>(Point3(0, -a - 0.2f, 0), a, building_material));
 
-		//objects.push_back(std::make_shared<Ball>(Point3(10000, 6000, 100000), 80000, building_material));
-		//objects.push_back(std::make_shared<Ball>(Point3(0, 0, 0), 12450, universematerial));
+		objects.push_back(std::make_shared<Ball>(Point3(10000, 6000, 100000), 80000, building_material));
+		objects.push_back(std::make_shared<Ball>(Point3(0, 0, 0), 12450, universematerial));
 
 
 
@@ -558,12 +558,12 @@ namespace worlds {
 		mat = scale(mat, Vector3(15));
 		mat = rotate(mat, (float)glm::radians(-45.0f), Vector3(0, 1, 0));
 		house->transform(mat);
-		objects.push_back(house);
+		//objects.push_back(house);
 
-		objects.push_back(building1);
-		objects.push_back(building2);
-		objects.push_back(building3);
-		objects.push_back(building4);
+		//objects.push_back(building1);
+		//objects.push_back(building2);
+		//objects.push_back(building3);
+		//objects.push_back(building4);
 
 
 
@@ -587,7 +587,7 @@ namespace worlds {
 		//mat = glm::rotate(mat, 3*angle / 2, Vector3(0, 1, 0));
 		mat = glm::scale(mat, Vector3(6));
 		mesh->transform(mat);
-		objects.push_back(mesh);
+		//objects.push_back(mesh);
 
 
 		auto mesh2 = std::make_shared<Mesh>("assets/objs/teapot.obj", phong_reflective_higher_exp);
@@ -595,7 +595,7 @@ namespace worlds {
 		mat = glm::rotate(mat, angle / 2, Vector3(0, 1, 0));
 		mat = glm::scale(mat, Vector3(20));
 		mesh2->transform(mat);
-		objects.push_back(mesh2);
+		// objects.push_back(mesh2);
 
 
 

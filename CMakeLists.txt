@@ -170,7 +170,6 @@ target_link_libraries(RayTracer_redone PRIVATE nlohmann_json::nlohmann_json)
 
 add_definitions(-DGLM_ENABLE_EXPERIMENTAL)
 
-set_property(TARGET RayTracer_redone PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
 
 
 file(COPY RayTracerRedone/assets DESTINATION ${CMAKE_BINARY_DIR})
