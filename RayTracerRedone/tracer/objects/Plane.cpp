@@ -25,6 +25,9 @@ std::tuple<float, float> computeUV(const glm::vec3& pointInPlane, const glm::vec
 	float uCoordinate = glm::dot(delta, u);
 	float vCoordinate = glm::dot(delta, v);
 
+	//if (uCoordinate < 0 || vCoordinate < 0) {
+	//	__debugbreak();
+	//}
 	return { glm::mod(uCoordinate / 100.0f,1.0f), glm::mod(vCoordinate / 100.0f,1.0f) };
 }
 
@@ -51,15 +54,20 @@ std::tuple<batch_type, batch_type> computeUV_SoA(const Vector3_SoA& pointsInPlan
 	const auto u = computeU_SoA(normal);
 	const auto v = computeV_SoA(normal, u);
 	const Vector3_SoA delta = {
-		pointsInPlane.x - otherPoint.x,
-		pointsInPlane.y - otherPoint.y,
-		pointsInPlane.z - otherPoint.z,
+		otherPoint.x - pointsInPlane.x,
+		otherPoint.y - pointsInPlane.y,
+		otherPoint.z - pointsInPlane.z,
 	};
 
-	auto uCoord = utility::dot_SoA(delta, u);
-	auto vCoord = utility::dot_SoA(delta, v);
-
-	return { xs::fmod(uCoord / 100.0f, batch_type(1.0f)),  xs::fmod(vCoord / 100.0f, batch_type(1.0f)) };
+	const batch_type uCoord = utility::dot_SoA(delta, u);
+	const batch_type vCoord = utility::dot_SoA(delta, v);
+	const batch_type one_rec(1.0f / 100.0f);
+	const auto mask = uCoord < 0;
+	const auto mask2 = vCoord < 0;
+	//if (xs::any(mask | mask2)) {
+	//	__debugbreak();
+	//}
+	return { xs::fmod(uCoord *one_rec, batch_type(1.0f)),  xs::fmod(vCoord *one_rec, batch_type(1.0f)) };
 }
 
 
@@ -96,6 +104,7 @@ intersectionRecSoA Plane::intersects(const RaySoA& ray) const {
 	}
 
 	const auto intersectionPoint = ray.point_at(t);
+
 	const auto [u, v] = computeUV_SoA(point, intersectionPoint, normal);
 
 	intersectionRecSoA rec;
