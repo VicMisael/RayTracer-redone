@@ -558,12 +558,12 @@ namespace worlds {
 		mat = scale(mat, Vector3(15));
 		mat = rotate(mat, (float)glm::radians(-45.0f), Vector3(0, 1, 0));
 		house->transform(mat);
-		objects.push_back(house);
+		// objects.push_back(house);
 
-		objects.push_back(building1);
-		objects.push_back(building2);
-		objects.push_back(building3);
-		objects.push_back(building4);
+		//objects.push_back(building1);
+		//objects.push_back(building2);
+		//objects.push_back(building3);
+		//objects.push_back(building4);
 
 
 

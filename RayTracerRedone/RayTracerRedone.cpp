@@ -124,11 +124,11 @@ int main(int argc, char *argv[]) {
     }else if (argc == 1 || argc > 1 && std::string("all") != argv[1]) {
 
 
-        const uint32_t w = 1750;
+        const uint32_t w = 550;
         const uint32_t h = w/2;
 
 
-        const auto sampler = generateSampler(1);
+        const auto sampler = generateSampler(16);
 
 
         const auto selectedWorld = worlds::buildingsScene();
